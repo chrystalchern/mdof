@@ -2,3 +2,7 @@ numpy
 scipy
 tqdm
 quakeio
+
+matplotlib
+plotly
+pandas

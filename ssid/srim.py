@@ -9,7 +9,7 @@ from functools import partial
 try:
     from tqdm import tqdm
 except:
-    tqdm = lambda x,*args: x
+    tqdm = lambda x,*args,**kwds: x
 
 import numpy as np
 from numpy import pi, log, sign
