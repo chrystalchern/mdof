@@ -74,6 +74,6 @@ def ComposeModes(dt, A, B, C, D):
         mx  = abs(np.real(modeshape[om,q]))
         modeshape[:,q] = np.real(modeshape[:,q])/mx*sign(np.real(modeshape[om,q]))
 
-    return freqdmp, modeshape, sj1, v, d
+    return freqdmp, modeshape, None, v, d
 
 

@@ -92,8 +92,8 @@ def okid(dati, dato, svd="gesvd", **config):
     dati = dati[:-1,:]
     dato = dato[:-1,:]
 
-    verbose = True
-    dn = config.get("dn", None) or dati.shape[0]
+    #verbose = True
+    #dn = config.get("dn", None) or dati.shape[0]
     kmax    = config["kmax"]
     n = config["orm"]   # assign order of model input to variable n, consistent with Eqs. 3.81-3.84
     p = config["mro"]   # assign input model reduction order to variable p, consistent with Eq. 3.76
@@ -121,9 +121,9 @@ def okid(dati, dato, svd="gesvd", **config):
     #    in Eq 3.76 using Linear Regression
     uu,wr,v = _svd(U,0)
     pg = (r+m)*p+r
-    for lop in range((r+m)*p+r):
-        if wr[lop] <= 0.001:
-            pg = lop
+    for i in range((r+m)*p+r):
+        if wr[i] <= 0.001:
+            pg = i
             break
 
     s = np.diag(wr)
@@ -196,7 +196,7 @@ def okid(dati, dato, svd="gesvd", **config):
     return A,B,C,D
 
 
-def validate(inputs, outputs, system, **config):
+def validate(freqdmp, v, system, **config):
     """2e. Validation Analysis
 
     Two criteria are used for selection of identified genuine modes
@@ -212,121 +212,7 @@ def validate(inputs, outputs, system, **config):
        Modes with output EMAC values < 0.5 are considered spurious & therefore not reported.
 
     """
-    A,B,C,D = system
-    def mpc(modes_raw):
-        """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
-        for q in range(n):
-            sxx[:,q] = np.real(modes_raw[:,q]).T@np.real(modes_raw[:,q])
-            syy[:,q] = np.imag(modes_raw[:,q]).T@np.imag(modes_raw[:,q])
-            sxy[:,q] = np.real(modes_raw[:,q]).T@np.imag(modes_raw[:,q])
-            nu[q]    = (syy[:,q]-sxx[:,q])/(2*sxy[:,q])
-            lam[1,q] = (sxx[:,q]+syy[:,q])/2 + sxy[:,q]*np.sqrt(nu[q]**2+1);
-            lam[2,q] = (sxx[:,q]+syy[:,q])/2 - sxy[:,q]*np.sqrt(nu[q]**2+1);
-            mpc[q]   = ((lam[0,q]-lam[1,q])/(lam[0,q]+lam[1,q]))**2;
-
-
-    def emac():
-        "b) Exted Modal Amplitude Coherence (EMAC)"
-        v_inv = np.linalg.inv(v)
-        qlin = v_inv@Qb;     # Controllability Matrix used for the input-EMAC
-        plin = Pb@v;         # Observability Matrix used for the output-EMAC
-
-        lamb = v_inv@A@v
-        bkh = v_inv@B;
-        for hn in range(n):
-            for ll in range(l):
-                qhat[hn,ll*r+1:ll*r+r] = bkh[hn,:]*(lamb[hn,hn])**ll
-
-        selsiz = min(size(qlin),size(qhat))
-
-        for hnd in range(n):
-            ql = qlin[hnd,:selsiz(2)]
-            qh = qhat[hnd,:selsiz(2)]
-            mac[hnd] = abs(ql*qh.T)/(abs(ql*ql.T)*abs(qh*qh.T))**0.5
-
-        #
-        # Output EMAC (Eqs. 3.88-3.89)
-        #
-        # Pick the last block row
-        pto = plin[(kmax-1)*m+1:m*kmax,:]  # the identified value at T0
-        for ds in range(n):
-            ptop[:,ds] = modes_raw[:,ds]*exp(sj1[ds]*dt*(kmax-1));
-
-        # Computation of rij
-        for qa in range(n):
-            for qz in range(m):
-                Rij[qa,qz] = min((abs(pto(qz,qa))/abs(ptop(qz,qa))),(abs(ptop(qz,qa))/abs(pto(qz,qa))));
-                Pij = angle(pto(qz,qa)/ptop(qz,qa))
-                Pijn[qa,qz] = Pij
-                if abs(Pij) <= pi/4:
-                    Wij[qa,qz] = 1 - abs(Pij)/(pi/4)
-                else:
-                    Wij[qa,qz] = 0
-
-                emaco[qa,qz] = Rij[qa,qz]*Wij[qa,qz];      # emaco is the ouput emac
-
-        #
-        # Input EMAC
-        #
-        # Pick the last block column
-        qto = qlin[:, (l-1)*r+1:l*r]
-        qtop = d**(l-1)*inm;
-
-        # EMAC Input Variation
-        for er in range(l):
-            qtovar = qlin[:,er*r:(er+1)*r];
-            qtopvar = d**er*inm;
-            # Computation of rik
-            for qak in range(n):
-                for qzk in range(r):
-                    Rik[qak,qzk] = min(
-                            (abs(qtovar[qak,qzk])/abs(qtopvar[qak,qzk])),
-                            (abs(qtopvar[qak,qzk])/abs(qtovar[qak,qzk]))
-                    )
-                    Pik = angle(qtovar[qak,qzk]/qtopvar[qak,qzk])
-                    if abs(Pik)<=pi/4:
-                        Wik[qak,qzk] = 1 - abs(Pik)/(pi/4)
-                    else:
-                        Wik[qak,qzk] = 0.0
-                    emaci[qak,qzk] = Rik[qak,qzk]*Wik[qak,qzk]
-
-            # Weight for emaci
-            emacif = zeros((n,1))
-            for xc in range(n):
-                sumi = 0;
-                for lw in range(r):
-                    sumi = emaci[xc,lw]*(inm[xc,lw]*inm[xc,lw].T) + sumi
-
-                emacif[xc] = sumi/(inm[xc,:]*inm[xc,:].T)
-            emacivar[:,er] = emacif;
-
-        # Computation of rik
-        for qak in range(n):
-            for qzk in range(r):
-                Rik[qak,qzk] = min((abs(qto[qak,qzk])/abs(qtop[qak,qzk])),(abs(qtop[qak,qzk])/abs(qto(qak,qzk))))
-                Pik = angle(qto[qak,qzk]/qtop[qak,qzk]);
-                if abs(Pik) <= pi/4:
-                    Wik[qak,qzk] = 1-abs(Pik)/(pi/4)
-                else:
-                    Wik[qak,qzk] = 0.0
-
-                emaci[qak,qzk] = Rik[qak,qzk]*Wik[qak,qzk]
-
-        # Computation of final Input and Ouput EMAC
-        for i in range(n):
-            # Weight for emaco
-            sumo = 0;
-            for la in range(m):
-                sumo = emaco[xc,la]*abs(modes_raw[la,xc])**2+sumo;
-
-            #Weight for emaci
-            sumi = 0;
-            for lw in range(r):
-                sumi = emaci[xc,lw]*abs(inm[xc,lw])**2+sumi 
-
-            emacof[i] = sumo/((modes_raw[:,xc].T*modes_raw[:,xc]))  # emacof is the final output EMAC
-            emacif[i] = sumi/(inm[xc,:]*inm[xc,:].T)                # emacif is the final input EMAC
-            emac[i] = emacof[i]*emacif[i] 
+    mpc = MPC(n, v, system)
 
     # Add the input EMAC, output EMAC, and MPC to the matrix freqdamp
     for lih in range(size(freqdmp)[0]):
@@ -338,11 +224,119 @@ def validate(inputs, outputs, system, **config):
         else:
             validationm=' not valid'
 
+def MPC(n, v, system):
+    """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
+    _,__,C,___ = system
+    modes_raw = C@v
+    _, n = modes_raw.shape
+    sxx, syy, sxy = np.zeros((3, *modes_raw.shape))
+    nu, mpc = np.zeros((2, n))
+    lam = np.zeros((2, n))
+    for i in range(n):
+        sxx[:,i] = np.real(modes_raw[:,i]).T@np.real(modes_raw[:,i])
+        syy[:,i] = np.imag(modes_raw[:,i]).T@np.imag(modes_raw[:,i])
+        sxy[:,i] = np.real(modes_raw[:,i]).T@np.imag(modes_raw[:,i])
+        nu[i]    = (syy[:,i]-sxx[:,i])/(2*sxy[:,i])
+        lam[1,i] = (sxx[:,i]+syy[:,i])/2 + sxy[:,i]*np.sqrt(nu[i]**2+1);
+        lam[2,i] = (sxx[:,i]+syy[:,i])/2 - sxy[:,i]*np.sqrt(nu[i]**2+1);
+        mpc[i]   = ((lam[0,i]-lam[1,i])/(lam[0,i]+lam[1,i]))**2;
+    return mpc
+
+def EMAC_Matrix(n, m, pto, ptop):
+    emac = np.zeros((n, m))
+    for i in range(n):
+        for j in range(m):
+            Rij = min(
+                (abs(pto[j,i])/abs(ptop[j,i])),
+                (abs(ptop[j,i])/abs(pto[j,i]))
+            )
+            Pij = np.angle(pto[j,i]/ptop[j,i])
+            if abs(Pij) <= pi/4:
+                Wij = 1 - abs(Pij)/(pi/4)
+            else:
+                Wij = 0
+            emac[i,j] = Rij*Wij
+
+def EMAC_Variation(n,m,pto,ptop):
+    pass
+
+
+def EnergyCondensedEMAC(n,m,emac,phi):
+    "Equation 3.93"
+    return np.array([
+        sum(emac[i,j]*abs(phi[i,j])**2 
+            for j in range(m)
+        )/(phi[i,:].T@phi[i,:])
+        for i in range(n) 
+    ])
+
+def MAC(shape,v, v_inv, A, B):
+    n,m,r,l = shape
+    lamb = v_inv@A@v
+    bkh = v_inv@B
+    for i in range(n):
+        for j in range(l):
+            qhat[i,j*r+1:j*r+r] = bkh[i,:]*(lamb[i,i])**j
+
+    selsiz = min(size(qlin),size(qhat))
+
+    for hnd in range(n):
+        ql = qlin[hnd,:selsiz(2)]
+        qh = qhat[hnd,:selsiz(2)]
+        mac[hnd] = abs(ql*qh.T)/(abs(ql*ql.T)*abs(qh*qh.T))**0.5
+
+
+def EMAC_Validate(shape, kmax, v, d, dt, system):
+    "b) Exted Modal Amplitude Coherence (EMAC)"
+    A,B,C,D = system
+    n,m,r,l = shape
+
+def OutputEMAC(n,m,p,Obsv,A,C):
+    #
+    # Output EMAC (Eqs. 3.88-3.89)
+    # p (kmax)
+
+    v, d = A.eigen()
+    plin = Obsv@v;         # Modal observability Matrix used for the output-EMAC
+    modes_raw = C@v
+    sj1 = np.log(d)/dt
+    pto = plin[(p-1)*m+1:m*p,:]  # the identified value at T0 ( last block row)
+    ptop = np.array([
+            modes_raw[:,i]*np.exp(sj1[i]*dt*(p-1))
+        for i in range(n)
+    ]).T
+    emaco  = EMAC_Matrix(n,m,pto,ptop)
+    return EnergyCondensedEMAC(n, m, emaco, modes_raw.T)
+
+
+def InputEMAC(Ctrl,A,B):
+    #
+    # Input EMAC
+    #
+    # # EMAC Input Variation
+    # for i in range(l):
+    #     qtovar = qlin[:,i*r:(i+1)*r]
+    #     qtopvar = (np.diag(d)**i)*inm
+    #     emaci = EMAC_Matrix(n,m,qtovar,qtopvar)
+    #     emacivar[:,i] = EnergyCondensedEMAC(n,m,emaci,inm);
+
+    # Pick the last block column
+    v, d  = A.eigen()
+    v_inv = np.linalg.inv(v)
+    inm   = linsolve(v,B)   # Initial mode contribution
+    qlin  = v_inv@Ctrl;     # Modal controllability Matrix (F' in Pappa 1993)
+    qto   = qlin[:, (l-1)*r+1:l*r]
+    qtop  = d**(l-1)@inm
+    emaci = EMAC_Matrix(n, m, qto, qtop)
+    return EnergyCondensedEMAC(n, m, emaci, inm)
+    
+
+
 if __name__ == "__main__":
     from pathlib import Path
     import quakeio
     # import ssid as si
-    import OKID
+    import okid
     import numpy as np
     channels = dict( # PAINTER RIO DELL
         inputs  = [17, 3, 20],
