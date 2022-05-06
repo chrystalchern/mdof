@@ -70,7 +70,10 @@ def okid(dati, dato, svd="gesvd", **config):
     
     if svd in ["gesvd", "gesdd"]:
         import scipy.linalg
-        _svd = lambda *args: scipy.linalg.svd(*args, lapack_driver=svd)
+        def _svd(*args):
+            U,S,V = scipy.linalg.svd(*args, lapack_driver=svd)
+            return U,S,V.T.conj()
+
     elif svd in ["xla", "jax"]:
         from jax.scipy.linalg import svd as _svd
 
@@ -128,7 +131,7 @@ def okid(dati, dato, svd="gesvd", **config):
 
     s = np.diag(wr)
 
-    pss = v.T[:,:pg]@linsolve(s[:pg,:pg], uu[:,:pg].T)
+    pss = v[:,:pg]@linsolve(s[:pg,:pg], uu[:,:pg].T)
     M = dato.T@pss           # M: Observer Markov Parameter Matrix
 
     # Fit for multiple regression
