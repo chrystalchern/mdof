@@ -163,7 +163,7 @@ def ComposeModes(dt, A, B, C, D):
 
     # a) Determination of modal frequencies (Eqs. 3.46 & 3.39)
     sj1 = kit/dt            # dt is the time step
-    freq1 = ((sj1*np.conj(sj1))**0.5)#/(2*pi)
+    freq1 = ((sj1*np.conj(sj1))**0.5)/(2*pi)
 
     roots = []
 
@@ -179,7 +179,7 @@ def ComposeModes(dt, A, B, C, D):
             roots.append(i)
 
     # b) Determination of damping ratios (Eqs. 3.46 & 3.39)
-    damp1 = -np.real(sj1)/(freq1)#(2*pi*freq1)
+    damp1 = -np.real(sj1)/(2*pi*freq1)
     # Represent the identified frequency & damping information
     # of the proper roots in a matrix
     freqdmp = np.array([
