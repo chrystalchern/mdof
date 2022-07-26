@@ -9,23 +9,27 @@ except:
 
 
 from pathlib import Path
-import matplotlib.pyplot as plt
 try:
-    style_file = Path(__file__).parents[1]/"assets/brace2.mplstyle"
-    plt.style.use([style_file])
-    import tempfile
-    with tempfile.NamedTemporaryFile() as tf:
-        plt.plot([0.0, 1.0], [0.0, 0.1], label=r"$\sigma")
-        plt.savefig(tf.name)
-except RuntimeError as e:
-    import matplotlib
-    matplotlib.rcParams.update({
-        "text.usetex": False,
-        "text.latex.preamble": ""
-    })
-finally:
-    plt.close()
+    import matplotlib.pyplot as plt
+    try:
+        style_file = Path(__file__).parents[1]/"assets/brace2.mplstyle"
+        plt.style.use([style_file])
+        import tempfile
+        with tempfile.NamedTemporaryFile() as tf:
+            plt.plot([0.0, 1.0], [0.0, 0.1], label=r"$\sigma")
+            plt.savefig(tf.name)
+    except (FileNotFoundError, RuntimeError, Exception) as e:
+        import matplotlib
+        matplotlib.rcParams.update({
+            "text.usetex": False,
+            "text.latex.preamble": ""
+        })
 
+    finally:
+        plt.close()
+
+except ImportError:
+    pass
 
 
 def plot_grid(series, label=None):

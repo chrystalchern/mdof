@@ -6,6 +6,13 @@ linsolve = scipy.linalg.solve
 
 lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
 
+def parse_okid(args, config):
+    """
+    p determines order of the observer Kalman ARX filter used in OKID-ERA-DC.
+    n determines size of the state-space model used for representing the system.
+    """
+    return config
+
 def okid(dati, dato, svd="gesvd", **config):
     """
     PART 2: OKID-ERA-DC (Observer Kalman filter Identification -

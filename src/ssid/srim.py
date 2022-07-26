@@ -3,6 +3,7 @@ __doc__="""
 """
 # Standard library
 import sys
+import json
 import multiprocessing
 from functools import partial
 # Dependencies
@@ -11,6 +12,7 @@ try:
 except:
     tqdm = lambda x,*args,**kwds: x
 
+import quakeio
 import numpy as np
 from numpy import pi, log, sign
 from numpy.linalg import eig
@@ -19,39 +21,21 @@ import scipy.linalg as sl
 linsolve = np.linalg.solve
 lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
 
+class JSON_Encoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        return json.JSONEncoder.default(self, obj)
+
 REQUIREMENTS = """
 numpy
 scipy
 tqdm
 quakeio
-"""
-
-HELP = """
-ssid [-p|w <>...] <method> <event> <inputs> <outputs>
-ssid [-p|w <>...] <method> -i <inputs> -o <outputs>
-
--i/--inputs  FILE...   Input data
--o/--outputs FILE...   Output data
-
-Methods:
-  <method> <outputs>  <plots>
-    srim    {dftmcs}   {m}
-    okid    {dftmcs}   {m}
-    spec    {ft}       {a}
-    four    {ft}       {a}
-    test
-
-Outputs options
--p/--plot
-    a/--accel-spect
--w/--write
-    ABCD   system matrices
-    d      damping
-    freq   frequency
-    cycl   cyclic frequency
-    t      period
-    m      modes
-    c      condition-number
 """
 
 EXAMPLES="""
@@ -231,6 +215,7 @@ def ftfe(dati, dato, **config):
 def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
 
+
 def parse_srim(argi, config):
     help="""
     SRIM -- System Identification with Information Matrix
@@ -245,13 +230,37 @@ def parse_srim(argi, config):
     for arg in argi:
         if arg == "-p":
             config["p"] = int(next(argi))
-        if arg == "--dt":
+        elif arg == "--dt":
             config["dt"] = float(next(argi))
-        if arg == "-n":
+        elif arg == "-n":
             config["orm"] = int(next(argi))
-        if arg in ["--help", "-h"]:
+        elif arg in ["--help", "-h"]:
             print(help)
             sys.exit()
+        else:
+            config["event_file"] = arg
+
+    channels = [[17, 3, 20], [9, 7, 4]]
+
+    event = quakeio.read(config["event_file"])
+    inputs = np.array([
+        event.match("l", station_channel=f"{i}").accel.data for i in channels[0]
+    ]).T
+    outputs = np.array([
+        event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
+        #event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
+    ]).T
+    npoints = len(inputs[:,0])
+    dt = event.at(station_channel=f"{channels[0][0]}").accel["time_step"]
+    config["dt"] = dt
+
+    #print(config)
+    #sys.exit()
+
+    A,B,C,D = srim(inputs, outputs, **config)
+    freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
+    import json
+    print(json.dumps(dict(freq=np.real(freqdmpSRIM)), cls=JSON_Encoder))
     return config
 
 def srim(
@@ -569,7 +578,6 @@ if __name__ == "__main__":
     import sys
     import quakeio
     from pathlib import Path
-    channels = [[17, 3, 20], [9, 7, 4]]
     method = None
 
     config, out_ops = parse_args(sys.argv)
@@ -605,7 +613,8 @@ if __name__ == "__main__":
         dt = event.at(file_name=f"CHAN{channels[0][0]:03d}.V2").accel["time_step"]
         config["dt"] = dt
 
-    print(config)
+    # print(config)
+    # sys.exit()
 
     A,B,C,D = srim(inputs, outputs, **config)
 

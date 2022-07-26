@@ -1,0 +1,13 @@
+pyproject.toml
+setup.py
+src/ssid/ExtractModes.py
+src/ssid/__init__.py
+src/ssid/__main__.py
+src/ssid/integrate.py
+src/ssid/okid.py
+src/ssid/spec.py
+src/ssid/srim.py
+src/ssid.egg-info/PKG-INFO
+src/ssid.egg-info/SOURCES.txt
+src/ssid.egg-info/dependency_links.txt
+src/ssid.egg-info/top_level.txt

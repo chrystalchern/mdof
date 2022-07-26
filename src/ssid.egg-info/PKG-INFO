@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: ssid
+Version: 0.0.0
+Author-email: "Claudio M. Perez" <50180406+claudioperez@users.noreply.github.com>
+Project-URL: repository, http://github.com/BRACE2/OpenSeesRT
+Project-URL: documentation, https://brace2.github.io/OpenSeesRT
+Keywords: seismic,earthquake
+Description-Content-Type: text/markdown
