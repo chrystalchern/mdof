@@ -259,8 +259,11 @@ def parse_srim(argi, config):
 
     A,B,C,D = srim(inputs, outputs, **config)
     freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
+    output = [
+            {"frequency": np.real(x[0]), "damping": np.real(x[1])} for x in freqdmpSRIM
+    ]
     import json
-    print(json.dumps(dict(freq=np.real(freqdmpSRIM)), cls=JSON_Encoder))
+    print(json.dumps(output, cls=JSON_Encoder))
     return config
 
 def srim(
