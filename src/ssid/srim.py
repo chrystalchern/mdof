@@ -227,6 +227,7 @@ def parse_srim(argi, config):
     """
     config.update({"p"  :  5, "orm":  4})
     #argi = iter(args)
+    channels = [[17, 3, 20], [9, 7, 4]]
     for arg in argi:
         if arg == "-p":
             config["p"] = int(next(argi))
@@ -237,10 +238,24 @@ def parse_srim(argi, config):
         elif arg in ["--help", "-h"]:
             print(help)
             sys.exit()
+        elif arg == "--inputs":
+            inputs = next(argi)[1:-1].split(",")
+            if isinstance(inputs, str):
+                channels[0] = [int(inputs)]
+            else:
+                channels[0] = list(map(int, inputs))
+        elif arg == "--outputs":
+            outputs = next(argi)[1:-1].split(",")
+            if isinstance(outputs, str):
+                channels[1] = [int(outputs)]
+            else:
+                channels[1] = list(map(int, outputs))
+        elif arg == "--":
+            continue
+
         else:
             config["event_file"] = arg
 
-    channels = [[17, 3, 20], [9, 7, 4]]
 
     event = quakeio.read(config["event_file"])
     inputs = np.array([
@@ -260,10 +275,11 @@ def parse_srim(argi, config):
     A,B,C,D = srim(inputs, outputs, **config)
     freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
     output = [
-            {"frequency": np.real(x[0]), "damping": np.real(x[1])} for x in freqdmpSRIM
+            {"frequency": np.real(x[0]), "damping": np.real(x[1])} 
+            for x in freqdmpSRIM if all(x > 0.0)
     ]
     import json
-    print(json.dumps(output, cls=JSON_Encoder))
+    print(json.dumps(output, cls=JSON_Encoder, indent=4))
     return config
 
 def srim(
@@ -607,13 +623,13 @@ if __name__ == "__main__":
     elif "event_file" in config:
         event = quakeio.read(config["event_file"])
         inputs = np.array([
-            event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[0]
+            event.match("l", station_channel=f"{i}").accel.data for i in channels[0]
         ]).T
         outputs = np.array([
-            event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
+            event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
         ]).T
         npoints = len(inputs[:,0])
-        dt = event.at(file_name=f"CHAN{channels[0][0]:03d}.V2").accel["time_step"]
+        dt = event.match("l", station_channel=f"{channels[0][0]}").accel["time_step"]
         config["dt"] = dt
 
     # print(config)

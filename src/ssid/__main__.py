@@ -45,6 +45,7 @@ def parse_args(args):
             "operation": None,
             "protocol": None
     }
+    config["channels"] = channels = [[], []]
     argi = iter(args[1:])
     for arg in argi:
         if arg == "-p":
@@ -66,6 +67,21 @@ def parse_args(args):
         elif config["protocol"] and config["operation"] is None:
             config["operation"] = arg
 
+        elif arg == "--inputs":
+            inputs = next(argi)[1:-1].split(",")
+            if isinstance(inputs, str):
+                channels[0] = [int(inputs)]
+            else:
+                channels[0] = list(map(int, inputs))
+        elif arg == "--outputs":
+            outputs = next(argi)[1:-1].split(",")
+            if isinstance(outputs, str):
+                channels[1] = [int(outputs)]
+            else:
+                channels[1] = list(map(int, outputs))
+        elif arg == "--":
+            continue
+
         else:
             break
 
@@ -76,10 +92,12 @@ if __name__ == "__main__":
     import quakeio
     import numpy as np
     from pathlib import Path
-    channels = [[17, 3, 20], [9, 7, 4]]
     method = None
 
     config, out_ops = parse_args(sys.argv)
+    sys.exit()
+
+    channels = config.get("channels", [[17, 3, 20], [9, 7, 4]])
 
     if config["method"] == "test":
         data_dir = Path("RioDell_Petrolia_Processed_Data")
@@ -102,18 +120,26 @@ if __name__ == "__main__":
 
     elif "event_file" in config:
         event = quakeio.read(config["event_file"])
-        inputs = np.array([
-            event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[0]
-        ]).T
-        outputs = np.array([
-            event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
-        ]).T
-        npoints = len(inputs[:,0])
-        dt = event.at(file_name=f"CHAN{channels[0][0]:03d}.V2").accel["time_step"]
+        try:
+            inputs = [
+                event.match("l", station_channel=f"{i}").accel.data for i in channels[0]
+            ]
+        except AttributeError:
+            print(f"{channels[0]}", "\n"*3, file=sys.stderr)
+            raise
+
+        try:
+            outputs = [
+                event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
+            ]
+        except AttributeError:
+            print(f"{channels[1]}", "\n"*3, file=sys.stderr)
+            raise
+
+        #npoints = len(inputs[:,0])
+        dt = event.match("l", station_channel=f"{channels[0][0]}").accel["time_step"]
         config["dt"] = dt
 
-    #print(config)
-    sys.exit()
 
     A,B,C,D = srim(inputs, outputs, **config)
 
