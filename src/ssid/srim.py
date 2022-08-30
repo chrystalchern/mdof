@@ -38,10 +38,12 @@ tqdm
 quakeio
 """
 
-EXAMPLES="""
-    ssid srim -wABCD event.zip 2,3 4,5
-    ssid okid -pm -i ch02.v2 ch03.v2 -o ch04.v2 ch05.v2
-    ssid okid -wm -i ch02.v2 ch03.v2 -o ch04.v2 ch05.v2
+"""
+ssid srim <event.zip> <options>
+
+Options
+-p
+-m
 """
 
 class IdentifiedSystem:
@@ -199,15 +201,7 @@ def parse_okid(args, config):
     """
     return config
 
-#
-# TFE
-#
-def stfe(dati, dato, **config):
-    pass
 
-def ftfe(dati, dato, **config):
-    "Fourier transfer function estimate"
-    pass
 
 #
 # SRIM
@@ -586,12 +580,6 @@ def srim(
 ###%KKKKK
 ##    return freqdmpSRIM,modeshapeSRIM,RMSEpredSRIM
 
-# def parse_args(argv):
-#     argi = iter(argv[1:])
-#     # assert argv[1] in ["srim", "stfe", "ftfe", "okid"]
-#     for arg in argi:
-#         if arg == "":
-#             pass
 
 if __name__ == "__main__":
     import sys

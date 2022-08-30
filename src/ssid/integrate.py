@@ -108,7 +108,6 @@ class Spectrum:
             interp=interp
         )
 
-
     @_plot_func
     def plot(self, **kwds):
         #sa = spectrum(self._accel, **kwds)

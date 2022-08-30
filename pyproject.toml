@@ -21,12 +21,16 @@ install_requires = [
   "quakeio",
   "matplotlib",
   "plotly",
-  "pandas"
+  "pandas",
+  "quakeio"
 ]
 
 [project.urls]
 repository = "http://github.com/BRACE2/OpenSeesRT"
 documentation = "https://brace2.github.io/OpenSeesRT"
+
+[project.scripts]
+ssid = "ssid.__main__:main"
 
 [build-system]
 requires = [

@@ -51,8 +51,12 @@ def ComposeModes(dt, A, B, C, D):
 
     # b) Determination of damping ratios (Eqs. 3.46 & 3.39)
     damp1 = -((np.real(sj1))/(2*pi*freq1))
+
     # Represent the identified frequency & damping information
     # of the proper roots in a matrix
+
+    # NOTE: These values are stored in one array like this for legacy reasons,
+    # but this should be cleaned and a proper data structure should be used!
     freqdmp = np.array([
                [freq1[lk],   # first column: identified frequency
                 damp1[lk],   # second column: identified damping ratio
