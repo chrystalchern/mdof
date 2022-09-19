@@ -13,7 +13,7 @@ def parse_okid(args, config):
     """
     return config
 
-def okid(dati, dato, svd="gesvd", **config):
+def okid(dati, dato, svd="gesvd", debug=False, **config):
     """
     PART 2: OKID-ERA-DC (Observer Kalman filter Identification -
             Eigen Realization with Direct Correlations)
@@ -129,7 +129,7 @@ def okid(dati, dato, svd="gesvd", **config):
 
     # i) Compute the matrix of Observer Markov Parameter Matrix (M)
     #    in Eq 3.76 using Linear Regression
-    uu,wr,v = _svd(U,0)
+    uu,wr,V = _svd(U,0)
     pg = (r+m)*p+r
     for i in range((r+m)*p+r):
         if wr[i] <= 0.001:
@@ -138,24 +138,24 @@ def okid(dati, dato, svd="gesvd", **config):
 
     s = np.diag(wr)
 
-    pss = v[:,:pg]@linsolve(s[:pg,:pg], uu[:,:pg].T)
+    pss = V[:,:pg]@linsolve(s[:pg,:pg], uu[:,:pg].T)
     M = dato.T@pss           # M: Observer Markov Parameter Matrix
 
     # Fit for multiple regression
     # RMSE between actual output & y on left hand side in Eq. 3.76. It should be 
     # quite small (e.g., 10^-3) for accurately computed Markow parameters.
-    ypreo = M@U
-    markovParamError = 1/m*sum((
-        sum((dato[:,i] - ypreo[i,:].T)**2)/sum(dato[:,i]**2)
-        for i in range(m)
-    ))  
+    # ypreo = M@U
+    # markovParamError = 1/m*sum((
+    #     sum((dato[:,i] - ypreo[i,:].T)**2)/sum(dato[:,i]**2)
+    #     for i in range(m)
+    # ))  
 
 
     ## ii) Compute Markov parameters (Y) using recursive relations in Eqs. 3.78 & 3.79
     #      (Equation 6.21 in Juang 1994)
 
     # Matrix D is directly equal to the Observer Markov parameter matrix (Eq. 3.77)
-    M1 = D = M[:, :r]  # D: Direct Transmission term
+    D = M[:, :r]  # D: Direct Transmission term
 
     Y = [D]
     # First p steps (Eq. 3.78)
@@ -175,7 +175,6 @@ def okid(dati, dato, svd="gesvd", **config):
         Y.append(sumt)
 
     # The Markow parameters Y have been computed.
-
 
     #
     # ERA/DC
@@ -199,10 +198,13 @@ def okid(dati, dato, svd="gesvd", **config):
     A  = Siv@R1[:,:n].T@H1@S1[:,:n]@Siv
     # B: input influence matrix (Eqs. 3.32 & 3.83)
     B = (np.sqrt(Sis)@S1[:,:n].T)[:,:r]
-    Pb = R1[:,:n]@np.sqrt(Sis)
+    Observability = R1[:,:n]@np.sqrt(Sis)
     # C: output influence matrix (Eqs. 3.34 & 3.84)
-    C  = Pb[:m,:]
-    return locals()
+    C  = Observability[:m,:]
+
+    if debug:
+        return locals()
+
     return A,B,C,D
 
 
@@ -230,9 +232,11 @@ def validate(freqdmp, v, system, **config):
         freqdmp[lih,5] = emacof(freqdmp[lih,2])
         freqdmp[lih,6] = mpc[freqdmp(lih,3)]
         if freqdmp[lih,5]>0.5 and freqdmp[lih,7]>0.5:
-            validationm=' valid'
+            # valid
+            return True
         else:
-            validationm=' not valid'
+            # not valid
+            return False
 
 def MPC(n, v, system):
     """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
@@ -252,7 +256,7 @@ def MPC(n, v, system):
         mpc[i]   = ((lam[0,i]-lam[1,i])/(lam[0,i]+lam[1,i]))**2;
     return mpc
 
-def EMAC_Matrix(n, m, pto, ptop):
+def EMAC_Matrix(n, m, pto, ptop, debug=False):
     emac = np.zeros((n, m))
     for i in range(n):
         for j in range(m):
@@ -261,22 +265,23 @@ def EMAC_Matrix(n, m, pto, ptop):
                 (abs(ptop[j,i])/abs(pto[j,i]))
             )
             Pij = np.angle(pto[j,i]/ptop[j,i])
-            if abs(Pij) <= pi/4:
-                Wij = 1 - abs(Pij)/(pi/4)
-            else:
-                Wij = 0
+            Wij = max(
+                1 - abs(Pij)/(pi/4),
+                0
+            )
             emac[i,j] = Rij*Wij
+    return emac
 
 def EMAC_Variation(n,m,pto,ptop):
     pass
 
 
-def EnergyCondensedEMAC(n,m,emac,phi):
+def EnergyCondensedEMAC(n,m,emac,phi,debug=False):
     "Equation 3.93"
     return np.array([
         sum(emac[i,j]*abs(phi[i,j])**2 
             for j in range(m)
-        )/(phi[i,:].T@phi[i,:])
+        )/np.real(phi[i,:].conjugate().transpose()@phi[i,:])
         for i in range(n) 
     ])
 
@@ -301,22 +306,18 @@ def EMAC_Validate(shape, kmax, v, d, dt, system):
     A,B,C,D = system
     n,m,r,l = shape
 
-def OutputEMAC(n,m,p,Obsv,A,C):
-    #
-    # Output EMAC (Eqs. 3.88-3.89)
-    # p (kmax)
-
-    v, d = A.eigen()
-    plin = Obsv@v;         # Modal observability Matrix used for the output-EMAC
-    modes_raw = C@v
-    sj1 = np.log(d)/dt
-    pto = plin[(p-1)*m+1:m*p,:]  # the identified value at T0 ( last block row)
-    ptop = np.array([
-            modes_raw[:,i]*np.exp(sj1[i]*dt*(p-1))
-        for i in range(n)
-    ]).T
+def OutputEMAC(n,m,kmax,A,C,Observability, debug=False,d=None,v=None, **_):
+    """Output EMAC (Eqs. 3.88-3.89)"""
+    if d is None:
+        assert v is None
+        from .ExtractModes import condeig 
+        v, d, _ = condeig(A)
+    pto = Observability[-m:,:]@v # the identified value at T0 ( last block row)
+    ptop = C@v@np.diag(d**(kmax-1))
     emaco  = EMAC_Matrix(n,m,pto,ptop)
-    return EnergyCondensedEMAC(n, m, emaco, modes_raw.T)
+    if debug:
+        return locals()
+    return EnergyCondensedEMAC(n, m, emaco, (C@v).T)
 
 
 def InputEMAC(Ctrl,A,B):
@@ -352,6 +353,23 @@ if __name__ == "__main__":
         inputs  = [17, 3, 20],
         outputs = [ 9, 7 , 4]
     )
+    channels = dict( # HAYWARD
+        inputs  = [17, 18, 24, 25],
+        outputs = [19, 20 , 22, 23]
+    )
+    for file in Path("hwd_recs").glob("RioDell_P*.zip"):
+        event = quakeio.read(file)
+        try:
+            inputs = [
+                event.match("r", file_name=f".*{chan}.*").accel
+                for chan in channels["inputs"]
+            ]
+            outpts = [
+                event.match("r", file_name=f".*{chan}.*").accel
+                for chan in channels["outputs"]
+            ]
+        except:
+            print(f"failed {file.name}")    
     for file in Path("painter").glob("RioDell_P*.zip"):
         event = quakeio.read(file)
         try:

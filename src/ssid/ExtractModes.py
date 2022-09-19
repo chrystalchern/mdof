@@ -1,3 +1,4 @@
+from cmath import isclose
 from numpy import pi, log, sign
 from numpy.linalg import eig
 import numpy as np
@@ -24,29 +25,30 @@ def condeig(a):
     c = abs(1 / np.diag(np.dot(vl, vr)))
     return vr, lamr, c
 
-def ComposeModes(dt, A, B, C, D):
+def ComposeModes(dt, A, B, C, D, debug=False, **kwds)->dict:
+    
     n = A.shape[0]
     m = C.shape[0]
 
     v, d, cnd = condeig(A)  # eigenvectors (d) & eiegenvalues (v) of the matrix A
-    kit = np.log(d)         # logarithm of the eigenvalues
+    # kit = np.log(d)         # logarithm of the eigenvalues
 
     # a) Determination of modal frequencies (Eqs. 3.46 & 3.39)
-    sj1 = kit/dt            # dt is the time step
-    freq1 = ((sj1*np.conj(sj1))**0.5)/(2*pi)
+    sj1 = np.log(d)/dt            # dt is the time step
+    freq1 = (np.real(sj1*np.conj(sj1))**0.5)/(2*pi)
 
     roots = []
 
     # selection of proper roots
-    if freq1[0] == freq1[1]:
+    if np.isclose(freq1[0], freq1[1]):
         roots.append(0)
 
-    if freq1[n-1] == freq1[n-2]:
+    if np.isclose(freq1[n-1], freq1[n-2]):
         roots.append(n-1)
 
-    for hw in range(2, n-2):
-        if (freq1[hw] == freq1[hw+1]) or (freq1[hw] == freq1[hw-1]):
-            roots.append(hw)
+    for i in range(2, n-2):
+        if np.isclose(freq1[i], freq1[i+1]) or np.isclose(freq1[i], freq1[i-1]):
+            roots.append(i)
  
 
     # b) Determination of damping ratios (Eqs. 3.46 & 3.39)
@@ -58,10 +60,10 @@ def ComposeModes(dt, A, B, C, D):
     # NOTE: These values are stored in one array like this for legacy reasons,
     # but this should be cleaned and a proper data structure should be used!
     freqdmp = np.array([
-               [freq1[lk],   # first column: identified frequency
-                damp1[lk],   # second column: identified damping ratio
-                cnd[lk]]     # condition number of the eigenvalue
-            for lk in roots
+               [freq1[i],   # first column: identified frequency
+                damp1[i],   # second column: identified damping ratio
+                cnd[i]]     # condition number of the eigenvalue
+            for i in roots
     ])
 
     # c) Determination of mode shapes
@@ -78,6 +80,8 @@ def ComposeModes(dt, A, B, C, D):
         mx  = abs(np.real(modeshape[om,q]))
         modeshape[:,q] = np.real(modeshape[:,q])/mx*sign(np.real(modeshape[om,q]))
 
+    if debug:
+        return locals()
     return freqdmp, modeshape, None, v, d
 
 

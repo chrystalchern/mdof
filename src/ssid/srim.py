@@ -14,9 +14,10 @@ except:
 
 import quakeio
 import numpy as np
-from numpy import pi, log, sign
+# from numpy import pi, log, sign
 from numpy.linalg import eig
-import scipy.linalg as sl
+# import scipy.linalg as sl
+from ssid import ExtractModes
 
 linsolve = np.linalg.solve
 lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
@@ -49,7 +50,7 @@ Options
 class IdentifiedSystem:
     def __init__(self, time_step, A, B, C, D, **kwds):
         self.system = A, B, C, D
-        self.freqdmp, modeshapeSRIM, *_ = ComposeModes(time_step, A, B, C, D)
+        self.freqdmp, modeshapeSRIM, *_ = ExtractModes.ComposeModes(time_step, A, B, C, D)
 
     def __repr__(self):
         import textwrap
@@ -61,7 +62,7 @@ class IdentifiedSystem:
                 {nln.join(f"{1/i: <6.4}  {i: <6.4}  {j: <6.4}" for i,j in np.real(self.freqdmp[:,:2]))}
             """)
         except Exception as e:
-            return f"Error extracting modes: {e}"
+            return f"Error extracting modes: {e}; got '{self.freqdmp = }'"
 
 def parse_args(args):
     outputs = []
@@ -84,124 +85,6 @@ def parse_args(args):
         else:
             config["method"] = arg
             return parsers[arg](argi, config), outputs
-
-#
-# Distribution Utilities
-#
-def install_me(install_opt=None):
-    import os
-    import subprocess
-    if install_opt == "dependencies":
-        subprocess.check_call([
-            sys.executable, "-m", "pip", "install", *REQUIREMENTS.strip().split("\n")
-        ])
-        sys.exit()
-    try:
-        from setuptools import setup
-    except ImportError:
-        from distutils.core import setup
-
-    sys.argv = sys.argv[:1] + sys.argv[2:]
-
-    setup(name = "ssid",
-          version = "0.0.1",
-          description = "Structural system identification",
-          long_description = HELP,
-          author = "",
-          author_email = "",
-          url = "",
-          py_modules = ["ssid"],
-          scripts = ["ssid.py"],
-          license = "",
-          install_requires = [] #*REQUIREMENTS.strip().split("\n")],
-    )
-
-#
-# Computation Utilities
-#
-def condeig(a):
-    """
-    vals, vecs, conds = condeig(A) Computes condition numbers for the
-    eigenvalues of a matrix. The condition numbers are the reciprocals
-    of the cosines of the angles between the left and right eigenvectors.
-    Inspired by Arno Onken's Octave code for condeig.
-
-    https://github.com/macd/rogues/blob/master/rogues/utils/condeig.py
-    """
-    m, n = a.shape
-    # eigenvalues, left and right eigenvectors
-    lamr, vl, vr = sl.eig(a, left=True, right=True)
-    vl = vl.T
-    # Normalize vectors
-    for i in range(n):
-        vl[i, :] = vl[i, :] / np.sqrt(abs(vl[i, :]**2).sum())
-    # Condition numbers are reciprocal of the cosines (dot products) of the
-    # left eignevectors with the right eigenvectors.
-    c = abs(1 / np.diag(np.dot(vl, vr)))
-    return vr, lamr, c
-
-def ComposeModes(dt, A, B, C, D):
-    n = A.shape[0]
-    m = C.shape[0]
-
-    v, d, cnd = condeig(A)  # eigenvectors (d) & eiegenvalues (v) of the matrix A
-    kit = np.log(d)         # logarithm of the eigenvalues
-
-    # a) Determination of modal frequencies (Eqs. 3.46 & 3.39)
-    sj1 = kit/dt            # dt is the time step
-    freq1 = ((sj1*np.conj(sj1))**0.5)/(2*pi)
-
-    roots = []
-
-    # selection of proper roots
-    if freq1[0] == freq1[1]:
-        roots.append(0)
-
-    if freq1[n-1] == freq1[n-2]:
-        roots.append(n-1)
-
-    for i in range(2, n-2):
-        if (freq1[i] == freq1[i+1]) or (freq1[i] == freq1[i-1]):
-            roots.append(i)
-
-    # b) Determination of damping ratios (Eqs. 3.46 & 3.39)
-    damp1 = -np.real(sj1)/(2*pi*freq1)
-    # Represent the identified frequency & damping information
-    # of the proper roots in a matrix
-    freqdmp = np.array([
-            [
-                freq1[lk],   # first column: identified frequency
-                damp1[lk],   # second column: identified damping ratio
-                cnd[lk]      # condition number of the eigenvalue
-            ] for lk in roots
-    ])
-
-    # c) Determination of mode shapes
-    modes_raw = C@v   # mode shapes (Eq. 3.40)
-
-    modeshape = np.zeros((m,len(roots)), dtype=complex)
-
-    # extract mode shapes from mod corresponding to a frequency
-    for q,root in enumerate(roots):
-        modeshape[:m,q] = modes_raw[:m, root]
-
-    for q,root in enumerate(roots):
-        om  = np.argmax(abs(np.real(modeshape[:,q])))
-        mx  = abs(np.real(modeshape[om,q]))
-        modeshape[:,q] = np.real(modeshape[:,q])/mx*sign(np.real(modeshape[om,q]))
-    return freqdmp, modeshape, sj1, v, d
-
-#
-# OKID_ERA_DC
-#
-def parse_okid(args, config):
-    """
-    p determines order of the observer Kalman ARX filter used in OKID-ERA-DC.
-    n determines size of the state-space model used for representing the system.
-    """
-    return config
-
-
 
 #
 # SRIM
@@ -263,9 +146,6 @@ def parse_srim(argi, config):
     dt = event.at(station_channel=f"{channels[0][0]}").accel["time_step"]
     config["dt"] = dt
 
-    #print(config)
-    #sys.exit()
-
     A,B,C,D = srim(inputs, outputs, **config)
     freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
     output = [
@@ -279,6 +159,7 @@ def parse_srim(argi, config):
 def srim(
     dati,
     dato,
+    debug = False,
     full     : bool = True,
     verbose  : bool = False,
     pool_size: int  = 6,
@@ -402,14 +283,14 @@ def srim(
     if full:
         # Full Decomposition Method
         un,*_ = np.linalg.svd(Rhh,0)           # Eq. 3.74
-        Op = un[:,:n]                          # Eq. 3.72
-        A = lsqminnorm(Op[:(p-1)*m,:], Op[m:p*m,:])
-        C = Op[:m,:]
+        Observability = un[:,:n]                          # Eq. 3.72
+        A = lsqminnorm(Observability[:(p-1)*m,:], Observability[m:p*m,:])
+        C = Observability[:m,:]
     else:
         # Partial Decomposition Method
         un,*_ = np.linalg.svd(Rhh[:,:(p-1)*m+1],0)
-        Op = un[:,:n]
-        A = lsqminnorm(Op[:(p-1)*m,:], Op[m:p*m,:])
+        Observability = un[:,:n]
+        A = lsqminnorm(Observability[:(p-1)*m,:], Observability[m:p*m,:])
         C = un[:m,:]
 
     # Computation of system matrices B & D
@@ -468,6 +349,8 @@ def srim(
         B[:,ww] = bcol[ww*n:(ww+1)*n]
 
     assert A.shape[0] == A.shape[1] == n
+    if debug:
+        return locals()
     return A,B,C,D
 
 #PY
@@ -625,7 +508,7 @@ if __name__ == "__main__":
 
     A,B,C,D = srim(inputs, outputs, **config)
 
-    freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
+    freqdmpSRIM, modeshapeSRIM, *_ = ExtractModes.ComposeModes(dt, A, B, C, D)
 
     if not out_ops:
         print(f"period: {np.real(1/freqdmpSRIM[:,0])}")
