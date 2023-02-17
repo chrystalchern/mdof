@@ -3,6 +3,7 @@ __doc__="""
 """
 # Standard library
 import sys
+import json
 import multiprocessing
 from functools import partial
 # Dependencies
@@ -11,13 +12,25 @@ try:
 except:
     tqdm = lambda x,*args,**kwds: x
 
+import quakeio
 import numpy as np
-from numpy import pi, log, sign
+# from numpy import pi, log, sign
 from numpy.linalg import eig
-import scipy.linalg as sl
+# import scipy.linalg as sl
+from ssid import ExtractModes
 
 linsolve = np.linalg.solve
 lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
+
+class JSON_Encoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        elif isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        return json.JSONEncoder.default(self, obj)
 
 REQUIREMENTS = """
 numpy
@@ -26,44 +39,18 @@ tqdm
 quakeio
 """
 
-HELP = """
-ssid [-p|w <>...] <method> <event> <inputs> <outputs>
-ssid [-p|w <>...] <method> -i <inputs> -o <outputs>
-
--i/--inputs  FILE...   Input data
--o/--outputs FILE...   Output data
-
-Methods:
-  <method> <outputs>  <plots>
-    srim    {dftmcs}   {m}
-    okid    {dftmcs}   {m}
-    spec    {ft}       {a}
-    four    {ft}       {a}
-    test
-
-Outputs options
--p/--plot
-    a/--accel-spect
--w/--write
-    ABCD   system matrices
-    d      damping
-    freq   frequency
-    cycl   cyclic frequency
-    t      period
-    m      modes
-    c      condition-number
 """
+ssid srim <event.zip> <options>
 
-EXAMPLES="""
-    ssid srim -wABCD event.zip 2,3 4,5
-    ssid okid -pm -i ch02.v2 ch03.v2 -o ch04.v2 ch05.v2
-    ssid okid -wm -i ch02.v2 ch03.v2 -o ch04.v2 ch05.v2
+Options
+-p
+-m
 """
 
 class IdentifiedSystem:
     def __init__(self, time_step, A, B, C, D, **kwds):
         self.system = A, B, C, D
-        self.freqdmp, modeshapeSRIM, *_ = ComposeModes(time_step, A, B, C, D)
+        self.freqdmp, modeshapeSRIM, *_ = ExtractModes.ComposeModes(time_step, A, B, C, D)
 
     def __repr__(self):
         import textwrap
@@ -75,7 +62,7 @@ class IdentifiedSystem:
                 {nln.join(f"{1/i: <6.4}  {i: <6.4}  {j: <6.4}" for i,j in np.real(self.freqdmp[:,:2]))}
             """)
         except Exception as e:
-            return f"Error extracting modes: {e}"
+            return f"Error extracting modes: {e}; got '{self.freqdmp = }'"
 
 def parse_args(args):
     outputs = []
@@ -100,136 +87,11 @@ def parse_args(args):
             return parsers[arg](argi, config), outputs
 
 #
-# Distribution Utilities
-#
-def install_me(install_opt=None):
-    import os
-    import subprocess
-    if install_opt == "dependencies":
-        subprocess.check_call([
-            sys.executable, "-m", "pip", "install", *REQUIREMENTS.strip().split("\n")
-        ])
-        sys.exit()
-    try:
-        from setuptools import setup
-    except ImportError:
-        from distutils.core import setup
-
-    sys.argv = sys.argv[:1] + sys.argv[2:]
-
-    setup(name = "ssid",
-          version = "0.0.1",
-          description = "Structural system identification",
-          long_description = HELP,
-          author = "",
-          author_email = "",
-          url = "",
-          py_modules = ["ssid"],
-          scripts = ["ssid.py"],
-          license = "",
-          install_requires = [] #*REQUIREMENTS.strip().split("\n")],
-    )
-
-#
-# Computation Utilities
-#
-def condeig(a):
-    """
-    vals, vecs, conds = condeig(A) Computes condition numbers for the
-    eigenvalues of a matrix. The condition numbers are the reciprocals
-    of the cosines of the angles between the left and right eigenvectors.
-    Inspired by Arno Onken's Octave code for condeig.
-
-    https://github.com/macd/rogues/blob/master/rogues/utils/condeig.py
-    """
-    m, n = a.shape
-    # eigenvalues, left and right eigenvectors
-    lamr, vl, vr = sl.eig(a, left=True, right=True)
-    vl = vl.T
-    # Normalize vectors
-    for i in range(n):
-        vl[i, :] = vl[i, :] / np.sqrt(abs(vl[i, :]**2).sum())
-    # Condition numbers are reciprocal of the cosines (dot products) of the
-    # left eignevectors with the right eigenvectors.
-    c = abs(1 / np.diag(np.dot(vl, vr)))
-    return vr, lamr, c
-
-def ComposeModes(dt, A, B, C, D):
-    n = A.shape[0]
-    m = C.shape[0]
-
-    v, d, cnd = condeig(A)  # eigenvectors (d) & eiegenvalues (v) of the matrix A
-    kit = np.log(d)         # logarithm of the eigenvalues
-
-    # a) Determination of modal frequencies (Eqs. 3.46 & 3.39)
-    sj1 = kit/dt            # dt is the time step
-    freq1 = ((sj1*np.conj(sj1))**0.5)/(2*pi)
-
-    roots = []
-
-    # selection of proper roots
-    if freq1[0] == freq1[1]:
-        roots.append(0)
-
-    if freq1[n-1] == freq1[n-2]:
-        roots.append(n-1)
-
-    for i in range(2, n-2):
-        if (freq1[i] == freq1[i+1]) or (freq1[i] == freq1[i-1]):
-            roots.append(i)
-
-    # b) Determination of damping ratios (Eqs. 3.46 & 3.39)
-    damp1 = -np.real(sj1)/(2*pi*freq1)
-    # Represent the identified frequency & damping information
-    # of the proper roots in a matrix
-    freqdmp = np.array([
-            [
-                freq1[lk],   # first column: identified frequency
-                damp1[lk],   # second column: identified damping ratio
-                cnd[lk]      # condition number of the eigenvalue
-            ] for lk in roots
-    ])
-
-    # c) Determination of mode shapes
-    modes_raw = C@v   # mode shapes (Eq. 3.40)
-
-    modeshape = np.zeros((m,len(roots)), dtype=complex)
-
-    # extract mode shapes from mod corresponding to a frequency
-    for q,root in enumerate(roots):
-        modeshape[:m,q] = modes_raw[:m, root]
-
-    for q,root in enumerate(roots):
-        om  = np.argmax(abs(np.real(modeshape[:,q])))
-        mx  = abs(np.real(modeshape[om,q]))
-        modeshape[:,q] = np.real(modeshape[:,q])/mx*sign(np.real(modeshape[om,q]))
-    return freqdmp, modeshape, sj1, v, d
-
-#
-# OKID_ERA_DC
-#
-def parse_okid(args, config):
-    """
-    p determines order of the observer Kalman ARX filter used in OKID-ERA-DC.
-    n determines size of the state-space model used for representing the system.
-    """
-    return config
-
-#
-# TFE
-#
-def stfe(dati, dato, **config):
-    pass
-
-def ftfe(dati, dato, **config):
-    "Fourier transfer function estimate"
-    pass
-
-#
 # SRIM
 #
 def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
+
 
 def parse_srim(argi, config):
     help="""
@@ -242,21 +104,62 @@ def parse_srim(argi, config):
     """
     config.update({"p"  :  5, "orm":  4})
     #argi = iter(args)
+    channels = [[17, 3, 20], [9, 7, 4]]
     for arg in argi:
         if arg == "-p":
             config["p"] = int(next(argi))
-        if arg == "--dt":
+        elif arg == "--dt":
             config["dt"] = float(next(argi))
-        if arg == "-n":
+        elif arg == "-n":
             config["orm"] = int(next(argi))
-        if arg in ["--help", "-h"]:
+        elif arg in ["--help", "-h"]:
             print(help)
             sys.exit()
+        elif arg == "--inputs":
+            inputs = next(argi)[1:-1].split(",")
+            if isinstance(inputs, str):
+                channels[0] = [int(inputs)]
+            else:
+                channels[0] = list(map(int, inputs))
+        elif arg == "--outputs":
+            outputs = next(argi)[1:-1].split(",")
+            if isinstance(outputs, str):
+                channels[1] = [int(outputs)]
+            else:
+                channels[1] = list(map(int, outputs))
+        elif arg == "--":
+            continue
+
+        else:
+            config["event_file"] = arg
+
+
+    event = quakeio.read(config["event_file"])
+    inputs = np.array([
+        event.match("l", station_channel=f"{i}").accel.data for i in channels[0]
+    ]).T
+    outputs = np.array([
+        event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
+        #event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
+    ]).T
+    npoints = len(inputs[:,0])
+    dt = event.at(station_channel=f"{channels[0][0]}").accel["time_step"]
+    config["dt"] = dt
+
+    A,B,C,D = srim(inputs, outputs, **config)
+    freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
+    output = [
+            {"frequency": np.real(x[0]), "damping": np.real(x[1])} 
+            for x in freqdmpSRIM if all(x > 0.0)
+    ]
+    import json
+    print(json.dumps(output, cls=JSON_Encoder, indent=4))
     return config
 
 def srim(
     dati,
     dato,
+    debug = False,
     full     : bool = True,
     verbose  : bool = False,
     pool_size: int  = 6,
@@ -380,14 +283,14 @@ def srim(
     if full:
         # Full Decomposition Method
         un,*_ = np.linalg.svd(Rhh,0)           # Eq. 3.74
-        Op = un[:,:n]                          # Eq. 3.72
-        A = lsqminnorm(Op[:(p-1)*m,:], Op[m:p*m,:])
-        C = Op[:m,:]
+        Observability = un[:,:n]                          # Eq. 3.72
+        A = lsqminnorm(Observability[:(p-1)*m,:], Observability[m:p*m,:])
+        C = Observability[:m,:]
     else:
         # Partial Decomposition Method
         un,*_ = np.linalg.svd(Rhh[:,:(p-1)*m+1],0)
-        Op = un[:,:n]
-        A = lsqminnorm(Op[:(p-1)*m,:], Op[m:p*m,:])
+        Observability = un[:,:n]
+        A = lsqminnorm(Observability[:(p-1)*m,:], Observability[m:p*m,:])
         C = un[:m,:]
 
     # Computation of system matrices B & D
@@ -446,6 +349,8 @@ def srim(
         B[:,ww] = bcol[ww*n:(ww+1)*n]
 
     assert A.shape[0] == A.shape[1] == n
+    if debug:
+        return locals()
     return A,B,C,D
 
 #PY
@@ -558,18 +463,11 @@ def srim(
 ###%KKKKK
 ##    return freqdmpSRIM,modeshapeSRIM,RMSEpredSRIM
 
-# def parse_args(argv):
-#     argi = iter(argv[1:])
-#     # assert argv[1] in ["srim", "stfe", "ftfe", "okid"]
-#     for arg in argi:
-#         if arg == "":
-#             pass
 
 if __name__ == "__main__":
     import sys
     import quakeio
     from pathlib import Path
-    channels = [[17, 3, 20], [9, 7, 4]]
     method = None
 
     config, out_ops = parse_args(sys.argv)
@@ -596,20 +494,21 @@ if __name__ == "__main__":
     elif "event_file" in config:
         event = quakeio.read(config["event_file"])
         inputs = np.array([
-            event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[0]
+            event.match("l", station_channel=f"{i}").accel.data for i in channels[0]
         ]).T
         outputs = np.array([
-            event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
+            event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
         ]).T
         npoints = len(inputs[:,0])
-        dt = event.at(file_name=f"CHAN{channels[0][0]:03d}.V2").accel["time_step"]
+        dt = event.match("l", station_channel=f"{channels[0][0]}").accel["time_step"]
         config["dt"] = dt
 
-    print(config)
+    # print(config)
+    # sys.exit()
 
     A,B,C,D = srim(inputs, outputs, **config)
 
-    freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
+    freqdmpSRIM, modeshapeSRIM, *_ = ExtractModes.ComposeModes(dt, A, B, C, D)
 
     if not out_ops:
         print(f"period: {np.real(1/freqdmpSRIM[:,0])}")

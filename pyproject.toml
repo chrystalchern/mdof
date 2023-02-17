@@ -1,0 +1,41 @@
+[project]
+name = "ssid"
+version = "0.0.2"
+authors = [
+  {name="Claudio M. Perez", email="50180406+claudioperez@users.noreply.github.com"}
+]
+
+readme = "README.md"
+
+keywords = [
+    "seismic",
+    "earthquake",
+] 
+
+[options]
+#packages = find
+install_requires = [
+  "numpy",
+  "scipy",
+  "tqdm",
+  "quakeio",
+  "matplotlib",
+  "plotly",
+  "pandas",
+  "quakeio"
+]
+
+[project.urls]
+repository = "http://github.com/BRACE2/OpenSeesRT"
+documentation = "https://brace2.github.io/OpenSeesRT"
+
+[project.scripts]
+ssid = "ssid.__main__:main"
+
+[build-system]
+requires = [
+    "setuptools >= 52.0.2",
+]
+
+build-backend = "setuptools.build_meta"
+
