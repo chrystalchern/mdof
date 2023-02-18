@@ -13,6 +13,27 @@ def parse_okid(args, config):
     """
     return config
 
+def era(impulse, input_dimension, mo, mc):
+    # get D from first input_dimension columns of impulse response
+    D = impulse[:,input_dimension:]
+    # make impulse response into hankel matrix and shifted hankel matrix
+
+    # svd of hankel matrix
+
+    # get A from svd and shifted hankel matrix
+
+    # get B and C
+
+    # eigendecomp A
+
+    # get frequencies from eigendecomp of A
+
+    # get modeshapes from C and eigendecomp of A
+
+
+    # return (A,B,C,D,freq,mode)
+    pass
+
 def okid(dati, dato, svd="gesvd", debug=False, **config):
     """
     PART 2: OKID-ERA-DC (Observer Kalman filter Identification -
