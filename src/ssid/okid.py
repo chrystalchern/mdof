@@ -49,12 +49,12 @@ def era(Y,mo,mc,p,q,r,dt=1):
     W,R = scipy.linalg.eig(Ar)
 
     # get frequencies from eigendecomp of A
-    omega = np.log(W + 2*np.pi*i/dt)
-    # print(f"{omega=}")
+    omega = np.log(W + 2*np.pi*1j/dt)
+    print(f"{omega=}")
 
     # get modeshapes from C and eigendecomp of A
     phi = Cr @ R
-    # print(f"{phi=}")    
+    print(f"{phi=}")    
 
     # return (Ar,Br,Cr,Dr,omega,phi)
     return (Ar,Br,Cr,Dr,S)
