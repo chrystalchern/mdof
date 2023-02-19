@@ -13,26 +13,47 @@ def parse_okid(args, config):
     """
     return config
 
-def era(impulse, input_dimension, mo, mc):
+def era(Y,mo,mc,p,q,r,dt=1):
     # get D from first input_dimension columns of impulse response
-    D = impulse[:,input_dimension:]
+    Dr = Y[:,:,0]  # first block of output data
+    
+    assert Y.shape[:2] == (p,q)  # sanity check that we're passing in the right output data
+    assert Y.shape[2] >= mo+mc   # make sure there are enough timesteps to assemble this size of Hankel matrix
+    
     # make impulse response into hankel matrix and shifted hankel matrix
+    H0 = np.zeros((p*mo, q*mc))
+    H1 = np.zeros((p*mo, q*mc))
+    for i in range(mo):
+        for j in range(mc):
+            H0[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+1]
+            H1[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+2]
 
-    # svd of hankel matrix
+    # reduced svd of hankel matrix
+    U,S,V = _svd(H0)
+    Sigma = np.diag(S[:r])
+    Ur = U[:,:r]
+    Vr = V[:,:r]
 
     # get A from svd and shifted hankel matrix
+    Ar = matpow(Sigma,-0.5) @ Ur.T @ H1 @ Vr @ matpow(Sigma,-0.5)
 
     # get B and C
+    Br = (matpow(Sigma,0.5) @ Vr.T)[:,:q]
+    Cr = (Ur @ matpow(Sigma,0.5))[:p,:]
 
     # eigendecomp A
+    W,R = scipy.linalg.eig(Ar)
 
     # get frequencies from eigendecomp of A
+    omega = np.log(W + 2*np.pi*i/dt)
+    # print(f"{omega=}")
 
     # get modeshapes from C and eigendecomp of A
+    phi = Cr @ R
+    # print(f"{phi=}")    
 
-
-    # return (A,B,C,D,freq,mode)
-    pass
+    # return (Ar,Br,Cr,Dr,omega,phi)
+    return (Ar,Br,Cr,Dr,S)
 
 def okid(dati, dato, svd="gesvd", debug=False, **config):
     """
