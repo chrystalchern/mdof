@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import zeros, pi, size
 import scipy.linalg
+from scipy.linalg import fractional_matrix_power as matpow
 
 linsolve = scipy.linalg.solve
 
@@ -29,6 +30,9 @@ def era(Y,mo,mc,p,q,r,dt=1):
             H1[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+2]
 
     # reduced svd of hankel matrix
+    def _svd(*args):
+        U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
+        return U,S,V.T.conj()
     U,S,V = _svd(H0)
     Sigma = np.diag(S[:r])
     Ur = U[:,:r]
