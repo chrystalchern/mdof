@@ -14,7 +14,14 @@ def parse_okid(args, config):
     """
     return config
 
-def era(Y,mo,mc,p,q,r,dt=1):
+# Y = output data: response to unit impulse, or "impulse response," or "markov parameters".
+# dimensions of Y: p x q x nt, where nt = number of timesteps = number of markov parameters = number of blocks
+# mc = number of block rows in Hankel matrix
+# mo = number of block columns in Hankel matrix
+# p = number of outputs
+# q = number of inputs
+# r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
+def era(Y,mo,mc,p,q,r):
     # get D from first input_dimension columns of impulse response
     Dr = Y[:,:,0]  # first block of output data
     
@@ -27,36 +34,24 @@ def era(Y,mo,mc,p,q,r,dt=1):
     for i in range(mo):
         for j in range(mc):
             H0[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+1]
-            H1[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+2]
+            H1[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+2] # TODO this can be done outside loops
 
     # reduced svd of hankel matrix
     def _svd(*args):
         U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
         return U,S,V.T.conj()
     U,S,V = _svd(H0)
-    Sigma = np.diag(S[:r])
+    Sigma = np.diag(S[:r]) # TODO we don't really need to construct this
     Ur = U[:,:r]
     Vr = V[:,:r]
 
     # get A from svd and shifted hankel matrix
-    Ar = matpow(Sigma,-0.5) @ Ur.T @ H1 @ Vr @ matpow(Sigma,-0.5)
+    Ar = matpow(Sigma,-0.5) @ Ur.T.conj() @ H1 @ Vr @ matpow(Sigma,-0.5) # TODO the matrix power can be removed
 
     # get B and C
-    Br = (matpow(Sigma,0.5) @ Vr.T)[:,:q]
-    Cr = (Ur @ matpow(Sigma,0.5))[:p,:]
+    Br = (matpow(Sigma,0.5) @ Vr.T.conj())[:,:q] # TODO the matrix power can be removed
+    Cr = (Ur @ matpow(Sigma,0.5))[:p,:] # TODO the matrix power can be removed
 
-    # eigendecomp A
-    W,R = scipy.linalg.eig(Ar)
-
-    # get frequencies from eigendecomp of A
-    omega = np.log(W + 2*np.pi*1j/dt)
-    print(f"{omega=}")
-
-    # get modeshapes from C and eigendecomp of A
-    phi = Cr @ R
-    print(f"{phi=}")    
-
-    # return (Ar,Br,Cr,Dr,omega,phi)
     return (Ar,Br,Cr,Dr,S)
 
 def okid(dati, dato, svd="gesvd", debug=False, **config):
