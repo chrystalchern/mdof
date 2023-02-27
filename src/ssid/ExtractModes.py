@@ -84,4 +84,32 @@ def ComposeModes(dt, A, B, C, D, debug=False, **kwds)->dict:
         return locals()
     return freqdmp, modeshape, None, v, d
 
+def modes(dt, A, C):
 
+    # eigendecomp A
+    Psi,Gam,cnd = condeig(A)  # eigenvectors (Psi) & eigenvalues (Gam) of the matrix A
+
+    # get damping and frequencies from eigendecomp of A
+    Lam = (np.log(Gam))/dt
+    Omega = np.real((Lam*np.conj(Lam))**0.5)  # radians per second. taking the real part because np keeps a +0j.
+    freq = Omega/(2*pi) # cycles per second (Hz)
+    damp = -np.real(Lam)/Omega
+
+    # get modeshapes from C and eigendecomp of A
+    modeshape = C @ Psi
+
+    nroots = int(len(freq)/2)
+    # print(f"{freq=}")
+    for i in range(nroots):
+        assert np.isclose(freq[2*i],freq[2*i+1])  # make sure we have pairs of roots
+
+    modes = {str(i):
+                {'cnd': cnd[2*i],   # condition number of the eigenvalue
+                'freq': freq[2*i],  # identified frequency
+                'damp': damp[2*i],  # identified damping ratio
+                'modeshape': modeshape[:,2*i]
+                }
+            for i in range(nroots)
+            }
+
+    return modes
