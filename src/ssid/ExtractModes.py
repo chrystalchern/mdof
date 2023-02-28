@@ -98,16 +98,29 @@ def modes(dt, A, C):
     # get modeshapes from C and eigendecomp of A
     modeshape = C @ Psi
 
-    nroots = int(len(freq)/2)
-    # print(f"{freq=}")
-    for i in range(nroots):
-        assert np.isclose(freq[2*i],freq[2*i+1])  # make sure we have pairs of roots
+    # nroots = int(len(freq)/2)
+    # # print(f"{freq=}")
+    # for i in range(nroots):
+    #     assert np.isclose(freq[2*i],freq[2*i+1])  # make sure we have pairs of roots
+
+    # modes = {str(i):
+    #             {'cnd': cnd[2*i],   # condition number of the eigenvalue
+    #             'freq': freq[2*i],  # identified frequency
+    #             'damp': damp[2*i],  # identified damping ratio
+    #             'modeshape': modeshape[:,2*i]
+    #             }
+    #         for i in range(nroots)
+    #         }
+
+    # return modes
+
+    nroots = int(len(freq))
 
     modes = {str(i):
-                {'cnd': cnd[2*i],   # condition number of the eigenvalue
-                'freq': freq[2*i],  # identified frequency
-                'damp': damp[2*i],  # identified damping ratio
-                'modeshape': modeshape[:,2*i]
+                {'cnd': cnd[i],   # condition number of the eigenvalue
+                'freq': freq[i],  # identified frequency
+                'damp': damp[i],  # identified damping ratio
+                'modeshape': modeshape[:,i]
                 }
             for i in range(nroots)
             }
