@@ -114,15 +114,15 @@ def modes(dt, A, C):
 
     # return modes
 
-    nroots = int(len(freq))
-
+    _, notroots = np.unique(freq.round(decimals=5), return_index=True)  # weed out unique roots
+    # print(notroots)
     modes = {str(i):
                 {'cnd': cnd[i],   # condition number of the eigenvalue
                 'freq': freq[i],  # identified frequency
                 'damp': damp[i],  # identified damping ratio
                 'modeshape': modeshape[:,i]
                 }
-            for i in range(nroots)
+            for i in range(len(freq)) if i not in notroots
             }
 
     return modes
