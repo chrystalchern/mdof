@@ -4,7 +4,7 @@ from numpy.linalg import eig
 import numpy as np
 import scipy.linalg as sl
 
-def condeig(a):
+def condeig(a): # TODO: make this match matlab source code for condeig
     """
     vals, vecs, conds = condeig(A) Computes condition numbers for the
     eigenvalues of a matrix. The condition numbers are the reciprocals
@@ -16,13 +16,13 @@ def condeig(a):
     m, n = a.shape
     # eigenvalues, left and right eigenvectors
     lamr, vl, vr = sl.eig(a, left=True, right=True)
-    vl = vl.T
+    vl = vl.T.conj()
     # Normalize vectors
     for i in range(n):
         vl[i, :] = vl[i, :] / np.sqrt(abs(vl[i, :] ** 2).sum())
     # Condition numbers are reciprocal of the cosines (dot products) of the
     # left eignevectors with the right eigenvectors.
-    c = abs(1 / np.diag(np.dot(vl, vr)))
+    c = abs(1 / np.diag(np.dot(vl, vr))) 
     return vr, lamr, c
 
 def ComposeModes(dt, A, B, C, D, debug=False, **kwds)->dict:
@@ -114,7 +114,10 @@ def modes(dt, A, C):
 
     # return modes
 
-    _, notroots = np.unique(freq.round(decimals=5), return_index=True)  # weed out unique roots
+    # weed out unique roots: get indices of roots that only show up once, and
+    # the index of the first of each pair.
+    _, notroots = np.unique(freq.round(decimals=5), return_index=True)
+    
     # print(notroots)
     modes = {str(i):
                 {'cnd': cnd[i],   # condition number of the eigenvalue
