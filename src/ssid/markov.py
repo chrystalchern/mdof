@@ -37,6 +37,7 @@ def okid(y,u,m):
         Ybar1[:,:,i] = Ybar[:,q+(q+p)*i : q+(q+p)*i+q]
         Ybar2[:,:,i] = Ybar[:,q+(q+p)*i+q : q+(q+p)*(i+1)]
     
+    print(Ybar2[:,:,0].shape, D.shape)
     Y[:,:,0] = Ybar1[:,:,0] + Ybar2[:,:,0] @ D
     for k in range(1,m):
         Y[:,:,k] = Ybar1[:,:,k] + Ybar2[:,:,k] @ D

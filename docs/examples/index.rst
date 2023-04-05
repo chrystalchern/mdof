@@ -4,5 +4,6 @@ Examples
 .. toctree::
 
     system_id_summary
-    si_example
+    system_id_studies
+    transfer_function
 
