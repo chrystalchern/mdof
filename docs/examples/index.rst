@@ -3,7 +3,7 @@ Examples
 
 .. toctree::
 
-    system_id_summary
-    system_id_studies
-    transfer_function
+    ssid_demo
+    state_space_studies
+    impulse_response_studies
 

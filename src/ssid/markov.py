@@ -1,30 +1,33 @@
 import numpy as np
 
-# y = output data: forced response. dimensions of y: p x nt, where nt = number of timesteps
-# u = input data: input. dimensions of u: q x nt.
-# m = number of Markov parameters (impulse response timesteps) to solve for
-def okid(y,u,m):
-    y = np.atleast_2d(y)
-    u = np.atleast_2d(u)
+# input = input data. dimensions of input: q x nt, where nt = number of timesteps.
+# output = response data due to input data. dimensions of output: p x nt.
+# m = number of Markov parameters (impulse response timesteps) to solve for.
+def okid(input,output,m=None,**options):
+    input = np.atleast_2d(input)
+    output = np.atleast_2d(output)
+
+    p = output.shape[0]
+    q = input.shape[0]
+    nt = output.shape[1]
+    assert output.shape[1] == input.shape[1]
     
+    if m is None:
+        m = min(300,nt)
+
     # adapted from Brunton
-    p = y.shape[0]
-    q = u.shape[0]
-    nt = y.shape[1]
-    assert y.shape[1] == u.shape[1]
-    
-    # Form data matrices y and V
+    # Form data matrix V
     V = np.zeros((q+(q+p)*m,nt))
     for i in range(nt):
-        V[:q,i] = u[:q,i]
+        V[:q,i] = input[:q,i]
         
     for i in range(1,m+1):
         for j in range(nt-i):
-            vtemp = np.concatenate((u[:,j],y[:,j]))
+            vtemp = np.concatenate((input[:,j],output[:,j]))
             V[q+(i-1)*(q+p):q+i*(q+p),i+j] = vtemp
     
     # Solve for observer Markov parameters Ybar
-    Ybar = y @ np.linalg.pinv(V,rcond=10**(-3))
+    Ybar = output @ np.linalg.pinv(V,rcond=10**(-3))
     
     # Isolate system Markov parameters H, and observer gain M
     D = Ybar[:,:q] # feed-through term (or D matrix) is the first term
@@ -37,7 +40,7 @@ def okid(y,u,m):
         Ybar1[:,:,i] = Ybar[:,q+(q+p)*i : q+(q+p)*i+q]
         Ybar2[:,:,i] = Ybar[:,q+(q+p)*i+q : q+(q+p)*(i+1)]
     
-    print(Ybar2[:,:,0].shape, D.shape)
+    # print(Ybar2[:,:,0].shape, D.shape)
     Y[:,:,0] = Ybar1[:,:,0] + Ybar2[:,:,0] @ D
     for k in range(1,m):
         Y[:,:,k] = Ybar1[:,:,k] + Ybar2[:,:,k] @ D
@@ -46,8 +49,6 @@ def okid(y,u,m):
             
     H = np.zeros((D.shape[0],D.shape[1],m+1))
     H[:,:,0] = D
-    
-    for k in range(1,m+1):
-        H[:,:,k] = Y[:,:,k-1]
-        
+    H[:,:,1:m+1] = Y[:,:,0:m]
+
     return H

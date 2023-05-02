@@ -1,19 +1,16 @@
 from ssid import markov, realize
 
-def system(input, output, **options):
-    # if not method:
-    #     method = "okid-era-dc"
-    y = output
-    f = input
-    m = 300
-    no = 140
-    nc = 140
-    a = 0
-    b = 0
-    l = 10
-    g = 3
-    r_okid_era_dc = 2
-    Y = markov.okid(y, f, m)
-    A,B,C,D = realize.era_dc(Y, no, nc, a, b, l, g, r=r_okid_era_dc)
+def system(method="srim", *args, **options):
+
+    if method == "okid-era":
+        Y = markov.okid(*args, **options)
+        A,B,C,D = realize.era(Y, **options)
+
+    if method == "okid-era-dc":
+        Y = markov.okid(*args, **options)
+        A,B,C,D = realize.era_dc(Y, **options)
+    
+    if method == "srim":
+        A,B,C,D = realize.srim(*args, **options)
 
     return A,B,C,D

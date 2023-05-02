@@ -10,15 +10,26 @@ from functools import partial
 # nc = number of block rows in Hankel matrix = order of controllability matrix
 # no = number of block columns in Hankel matrix = order of observability matrix
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
-def era(Y,no,nc,r=None):
-    if not r:
-        r = int(Y.shape[2]/2)
+def era(Y,no=None,nc=None,r=None,**options):
+    
+    if r is None:
+        r = min(20, int(Y.shape[2]/2))
     p,q = Y.shape[:2] # p = number of outputs, q = number of inputs
     
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
     
-    assert Y.shape[2] >= no+nc   # make sure there are enough timesteps to assemble this size of Hankel matrix
+    # size of Hankel matrix
+    if no is None:
+        if nc is None:
+            no = nc = min(300, (Y.shape[2]-1)/2)
+        else:
+            no = min(300, Y.shape[2]-1-nc)
+    elif nc is None:
+        nc = min(300, Y.shape[2]-1-no)
+    else:
+        # make sure there are enough timesteps to assemble this size of Hankel matrix
+        assert Y.shape[2] >= no+nc
     
     # make impulse response into Hankel matrix and shifted Hankel matrix
     H = np.zeros((p*(no), q*(nc+1)))
@@ -53,15 +64,25 @@ def era(Y,no,nc,r=None):
 # b = (beta) number of block columns in Hankel of correlation matrix
 # l = initial lag for data correlations
 # g = lags (gap) between correlation matrices
-def era_dc(Y,no,nc,a=0,b=0,l=0,g=1,r=None):
-    if not r:
+def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
+    if r is None:
         r = int(Y.shape[2]/2)
     p,q = Y.shape[:2] # p = number of outputs, q = number of inputs
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
-    
-    assert Y.shape[2] >= l+(a+1+b+1)*g+no+nc   # make sure there are enough timesteps to assemble the Hankel matrices
+
+    # size of Hankel matrix
+    if no is None:
+        if nc is None:
+            no = nc = min(300, (Y.shape[2]-1)/2)
+        else:
+            no = min(300, Y.shape[2]-1-nc)
+    elif nc is None:
+        nc = min(300, Y.shape[2]-1-no)
+    else:
+        # make sure there are enough timesteps to assemble the Hankel matrices
+        assert Y.shape[2] >= l+(a+1+b+1)*g+no+nc
     
     # Hankel matrix of impulse response (Markov parameters)
     H = np.zeros((p*(no), q*(nc+l+(a+1+b+1)*g)))
@@ -110,17 +131,19 @@ def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
 
 def srim(
-    dati,
-    dato,
+    input,
+    output,
+    ns = None,
+    r = None,
     debug = False,
     full     : bool = True,
-    verbose  : bool = False,
     pool_size: int  = 6,
     **config
 ):
     """
-    mro $(p)$ determines order of the observer Kalman ARX filter used in OKID-ERA-DC.
-    orm $(n)$ determines size of the state-space model used for representing the system.
+    ns: number of steps used for identification (prediction horizon),
+        analagous to order of the observer Kalman ARX filter used in OKID-ERA-DC.
+    r $(r)$ determines size of the state-space model used for representing the system.
 
     Returns
     =======
@@ -154,43 +177,44 @@ def srim(
     2g. Back calculate (estimate) the output accelerations with the state-space system &
         check against the actual output accelerations.
 
-    For orm = 2, one mode is found, for orm = 4, two modes are found.
+    For r = 2, one mode is found, for r = 4, two modes are found.
     For case 1, one mode is transverse & the other is torsion.
     For all other cases, the second mode is a higher mode.
-    Sometimes higher orm still gives fewer modes, e.g. orm = 8 for case 1 gives
+    Sometimes higher r still gives fewer modes, e.g. r = 8 for case 1 gives
     three modes, but one of them is invalid according to the EMAC & MPC criteria.
-    same orm in OKID-ERA-DC is used. It can be changed if needed.
+    same r in OKID-ERA-DC is used. It can be changed if needed.
 
     """
     
     #
     # Convenience argument handling
     #
-    p = config.get("p", config.get("mro"))         # # steps used for the identification (ie, prediction horizon)
-    n = n1 = config.get("n", config.get("orm", 4))  # Order of the model.
 
-    if isinstance(dati, list):
-        dati = np.array([i.data for i in dati]).T
-    elif issubclass(dati.__class__, dict):
-        dati = dati.data
+    if isinstance(input, list):
+        input = np.array([i.data for i in input]).T
+    elif issubclass(input.__class__, dict):
+        input = input.data
 
-    if isinstance(dato, list):
-        dato = np.array([i.data for i in dato]).T
-    elif issubclass(dato.__class__, dict):
-        dato = dato.data
+    if isinstance(output, list):
+        output = np.array([i.data for i in output]).T
+    elif issubclass(output.__class__, dict):
+        output = output.data
 
-    if len(dati.shape) < 2:
-        dati = np.atleast_2d(dati).T
-    if len(dato.shape) < 2:
-        dato = np.atleast_2d(dato).T
+    if len(input.shape) < 2:
+        input = np.atleast_2d(input).T
+    if len(output.shape) < 2:
+        output = np.atleast_2d(output).T
 
-    if verbose:
-        progress_bar = tqdm
-    else:
-        progress_bar = lambda arg, **kwds: (i for i in arg)
+    progress_bar = lambda arg, **kwds: (i for i in arg)
 
-    dn = config.get("dn", None) or dati.shape[0]
+    assert input.shape[0] == output.shape[0]
+    nt = config.get("nt", None) or input.shape[0]
 
+    if ns is None:
+        ns = min(300, nt)
+
+    if r is None:
+        r = min(10, int(ns/2))
     # 2a. Compute y (output) and u (input) vectors (Eqs. 3.58 & 3.60)
 
     # Note that main Step 2 develops Eq. 3.57.
@@ -198,22 +222,21 @@ def srim(
     # Accordingly, the code continues with Step 2a to compute the output & input vectors.
 
     # Calculate the usable size of the data matrix
-    # dn = size(dat,1)/div;       # total # time steps after decimating
-    nsizS = dn-1-p+2
+    # nt = size(dat,1)/div;       # total # time steps after decimating
+    nsizS = nt-1-ns+2
 
-    l,m = dato.shape # m is the number of output channels
-    _,r = dati.shape # r is the number of input channels
+    _,p = output.shape # p is the number of output channels
+    _,q = input.shape # q is the number of input channels
 
+    assert ns >= r/p + 1
 
-    assert p >= n/m + 1
-
-    ypS = np.zeros((m*p,nsizS))
-    upS = np.zeros((r*p,nsizS))
+    ypS = np.zeros((p*ns,nsizS))
+    upS = np.zeros((q*ns,nsizS))
 
     # Compute Y (output) & U (input) vectors (Eqs. 3.58 & 3.60 Arici 2006)
-    for b in range(p):
-        ypS[b*m:(b+1)*m,:nsizS+1] = dato[b:nsizS+b, :].T
-        upS[b*r:(b+1)*r,:nsizS+1] = dati[b:nsizS+b, :].T
+    for b in range(ns):
+        ypS[b*p:(b+1)*p,:nsizS+1] = output[b:nsizS+b, :].T
+        upS[b*q:(b+1)*q,:nsizS+1] = input[b:nsizS+b, :].T
 
 
     # 2b. Compute the correlation terms and the coefficient matrix 
@@ -224,9 +247,9 @@ def srim(
     Ruu = upS@upS.T/nsizS
     Ruy = upS@ypS.T/nsizS
 
-    assert Ryy.shape[0] == Ryy.shape[1] == p*m
-    assert Ruy.shape[0] == p*r
-    assert Ruy.shape[1] == p*m
+    assert Ryy.shape[0] == Ryy.shape[1] == ns*p
+    assert Ruy.shape[0] == ns*q
+    assert Ruy.shape[1] == ns*p
 
     # Compute the correlation matrix (Eq. 3.69)
     Rhh = Ryy - Ruy.T@linsolve(Ruu,Ruy)
@@ -236,22 +259,22 @@ def srim(
     if full:
         # Full Decomposition Method
         un,*_ = np.linalg.svd(Rhh,0)           # Eq. 3.74
-        Observability = un[:,:n]                          # Eq. 3.72
-        A = lsqminnorm(Observability[:(p-1)*m,:], Observability[m:p*m,:])
-        C = Observability[:m,:]
+        Observability = un[:,:r]                          # Eq. 3.72
+        A = lsqminnorm(Observability[:(ns-1)*p,:], Observability[p:ns*p,:])
+        C = Observability[:p,:]
     else:
         # Partial Decomposition Method
-        un,*_ = np.linalg.svd(Rhh[:,:(p-1)*m+1],0)
-        Observability = un[:,:n]
-        A = lsqminnorm(Observability[:(p-1)*m,:], Observability[m:p*m,:])
-        C = un[:m,:]
+        un,*_ = np.linalg.svd(Rhh[:,:(ns-1)*p+1],0)
+        Observability = un[:,:r]
+        A = lsqminnorm(Observability[:(ns-1)*p,:], Observability[p:ns*p,:])
+        C = un[:p,:]
 
     # Computation of system matrices B & D
     # Output Error Minimization
 
     # Setting up the Phi matrix
-    Phi  = np.zeros((m*nsizS, n+m*r+n*r))
-    CA_powers = np.zeros((nsizS, m, A.shape[1]))
+    Phi  = np.zeros((p*nsizS, r+p*q+r*q))
+    CA_powers = np.zeros((nsizS, p, A.shape[1]))
     CA_powers[0, :, :] = C
     A_p = A
     for pwr in range(1,nsizS):
@@ -260,19 +283,19 @@ def srim(
 
     # First block column of Phi
     for df in range(nsizS):
-        Phi[df*m:(df+1)*m,:n] = CA_powers[df,:,:]
+        Phi[df*p:(df+1)*p,:r] = CA_powers[df,:,:]
 
     # Second block column of Phi
-    Imm = np.eye(m)
+    Ipp = np.eye(p)
     for i in range(nsizS):
-        Phi[i*m:(i+1)*m, n:n+m*r] = np.kron(dati[i,:],Imm)
+        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(input[i,:],Ipp)
 
     # Third block column of Phi
-    In1n1 = np.eye(n)
-    cc = n + m*r + 1
-    dd = n + m*r + n*r
+    In1n1 = np.eye(r)
+    cc = r + p*q + 1
+    dd = r + p*q + r*q
 
-    krn = np.array([np.kron(dati[i,:],In1n1) for i in range(nsizS)])
+    krn = np.array([np.kron(input[i,:],In1n1) for i in range(nsizS)])
 
     with multiprocessing.Pool(pool_size) as pool:
         for i,res in progress_bar(
@@ -283,25 +306,25 @@ def srim(
                 ),
                 total = nsizS
             ):
-            Phi[i*m:(i+1)*m,cc-1:dd] = res
+            Phi[i*p:(i+1)*p,cc-1:dd] = res
 
-    y = dato[:nsizS,:].flatten()
+    y = output[:nsizS,:].flatten()
 
     teta = lsqminnorm(Phi,y)
 
-    x0 = teta[:n1]
-    dcol = teta[n1:n1+m*r]
-    bcol = teta[n1+m*r:n1+m*r+n1*r]
+    x0 = teta[:r]
+    dcol = teta[r:r+p*q]
+    bcol = teta[r+p*q:r+p*q+r*q]
 
-    D = np.zeros((m,r))
-    B = np.zeros((n,r))
-    for wq in range(r):
-        D[:,wq] = dcol[wq*m:(wq+1)*m]
+    D = np.zeros((p,q))
+    B = np.zeros((r,q))
+    for wq in range(q):
+        D[:,wq] = dcol[wq*p:(wq+1)*p]
 
-    for ww in range(r):
-        B[:,ww] = bcol[ww*n:(ww+1)*n]
+    for ww in range(q):
+        B[:,ww] = bcol[ww*r:(ww+1)*r]
 
-    assert A.shape[0] == A.shape[1] == n
+    assert A.shape[0] == A.shape[1] == r
     if debug:
         return locals()
     return A,B,C,D
