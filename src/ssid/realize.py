@@ -149,17 +149,8 @@ def srim(
 
     Returns
     =======
-     freqdampSRIM:
-        variable is a matrix that includes the information of identified
-        frequencies, damping ratios & validation of the modes with MPC & EMAC criteria.
-        Each row of freqdamp corresponds to a mode. Columns are as follows:
-        1) frequency, 2) damping ratio, 3) order index, 4) condition number, 5) MPC.
-        If values in columns 5 is > 0.5, identified mode is valid.
-     modeshapeSRIM:
-         stores the mode shape information for identified modes.
-     RMSEpredSRIM:
-         root mean square error of the predicted output from
-         identified parameters with respect to the actual output
+    A,B,C,D:
+        State-space model matrices
 
     ## SRIM Methodology
 

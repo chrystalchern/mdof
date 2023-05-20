@@ -1,8 +1,8 @@
 [project]
 name = "ssid"
-version = "0.0.2"
+version = "0.0.3"
 authors = [
-  {name="Claudio M. Perez", email="50180406+claudioperez@users.noreply.github.com"}
+  {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"}
 ]
 
 readme = "README.md"

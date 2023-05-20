@@ -1,6 +1,8 @@
 import sys
 import json
 
+import ssid
+import ssid.modes
 import quakeio
 import numpy as np
 from .okid import parse_okid
@@ -49,23 +51,23 @@ def parse_srim(argi, config):
     SRIM -- System Identification with Information Matrix
 
     Parameters
-    p           order of the observer Kalman ARX filter.
-    n           size of the state-space model used for 
-                representing the system.
+    no          order of the observer Kalman ARX filter (formerly p).
+    r           size of the state-space model used for 
+                representing the system. (formerly orm/n)
     """
     config.update({"p"  :  5, "orm":  4})
 
     #argi = iter(args)
     channels = [[], []]
     for arg in argi:
-        if arg == "-p":
-            config["p"] = int(next(argi))
+        if arg == "--arx-order":
+            config["no"] = int(next(argi))
 
         elif arg == "--dt":
             config["dt"] = float(next(argi))
 
-        elif arg == "-n":
-            config["orm"] = int(next(argi))
+        elif arg == "--ss-size":
+            config["r"] = int(next(argi))
 
         elif arg in ["--help", "-h"]:
             print(help)
@@ -99,16 +101,21 @@ def parse_srim(argi, config):
         event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
         #event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
     ]).T
-    npoints = len(inputs[:,0])
+    
     dt = event.at(station_channel=f"{channels[0][0]}").accel["time_step"]
     config["dt"] = dt
 
+    A,B,C,D = ssid.system(input=inputs, output=outputs, full=True, **config)
 
-    A,B,C,D = srim(inputs, outputs, **config)
-    freqdmpSRIM, modeshapeSRIM, *_ = ComposeModes(dt, A, B, C, D)
+    ss_modes = ssid.modes.modes((A,B,C,D),dt)
+
     output = [
-            {"frequency": np.real(x[0]), "damping": np.real(x[1])} 
-            for x in freqdmpSRIM if all(x > 0.0)
+        {
+            "period":  1/mode["freq"],
+            "frequency": mode["freq"],
+            "damping":   mode["damp"]         
+        } 
+        for mode in sorted(ss_modes.values(), key=lambda item: item["freq"])
     ]
 
     print(json.dumps(output, cls=JSON_Encoder, indent=4))
@@ -142,14 +149,6 @@ def parse_args(args):
         elif arg == "--protocol":
             config["protocol"] = next(arg)
 
-        # Positional args
-        elif config["method"] is None:
-            config["method"] = arg
-            break
-
-        elif config["protocol"] and config["operation"] is None:
-            config["operation"] = arg
-
         elif arg == "--inputs":
             inputs = next(argi)[1:-1].split(",")
             if isinstance(inputs, str):
@@ -163,17 +162,28 @@ def parse_args(args):
                 channels[1] = [int(outputs)]
             else:
                 channels[1] = list(map(int, outputs))
+
+        # Positional args
+        elif config["method"] is None:
+            config["method"] = arg
+            break
+
+        # elif config["protocol"] and config["operation"] is None:
+        #     config["operation"] = arg
+
         elif arg == "--":
             continue
 
         else:
-            break
+            print(HELP)
+            sys.exit()
 
-    return sub_parsers[arg](argi, config), outputs
+
+    return sub_parsers[config.pop("method")](argi, config), outputs
 
 
 def main():
-    config, out_ops = parse_args(sys.argv)
+    parse_args(sys.argv)
 
 if __name__ == "__main__":
     main()
