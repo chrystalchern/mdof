@@ -29,8 +29,8 @@ install_requires = [
 ]
 
 [project.urls]
-repository = "http://github.com/BRACE2/OpenSeesRT"
-documentation = "https://brace2.github.io/OpenSeesRT"
+repository = "http://github.com/BRACE2/SystemIdentification"
+documentation = "https://brace2.github.io/SystemIdentification"
 
 [project.scripts]
 ssid = "ssid.__main__:main"
