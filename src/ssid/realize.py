@@ -7,8 +7,8 @@ from functools import partial
 
 # Y = output data: response to unit impulse, or "impulse response," or "Markov parameters".
 # dimensions of Y: p x q x nt, where nt = number of timesteps = number of Markov parameters = number of blocks
-# nc = number of block rows in Hankel matrix = order of controllability matrix
-# no = number of block columns in Hankel matrix = order of observability matrix
+# no = number of block rows in Hankel matrix = order of observability matrix
+# nc = number of block columns in Hankel matrix = order of controllability matrix
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
 def era(Y,no=None,nc=None,r=None,**options):
     
@@ -75,11 +75,11 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, (Y.shape[2]-1)/2)
+            no = nc = min(300, int((Y.shape[2]-1)/2))
         else:
-            no = min(300, Y.shape[2]-1-nc)
+            no = min(300, int(Y.shape[2]-1-nc))
     elif nc is None:
-        nc = min(300, Y.shape[2]-1-no)
+        nc = min(300, int(Y.shape[2]-1-no))
     else:
         # make sure there are enough timesteps to assemble the Hankel matrices
         assert Y.shape[2] >= l+(a+1+b+1)*g+no+nc
@@ -133,7 +133,7 @@ def _blk_3(i, CA, U):
 def srim(
     input,
     output,
-    ns = None,
+    no = None,
     r = None,
     debug = False,
     full     : bool = True,
@@ -141,9 +141,11 @@ def srim(
     **config
 ):
     """
-    ns: number of steps used for identification (prediction horizon),
-        analagous to order of the observer Kalman ARX filter used in OKID-ERA-DC.
-    r $(r)$ determines size of the state-space model used for representing the system.
+    no: number of steps used for identification (prediction horizon),
+        and the order of the observability matrix.
+        analagous to order (number of autoregressors) of the observer Kalman
+        ARX filter used in OKID-ERA-DC.
+    r:  size of the state-space model used for representing the system.
 
     Returns
     =======
@@ -210,11 +212,11 @@ def srim(
     assert input.shape[0] == output.shape[0]
     nt = config.get("nt", None) or input.shape[0]
 
-    if ns is None:
-        ns = min(300, nt)
+    if no is None:
+        no = min(300, nt)
 
     if r is None:
-        r = min(10, int(ns/2))
+        r = min(10, int(no/2))
     # 2a. Compute y (output) and u (input) vectors (Eqs. 3.58 & 3.60)
 
     # Note that main Step 2 develops Eq. 3.57.
@@ -223,33 +225,34 @@ def srim(
 
     # Calculate the usable size of the data matrix
     # nt = size(dat,1)/div;       # total # time steps after decimating
-    nsizS = nt-1-ns+2
+    ns = nt-1-no+2
 
     _,p = output.shape # p is the number of output channels
     _,q = input.shape # q is the number of input channels
 
-    assert ns >= r/p + 1
+    assert no >= r/p + 1    # make sure prediction horizon is large enough that
+                            # observability matrix is full rank
 
-    ypS = np.zeros((p*ns,nsizS))
-    upS = np.zeros((q*ns,nsizS))
+    ypS = np.zeros((p*no,ns))
+    upS = np.zeros((q*no,ns))
 
     # Compute Y (output) & U (input) vectors (Eqs. 3.58 & 3.60 Arici 2006)
-    for b in range(ns):
-        ypS[b*p:(b+1)*p,:nsizS+1] = output[b:nsizS+b, :].T
-        upS[b*q:(b+1)*q,:nsizS+1] = input[b:nsizS+b, :].T
+    for b in range(no):
+        ypS[b*p:(b+1)*p,:ns+1] = output[b:ns+b, :].T
+        upS[b*q:(b+1)*q,:ns+1] = input[b:ns+b, :].T
 
 
     # 2b. Compute the correlation terms and the coefficient matrix 
     #     (Eqs. 3.68 & 3.69).
 
     # Compute the correlation terms (Eq. 3.68)
-    Ryy = ypS@ypS.T/nsizS
-    Ruu = upS@upS.T/nsizS
-    Ruy = upS@ypS.T/nsizS
+    Ryy = ypS@ypS.T/ns
+    Ruu = upS@upS.T/ns
+    Ruy = upS@ypS.T/ns
 
-    assert Ryy.shape[0] == Ryy.shape[1] == ns*p
-    assert Ruy.shape[0] == ns*q
-    assert Ruy.shape[1] == ns*p
+    assert Ryy.shape[0] == Ryy.shape[1] == no*p
+    assert Ruy.shape[0] == no*q
+    assert Ruy.shape[1] == no*p
 
     # Compute the correlation matrix (Eq. 3.69)
     Rhh = Ryy - Ruy.T@linsolve(Ruu,Ruy)
@@ -260,34 +263,34 @@ def srim(
         # Full Decomposition Method
         un,*_ = np.linalg.svd(Rhh,0)           # Eq. 3.74
         Observability = un[:,:r]                          # Eq. 3.72
-        A = lsqminnorm(Observability[:(ns-1)*p,:], Observability[p:ns*p,:])
+        A = lsqminnorm(Observability[:(no-1)*p,:], Observability[p:no*p,:])
         C = Observability[:p,:]
     else:
         # Partial Decomposition Method
-        un,*_ = np.linalg.svd(Rhh[:,:(ns-1)*p+1],0)
+        un,*_ = np.linalg.svd(Rhh[:,:(no-1)*p+1],0)
         Observability = un[:,:r]
-        A = lsqminnorm(Observability[:(ns-1)*p,:], Observability[p:ns*p,:])
+        A = lsqminnorm(Observability[:(no-1)*p,:], Observability[p:no*p,:])
         C = un[:p,:]
 
     # Computation of system matrices B & D
     # Output Error Minimization
 
     # Setting up the Phi matrix
-    Phi  = np.zeros((p*nsizS, r+p*q+r*q))
-    CA_powers = np.zeros((nsizS, p, A.shape[1]))
+    Phi  = np.zeros((p*ns, r+p*q+r*q))
+    CA_powers = np.zeros((ns, p, A.shape[1]))
     CA_powers[0, :, :] = C
     A_p = A
-    for pwr in range(1,nsizS):
+    for pwr in range(1,ns):
         CA_powers[pwr,:,:] =  C@A_p
         A_p = A@A_p
 
     # First block column of Phi
-    for df in range(nsizS):
+    for df in range(ns):
         Phi[df*p:(df+1)*p,:r] = CA_powers[df,:,:]
 
     # Second block column of Phi
     Ipp = np.eye(p)
-    for i in range(nsizS):
+    for i in range(ns):
         Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(input[i,:],Ipp)
 
     # Third block column of Phi
@@ -295,20 +298,20 @@ def srim(
     cc = r + p*q + 1
     dd = r + p*q + r*q
 
-    krn = np.array([np.kron(input[i,:],In1n1) for i in range(nsizS)])
+    krn = np.array([np.kron(input[i,:],In1n1) for i in range(ns)])
 
     with multiprocessing.Pool(pool_size) as pool:
         for i,res in progress_bar(
                 pool.imap_unordered(
                     partial(_blk_3,CA=CA_powers,U=np.flip(krn,0)),
-                    range(1,nsizS),
+                    range(1,ns),
                     200
                 ),
-                total = nsizS
+                total = ns
             ):
             Phi[i*p:(i+1)*p,cc-1:dd] = res
 
-    y = output[:nsizS,:].flatten()
+    y = output[:ns,:].flatten()
 
     teta = lsqminnorm(Phi,y)
 
@@ -327,4 +330,131 @@ def srim(
     assert A.shape[0] == A.shape[1] == r
     if debug:
         return locals()
+    return A,B,C,D
+
+# input = input data. dimensions of input: q x nt, where nt = number of timesteps.
+# output = response data due to input data. dimensions of output: p x nt.
+# no = number of steps used for identification (prediction horizon),
+    # and the order of the observability matrix.
+    # analagous to order (number of autoregressors) of the observer Kalman
+    # ARX filter used in OKID-ERA-DC.
+# r = size of the state-space model used for representing the system.
+# Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
+def srim2(input,output,no=None,r=None,full=True,**options):
+    input = np.atleast_2d(input)
+    output = np.atleast_2d(output)
+
+    p = output.shape[0]
+    q = input.shape[0]
+    nt = output.shape[1]
+    assert output.shape[1] == input.shape[1]
+
+    if no is None:
+        no = min(300, nt)
+
+    if r is None:
+        r = min(10, int(no/2))
+
+    # maximum possible number of columns in the Y and U data matrices
+    ns = nt-1-no+2
+
+    assert no >= r/p + 1    # make sure prediction horizon is large enough that
+                            # observability matrix is full rank (Juang Eq. 8)
+
+    Yno = np.zeros((p*no,ns))
+    Uno = np.zeros((q*no,ns))
+
+    # Construct Y (output) & U (input) data matrices (Eqs. 3.58 & 3.60 Arici 2006)
+    for i in range(no):
+        Yno[i*p:(i+1)*p,:] = output[:,i:ns+i]
+        Uno[i*q:(i+1)*q,:] = input[:,i:ns+i]
+
+
+    # 2b. Compute the correlation terms and the coefficient matrix 
+    #     (Eqs. 3.68 & 3.69).
+
+    # Compute the correlation terms (Eq. 3.68)
+    Ryy = Yno@Yno.T/ns
+    Ruu = Uno@Uno.T/ns
+    Ruy = Uno@Yno.T/ns
+
+    assert Ryy.shape[0] == Ryy.shape[1] == no*p
+    assert Ruy.shape[0] == no*q
+    assert Ruy.shape[1] == no*p
+
+    # Compute the correlation matrix (Eq. 3.69)
+    Rhh = Ryy - Ruy.T@linsolve(Ruu,Ruy)
+
+    # 2c. Obtain observability matrix using full or partial decomposition 
+    #     (Eqs. 3.72 & 3.74).
+    if full:
+        # Full Decomposition Method
+        un,*_ = np.linalg.svd(Rhh,0)           # Eq. 3.74
+        Observability = un[:,:r]               # Eq. 3.72
+        A = lsqminnorm(Observability[:(no-1)*p,:], Observability[p:no*p,:])
+        C = Observability[:p,:]
+    else:
+        # Partial Decomposition Method
+        un,*_ = np.linalg.svd(Rhh[:,:(no-1)*p+1],0)
+        Observability = un[:,:r]
+        A = lsqminnorm(Observability[:(no-1)*p,:], Observability[p:no*p,:])
+        C = un[:p,:]
+
+    # Computation of system matrices B & D
+    # Output Error Minimization
+
+    # Setting up the Phi matrix
+    Phi  = np.zeros((p*ns, r+p*q+r*q))
+    CA_powers = np.zeros((ns, p, A.shape[1]))
+    CA_powers[0, :, :] = C
+    A_p = A
+    for pwr in range(1,ns):
+        CA_powers[pwr,:,:] =  C@A_p
+        A_p = A@A_p
+
+    # First block column of Phi
+    for df in range(ns):
+        Phi[df*p:(df+1)*p,:r] = CA_powers[df,:,:]
+
+    # Second block column of Phi
+    Ipp = np.eye(p)
+    for i in range(ns):
+        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(input[i,:],Ipp)
+
+    # Third block column of Phi
+    In1n1 = np.eye(r)
+    cc = r + p*q + 1
+    dd = r + p*q + r*q
+
+    krn = np.array([np.kron(input[i,:],In1n1) for i in range(ns)])
+
+    with multiprocessing.Pool(pool_size) as pool:
+        for i,res in progress_bar(
+                pool.imap_unordered(
+                    partial(_blk_3,CA=CA_powers,U=np.flip(krn,0)),
+                    range(1,ns),
+                    200
+                ),
+                total = ns
+            ):
+            Phi[i*p:(i+1)*p,cc-1:dd] = res
+
+    y = output[:ns,:].flatten()
+
+    teta = lsqminnorm(Phi,y)
+
+    x0 = teta[:r]
+    dcol = teta[r:r+p*q]
+    bcol = teta[r+p*q:r+p*q+r*q]
+
+    D = np.zeros((p,q))
+    B = np.zeros((r,q))
+    for wq in range(q):
+        D[:,wq] = dcol[wq*p:(wq+1)*p]
+
+    for ww in range(q):
+        B[:,ww] = bcol[ww*r:(ww+1)*r]
+
+    assert A.shape[0] == A.shape[1] == r
+
     return A,B,C,D
