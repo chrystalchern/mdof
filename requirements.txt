@@ -6,3 +6,5 @@ quakeio
 matplotlib
 plotly
 pandas
+ssid
+
