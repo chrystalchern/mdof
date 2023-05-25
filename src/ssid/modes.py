@@ -31,8 +31,12 @@ def modes(realization, dt):
 
     # get damping and frequencies from eigendecomp of A
     Lam = (np.log(Gam))/dt
+    # TODO: maybe clean
     Omega = np.real((Lam*np.conj(Lam))**0.5)  # radians per second. taking the real part because np keeps a +0j.
+    # Omega = np.real_if_close((Lam*np.conj(Lam))**0.5) # radians per second. taking the real part because np keeps a +0j.
     freq = Omega/(2*pi) # cycles per second (Hz)
+    Omega.__str__()
+    # print(Omega)
     damp = -np.real(Lam)/Omega
 
     # get modeshapes from C and eigendecomp of A

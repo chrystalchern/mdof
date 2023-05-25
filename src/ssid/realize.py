@@ -11,7 +11,6 @@ from functools import partial
 # nc = number of block columns in Hankel matrix = order of controllability matrix
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
 def era(Y,no=None,nc=None,r=None,**options):
-    
     if r is None:
         r = min(20, int(Y.shape[2]/2))
     p,q = Y.shape[:2] # p = number of outputs, q = number of inputs
@@ -22,11 +21,11 @@ def era(Y,no=None,nc=None,r=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, (Y.shape[2]-1)/2)
+            no = nc = min(300, int((Y.shape[2]-1)/2))
         else:
-            no = min(300, Y.shape[2]-1-nc)
+            no = min(300, int(Y.shape[2]-1-nc))
     elif nc is None:
-        nc = min(300, Y.shape[2]-1-no)
+        nc = min(300, int(Y.shape[2]-1-no))
     else:
         # make sure there are enough timesteps to assemble this size of Hankel matrix
         assert Y.shape[2] >= no+nc

@@ -14,3 +14,6 @@ def system(method="srim", *args, **options):
         A,B,C,D = realize.srim(*args, **options)
 
     return A,B,C,D
+
+def spectrum(method="srim", *args, **options):
+    return None
