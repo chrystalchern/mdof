@@ -14,45 +14,212 @@ def parse_okid(args, config):
     """
     return config
 
-# Y = output data: response to unit impulse, or "impulse response," or "markov parameters".
-# dimensions of Y: p x q x nt, where nt = number of timesteps = number of markov parameters = number of blocks
-# mc = number of block rows in Hankel matrix
-# mo = number of block columns in Hankel matrix
+# y = output data: forced response. dimensions of y: p x nt, where nt = number of timesteps
+# u = input data: input. dimensions of u: q x nt.
+# m = number of Markov parameters (impulse response timesteps) to solve for
+def get_impulse(y, u):
+    p = y.shape[0]
+    q = u.shape[0]
+    nt = y.shape[1]
+    assert y.shape[1] == u.shape[1]
+    # form a blockwise upper triangular matrix of inputs
+    U = np.zeros((q*nt, nt))
+    for i in range(nt):
+        for j in range(nt-i):
+            U[q*j:q*(j+1),i] = u[:,i]
+    Y_impulse = y @ np.linalg.pinv(U)
+    assert Y_impulse.shape == (p, q*nt)
+    return Y_impulse
+
+def okid2(y, u, m):
+    p = y.shape[0]
+    q = u.shape[0]
+    nt = y.shape[1]
+    assert y.shape[1] == u.shape[1]
+    # form a blockwise upper triangular matrix of inputs
+    U = np.zeros((q*nt, nt))
+    for i in range(nt):
+        for j in range(nt-i):
+            U[q*j:q*(j+1),i] = u[:,i]
+    Y_impulse = y @ np.linalg.pinv(U)
+    assert Y_impulse.shape == (p, q*nt)
+    return Y_impulse
+
+def OKID_brunton(y,u,m):
+    
+    p = y.shape[0]
+    q = u.shape[0]
+    nt = y.shape[1]
+    assert y.shape[1] == u.shape[1]
+    
+    # Form data matrices y and V
+    V = np.zeros((q+(q+p)*m,nt))
+    for i in range(nt):
+        V[:q,i] = u[:q,i]
+        
+    for i in range(1,m+1):
+        for j in range(nt-i):
+            vtemp = np.concatenate((u[:,j],y[:,j]))
+            V[q+(i-1)*(q+p):q+i*(q+p),i+j] = vtemp
+    
+    # Solve for observer Markov parameters Ybar
+    Ybar = y @ np.linalg.pinv(V,rcond=10**(-3))
+    
+    # Isolate system Markov parameters H, and observer gain M
+    D = Ybar[:,:q] # feed-through term (or D matrix) is the first term
+    
+    Y = np.zeros((p,q,m))
+    Ybar1 = np.zeros((p,q,m))
+    Ybar2 = np.zeros((p,q,m))
+    
+    for i in range(m):
+        Ybar1[:,:,i] = Ybar[:,q+(q+p)*i : q+(q+p)*i+q]
+        Ybar2[:,:,i] = Ybar[:,q+(q+p)*i+q : q+(q+p)*(i+1)]
+    
+    Y[:,:,0] = Ybar1[:,:,0] + Ybar2[:,:,0] @ D
+    for k in range(1,m):
+        Y[:,:,k] = Ybar1[:,:,k] + Ybar2[:,:,k] @ D
+        for i in range(k-1):
+            Y[:,:,k] += Ybar2[:,:,i] @ Y[:,:,k-i-1]
+            
+    H = np.zeros((D.shape[0],D.shape[1],m+1))
+    H[:,:,0] = D
+    
+    for k in range(1,m+1):
+        H[:,:,k] = Y[:,:,k-1]
+        
+    return H
+
+# Y = output data: response to unit impulse, or "impulse response," or "Markov parameters".
+# dimensions of Y: p x q x nt, where nt = number of timesteps = number of Markov parameters = number of blocks
+# mc = number of block rows in Hankel matrix = order of controllability matrix
+# mo = number of block columns in Hankel matrix = order of observability matrix
 # p = number of outputs
 # q = number of inputs
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
 def era(Y,mo,mc,p,q,r):
-    # get D from first input_dimension columns of impulse response
+    # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
     
     assert Y.shape[:2] == (p,q)  # sanity check that we're passing in the right output data
     assert Y.shape[2] >= mo+mc   # make sure there are enough timesteps to assemble this size of Hankel matrix
     
-    # make impulse response into hankel matrix and shifted hankel matrix
-    H0 = np.zeros((p*mo, q*mc))
-    H1 = np.zeros((p*mo, q*mc))
+    # make impulse response into Hankel matrix and shifted Hankel matrix
+    H = np.zeros((p*(mo), q*(mc+1)))
     for i in range(mo):
-        for j in range(mc):
-            H0[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+1]
-            H1[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+2] # TODO this can be done outside loops
+        for j in range(mc+1):
+            H[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+1]
+    H0 = H[:,:-q]
+    H1 = H[:,q:]
+    assert H0.shape == H1.shape == (p*(mo), q*(mc))
 
-    # reduced svd of hankel matrix
+    # reduced SVD of Hankel matrix
     def _svd(*args):
         U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
         return U,S,V.T.conj()
     U,S,V = _svd(H0)
-    Sigma = np.diag(S[:r]) # TODO we don't really need to construct this
+    SigmaInvSqrt = np.diag(S[:r]**-0.5)
+    SigmaSqrt = np.diag(S[:r]**0.5)
     Ur = U[:,:r]
     Vr = V[:,:r]
 
-    # get A from svd and shifted hankel matrix
-    Ar = matpow(Sigma,-0.5) @ Ur.T.conj() @ H1 @ Vr @ matpow(Sigma,-0.5) # TODO the matrix power can be removed
+    # get A from SVD and shifted Hankel matrix
+    Ar = SigmaInvSqrt @ Ur.T.conj() @ H1 @ Vr @ SigmaInvSqrt
 
     # get B and C
-    Br = (matpow(Sigma,0.5) @ Vr.T.conj())[:,:q] # TODO the matrix power can be removed
-    Cr = (Ur @ matpow(Sigma,0.5))[:p,:] # TODO the matrix power can be removed
+    Br = (SigmaSqrt @ Vr.T.conj())[:,:q]
+    Cr = (Ur @ SigmaSqrt)[:p,:]
 
     return (Ar,Br,Cr,Dr,S)
+
+# l = initial lag for data correlations
+# g = lags between correlation matrices
+# a = number of block rows in Hankel of correlation matrix
+# b = number of block columns in Hankel of correlation matrix
+def era_dc(Y,mo,mc,p,q,r,l,g,a,b):
+    # get D from first p x q block of impulse response
+    Dr = Y[:,:,0]  # first block of output data
+    
+    assert Y.shape[:2] == (p,q)  # sanity check that we're passing in the right output data
+    assert Y.shape[2] >= l+(a+1+b+1)*g+mo+mc   # make sure there are enough timesteps to assemble the Hankel matrices
+    
+    # make impulse response into Hankel matrix
+    H = np.zeros((p*(mo), q*(mc+l+(a+1+b+1)*g))) # Hankel of Markov parameters
+    for i in range(mo):
+        for j in range(mc+l+(a+1+b+1)*g):
+            H[p*i:p*(i+1), q*j:q*(j+1)] = Y[:,:,i+j+1]
+    H0 = H[:,:q*mc]
+    assert H0.shape == (p*(mo), q*(mc))
+
+    dimR = p*mo # Dimension of square correlation matrices
+    dimHRl = (dimR*(a+1), dimR*(b+1)) # Dimension of Hankels of correlation matrices
+    HRl = np.zeros(dimHRl) # Hankel of correlation matrices
+    HRl1 = np.zeros(dimHRl) # Shifted Hankel of correlation matrices
+    for i in range(a+1):
+        for j in range(b+1):
+            Hl = H[:, q*(l+1+(i+j)*g):q*(l+1+(i+j)*g+mc)]
+            Hl1 = H[:, q*(l+1+(i+j)*g+1):q*(l+1+(i+j)*g+mc+1)]
+            assert Hl.shape == Hl1.shape == (p*(mo), q*(mc))
+            R = Hl@H0
+            R1 = Hl1@H0
+            assert R.shape == R1.shape == (dimR,dimR)
+            HRl[dimR*i:dimR*(i+1), dimR*j:dimR*(j+1)] = R
+            HRl1[dimR*i:dimR*(i+1), dimR*j:dimR*(j+1)] = R1
+
+    # reduced SVD of Hankel matrix
+    def _svd(*args):
+        U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
+        return U,S,V.T.conj()
+    U,S,V = _svd(HRl)
+    SigmaInvSqrt = np.diag(S[:r]**-0.5)
+    SigmaSqrt = np.diag(S[:r]**0.5)
+    Ur = U[:,:r]
+    Vr = V[:,:r]
+
+    # get A from SVD and shifted Hankel matrix
+    Ar = SigmaInvSqrt @ Ur.T.conj() @ HRl1 @ Vr @ SigmaInvSqrt
+
+    # get B and C
+    Br = ((SigmaInvSqrt @ Ur.T.conj())[:,:dimR] @ H0)[:,:q]
+    Cr = (Ur @ SigmaSqrt)[:p,:]
+
+    return (Ar,Br,Cr,Dr,S)
+
+
+def _era_ya(kmax, m, l, r, Y, n, svd="gesvd"):
+    # ERA/DC
+    #
+    # Form Hankel matrix (H) from the Markov parameters (Y) (Eq. 3.80)
+
+    # Obtain Hankel Matrix of Zeroth Order & First Order
+    H0,H1 = np.zeros((2, kmax*m, l*r))
+    #H0 = hankel(Y,0)
+    for hj in range(kmax):
+        for jh in range(l):
+            H0[hj*m:hj*m+m, jh*r:jh*r+r] = Y[jh+hj+1]
+            H1[hj*m:hj*m+m, jh*r:jh*r+r] = Y[jh+hj+2]
+    
+    if svd in ["gesvd", "gesdd"]:
+        import scipy.linalg
+        def _svd(*args):
+            U,S,V = scipy.linalg.svd(*args, lapack_driver=svd)
+            return U,S,V.T.conj()
+
+    ## 2c. Use H matrix to compute system matrices A, B & C
+    R1,sis,S1 = _svd(H0) # singular value decomposition
+    Sis = np.diag(sis[:n])
+
+    Siv = np.diag(1/np.sqrt(sis[:n]))
+    # A: state transition matrix (Eqs. 3.32 & 3.82)
+    A  = Siv@R1[:,:n].T@H1@S1[:,:n]@Siv
+    # B: input influence matrix (Eqs. 3.32 & 3.83)
+    B = (np.sqrt(Sis)@S1[:,:n].T)[:,:r]
+    Observability = R1[:,:n]@np.sqrt(Sis)
+    # C: output influence matrix (Eqs. 3.34 & 3.84)
+    C  = Observability[:m,:]
+
+    return A,B,C
+
 
 def okid(dati, dato, svd="gesvd", debug=False, **config):
     """
@@ -217,31 +384,7 @@ def okid(dati, dato, svd="gesvd", debug=False, **config):
 
     # The Markow parameters Y have been computed.
 
-    #
-    # ERA/DC
-    #
-    # Form Hankel matrix (H) from the Markov parameters (Y) (Eq. 3.80)
-
-    # Obtain Hankel Matrix of Zeroth Order & First Order
-    H0,H1 = np.zeros((2, kmax*m, l*r))
-    #H0 = hankel(Y,0)
-    for hj in range(kmax):
-        for jh in range(l):
-            H0[hj*m:hj*m+m, jh*r:jh*r+r] = Y[jh+hj+1]
-            H1[hj*m:hj*m+m, jh*r:jh*r+r] = Y[jh+hj+2]
-    
-    ## 2c. Use H matrix to compute system matrices A, B & C
-    R1,sis,S1 = _svd(H0) # singular value decomposition
-    Sis = np.diag(sis[:n])
-
-    Siv = np.diag(1/np.sqrt(sis[:n]))
-    # A: state transition matrix (Eqs. 3.32 & 3.82)
-    A  = Siv@R1[:,:n].T@H1@S1[:,:n]@Siv
-    # B: input influence matrix (Eqs. 3.32 & 3.83)
-    B = (np.sqrt(Sis)@S1[:,:n].T)[:,:r]
-    Observability = R1[:,:n]@np.sqrt(Sis)
-    # C: output influence matrix (Eqs. 3.34 & 3.84)
-    C  = Observability[:m,:]
+    A,B,C = _era_ya(kmax, m, l, r, Y, _svd, n)
 
     if debug:
         return locals()
