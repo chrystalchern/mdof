@@ -9,3 +9,5 @@ pandas
 ssid
 control
 sdof
+
+SciencePlots
