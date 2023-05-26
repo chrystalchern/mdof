@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import scienceplots
 
-plt.style.use(["science"])# , "notebook"])
+plt.style.use(["science", "no-latex"])# , "notebook"])
 
 nln = "\n"
 
