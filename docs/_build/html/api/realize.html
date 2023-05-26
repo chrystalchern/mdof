@@ -259,7 +259,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="system.html"><code class="docutils literal notranslate"><span class="pre">ssid.system()</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="modes.html"><code class="docutils literal notranslate"><span class="pre">ssid.modes()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="modes.html"><code class="docutils literal notranslate"><span class="pre">ssid.modes.modes()</span></code></a></li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="markov.html"><code class="docutils literal notranslate"><span class="pre">markov</span></code> Module</a></li>
@@ -325,70 +325,71 @@ document.write(`
 <h1><code class="docutils literal notranslate"><span class="pre">realize</span></code> Module<a class="headerlink" href="#realize-module" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ssid.realize.era">
-<span class="sig-prename descclassname"><span class="pre">ssid.realize.</span></span><span class="sig-name descname"><span class="pre">era</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.realize.era" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ssid.realize.</span></span><span class="sig-name descname"><span class="pre">era</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.realize.era" title="Permalink to this definition">#</a></dt>
 <dd><p>Generate a state space system realization from set of Markov parameters, or discrete impulse response data, using the Eigensystem Realization Algorithm (ERA) (Juang and Pappa, 1985).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q*nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>no</strong> (<em>int</em>) – number of block rows in Hankel matrix = order of controllability matrix</p></li>
 <li><p><strong>nc</strong> (<em>int</em>) – number of block columns in Hankel matrix = order of observability matrix</p></li>
-<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order; default None</p></li>
+<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order. default: minimum of 10 and <cite>no</cite>/2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">A,B,C,D</span></code></p>
+<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[array]</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ssid.realize.era_dc">
-<span class="sig-prename descclassname"><span class="pre">ssid.realize.</span></span><span class="sig-name descname"><span class="pre">era_dc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">no</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">a</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">g</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.realize.era_dc" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ssid.realize.</span></span><span class="sig-name descname"><span class="pre">era_dc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.realize.era_dc" title="Permalink to this definition">#</a></dt>
 <dd><p>Generate a state space system realization from set of Markov parameters, or discrete impulse response data, using the Eigensystem Realization Algorithm with Data Correlations (ERA/DC) (Juang, Cooper, and Wright, 1988).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q*nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>no</strong> (<em>int</em>) – number of block rows in Hankel matrix = order of controllability matrix</p></li>
-<li><p><strong>nc</strong> (<em>int</em>) – number of block columns in Hankel matrix = order of observability matrix</p></li>
-<li><p><strong>a</strong> (<em>int</em><em>, </em><em>optional</em>) – (alpha) number of block rows in Hankel of correlation matrix</p></li>
-<li><p><strong>b</strong> (<em>int</em><em>, </em><em>optional</em>) – (beta) number of block columns in Hankel of correlation matrix</p></li>
-<li><p><strong>l</strong> (<em>int</em><em>, </em><em>optional</em>) – initial lag for data correlations</p></li>
-<li><p><strong>g</strong> (<em>int</em><em>, </em><em>optional</em>) – lags (gap) between correlation matrices</p></li>
-<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order</p></li>
+<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>no</strong> (<em>int</em>) – number of block rows in Hankel matrix = order of observability matrix</p></li>
+<li><p><strong>nc</strong> (<em>int</em>) – number of block columns in Hankel matrix = order of controllability matrix</p></li>
+<li><p><strong>a</strong> (<em>int</em><em>, </em><em>optional</em>) – (alpha) number of block rows in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>b</strong> (<em>int</em><em>, </em><em>optional</em>) – (beta) number of block columns in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>l</strong> (<em>int</em><em>, </em><em>optional</em>) – initial lag for data correlations. default: 0</p></li>
+<li><p><strong>g</strong> (<em>int</em><em>, </em><em>optional</em>) – lags (gap) between correlation matrices. default: 1</p></li>
+<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order. default: minimum of 10 and <cite>no</cite>/2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">A,B,C,D</span></code></p>
+<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[array]</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="ssid.realize.srim">
-<span class="sig-prename descclassname"><span class="pre">ssid.realize.</span></span><span class="sig-name descname"><span class="pre">srim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mro</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">orm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.realize.srim" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ssid.realize.</span></span><span class="sig-name descname"><span class="pre">srim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.realize.srim" title="Permalink to this definition">#</a></dt>
 <dd><p>Generate a state space system realization from set of Markov parameters, or discrete impulse response data, for a given set of input and output data, using System Realization Using Information Matrix (SRIM) (Juang, 1996).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>input</strong> (<em>array</em>) – input acceleration time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>output</strong> (<em>array</em>) – output acceleration response history to an arbitrary input. dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>mro</strong> (<em>int</em>) – number of steps used for identification (prediction horizon)</p></li>
-<li><p><strong>rmo</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order</p></li>
+<li><p><strong>no</strong> (<em>int</em>) – number of steps used for identification (prediction horizon). default: minimum of 300 and number of timesteps in input and output data.</p></li>
+<li><p><strong>r</strong> (<em>bool</em>) – reduced model order. default: minimum of 10 and <cite>no</cite>/2</p></li>
+<li><p><strong>full</strong> – if True, full SVD. default: True</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">A,B,C,D</span></code></p>
+<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>list[array]</p>
+<dd class="field-odd"><p>tuple</p>
 </dd>
 </dl>
 </dd></dl>

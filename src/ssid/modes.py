@@ -48,10 +48,10 @@ def modes(realization, dt):
     
     # print(notroots)
     modes = {str(i):
-                {'cnd': cnd[i],   # condition number of the eigenvalue
-                'freq': freq[i],  # identified frequency
-                'damp': damp[i],  # identified damping ratio
-                'modeshape': modeshape[:,i]
+                {'freq': freq[i],  # identified frequency
+                'damp': damp[i],   # identified damping ratio
+                'modeshape': modeshape[:,i],  # identified modeshape
+                'cnd': cnd[i],     # condition number of the eigenvalue
                 }
             for i in range(len(freq)) if i not in notroots
             }

@@ -1,11 +1,11 @@
-.. py:function:: ssid.modes(realization,**options)
+.. py:function:: ssid.modes.modes(realization)
 
     Determine the modal parameters of a given state space system realization.
 
-    :param realization: realization in the form of state space coefficients ``A,B,C,D``
-    :type realization: list
-    :param dt: realization in the form of state space coefficients ``A,B,C,D``
-    :type realization: list
+    :param realization: realization in the form of state space coefficients ``(A,B,C,D)``
+    :type realization: tuple
+    :param dt: timestep
+    :type realization: float
     
-    :return: ``freq`` natural frequencies, ``damp`` damping ratios, and ``mode`` mode shapes
+    :return: natural frequencies, damping ratios, mode shapes, and eigenvalue condition numbers for each mode in the ``freq``, ``damp``, ``modeshape``, and ``cnd`` fields, respectively.
     :rtype: dictionary

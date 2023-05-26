@@ -29,7 +29,7 @@ def print_modes(modes, Tn=None, zeta=None):
         print(row)
 
 def plot_models(models, Tn, zeta):
-    fig, ax = plt.subplots(2, 3, constrained_layout=True, sharex=True)# , figsize=(13,6.5))
+    fig, ax = plt.subplots(2, 3, constrained_layout=True, sharex=True, figsize=(13,6.5))
 
     period = [models[method]["period"][0] for method in models]
     ax[0,0].bar(["true"]+list(models), [Tn]+period)
@@ -97,5 +97,5 @@ def plot_pred(ytrue, models, t, title=None):
             ax.plot(t,models[method]["ypred"],"--",label=method)
     ax.set_xlabel("time (s)")# , fontsize=13)
     ax.set_ylabel("output")# , fontsize=13)
-    ax.legend(fontsize=12)    
+    fig.legend(fontsize=12, frameon=True, framealpha=1)    
     fig.suptitle(title, fontsize=14)

@@ -260,7 +260,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="system.html"><code class="docutils literal notranslate"><span class="pre">ssid.system()</span></code></a></li>
-<li class="toctree-l1"><a class="reference internal" href="modes.html"><code class="docutils literal notranslate"><span class="pre">ssid.modes()</span></code></a></li>
+<li class="toctree-l1"><a class="reference internal" href="modes.html"><code class="docutils literal notranslate"><span class="pre">ssid.modes.modes()</span></code></a></li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">markov</span></code> Module</a></li>
@@ -326,18 +326,18 @@ document.write(`
 <h1><code class="docutils literal notranslate"><span class="pre">markov</span></code> Module<a class="headerlink" href="#markov-module" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ssid.markov.okid">
-<span class="sig-prename descclassname"><span class="pre">ssid.markov.</span></span><span class="sig-name descname"><span class="pre">okid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.markov.okid" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ssid.markov.</span></span><span class="sig-name descname"><span class="pre">okid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.markov.okid" title="Permalink to this definition">#</a></dt>
 <dd><p>Identify Markov parameters, or discrete impulse response data, for a given set of input and output data, using the Observer Kalman Identification Algorithm (OKID) (Juang, Phan, Horta, Longman, 1993).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>output</strong> (<em>array</em>) – output acceleration response history to an arbitrary input. dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>input</strong> (<em>array</em>) – input acceleration time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>m</strong> (<em>int</em>) – number of Markov paramters to compute</p></li>
+<li><p><strong>input</strong> (<em>array</em>) – input time history data. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>output</strong> (<em>array</em>) – output response history data. dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>m</strong> (<em>int</em>) – number of Markov parameters to compute. if None, uses the minimum of 300 and the number of timesteps in <cite>input</cite> and <cite>output</cite>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>the Markov parameters, with dimensions <span class="math notranslate nohighlight">\((p,q*nt)\)</span></p>
+<dd class="field-even"><p>the Markov parameters, with dimensions <span class="math notranslate nohighlight">\((p,q,m+1)\)</span></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>array</p>

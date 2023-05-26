@@ -258,7 +258,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="system.html"><code class="docutils literal notranslate"><span class="pre">ssid.system()</span></code></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">ssid.modes()</span></code></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">ssid.modes.modes()</span></code></a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="markov.html"><code class="docutils literal notranslate"><span class="pre">markov</span></code> Module</a></li>
@@ -321,18 +321,18 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <dl class="py function">
-<dt class="sig sig-object py" id="ssid.modes">
-<span class="sig-prename descclassname"><span class="pre">ssid.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realization</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.modes" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ssid.modes.modes">
+<span class="sig-prename descclassname"><span class="pre">ssid.modes.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realization</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.modes.modes" title="Permalink to this definition">#</a></dt>
 <dd><p>Determine the modal parameters of a given state space system realization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>realization</strong> (<em>list</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">A,B,C,D</span></code></p></li>
-<li><p><strong>dt</strong> – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">A,B,C,D</span></code></p></li>
+<li><p><strong>realization</strong> (<em>float</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
+<li><p><strong>dt</strong> – timestep</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">freq</span></code> natural frequencies, <code class="docutils literal notranslate"><span class="pre">damp</span></code> damping ratios, and <code class="docutils literal notranslate"><span class="pre">mode</span></code> mode shapes</p>
+<dd class="field-even"><p>natural frequencies, damping ratios, mode shapes, and eigenvalue condition numbers for each mode in the <code class="docutils literal notranslate"><span class="pre">freq</span></code>, <code class="docutils literal notranslate"><span class="pre">damp</span></code>, <code class="docutils literal notranslate"><span class="pre">modeshape</span></code>, and <code class="docutils literal notranslate"><span class="pre">cnd</span></code> fields, respectively.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dictionary</p>
