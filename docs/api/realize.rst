@@ -7,11 +7,11 @@
 
     :param Y: Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of output channels, :math:`q` = number of input channels, and :math:`nt` = number of timesteps
     :type Y: array
-    :param no: number of block rows in Hankel matrix = order of controllability matrix
+    :param no: number of block rows in Hankel matrix = order of observability matrix
     :type no: int
-    :param nc: number of block columns in Hankel matrix = order of observability matrix
+    :param nc: number of block columns in Hankel matrix = order of controllability matrix
     :type nc: int
-    :param r: reduced model order. default: minimum of 10 and `no`/2
+    :param r: reduced model order. default: minimum of 10 and ``no``/2
     :type r: int, optional
 
     :return: realization in the form of state space coefficients ``(A,B,C,D)``
@@ -35,7 +35,7 @@
     :type l: int, optional
     :param g: lags (gap) between correlation matrices. default: 1
     :type g: int, optional
-    :param r: reduced model order. default: minimum of 10 and `no`/2
+    :param r: reduced model order. default: minimum of 10 and ``no``/2
     :type r: int, optional
 
     :return: realization in the form of state space coefficients ``(A,B,C,D)``
@@ -51,7 +51,7 @@
     :type output: array
     :param no: number of steps used for identification (prediction horizon). default: minimum of 300 and number of timesteps in input and output data.
     :type no: int
-    :param r: reduced model order. default: minimum of 10 and `no`/2
+    :param r: reduced model order. default: minimum of 10 and ``no``/2
     :type r: int
     :param full: if True, full SVD. default: True
     :type r: bool

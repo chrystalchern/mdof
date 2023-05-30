@@ -9,7 +9,7 @@
     :type input: array
     :param output: output response history data. dimensions: :math:`(p,nt)`, where :math:`p` = number of output channels, and :math:`nt` = number of timesteps
     :type output: array
-    :param m: number of Markov parameters to compute. if None, uses the minimum of 300 and the number of timesteps in `input` and `output`.
+    :param m: number of Markov parameters to compute. default: minimum of 300 and the number of timesteps in `input` and `output`.
     :type m: int
 
     :return: the Markov parameters, with dimensions :math:`(p,q,m+1)`
