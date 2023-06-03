@@ -197,7 +197,8 @@ def srim(
     if len(output.shape) < 2:
         output = np.atleast_2d(output).T
 
-    progress_bar = lambda arg, **kwds: (i for i in arg)
+    from tqdm import tqdm as progress_bar
+    # progress_bar = lambda arg, **kwds: (i for i in arg)
 
     assert input.shape[0] == output.shape[0]
     nt = config.get("nt", None) or input.shape[0]
@@ -330,14 +331,13 @@ def srim(
     # ARX filter used in OKID-ERA-DC.
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-def srim2(input,output,no=None,r=None,full=True,**options):
+def srim2(input,output,no=None,r=None,full=True,pool_size=6,**options):
     input = np.atleast_2d(input)
     output = np.atleast_2d(output)
 
-    p = output.shape[0]
+    p,nt = output.shape
     q = input.shape[0]
-    nt = output.shape[1]
-    assert output.shape[1] == input.shape[1]
+    assert nt == input.shape[1]
 
     if no is None:
         no = min(300, nt)
@@ -353,6 +353,8 @@ def srim2(input,output,no=None,r=None,full=True,**options):
 
     Yno = np.zeros((p*no,ns))
     Uno = np.zeros((q*no,ns))
+
+    progress_bar = lambda arg, **kwds: (i for i in arg)
 
     # Construct Y (output) & U (input) data matrices (Eqs. 3.58 & 3.60 Arici 2006)
     for i in range(no):
@@ -448,3 +450,29 @@ def srim2(input,output,no=None,r=None,full=True,**options):
     assert A.shape[0] == A.shape[1] == r
 
     return A,B,C,D
+
+def subspace(output,no=None,r=None,cov_driven=True,**options):
+    output = np.atleast_2d(output)
+    p,nt = output.shape
+    assert nt > p
+
+    if no == None:
+        no = min(300, int(nt/2))
+    if r == None:
+        r = min(10,no-1)
+    
+    if cov_driven:
+        Toep = np.zeros((p*no,p*no))
+        for i in range(2*no-1):
+            covs = np.zeros((p,p,no-1))
+            for k in range(no-1):
+                covs[:,:,k] = output[:,k+i]@output[k]
+            Ri = np.sum(covs,axis=3)/no
+            for j in range(i):
+                for l in range(j):
+                    Toep[j,-l-1] = Ri
+
+    else:
+        pass
+
+    return

@@ -18,7 +18,7 @@ def print_modes(modes, Tn=None, zeta=None):
 
     print("Spectral quantities:")
     print(f"{header}")
-    for mode in modes.values():
+    for mode in sorted(modes.values(), key=lambda x: x["freq"]):
         f = mode["freq"]
         z = mode["damp"]
         row = f"      {1/f: <9.4}  {z: <9.4}"
@@ -99,3 +99,17 @@ def plot_pred(ytrue, models, t, title=None):
     ax.set_ylabel("output")# , fontsize=13)
     fig.legend(fontsize=12, frameon=True, framealpha=1)    
     fig.suptitle(title, fontsize=14)
+
+
+def make_hover_data(data, ln=None):
+    import numpy as np
+    if ln is None:
+        items = np.array([d.values for d in data])
+        keys = data[0].keys()
+    else:
+        items = np.array([list(data.values())]*ln)
+        keys = data.keys()
+    return {
+        "hovertemplate": "<br>".join(f"{k}: %{{customdata[{v}]}}" for v,k in enumerate(keys)),
+        "customdata": list(items),
+    }
