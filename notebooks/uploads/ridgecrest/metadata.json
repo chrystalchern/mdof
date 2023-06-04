@@ -1,0 +1,276 @@
+{
+    "details": {
+        "status": 200,
+        "url": "https://strongmotioncenter.org/testuser/wserv2/records/query?email=cchern%40berkeley.edu&rettype=dataset&download=P&groupby=event&abandoned=false&stcode=CE33742&orderby=epidist-asc&nodata=404"
+    },
+    "count": 5,
+    "results": {
+        "events": [
+            {
+                "id": "ci38443183",
+                "cesmd_id": "ci38443183",
+                "mag": 6.4,
+                "longitude": -117.506,
+                "latitude": 35.7052,
+                "depth": 10.7,
+                "place": "12 km (7.5 mi) SW of Searles Valley, CA",
+                "time": "2019-07-04 17:33:49",
+                "state": "CA",
+                "country": "US",
+                "detail": "6.4MW, 10:33:49 PDT, 35.7052N 117.506W Depth 10.7 km",
+                "net": "ci",
+                "magType": "MW",
+                "faultType": "SS",
+                "type": "earthquake",
+                "title": "Ridgecrest Earthquake of 04 Jul 2019",
+                "stations": [
+                    {
+                        "code": "33742",
+                        "network": "CE",
+                        "status": "Active",
+                        "channels": 9,
+                        "recorder_type": "F",
+                        "numRecorders": 3,
+                        "name": "Ridgecrest - Hwy 395/Brown Road Bridge",
+                        "location": "Ridgecrest-395Br",
+                        "longitude": -117.8187,
+                        "latitude": 35.6696,
+                        "elevation": "729",
+                        "type": "Bridge",
+                        "Vs30": null,
+                        "siteclass": null,
+                        "record": {
+                            "epidist": 28.6,
+                            "pgav1": 0.102,
+                            "pgav2": 0.1,
+                            "pga_str": 0.274,
+                            "pgv": 6.04,
+                            "pgd": 3.3,
+                            "sa03": 0.214,
+                            "sa10": 0.088,
+                            "sa30": 0.031,
+                            "fault_dist": 21.8,
+                            "data_availability": {
+                                "plot": "true",
+                                "processed": "true",
+                                "raw": "true"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "ci38457511",
+                "cesmd_id": "ci38457511",
+                "mag": 7.1,
+                "longitude": -117.5993,
+                "latitude": 35.7695,
+                "depth": 8,
+                "place": "18 km (11.3 mi) W of Searles Valley, CA",
+                "time": "2019-07-06 03:19:53",
+                "state": "CA",
+                "country": "US",
+                "detail": "7.1MW, 20:19:53 PDT, 35.7695N 117.5993W Depth 8.0 km",
+                "net": "ci",
+                "magType": "MW",
+                "faultType": "SS",
+                "type": "earthquake",
+                "title": "Ridgecrest Earthquake of 05 Jul 2019",
+                "stations": [
+                    {
+                        "code": "33742",
+                        "network": "CE",
+                        "status": "Active",
+                        "channels": 9,
+                        "recorder_type": "F",
+                        "numRecorders": 3,
+                        "name": "Ridgecrest - Hwy 395/Brown Road Bridge",
+                        "location": "Ridgecrest-395Br",
+                        "longitude": -117.8187,
+                        "latitude": 35.6696,
+                        "elevation": "729",
+                        "type": "Bridge",
+                        "Vs30": null,
+                        "siteclass": null,
+                        "record": {
+                            "epidist": 22.7,
+                            "pgav1": 0.243,
+                            "pgav2": 0.24,
+                            "pga_str": 0.604,
+                            "pgv": 24.45,
+                            "pgd": 18.6,
+                            "sa03": 0.526,
+                            "sa10": 0.241,
+                            "sa30": 0.074,
+                            "fault_dist": 22.3,
+                            "data_availability": {
+                                "plot": "true",
+                                "processed": "true",
+                                "raw": "true"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "ci38996632",
+                "cesmd_id": "ci38996632",
+                "mag": 5,
+                "longitude": -117.709,
+                "latitude": 35.9073,
+                "depth": 2.4,
+                "place": "18 km (11.25 mi) E of Little Lake, CA",
+                "time": "2019-08-22 20:49:50",
+                "state": "CA",
+                "country": "US",
+                "detail": "5.0MW, 13:49:50 PDT, 35.9073N 117.709W Depth 2.4 km",
+                "net": "ci",
+                "magType": "MW",
+                "faultType": "",
+                "type": "earthquake",
+                "title": "Little Lake Earthquake of 22 Aug 2019",
+                "stations": [
+                    {
+                        "code": "33742",
+                        "network": "CE",
+                        "status": "Active",
+                        "channels": 9,
+                        "recorder_type": "F",
+                        "numRecorders": 3,
+                        "name": "Ridgecrest - Hwy 395/Brown Road Bridge",
+                        "location": "Ridgecrest-395Br",
+                        "longitude": -117.8187,
+                        "latitude": 35.6696,
+                        "elevation": "729",
+                        "type": "Bridge",
+                        "Vs30": null,
+                        "siteclass": null,
+                        "record": {
+                            "epidist": 28.2,
+                            "pgav1": 0.026,
+                            "pgav2": 0.025,
+                            "pga_str": 0.099,
+                            "pgv": 0.95,
+                            "pgd": 0.1,
+                            "sa03": 0.027,
+                            "sa10": 0.005,
+                            "sa30": 0.001,
+                            "fault_dist": null,
+                            "data_availability": {
+                                "plot": "true",
+                                "processed": "true",
+                                "raw": "true"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "ci39462536",
+                "cesmd_id": "ci39462536",
+                "mag": 5.5,
+                "longitude": -117.4282,
+                "latitude": 35.6148,
+                "depth": 8.4,
+                "place": "17 km (10.625 mi) S of Searles Valley, CA",
+                "time": "2020-06-04 01:32:11",
+                "state": "CA",
+                "country": "US",
+                "detail": "5.5MW, 18:32:11 PDT, 35.6148N 117.4282W Depth 8.4 km",
+                "net": "ci",
+                "magType": "MW",
+                "faultType": "",
+                "type": "earthquake",
+                "title": "Searles Valley Earthquake of 03 Jun 2020",
+                "stations": [
+                    {
+                        "code": "33742",
+                        "network": "CE",
+                        "status": "Active",
+                        "channels": 9,
+                        "recorder_type": "F",
+                        "numRecorders": 3,
+                        "name": "Ridgecrest - Hwy 395/Brown Road Bridge",
+                        "location": "Ridgecrest-395Br",
+                        "longitude": -117.8187,
+                        "latitude": 35.6696,
+                        "elevation": "729",
+                        "type": "Bridge",
+                        "Vs30": null,
+                        "siteclass": null,
+                        "record": {
+                            "epidist": 35.8,
+                            "pgav1": 0.018,
+                            "pgav2": 0.018,
+                            "pga_str": 0.06,
+                            "pgv": 1.01,
+                            "pgd": 0.3,
+                            "sa03": 0.026,
+                            "sa10": 0.016,
+                            "sa30": 0.003,
+                            "fault_dist": null,
+                            "data_availability": {
+                                "plot": "true",
+                                "processed": "true",
+                                "raw": "true"
+                            }
+                        }
+                    }
+                ]
+            },
+            {
+                "id": "ci39493944",
+                "cesmd_id": "ci39493944",
+                "mag": 5.8,
+                "longitude": -117.9752,
+                "latitude": 36.4468,
+                "depth": 4.7,
+                "place": "18 km (11.25 mi) SSE of Lone Pine, CA",
+                "time": "2020-06-24 17:40:49",
+                "state": "CA",
+                "country": "US",
+                "detail": "5.8MW, 10:40:49 PDT, 36.4468N 117.9752W Depth 4.7 km",
+                "net": "ci",
+                "magType": "MW",
+                "faultType": "",
+                "type": "earthquake",
+                "title": "Lone Pine Earthquake of 24 Jun 2020",
+                "stations": [
+                    {
+                        "code": "33742",
+                        "network": "CE",
+                        "status": "Active",
+                        "channels": 9,
+                        "recorder_type": "F",
+                        "numRecorders": 3,
+                        "name": "Ridgecrest - Hwy 395/Brown Road Bridge",
+                        "location": "Ridgecrest-395Br",
+                        "longitude": -117.8187,
+                        "latitude": 35.6696,
+                        "elevation": "729",
+                        "type": "Bridge",
+                        "Vs30": null,
+                        "siteclass": null,
+                        "record": {
+                            "epidist": 87.5,
+                            "pgav1": 0.011,
+                            "pgav2": 0.011,
+                            "pga_str": 0.027,
+                            "pgv": 0.93,
+                            "pgd": 0.3,
+                            "sa03": 0.02,
+                            "sa10": 0.012,
+                            "sa30": 0.003,
+                            "fault_dist": null,
+                            "data_availability": {
+                                "plot": "true",
+                                "processed": "true",
+                                "raw": "true"
+                            }
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+}

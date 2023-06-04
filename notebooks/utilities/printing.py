@@ -27,6 +27,8 @@ def print_modes(modes, Tn=None, zeta=None):
         if zeta is not None:
             row += f"    {100*(z-zeta)/zeta: <9.4}"
         print(row)
+    print("Mean Period(s):", np.mean([1/v["freq"] for v in modes.values()]))
+    print("Standard Dev(s):", np.std([1/v["freq"] for v in modes.values()]))
 
 def plot_models(models, Tn, zeta):
     fig, ax = plt.subplots(2, 3, constrained_layout=True, sharex=True, figsize=(13,6.5))

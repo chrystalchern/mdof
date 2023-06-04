@@ -13,11 +13,11 @@ def okid(input,output,m=None,**options):
     p = output.shape[0]
     q = input.shape[0]
     nt = output.shape[1]
-
     assert output.shape[1] == input.shape[1]
     
     if m is None:
         m = min(300,nt)
+
     # adapted from Brunton
     # Form data matrix V
     V = np.zeros((q+(q+p)*m,nt))
@@ -31,6 +31,7 @@ def okid(input,output,m=None,**options):
     
     # Solve for observer Markov parameters Ybar
     Ybar = output @ np.linalg.pinv(V,rcond=10**(-3))
+    
     # Isolate system Markov parameters H, and observer gain M
     D = Ybar[:,:q] # feed-through term (or D matrix) is the first term
     

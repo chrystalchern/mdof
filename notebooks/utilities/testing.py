@@ -25,3 +25,6 @@ def mode_statistics(mode_results, key):
     return [
         dict(**item, distance=(item[key]-mean)/std) for item in closest_values
     ]
+
+def mode_set(mode_results, key):
+    return 

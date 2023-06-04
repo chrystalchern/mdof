@@ -10,12 +10,23 @@ def _decimate(series, d):
 
 def extract_channels(event, channels, decimate=1):
     import numpy as np
-    import warnings
+    import sys
+
+    def find(chan):
+        #event.match("r", file_name=f".*{chan}\.[vV]2")
+        return event.match("l", station_channel=f"{chan}")
 
     data = np.asarray([
-        _decimate(event.match("r", file_name=f".*{chan}\.[vV]2").accel.data, d=decimate)
-        for chan in channels
+        _decimate(find(chan).accel.data, d=decimate)
+        for chan in channels if find(chan) is not None
     ])
+
+
+    if len(data) == 0:
+        raise ValueError("No channels found")
+    
+    elif len(data) != len(channels):
+        print(f"Only extracted {len(data)} channels, {len(channels)-len(data)} missing.", file=sys.stderr)
 
     dt = event.match("r", file_name=rf".*{channels[0]}\.[vV]2").accel["time_step"]*decimate 
     return data, dt
