@@ -10,11 +10,12 @@ def _decimate(series, d):
 
 def extract_channels(event, channels, decimate=1):
     import numpy as np
+    import warnings
 
-    data = np.array([
+    data = np.asarray([
         _decimate(event.match("r", file_name=f".*{chan}\.[vV]2").accel.data, d=decimate)
         for chan in channels
-    ]).T
+    ])
 
     dt = event.match("r", file_name=rf".*{channels[0]}\.[vV]2").accel["time_step"]*decimate 
     return data, dt

@@ -15,3 +15,13 @@ def test_method(method, input, output, dt, t, **conf):
                 "damping": [value['damp'] for value in modedict.values()]
             }
     return model
+
+def mode_statistics(mode_results, key):
+    import numpy as np
+    values = [result[key] for results in mode_results for result in results]
+    mean = np.mean(values)
+    std = np.std(values)
+    closest_values = [results[np.argmin(np.abs(mean-[result[key] for result in results]))] for results in mode_results]
+    return [
+        dict(**item, distance=(item[key]-mean)/std) for item in closest_values
+    ]

@@ -327,12 +327,12 @@ document.write(`
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>realization</strong> (<em>float</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
-<li><p><strong>dt</strong> – timestep</p></li>
+<li><p><strong>realization</strong> (<em>tuple</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – timestep</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>natural frequencies, damping ratios, mode shapes, and eigenvalue condition numbers for each mode in the <code class="docutils literal notranslate"><span class="pre">freq</span></code>, <code class="docutils literal notranslate"><span class="pre">damp</span></code>, <code class="docutils literal notranslate"><span class="pre">modeshape</span></code>, and <code class="docutils literal notranslate"><span class="pre">cnd</span></code> fields, respectively.</p>
+<dd class="field-even"><p>natural frequencies, damping ratios, mode shapes, and eigenvalue condition numbers for each mode. stored as a dictionary in the <code class="docutils literal notranslate"><span class="pre">freq</span></code>, <code class="docutils literal notranslate"><span class="pre">damp</span></code>, <code class="docutils literal notranslate"><span class="pre">modeshape</span></code>, and <code class="docutils literal notranslate"><span class="pre">cnd</span></code> fields, respectively.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dictionary</p>

@@ -1,20 +1,23 @@
 import numpy as np
+import warnings
 
 # input = input data. dimensions of input: q x nt, where nt = number of timesteps.
 # output = response data due to input data. dimensions of output: p x nt.
 # m = number of Markov parameters (impulse response timesteps) to solve for.
 def okid(input,output,m=None,**options):
-    input = np.atleast_2d(input)
-    output = np.atleast_2d(output)
+    if input.shape[0] > input.shape[1]:
+        warnings.warn("input data has more channels (dim 1) than timesteps (dim 2)")
+    if output.shape[0] > output.shape[1]:
+        warnings.warn("output data has more channels (dim 1) than timesteps (dim 2)")
 
     p = output.shape[0]
     q = input.shape[0]
     nt = output.shape[1]
+
     assert output.shape[1] == input.shape[1]
     
     if m is None:
         m = min(300,nt)
-
     # adapted from Brunton
     # Form data matrix V
     V = np.zeros((q+(q+p)*m,nt))
@@ -28,7 +31,6 @@ def okid(input,output,m=None,**options):
     
     # Solve for observer Markov parameters Ybar
     Ybar = output @ np.linalg.pinv(V,rcond=10**(-3))
-    
     # Isolate system Markov parameters H, and observer gain M
     D = Ybar[:,:q] # feed-through term (or D matrix) is the first term
     

@@ -4,6 +4,7 @@ linsolve = np.linalg.solve
 lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
 import multiprocessing
 from functools import partial
+import warnings
 
 # Y = output data: response to unit impulse, or "impulse response," or "Markov parameters".
 # dimensions of Y: p x q x nt, where nt = number of timesteps = number of Markov parameters = number of blocks
@@ -129,7 +130,7 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
 def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
 
-def srim(
+def srim2(
     input,
     output,
     no = None,
@@ -200,6 +201,13 @@ def srim(
     from tqdm import tqdm as progress_bar
     # progress_bar = lambda arg, **kwds: (i for i in arg)
 
+    if input.shape[0] > input.shape[1]:
+        warnings.warn("input data has more channels (dim 1) than timesteps (dim 2)")
+    if output.shape[0] > output.shape[1]:
+        warnings.warn("output data has more channels (dim 1) than timesteps (dim 2)")
+
+    input = input.T
+    output= output.T
     assert input.shape[0] == output.shape[0]
     nt = config.get("nt", None) or input.shape[0]
 
@@ -331,9 +339,11 @@ def srim(
     # ARX filter used in OKID-ERA-DC.
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-def srim2(input,output,no=None,r=None,full=True,pool_size=6,**options):
-    input = np.atleast_2d(input)
-    output = np.atleast_2d(output)
+def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
+    if input.shape[0] > input.shape[1]:
+        warnings.warn("input data has more channels (dim 1) than timesteps (dim 2)")
+    if output.shape[0] > output.shape[1]:
+        warnings.warn("output data has more channels (dim 1) than timesteps (dim 2)")
 
     p,nt = output.shape
     q = input.shape[0]
@@ -411,14 +421,14 @@ def srim2(input,output,no=None,r=None,full=True,pool_size=6,**options):
     # Second block column of Phi
     Ipp = np.eye(p)
     for i in range(ns):
-        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(input[i,:],Ipp)
+        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(input[:,i],Ipp)
 
     # Third block column of Phi
     In1n1 = np.eye(r)
     cc = r + p*q + 1
     dd = r + p*q + r*q
 
-    krn = np.array([np.kron(input[i,:],In1n1) for i in range(ns)])
+    krn = np.array([np.kron(input[:,i],In1n1) for i in range(ns)])
 
     with multiprocessing.Pool(pool_size) as pool:
         for i,res in progress_bar(
@@ -431,7 +441,7 @@ def srim2(input,output,no=None,r=None,full=True,pool_size=6,**options):
             ):
             Phi[i*p:(i+1)*p,cc-1:dd] = res
 
-    y = output[:ns,:].flatten()
+    y = output[:,:ns].flatten()
 
     teta = lsqminnorm(Phi,y)
 

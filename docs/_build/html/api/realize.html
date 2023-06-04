@@ -331,9 +331,9 @@ document.write(`
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>no</strong> (<em>int</em>) – number of block rows in Hankel matrix = order of controllability matrix</p></li>
-<li><p><strong>nc</strong> (<em>int</em>) – number of block columns in Hankel matrix = order of observability matrix</p></li>
-<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order. default: minimum of 10 and <cite>no</cite>/2</p></li>
+<li><p><strong>no</strong> (<em>int</em>) – number of block rows in Hankel matrix = order of observability matrix</p></li>
+<li><p><strong>nc</strong> (<em>int</em>) – number of block columns in Hankel matrix = order of controllability matrix</p></li>
+<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order. default: minimum of 10 and <code class="docutils literal notranslate"><span class="pre">no</span></code>/2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -359,7 +359,7 @@ document.write(`
 <li><p><strong>b</strong> (<em>int</em><em>, </em><em>optional</em>) – (beta) number of block columns in Hankel of correlation matrix. default: 0</p></li>
 <li><p><strong>l</strong> (<em>int</em><em>, </em><em>optional</em>) – initial lag for data correlations. default: 0</p></li>
 <li><p><strong>g</strong> (<em>int</em><em>, </em><em>optional</em>) – lags (gap) between correlation matrices. default: 1</p></li>
-<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order. default: minimum of 10 and <cite>no</cite>/2</p></li>
+<li><p><strong>r</strong> (<em>int</em><em>, </em><em>optional</em>) – reduced model order. default: minimum of 10 and <code class="docutils literal notranslate"><span class="pre">no</span></code>/2</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -381,7 +381,7 @@ document.write(`
 <li><p><strong>input</strong> (<em>array</em>) – input acceleration time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where <span class="math notranslate nohighlight">\(q\)</span> = number of input channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>output</strong> (<em>array</em>) – output acceleration response history to an arbitrary input. dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of output channels, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>no</strong> (<em>int</em>) – number of steps used for identification (prediction horizon). default: minimum of 300 and number of timesteps in input and output data.</p></li>
-<li><p><strong>r</strong> (<em>bool</em>) – reduced model order. default: minimum of 10 and <cite>no</cite>/2</p></li>
+<li><p><strong>r</strong> (<em>bool</em>) – reduced model order. default: minimum of 10 and <code class="docutils literal notranslate"><span class="pre">no</span></code>/2</p></li>
 <li><p><strong>full</strong> – if True, full SVD. default: True</p></li>
 </ul>
 </dd>
