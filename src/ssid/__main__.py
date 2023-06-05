@@ -46,6 +46,37 @@ class JSON_Encoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
+def _decimate(series, d):
+    import numpy as np
+    return series[np.arange(0,len(series),d)]
+
+def extract_channels(event, channels, decimate=1, permissive=True):
+    import numpy as np
+    import sys
+
+    def find(chan):
+        #event.match("r", file_name=f".*{chan}\.[vV]2")
+        return event.match("l", station_channel=f"{chan}")
+
+    data = np.asarray([
+        _decimate(find(chan).accel.data, d=decimate)
+        for chan in channels if find(chan) is not None
+    ])
+
+
+    if len(data) == 0:
+        raise ValueError("No channels found")
+    
+    elif len(data) != len(channels):
+        if permissive:
+            print(f"Only extracted {len(data)} channels, {len(channels)-len(data)} missing.", file=sys.stderr)
+        else:
+            raise ValueError("Could not extract all desired channels")
+
+    dt = find(channels[0]).accel["time_step"]*decimate 
+    return data, dt
+
+
 def parse_srim(argi, config):
     help="""
     SRIM -- System Identification with Information Matrix
@@ -74,14 +105,16 @@ def parse_srim(argi, config):
             sys.exit()
 
         elif arg == "--inputs":
-            inputs = next(argi)[1:-1].split(",")
+            # inputs = next(argi)[1:-1].split(",")
+            inputs = eval(next(argi))
             if isinstance(inputs, str):
                 channels[0] = [int(inputs)]
             else:
                 channels[0] = list(map(int, inputs))
 
         elif arg == "--outputs":
-            outputs = next(argi)[1:-1].split(",")
+            # outputs = next(argi)[1:-1].split(",")
+            outputs = eval(next(argi))
             if isinstance(outputs, str):
                 channels[1] = [int(outputs)]
             else:
@@ -94,15 +127,8 @@ def parse_srim(argi, config):
             config["event_file"] = arg
 
     event = quakeio.read(config["event_file"])
-    inputs = np.array([
-        event.match("l", station_channel=f"{i}").accel.data for i in channels[0]
-    ]).T
-    outputs = np.array([
-        event.match("l", station_channel=f"{i}").accel.data for i in channels[1]
-        #event.at(file_name=f"CHAN{i:03d}.V2").accel.data for i in channels[1]
-    ]).T
-    
-    dt = event.at(station_channel=f"{channels[0][0]}").accel["time_step"]
+    inputs,  dt = extract_channels(event, channels[0], decimate=8)
+    outputs, dt = extract_channels(event, channels[1], decimate=8)
     config["dt"] = dt
 
     A,B,C,D = ssid.system(input=inputs, output=outputs, full=True, **config)
