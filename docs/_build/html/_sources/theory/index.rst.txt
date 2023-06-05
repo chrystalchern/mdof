@@ -1,15 +1,14 @@
 Theory 
 ======
 
-State Space Model
-------------------
+State Space Model of Structural Dynamics
+----------------------------------------
 .. include:: statespace.rst
 
 
 Eigensystem Realization Algorithm (ERA)
 ----------------------------------------
 .. include:: era.rst
-
 
 Observer Kalman Filter Identification (OKID)
 ---------------------------------------------

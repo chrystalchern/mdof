@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
 
-    <title>&lt;no title&gt; &#8212; ssid</title>
+    <title>Partitioned Equation of Dynamic Equilibrium &#8212; ssid</title>
   
   
   
@@ -138,6 +138,13 @@
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
   </ul>
 </nav></div>
       
@@ -228,6 +235,13 @@ document.write(`
                       </a>
                     </li>
                 
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
   </ul>
 </nav></div>
         
@@ -284,7 +298,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">&lt;no title&gt;</li>
+    <li class="breadcrumb-item active" aria-current="page">Partitioned Equation of Dynamic Equilibrium</li>
   </ul>
 </nav>
 </div>
@@ -301,23 +315,31 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p>When an MDOF system is subject to multiple support excitation, such as
-in Figure <a class="reference external" href="#fig-msmdof">[fig-msmdof]</a>, the displacement vector is
-extended to include the support DOF. An equation of dynamic equilibrium
-(Equation <a class="reference external" href="#eq:msmdof_eom">[eq:msmdof_eom]</a>) is derived as follows:</p>
+  <figure class="align-default" id="id1">
+<img alt="MDOF Structure" src="../_images/structure_diagram.png" />
+<figcaption>
+<p><span class="caption-text">MDOF Structure</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+<p>When an multiple degree-of-freedom (MDOF) system is subject to multiple
+support excitation, such as in the figure above, the displacement vector
+is extended to include the support DOF. An <a class="reference external" href="#equation-of-motion">equation of
+motion</a> is derived as follows.</p>
 <p>Begin by forming a partitioned equation of dynamic equilibrium for all
 the DOF:</p>
+<section id="partitioned-equation-of-dynamic-equilibrium">
+<h1>Partitioned Equation of Dynamic Equilibrium<a class="headerlink" href="#partitioned-equation-of-dynamic-equilibrium" title="Permalink to this heading">#</a></h1>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{bmatrix} \mathbf{m} &amp; \mathbf{m}_{g} \\ \mathbf{m}^T_{g} &amp; \mathbf{m}_{gg} \end{bmatrix}
-    \begin{bmatrix} \mathbf{\ddot{u}}^{t}_{f} \\ \mathbf{\ddot{u}}_{g} \end{bmatrix}
-    +
-    \begin{bmatrix} \mathbf{c} &amp; \mathbf{c}_{g} \\ \mathbf{c}^T_{g} &amp; \mathbf{c}_{gg} \end{bmatrix}
-    \begin{bmatrix} \mathbf{\dot{u}}^{t}_{f} \\ \mathbf{\dot{u}}_{g} \end{bmatrix}
-    +
-    \begin{bmatrix} \mathbf{k} &amp; \mathbf{k}_{g} \\ \mathbf{k}^T_{g} &amp; \mathbf{k}_{gg} \end{bmatrix}
-    \begin{bmatrix} \mathbf{u}^{t}_{f} \\ \mathbf{u}_{g} \end{bmatrix}
-    =
-    \begin{bmatrix} \mathbf{0} \\ \mathbf{p}_{g} \end{bmatrix}\end{split}\]</div>
+\begin{bmatrix} \mathbf{\ddot{u}}^{t}_{f} \\ \mathbf{\ddot{u}}_{g} \end{bmatrix}
++
+\begin{bmatrix} \mathbf{c} &amp; \mathbf{c}_{g} \\ \mathbf{c}^T_{g} &amp; \mathbf{c}_{gg} \end{bmatrix}
+\begin{bmatrix} \mathbf{\dot{u}}^{t}_{f} \\ \mathbf{\dot{u}}_{g} \end{bmatrix}
++
+\begin{bmatrix} \mathbf{k} &amp; \mathbf{k}_{g} \\ \mathbf{k}^T_{g} &amp; \mathbf{k}_{gg} \end{bmatrix}
+\begin{bmatrix} \mathbf{u}^{t}_{f} \\ \mathbf{u}_{g} \end{bmatrix}
+=
+\begin{bmatrix} \mathbf{0} \\ \mathbf{p}_{g} \end{bmatrix}\end{split}\]</div>
 <p>where the subscript <span class="math notranslate nohighlight">\(g\)</span> indicates support DOF, the subscript
 <span class="math notranslate nohighlight">\(f\)</span> indicates structural DOF, and the superscript <span class="math notranslate nohighlight">\(t\)</span>
 indicates the total of quasi-static (<span class="math notranslate nohighlight">\(\mathbf{u}^{s}_{f}\)</span>, due to
@@ -331,9 +353,9 @@ moving all <span class="math notranslate nohighlight">\(\mathbf{u}_{g}\)</span> 
 to the right side,</p>
 <div class="math notranslate nohighlight">
 \[\mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
-    = -(\mathbf{m}\mathbf{\ddot{u}}^{s}_{f}+\mathbf{m}_{g}\mathbf{\ddot{u}}_{g})
-    -(\mathbf{c}\mathbf{\dot{u}}^{s}_{f}+\mathbf{c}_{g}\mathbf{\dot{u}}_{g})
-    -(\mathbf{k}\mathbf{u}^{s}_{f}+\mathbf{k}_{g}\mathbf{u}_{g})\]</div>
+= -(\mathbf{m}\mathbf{\ddot{u}}^{s}_{f}+\mathbf{m}_{g}\mathbf{\ddot{u}}_{g})
+-(\mathbf{c}\mathbf{\dot{u}}^{s}_{f}+\mathbf{c}_{g}\mathbf{\dot{u}}_{g})
+-(\mathbf{k}\mathbf{u}^{s}_{f}+\mathbf{k}_{g}\mathbf{u}_{g})\]</div>
 <p>The term
 <span class="math notranslate nohighlight">\((\mathbf{k}\mathbf{u}^{s}_{f}+\mathbf{k}_{g}\mathbf{u}_{g})=\mathbf{0}\)</span>
 due to static equilibrium, allowing the term to be dropped and giving
@@ -343,57 +365,59 @@ the term
 is dropped because it is usually small relative to the inertia term; and
 the term <span class="math notranslate nohighlight">\(\mathbf{m}_{g}\mathbf{\ddot{u}}_{g}\)</span> is dropped because
 mass is usually neglected at supports.</p>
-<p>The equilibrium equation thus simplifies to:</p>
+<p>The equilibrium equation thus simplifies.</p>
+</section>
+<section id="equation-of-motion">
+<h1>Equation of Motion<a class="headerlink" href="#equation-of-motion" title="Permalink to this heading">#</a></h1>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:msmdof_eom}
-    \begin{aligned}
-        \mathbf{M\ddot{u}}_{f}(t) + \mathbf{\zeta\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &amp;= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
-        \mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
-        &amp;= -\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_{g}
-    \end{aligned}\end{split}\]</div>
-<p>The state-space representation of the MDOF multiple-support excitation
-system is similar to the uniform excitation case, but with the support
-displacements <span class="math notranslate nohighlight">\(\mathbf{\ddot{u}}_{g}\)</span> defined by a vector rather
-than a scalar.</p>
-<p>Hence, Equation <a class="reference external" href="#eq:msmdof_statespace">[eq:msmdof_statespace]</a>
-presents the continuous LTI state-space representation of the most
-general form (MDOF with multiple support excitation) of a structural
-system.</p>
+\[\begin{split}\begin{aligned}
+    \mathbf{M\ddot{u}}_{f}(t) + \mathbf{\zeta\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &amp;= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
+    \mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
+    &amp;= -\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_{g}
+\end{aligned}\end{split}\]</div>
+<p>Hence, the following equation presents the continuous linear
+time-invariant (LTI) state-space representation of a structural system.</p>
+</section>
+<section id="continuous-lti-state-space-representation">
+<h1>Continuous LTI State-Space Representation<a class="headerlink" href="#continuous-lti-state-space-representation" title="Permalink to this heading">#</a></h1>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:msmdof_statespace}
-    \begin{aligned}
-        \mathbf{\dot{x}} &amp;= \mathbf{A}_{c}\mathbf{x} + \mathbf{B}_{c}\mathbf{u} \\
-        \begin{bmatrix} \mathbf{\dot{u}}_{f}(t) \\ \mathbf{\ddot{u}}_{f}(t) \end{bmatrix}
-        &amp;=
-        \begin{bmatrix} \mathbf{0} &amp; \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
-        \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
-        +
-        \begin{bmatrix} \mathbf{0} \\ -\mathbf{\iota} \end{bmatrix}
-        \mathbf{\ddot{u}}_{g}(t) \\ \\
-        \mathbf{y} &amp;= \mathbf{Cx} + \mathbf{Du} \\
-        \mathbf{\ddot{u}}_{f}(t) &amp;=
-        \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
-        \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
-        +
-        \begin{bmatrix} -\mathbf{\iota} \end{bmatrix}
-        \mathbf{\ddot{u}}_{g}(t)
-    \end{aligned}\end{split}\]</div>
+\[\begin{split}\begin{aligned}
+    \mathbf{\dot{x}} &amp;= \mathbf{A}_{c}\mathbf{x} + \mathbf{B}_{c}\mathbf{u} \\
+    \begin{bmatrix} \mathbf{\dot{u}}_{f}(t) \\ \mathbf{\ddot{u}}_{f}(t) \end{bmatrix}
+    &amp;=
+    \begin{bmatrix} \mathbf{0} &amp; \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
+    \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
+    +
+    \begin{bmatrix} \mathbf{0} \\ -\mathbf{\iota} \end{bmatrix}
+    \mathbf{\ddot{u}}_{g}(t) \\ \\
+    \mathbf{y} &amp;= \mathbf{Cx} + \mathbf{Du} \\
+    \mathbf{\ddot{u}}_{f}(t) &amp;=
+    \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
+    \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
+    +
+    \begin{bmatrix} -\mathbf{\iota} \end{bmatrix}
+    \mathbf{\ddot{u}}_{g}(t)
+\end{aligned}\end{split}\]</div>
 <p>In order to move from the continuous to the discrete case, the
 coefficients <span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{B}_{c}\)</span> are
 transformed by solving the first-order differential equation with the
 signal’s value held constant between time steps (“zero-order hold
-method”, Figure <a class="reference external" href="#fig-discretize">[fig-discretize]</a>, Appendix
-<a class="reference external" href="#sec:discrete">[sec:discrete]</a>
-). The coefficients
-<span class="math notranslate nohighlight">\(\mathbf{C}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> are unchanged. The results are
-shown in Equation
-<a class="reference external" href="#eq:discrete_statespace">[eq:discrete_statespace]</a>.</p>
+method”). The coefficients <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> are
+unchanged. The results are shown in the following equation.</p>
+<figure class="align-default" id="id2">
+<img alt="Signal Discretization" src="../_images/si_discretize.png" />
+<figcaption>
+<p><span class="caption-text">Signal Discretization</span><a class="headerlink" href="#id2" title="Permalink to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="discrete-lti-state-space-representation">
+<h1>Discrete LTI State-Space Representation<a class="headerlink" href="#discrete-lti-state-space-representation" title="Permalink to this heading">#</a></h1>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:discrete_statespace}
-    \begin{aligned}
-        \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
-        \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
-    \end{aligned}\end{split}\]</div>
+\[\begin{split}\begin{aligned}
+    \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
+\end{aligned}\end{split}\]</div>
 <div class="math notranslate nohighlight">
 \[\mathbf{x}_{k} = \mathbf{x}(k\Delta t), \hspace{1cm} \mathbf{u}_{k} = \mathbf{u}(k\Delta t), \hspace{1cm} \mathbf{y}_{k} = \mathbf{y}(k\Delta t)\]</div>
 <div class="math notranslate nohighlight">
@@ -401,11 +425,12 @@ shown in Equation
 <p>where:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-    \text{\gls{A}} &amp; \text{: discrete state transition matrix} \\
-    \text{\gls{B}} &amp; \text{: discrete input influence matrix} \\
-    \text{\gls{C}} &amp; \text{: output influence matrix} \\
-    \text{\gls{D}} &amp; \text{: direct transmission or feed-through matrix}
+    \mathbf{A} &amp; \text{: discrete state transition matrix} \\
+    \mathbf{B} &amp; \text{: discrete input influence matrix} \\
+    \mathbf{C} &amp; \text{: output influence matrix} \\
+    \mathbf{D} &amp; \text{: direct transmission or feed-through matrix}
 \end{aligned}\end{split}\]</div>
+</section>
 
 
                 </article>
@@ -429,7 +454,11 @@ shown in Equation
     <i class="fa-solid fa-list"></i> On this page
   </div>
   <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Partitioned Equation of Dynamic Equilibrium</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-of-motion">Equation of Motion</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-lti-state-space-representation">Continuous LTI State-Space Representation</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-lti-state-space-representation">Discrete LTI State-Space Representation</a></li>
 </ul>
 
   </nav></div>
