@@ -316,7 +316,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <figure class="align-default" id="id1">
-<img alt="MDOF Structure" src="../_images/structure_diagram.png" />
+<img alt="MDOF Structure" src="../_images/si_msmdof.png" />
 <figcaption>
 <p><span class="caption-text">MDOF Structure</span><a class="headerlink" href="#id1" title="Permalink to this image">#</a></p>
 </figcaption>
@@ -371,7 +371,7 @@ mass is usually neglected at supports.</p>
 <h1>Equation of Motion<a class="headerlink" href="#equation-of-motion" title="Permalink to this heading">#</a></h1>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-    \mathbf{M\ddot{u}}_{f}(t) + \mathbf{\zeta\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &amp;= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
+    \mathbf{M\ddot{u}}_{f}(t) + \mathbf{Z\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &amp;= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
     \mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
     &amp;= -\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_{g}
 \end{aligned}\end{split}\]</div>
@@ -385,14 +385,14 @@ time-invariant (LTI) state-space representation of a structural system.</p>
     \mathbf{\dot{x}} &amp;= \mathbf{A}_{c}\mathbf{x} + \mathbf{B}_{c}\mathbf{u} \\
     \begin{bmatrix} \mathbf{\dot{u}}_{f}(t) \\ \mathbf{\ddot{u}}_{f}(t) \end{bmatrix}
     &amp;=
-    \begin{bmatrix} \mathbf{0} &amp; \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
+    \begin{bmatrix} \mathbf{0} &amp; \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{Z} \end{bmatrix}
     \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
     +
     \begin{bmatrix} \mathbf{0} \\ -\mathbf{\iota} \end{bmatrix}
     \mathbf{\ddot{u}}_{g}(t) \\ \\
     \mathbf{y} &amp;= \mathbf{Cx} + \mathbf{Du} \\
     \mathbf{\ddot{u}}_{f}(t) &amp;=
-    \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
+    \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{Z} \end{bmatrix}
     \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
     +
     \begin{bmatrix} -\mathbf{\iota} \end{bmatrix}

@@ -1,4 +1,4 @@
-.. figure:: figures/structure_diagram.png
+.. figure:: figures/si_msmdof.png
    :alt: MDOF Structure
 
    MDOF Structure
@@ -68,7 +68,7 @@ Equation of Motion
 
 
    \begin{aligned}
-       \mathbf{M\ddot{u}}_{f}(t) + \mathbf{\zeta\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
+       \mathbf{M\ddot{u}}_{f}(t) + \mathbf{Z\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
        \mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
        &= -\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_{g}
    \end{aligned}
@@ -86,14 +86,14 @@ Continuous LTI State-Space Representation
        \mathbf{\dot{x}} &= \mathbf{A}_{c}\mathbf{x} + \mathbf{B}_{c}\mathbf{u} \\
        \begin{bmatrix} \mathbf{\dot{u}}_{f}(t) \\ \mathbf{\ddot{u}}_{f}(t) \end{bmatrix}
        &=
-       \begin{bmatrix} \mathbf{0} & \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} & -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
+       \begin{bmatrix} \mathbf{0} & \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} & -\mathbf{M}^{-1}\mathbf{Z} \end{bmatrix}
        \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
        +
        \begin{bmatrix} \mathbf{0} \\ -\mathbf{\iota} \end{bmatrix}
        \mathbf{\ddot{u}}_{g}(t) \\ \\
        \mathbf{y} &= \mathbf{Cx} + \mathbf{Du} \\        
        \mathbf{\ddot{u}}_{f}(t) &= 
-       \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} & -\mathbf{M}^{-1}\mathbf{\zeta} \end{bmatrix}
+       \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} & -\mathbf{M}^{-1}\mathbf{Z} \end{bmatrix}
        \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
        +
        \begin{bmatrix} -\mathbf{\iota} \end{bmatrix}

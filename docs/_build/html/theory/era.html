@@ -315,120 +315,111 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p>With the discrete LTI model (Equation
-<a class="reference external" href="#eq:statespace_era">[eq:statespace_era]</a>), a unit impulse input with
-zero initial conditions (Equation
-<a class="reference external" href="#eq:state_evol_impulse">[eq:state_evol_impulse]</a>) produces an output
-of constants (<span class="math notranslate nohighlight">\(\mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B}\)</span>). These
-constants are called <em>Markov parameters</em> because they must be unique for
-a given system – there is only one possible output for a unit impulse
-input.</p>
+  <p>As shown in the previous section, a structural system’s dynamic behavior
+can be represented by the four coefficients
+(<span class="math notranslate nohighlight">\(\mathbf{A},\mathbf{B},\mathbf{C},\mathbf{D}\)</span>) of its discrete
+LTI state-space representation. The <a class="reference external" href="https://doi.org/10.1524/auto.1966.14.112.545">Ho-Kalman
+Algorithm</a>, or
+<a class="reference external" href="https://doi.org/10.2514/3.20031">Eigensystem Realization Algorithm</a>,
+produces a <em>reduced order model</em> for these four coefficients,
+(<span class="math notranslate nohighlight">\(\mathbf{\tilde{A}},\mathbf{\tilde{B}},\mathbf{\tilde{C}},\mathbf{\tilde{D}}\)</span>),
+based on an impulse input and its corresponding response output. Then,
+modal properties can be extracted from <span class="math notranslate nohighlight">\(\mathbf{\tilde{A}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{\tilde{C}}\)</span>.</p>
+<p>With the discrete LTI model, a unit impulse input with zero initial
+conditions produces an output of constants
+(<span class="math notranslate nohighlight">\(\mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B}\)</span>). These constants are
+called <em>Markov parameters</em> because they must be unique for a given
+system – there is only one possible output for a unit impulse input.</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:statespace_era}
-    \begin{aligned}
-        \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
-        \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
-    \end{aligned}\end{split}\]</div>
+\[\begin{split}\begin{aligned}
+    \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
+\end{aligned}\end{split}\]</div>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:state_evol_impulse}
-    \begin{aligned}
-        \mathbf{u}_{0},\mathbf{u}_{1},\mathbf{u}_{2},...,\mathbf{u}_{k} &amp;= \mathbf{I,0,0,...,0} \\
-        \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} &amp;= \mathbf{0,B,AB,...,A}^{k-1}\mathbf{B} \\
-        \mathbf{y}_{0},\mathbf{y}_{1},\mathbf{y}_{2},...,\mathbf{y}_{k} &amp;= \mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B} \\
-    \end{aligned}\end{split}\]</div>
+\[\begin{split}\begin{aligned}
+    \mathbf{u}_{0},\mathbf{u}_{1},\mathbf{u}_{2},...,\mathbf{u}_{k} &amp;= \mathbf{I,0,0,...,0} \\
+    \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} &amp;= \mathbf{0,B,AB,...,A}^{k-1}\mathbf{B} \\
+    \mathbf{y}_{0},\mathbf{y}_{1},\mathbf{y}_{2},...,\mathbf{y}_{k} &amp;= \mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B} \\
+\end{aligned}\end{split}\]</div>
 <p>Knowing that the impulse response output data directly give the Markov
-parameters, the data can then be stacked into the generalized Hankel
-matrix (Appendix <a class="reference external" href="#sec:hankel">[sec:hankel]</a>) <span class="math notranslate nohighlight">\(\mathbf{H}\)</span> in
-Equation <a class="reference external" href="#eq:hankel">[eq:hankel]</a> <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
+parameters, the data can then be stacked into the generalized blockwise
+Hankel matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:hankel}
-    \mathbf{H}
-    =
-    \begin{bmatrix}
-        \mathbf{y}_{1}     &amp; \mathbf{y}_{2}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}}          \\
-        \mathbf{y}_{2}     &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
-        \vdots             &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
-        \mathbf{y}_{m_{o}} &amp; \mathbf{y}_{m_{o}+1}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}-1}  \\
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        \mathbf{CB}                     &amp; \mathbf{CAB}                  &amp; \cdots  &amp; \mathbf{CA}^{m_{c}-1}\mathbf{B}       \\
-        \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}         \\
-        \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                \\
-        \mathbf{CA}^{m_{o}-1}\mathbf{B} &amp; \mathbf{CA}^{m_{o}}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-2}\mathbf{B} \\
-    \end{bmatrix}
-    =
-    \mathbf{\mathcal{OC}}\end{split}\]</div>
+\[\begin{split}\mathbf{H}
+=
+\begin{bmatrix}
+    \mathbf{y}_{1}     &amp; \mathbf{y}_{2}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}}          \\
+    \mathbf{y}_{2}     &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
+    \vdots             &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
+    \mathbf{y}_{m_{o}} &amp; \mathbf{y}_{m_{o}+1}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}-1}  \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \mathbf{CB}                     &amp; \mathbf{CAB}                  &amp; \cdots  &amp; \mathbf{CA}^{m_{c}-1}\mathbf{B}       \\
+    \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}         \\
+    \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                \\
+    \mathbf{CA}^{m_{o}-1}\mathbf{B} &amp; \mathbf{CA}^{m_{o}}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-2}\mathbf{B} \\
+\end{bmatrix}
+=
+\mathbf{\mathcal{OC}}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(\mathbf{\mathcal{O}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\mathcal{C}}\)</span> are
 the observability and controllability matrices of the system:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf{\mathcal{O}} = \begin{bmatrix}
-        \mathbf{C} \\ \mathbf{CA} \\ \mathbf{CA}^{2} \\ \vdots \\ \mathbf{CA}^{m_{o}-1}
-    \end{bmatrix}, \hspace{1cm}
-    \mathbf{\mathcal{C}} = \begin{bmatrix} \mathbf{B} &amp; \mathbf{AB} &amp; \mathbf{A}^{2}\mathbf{B} &amp; \cdots &amp; \mathbf{A}^{m_{c}-1}\mathbf{B}  \end{bmatrix}\end{split}\]</div>
+    \mathbf{C} \\ \mathbf{CA} \\ \mathbf{CA}^{2} \\ \vdots \\ \mathbf{CA}^{m_{o}-1}
+\end{bmatrix}, \hspace{1cm}
+\mathbf{\mathcal{C}} = \begin{bmatrix} \mathbf{B} &amp; \mathbf{AB} &amp; \mathbf{A}^{2}\mathbf{B} &amp; \cdots &amp; \mathbf{A}^{m_{c}-1}\mathbf{B}  \end{bmatrix}\end{split}\]</div>
 <p>The shifted Hankel matrix, <span class="math notranslate nohighlight">\(\mathbf{H'}\)</span> (one time step ahead of
-<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>), is shown in Equation
-(<a class="reference external" href="#eq:hankel_shifted">[eq:hankel_shifted]</a>):</p>
+<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>), is shown below:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:hankel_shifted}
-    \mathbf{H'}
-    =
-    \begin{bmatrix}
-        \mathbf{y}_{2}       &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
-        \mathbf{y}_{3}       &amp; \mathbf{y}_{4}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+2}        \\
-        \vdots               &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
-        \mathbf{y}_{m_{o}+1} &amp; \mathbf{y}_{m_{o}+2}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}}    \\
-    \end{bmatrix}
-    =
-    \begin{bmatrix}
-        \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}          \\
-        \mathbf{CA}^{2}\mathbf{B}       &amp; \mathbf{CA}^{3}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+1}\mathbf{B}        \\
-        \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                 \\
-        \mathbf{CA}^{m_{o}}\mathbf{B}   &amp; \mathbf{CA}^{m_{o}+1}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-1}\mathbf{B}\\
-    \end{bmatrix}
-    =
-    \mathbf{\mathcal{O}A\mathcal{C}}\end{split}\]</div>
-<p>By taking the dominant terms of the SVD of <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, and
-transforming the relationship between
+\[\begin{split}\mathbf{H'}
+=
+\begin{bmatrix}
+    \mathbf{y}_{2}       &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
+    \mathbf{y}_{3}       &amp; \mathbf{y}_{4}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+2}        \\
+    \vdots               &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
+    \mathbf{y}_{m_{o}+1} &amp; \mathbf{y}_{m_{o}+2}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}}    \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}          \\
+    \mathbf{CA}^{2}\mathbf{B}       &amp; \mathbf{CA}^{3}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+1}\mathbf{B}        \\
+    \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                 \\
+    \mathbf{CA}^{m_{o}}\mathbf{B}   &amp; \mathbf{CA}^{m_{o}+1}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-1}\mathbf{B}\\
+\end{bmatrix}
+=
+\mathbf{\mathcal{O}A\mathcal{C}}\end{split}\]</div>
+<p>By taking the dominant terms of the singular value decomposition (SVD)
+of <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, and transforming the relationship between
 <span class="math notranslate nohighlight">\(\mathbf{H} = \mathbf{\mathcal{OC}}\)</span> and
 <span class="math notranslate nohighlight">\(\mathbf{H'} = \mathbf{\mathcal{O}A\mathcal{C}}\)</span>, a reduced-order
-model, Equation
-<a class="reference external" href="#eq:statespace_reduced_era">[eq:statespace_reduced_era]</a>, is
-constructed as follows:</p>
+model is constructed as follows:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf{H} = \mathbf{U}\Sigma\mathbf{V}^{H} =
-    \begin{bmatrix} \mathbf{\tilde{U}} &amp; \mathbf{U}_{t} \end{bmatrix}
-    \begin{bmatrix} \tilde{\Sigma} &amp; \mathbf{0} \\ \mathbf{0} &amp; \Sigma_{t} \end{bmatrix}
-    \begin{bmatrix} \mathbf{\tilde{V}}^{H} \\ \mathbf{V}_{t}^{H} \end{bmatrix}
-    \approx \mathbf{\tilde{U}}\tilde{\Sigma}\mathbf{\tilde{V}}^{H}\end{split}\]</div>
+\begin{bmatrix} \mathbf{\tilde{U}} &amp; \mathbf{U}_{t} \end{bmatrix}
+\begin{bmatrix} \tilde{\Sigma} &amp; \mathbf{0} \\ \mathbf{0} &amp; \Sigma_{t} \end{bmatrix}
+\begin{bmatrix} \mathbf{\tilde{V}}^{H} \\ \mathbf{V}_{t}^{H} \end{bmatrix}
+\approx \mathbf{\tilde{U}}\tilde{\Sigma}\mathbf{\tilde{V}}^{H}\end{split}\]</div>
 <p>where the superscript <span class="math notranslate nohighlight">\(H\)</span> denotes conjugate transpose and the
 subscript <span class="math notranslate nohighlight">\(t\)</span> indicates elements to be truncated such that only
 the first <span class="math notranslate nohighlight">\(r\)</span> dominant singular values in <span class="math notranslate nohighlight">\(\tilde{\Sigma}\)</span>
 are retained,</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-        \mathbf{\tilde{A}} &amp;= \tilde{\Sigma}^{-1/2}\mathbf{\tilde{U}}^{H}\mathbf{H'\tilde{V}}\tilde{\Sigma}^{-1/2} \\
-        \mathbf{\tilde{B}} &amp;= \tilde{\Sigma}^{1/2}\mathbf{\tilde{V}}^{H}
-                            \begin{bmatrix} \mathbf{I}_{q} \\ \mathbf{0} \end{bmatrix} \\
-        \mathbf{\tilde{C}} &amp;= \begin{bmatrix} \mathbf{I}_{p} &amp; \mathbf{0} \end{bmatrix} \mathbf{\tilde{U}}\tilde{\Sigma}^{1/2} \\
-        \mathbf{\tilde{D}} &amp;= \mathbf{y}_{0}
-    \end{aligned}\end{split}\]</div>
+    \mathbf{\tilde{A}} &amp;= \tilde{\Sigma}^{-1/2}\mathbf{\tilde{U}}^{H}\mathbf{H'\tilde{V}}\tilde{\Sigma}^{-1/2} \\
+    \mathbf{\tilde{B}} &amp;= \tilde{\Sigma}^{1/2}\mathbf{\tilde{V}}^{H}
+                        \begin{bmatrix} \mathbf{I}_{q} \\ \mathbf{0} \end{bmatrix} \\
+    \mathbf{\tilde{C}} &amp;= \begin{bmatrix} \mathbf{I}_{p} &amp; \mathbf{0} \end{bmatrix} \mathbf{\tilde{U}}\tilde{\Sigma}^{1/2} \\
+    \mathbf{\tilde{D}} &amp;= \mathbf{y}_{0}
+\end{aligned}\end{split}\]</div>
 <p>where <span class="math notranslate nohighlight">\(p\)</span> indicates the number of outputs and <span class="math notranslate nohighlight">\(q\)</span> the number
 of inputs, and</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\label{eq:statespace_reduced_era}
-    \begin{aligned}
-        \mathbf{\tilde{x}}_{k+1} &amp;= \mathbf{\tilde{A}\tilde{x}}_{k} + \mathbf{\tilde{B}u}_{k} \\
-        \mathbf{y}_{k} &amp;= \mathbf{\tilde{C}\tilde{x}}_{k} + \mathbf{\tilde{D}u}_{k}. \\
-    \end{aligned}\end{split}\]</div>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id2" role="note">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>The matrix is a <em>generalized</em> Hankel matrix because it is not
-necessarily square, and it has constant skew-diagonals in a
-block-by-block sense rather than in an element-by-element sense.</p>
-</aside>
-</aside>
+\[\begin{split}\begin{aligned}
+    \mathbf{\tilde{x}}_{k+1} &amp;= \mathbf{\tilde{A}\tilde{x}}_{k} + \mathbf{\tilde{B}u}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{\tilde{C}\tilde{x}}_{k} + \mathbf{\tilde{D}u}_{k}. \\
+\end{aligned}\end{split}\]</div>
 
 
                 </article>

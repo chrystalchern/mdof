@@ -8,7 +8,7 @@ nln = "\n"
 
 def print_modes(modes, Tn=None, zeta=None):
 
-    header = "         T(s)      \N{Greek Small Letter Zeta}"
+    header = "       T(s)        \N{Greek Small Letter Zeta}"
 
     if Tn is not None:
         header += "          T % error"
