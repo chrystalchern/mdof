@@ -12,7 +12,7 @@ Eigensystem Realization Algorithm (ERA)
 
 Observer Kalman Filter Identification (OKID)
 ---------------------------------------------
-
+.. include:: okid.rst
 
 ERA with Data Correlations (ERA-DC)
 ------------------------------------

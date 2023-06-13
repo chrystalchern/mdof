@@ -1,19 +1,22 @@
-from ssid import markov, realize
+from ssid import markov, realize, modes
 
-def system(method="srim", *args, **options):
+def system(input, output, method="srim", **options):
 
     if method == "okid-era":
-        Y = markov.okid(*args, **options)
-        A,B,C,D = realize.era(Y, **options)
+        Y = markov.okid(input, output, **options)
+        realilzation = realize.era(Y, **options)
 
     if method == "okid-era-dc":
-        Y = markov.okid(*args, **options)
-        A,B,C,D = realize.era_dc(Y, **options)
+        Y = markov.okid(input, output, **options)
+        realization = realize.era_dc(Y, **options)
     
     if method == "srim":
-        A,B,C,D = realize.srim(*args, **options)
+        realization = realize.srim(input, output, **options)
 
-    return A,B,C,D
+    return realization
 
-def spectrum(method="srim", *args, **options):
-    return None
+def spectrum(input, output, dt, method="srim", **options):
+    
+    realization = system(input, output, method, **options)
+
+    return modes.modes(realization, dt)
