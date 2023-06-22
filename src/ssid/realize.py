@@ -5,6 +5,11 @@ lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
 import multiprocessing
 from functools import partial
 import warnings
+try:
+    from tqdm import tqdm as progress_bar
+
+except:
+    def progress_bar(arg, **kwds): return arg 
 
 ## ERA ##
 # Y = output data: response to unit impulse, or "impulse response," or "Markov parameters".
@@ -131,6 +136,7 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
 def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
 
+
 ## SRIM ##
 # input = input data. dimensions of input: q x nt, where nt = number of timesteps.
 # output = response data due to input data. dimensions of output: p x nt.
@@ -165,7 +171,7 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
     Yno = np.zeros((p*no,ns))
     Uno = np.zeros((q*no,ns))
 
-    progress_bar = lambda arg, **kwds: (i for i in arg)
+    # progress_bar = lambda arg, **kwds: (i for i in arg)
 
     # Construct Y (output) & U (input) data matrices (Eqs. 3.58 & 3.60 Arici 2006)
     for i in range(no):
@@ -231,16 +237,23 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
 
     krn = np.array([np.kron(input[:,i],In1n1) for i in range(ns)])
 
+    # Execute a loop in parallel that looks something like:
+    #    for i in  range(1,ns):
+    #        Phi[] = _blk_3(i, CA_Powers, np.flip(...))
+
     with multiprocessing.Pool(pool_size) as pool:
         for i,res in progress_bar(
                 pool.imap_unordered(
-                    partial(_blk_3,CA=CA_powers,U=np.flip(krn,0)),
+                    partial(_blk_3, CA=CA_powers,U=np.flip(krn,0)),
                     range(1,ns),
                     200
                 ),
                 total = ns
             ):
             Phi[i*p:(i+1)*p,cc-1:dd] = res
+
+
+
 
     y = output[:,:ns].flatten()
 
