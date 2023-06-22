@@ -2,7 +2,7 @@ import sys
 import json
 
 import ssid
-import ssid.modes
+import ssid.modal
 import quakeio
 import numpy as np
 from .okid import parse_okid
@@ -133,7 +133,7 @@ def parse_srim(argi, config):
 
     A,B,C,D = ssid.system(input=inputs, output=outputs, full=True, **config)
 
-    ss_modes = ssid.modes.modes((A,B,C,D),dt)
+    ss_modes = ssid.modal.system_modes((A,B,C,D),dt)
 
     output = [
         {

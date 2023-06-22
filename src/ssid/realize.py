@@ -13,9 +13,9 @@ import warnings
 # nc = number of block columns in Hankel matrix = order of controllability matrix
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
 def era(Y,no=None,nc=None,r=None,**options):
+    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
     if r is None:
-        r = min(20, int(Y.shape[2]/2))
-    p,q = Y.shape[:2] # p = number of outputs, q = number of inputs
+        r = min(20, int(nt/2))
     
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
@@ -23,14 +23,14 @@ def era(Y,no=None,nc=None,r=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, int((Y.shape[2]-1)/2))
+            no = nc = min(300, int((nt-1)/2))
         else:
-            no = min(300, int(Y.shape[2]-1-nc))
+            no = min(300, int(nt-1-nc))
     elif nc is None:
-        nc = min(300, int(Y.shape[2]-1-no))
+        nc = min(300, int(nt-1-no))
     else:
         # make sure there are enough timesteps to assemble this size of Hankel matrix
-        assert Y.shape[2] >= no+nc
+        assert nt >= no+nc
     
     # make impulse response into Hankel matrix and shifted Hankel matrix
     H = np.zeros((p*(no), q*(nc+1)))
@@ -66,9 +66,9 @@ def era(Y,no=None,nc=None,r=None,**options):
 # l = initial lag for data correlations
 # g = lags (gap) between correlation matrices
 def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
+    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
     if r is None:
-        r = int(Y.shape[2]/2)
-    p,q = Y.shape[:2] # p = number of outputs, q = number of inputs
+        r = int(nt/2)
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
@@ -76,14 +76,14 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, int((Y.shape[2]-1)/2))
+            no = nc = min(300, int((nt-1)/2))
         else:
-            no = min(300, int(Y.shape[2]-1-nc))
+            no = min(300, int(nt-1-nc))
     elif nc is None:
-        nc = min(300, int(Y.shape[2]-1-no))
+        nc = min(300, int(nt-1-no))
     else:
         # make sure there are enough timesteps to assemble the Hankel matrices
-        assert Y.shape[2] >= l+(a+1+b+1)*g+no+nc
+        assert nt >= l+(a+1+b+1)*g+no+nc
     
     # Hankel matrix of impulse response (Markov parameters)
     H = np.zeros((p*(no), q*(nc+l+(a+1+b+1)*g)))
@@ -146,9 +146,9 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
     if output.shape[0] > output.shape[1]:
         warnings.warn("output data has more channels (dim 1) than timesteps (dim 2)")
 
-    p,nt = output.shape
-    q = input.shape[0]
-    assert nt == input.shape[1]
+    q,nt = input.shape
+    p = output.shape[0]
+    assert nt == output.shape[1]
 
     if no is None:
         no = min(300, nt)
