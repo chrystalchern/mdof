@@ -78,30 +78,49 @@ def plot_models(models, Tn, zeta):
     
     fig.suptitle("Spectral Quantity Prediction with System Identification") #,fontsize=14)
 
-def plot_io(input, output, t, title=None):
+def plot_io(inputs, outputs, t, title=None):
     fig, ax = plt.subplots(1,2,figsize=(12,4))
     # fig, ax = plt.subplots(1,2,figsize=(8,3))
-    ax[0].plot(t,input)
+    if len(inputs.shape) > 1:
+        for i in range(inputs.shape[0]):
+            ax[0].plot(t,inputs[i,:])
+    else:
+        ax[0].plot(t,inputs)
     ax[0].set_xlabel("time (s)")# , fontsize=13)
-    ax[0].set_ylabel("input")# , fontsize=13)
-    ax[1].plot(t,output)
+    ax[0].set_ylabel("inputs")# , fontsize=13)
+    if len(outputs.shape) > 1:
+        for i in range(outputs.shape[0]):
+            ax[1].plot(t,outputs[i,:])
+    else:
+        ax[1].plot(t,outputs)
     ax[1].set_xlabel("time (s)")# , fontsize=13)
-    ax[1].set_ylabel("output")# , fontsize=13)
+    ax[1].set_ylabel("outputs")# , fontsize=13)
     fig.suptitle(title, fontsize=14)
 
 def plot_pred(ytrue, models, t, title=None):
     fig, ax = plt.subplots(figsize=(8,4))
-    ax.plot(t,ytrue,label="true")
+    if len(ytrue.shape) > 1:
+        for i in range(ytrue.shape[0]):
+            ax.plot(t,ytrue[i,:],label="true")
+    else:
+        ax.plot(t,ytrue,label="true")
     if type(models) is np.ndarray:
-        ax.plot(t,models,"--",label=f"prediction")
+        if len(models.shape) > 1:
+            for i in range(models.shape[0]):
+                ax.plot(t,models[i,:],"--",label=f"prediction")
+        else:
+            ax.plot(t,models,"--",label=f"prediction")
     else:
         for method in models:
-            ax.plot(t,models[method]["ypred"],"--",label=method)
+            if len(models[method]["ypred"].shape) > 1:
+                for i in range(models[method]["ypred"].shape[0]):
+                    ax.plot(t,models[method]["ypred"][i,:],"--",label=method)
+            else:
+                ax.plot(t,models[method]["ypred"],"--",label=method)
     ax.set_xlabel("time (s)")# , fontsize=13)
-    ax.set_ylabel("output")# , fontsize=13)
+    ax.set_ylabel("outputs")# , fontsize=13)
     fig.legend(fontsize=12, frameon=True, framealpha=1)    
     fig.suptitle(title, fontsize=14)
-
 
 def make_hover_data(data, ln=None):
     import numpy as np

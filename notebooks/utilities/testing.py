@@ -1,15 +1,16 @@
 import ssid
-from ssid import modes
+from ssid import modal
 from time import time
-from control.matlab import ss, lsim
+from control import ss, forced_response
 
-def test_method(method, input, output, dt, t, **conf):
+def test_method(method, inputs, outputs, dt, t, **conf):
     time0 = time()
-    A,B,C,D = ssid.system(method=method, input=input, output=output, **conf)
-    modedict = modes.modes((A,B,C,D),dt)
+    A,B,C,D = ssid.system(method=method, inputs=inputs, outputs=outputs, **conf)
+    time1 = time()
+    modedict = modal.system_modes((A,B,C,D),dt)
     model = {
-                "time":    time()-time0,
-                "ypred":   lsim(ss(A,B,C,D,dt),input,t)[0],
+                "time":    time1-time0,
+                "ypred":   forced_response(ss(A,B,C,D,dt), T=t, U=inputs, squeeze=False, return_x=False).outputs,
                 "modes":   modedict,
                 "period":  [1/value['freq'] for value in modedict.values()],
                 "damping": [value['damp'] for value in modedict.values()]
