@@ -131,7 +131,7 @@ def parse_srim(argi, config):
     outputs, dt = extract_channels(event, channels[1], decimate=8)
     config["dt"] = dt
 
-    A,B,C,D = ssid.system(input=inputs, output=outputs, full=True, **config)
+    A,B,C,D = ssid.system(inputs=inputs, outputs=outputs, full=True, **config)
 
     ss_modes = ssid.modal.system_modes((A,B,C,D),dt)
 

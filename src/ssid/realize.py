@@ -81,15 +81,14 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, int((nt-1)/2))
+            no = nc = min(300, int(nt/2-1))
         else:
-            no = min(300, int(nt-1-nc))
+            no = min(300, int(nt/2-1))
     elif nc is None:
-        nc = min(300, int(nt-1-no))
-    else:
-        # make sure there are enough timesteps to assemble the Hankel matrices
-        assert nt >= l+(a+1+b+1)*g+no+nc
-    
+        nc = min(300, int(nt-no-2))
+    # make sure there are enough timesteps to assemble the Hankel matrices
+    assert nt >= l+(a+1+b+1)*g+no+nc
+
     # Hankel matrix of impulse response (Markov parameters)
     H = np.zeros((p*(no), q*(nc+l+(a+1+b+1)*g)))
     for i in range(no):
@@ -138,23 +137,28 @@ def _blk_3(i, CA, U):
 
 
 ## SRIM ##
-# input = input data. dimensions of input: q x nt, where nt = number of timesteps.
-# output = response data due to input data. dimensions of output: p x nt.
+# inputs = input data. dimensions of inputs: q x nt, where nt = number of timesteps.
+# outputs = response data due to input data. dimensions of outputs: p x nt.
 # no = number of steps used for identification (prediction horizon),
     # and the order of the observability matrix.
     # analagous to order (number of autoregressors) of the observer Kalman
     # ARX filter used in OKID-ERA-DC.
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
-    if input.shape[0] > input.shape[1]:
+def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
+    if len(inputs.shape) == 1:
+        inputs = inputs[None,:]
+    if len(outputs.shape) == 1:
+        outputs = outputs[None,:]
+
+    if inputs.shape[0] > inputs.shape[1]:
         warnings.warn("input data has more channels (dim 1) than timesteps (dim 2)")
-    if output.shape[0] > output.shape[1]:
+    if outputs.shape[0] > outputs.shape[1]:
         warnings.warn("output data has more channels (dim 1) than timesteps (dim 2)")
 
-    q,nt = input.shape
-    p = output.shape[0]
-    assert nt == output.shape[1]
+    q,nt = inputs.shape
+    p = outputs.shape[0]
+    assert nt == outputs.shape[1]
 
     if no is None:
         no = min(300, nt)
@@ -175,8 +179,8 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
 
     # Construct Y (output) & U (input) data matrices (Eqs. 3.58 & 3.60 Arici 2006)
     for i in range(no):
-        Yno[i*p:(i+1)*p,:] = output[:,i:ns+i]
-        Uno[i*q:(i+1)*q,:] = input[:,i:ns+i]
+        Yno[i*p:(i+1)*p,:] = outputs[:,i:ns+i]
+        Uno[i*q:(i+1)*q,:] = inputs[:,i:ns+i]
 
 
     # 2b. Compute the correlation terms and the coefficient matrix 
@@ -228,14 +232,14 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
     # Second block column of Phi
     Ipp = np.eye(p)
     for i in range(ns):
-        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(input[:,i],Ipp)
+        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(inputs[:,i],Ipp)
 
     # Third block column of Phi
     In1n1 = np.eye(r)
     cc = r + p*q + 1
     dd = r + p*q + r*q
 
-    krn = np.array([np.kron(input[:,i],In1n1) for i in range(ns)])
+    krn = np.array([np.kron(inputs[:,i],In1n1) for i in range(ns)])
 
     # Execute a loop in parallel that looks something like:
     #    for i in  range(1,ns):
@@ -252,10 +256,7 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
             ):
             Phi[i*p:(i+1)*p,cc-1:dd] = res
 
-
-
-
-    y = output[:,:ns].flatten()
+    y = outputs[:,:ns].flatten()
 
     teta = lsqminnorm(Phi,y)
 
@@ -275,9 +276,9 @@ def srim(input,output,no=None,r=None,full=True,pool_size=6,**options):
 
     return A,B,C,D
 
-def subspace(output,no=None,r=None,cov_driven=True,**options):
-    output = np.atleast_2d(output)
-    p,nt = output.shape
+def subspace(outputs,no=None,r=None,cov_driven=True,**options):
+    outputs = np.atleast_2d(outputs)
+    p,nt = outputs.shape
     assert nt > p
 
     if no == None:
@@ -290,7 +291,7 @@ def subspace(output,no=None,r=None,cov_driven=True,**options):
         for i in range(2*no-1):
             covs = np.zeros((p,p,no-1))
             for k in range(no-1):
-                covs[:,:,k] = output[:,k+i]@output[k]
+                covs[:,:,k] = outputs[:,k+i]@outputs[k]
             Ri = np.sum(covs,axis=3)/no
             for j in range(i):
                 for l in range(j):
