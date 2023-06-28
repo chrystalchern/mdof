@@ -65,8 +65,8 @@ def extract_channels(event, channels, decimate=1, permissive=True):
 
 
     if len(data) == 0:
-        raise ValueError("No channels found")
-    
+        raise ValueError(f"No channels found, requested '{channels}'")
+
     elif len(data) != len(channels):
         if permissive:
             print(f"Only extracted {len(data)} channels, {len(channels)-len(data)} missing.", file=sys.stderr)
@@ -126,25 +126,34 @@ def parse_srim(argi, config):
         else:
             config["event_file"] = arg
 
-    event = quakeio.read(config["event_file"])
-    inputs,  dt = extract_channels(event, channels[0], decimate=8)
-    outputs, dt = extract_channels(event, channels[1], decimate=8)
+    event = quakeio.read(config["event_file"], exclusions=["filter*"])
+    try:
+        inputs,  dt = extract_channels(event, channels[0], decimate=8)
+        outputs, dt = extract_channels(event, channels[1], decimate=8)
+    except Exception as e:
+        print(json.dumps({"error": str(e), "data": []}))
+        return
+
     config["dt"] = dt
 
-    A,B,C,D = ssid.system(inputs=inputs, outputs=outputs, full=True, **config)
+    try:
+        A,B,C,D = ssid.system(inputs=inputs, outputs=outputs, full=True, **config)
+        ss_modes = ssid.modal.system_modes((A,B,C,D),dt)
 
-    ss_modes = ssid.modal.system_modes((A,B,C,D),dt)
+    except Exception as e:
+        print(json.dumps({"error": str(e), "data": []}))
+        return
 
     output = [
         {
             "period":  1/mode["freq"],
             "frequency": mode["freq"],
-            "damping":   mode["damp"]         
-        } 
+            "damping":   mode["damp"]
+        }
         for mode in sorted(ss_modes.values(), key=lambda item: item["freq"])
     ]
 
-    print(json.dumps(output, cls=JSON_Encoder, indent=4))
+    print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
     return config
 
 
