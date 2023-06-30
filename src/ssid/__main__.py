@@ -1,3 +1,4 @@
+import ast
 import sys
 import json
 
@@ -6,6 +7,7 @@ import ssid.modal
 import quakeio
 import numpy as np
 from .okid import parse_okid
+
 
 HELP = """
 ssid [-p|w <>...] <method> <event> <inputs> <outputs>
@@ -106,7 +108,7 @@ def parse_srim(argi, config):
 
         elif arg == "--inputs":
             # inputs = next(argi)[1:-1].split(",")
-            inputs = eval(next(argi))
+            inputs = ast.literal_eval(next(argi))
             if isinstance(inputs, str):
                 channels[0] = [int(inputs)]
             else:
@@ -114,7 +116,7 @@ def parse_srim(argi, config):
 
         elif arg == "--outputs":
             # outputs = next(argi)[1:-1].split(",")
-            outputs = eval(next(argi))
+            outputs = ast.literal_eval(next(argi))
             if isinstance(outputs, str):
                 channels[1] = [int(outputs)]
             else:
