@@ -8,7 +8,7 @@ nln = "\n"
 
 def print_modes(modes, Tn=None, zeta=None):
 
-    header = "       T(s)        \N{Greek Small Letter Zeta}"
+    header = "       T(s)        \N{Greek Small Letter Zeta}        EMACO        MPC     EMACO*MPC"
 
     if Tn is not None:
         header += "          T % error"
@@ -21,7 +21,9 @@ def print_modes(modes, Tn=None, zeta=None):
     for mode in sorted(modes.values(), key=lambda x: x["freq"]):
         f = mode["freq"]
         z = mode["damp"]
-        row = f"      {1/f: <9.4}  {z: <9.4}"
+        emaco = mode["energy_condensed_emaco"]
+        mpc = mode["mpc"]
+        row = f"      {1/f: <9.4}  {z: <9.4}  {emaco: <9.4}  {mpc: <9.4}  {emaco*mpc: <9.4}"
         if Tn is not None:
             row += f"    {100*(1/f-Tn)/(Tn): <9.4}"
         if zeta is not None:

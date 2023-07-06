@@ -274,7 +274,7 @@ def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
 
     assert A.shape[0] == A.shape[1] == r
 
-    return A,B,C,D
+    return (A,B,C,D),Observability
 
 def subspace(outputs,no=None,r=None,cov_driven=True,**options):
     outputs = np.atleast_2d(outputs)
