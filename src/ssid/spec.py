@@ -3,7 +3,11 @@ from scipy.fft import fft, fftfreq
 
 def power_transfer(inputs, outputs, step): pass
 
-def response_transfer(inputs, outputs, step): pass
+def response_transfer(inputs, outputs, step, **kwds):
+    from sdof import spectrum
+    input_spectrum  = spectrum(inputs,  step, **kwds)
+    output_spectrum = spectrum(outputs, step, **kwds)
+    return (1/input_spectrum[0], output_spectrum[1]/input_spectrum[1])
 
 def fourier_transfer(inputs, outputs, step):
     input_transform = fspec(inputs, step)
@@ -13,8 +17,10 @@ def fourier_transfer(inputs, outputs, step):
 
 def pspec(series, step):
     import scipy.signal
+
 def rspec(series, step):
     pass
+
 def fspec(series, step):
     assert len(series.shape) == 1
     N = len(series)
