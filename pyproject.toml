@@ -1,6 +1,6 @@
 [project]
 name = "ssid"
-version = "0.0.3"
+version = "0.0.4"
 authors = [
   {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"}
 ]

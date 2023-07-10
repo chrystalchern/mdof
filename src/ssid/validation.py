@@ -66,8 +66,8 @@ def MPC(A,C,Psi=None):
     assert Psi.shape == (n,n)
     modes_raw = C@Psi
     s11, s22, s12 = np.zeros((3,n))
-    nu, mpc = np.zeros((2, n))
-    lam = np.zeros((2, n))
+    nu, mpc = np.zeros((2,n))
+    lam = np.zeros((2,n))
     for i in range(n):
         mode_i = modes_raw[:,i]
         s11[i] = np.real(mode_i).conjugate().transpose()@np.real(mode_i)

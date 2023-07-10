@@ -33,7 +33,7 @@ includes more terms than ERA.
 
    \begin{aligned}
        \mathbf{u}_{0},\mathbf{u}_{1},\mathbf{u}_{2},...,\mathbf{u}_{k} :=& \text{given input} \\
-       \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} =&  \mathbf{0},(\mathbf{Bu}_{0}),(\mathbf{ABu}_{0}+\mathbf{Bu}_{1}),...,(\mathbf{A}^{k-1}\mathbf{Bu}_{0}+A^{k-2}\mathbf{Bu}_{1}+...+\mathbf{Bu}_{k-1}) \\
+       \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} =&  \mathbf{0},(\mathbf{Bu}_{0}),(\mathbf{ABu}_{0}+\mathbf{Bu}_{1}),...,(\mathbf{A}^{k-1}\mathbf{Bu}_{0}+\mathbf{A}^{k-2}\mathbf{Bu}_{1}+...+\mathbf{Bu}_{k-1}) \\
        \mathbf{y}_{0},\mathbf{y}_{1},\mathbf{y}_{2},...,\mathbf{y}_{k} =&  \mathbf{Du}_0,(\mathbf{CBu}_{0}+\mathbf{Du}_{1}),(\mathbf{CABu}_{0}+\mathbf{CBu}_{1}+\mathbf{Du}_{2}),..., \\
        & (\mathbf{CA}^{k-1}\mathbf{Bu}_{0}+\mathbf{CA}^{k-2}\mathbf{Bu}_{1}+...+\mathbf{Du}_{k}).
    \end{aligned}

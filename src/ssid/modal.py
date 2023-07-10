@@ -63,9 +63,15 @@ def system_modes(realization, dt, Observability=None, nt=None):
                 'modeshape': modeshape[:,i],  # identified modeshape
                 'cnd': cnd[i],     # condition number of the eigenvalue
                 'energy_condensed_emaco': energy_condensed_emaco[i],  # energy condensed output emac
-                'mpc': mpc[i],  # MPC
+                'mpc': mpc[i],     # MPC
                 }
-            for i in range(len(freq)) if i not in notroots #and energy_condensed_emaco[i] > 0.5 and mpc[i] > 0.5
+            for i in range(len(freq)) if i not in notroots # and energy_condensed_emaco[i] > 0.5 and mpc[i] > 0.5
             }
 
     return modes
+
+def spectrum_modes(periods, amplitudes, nmodes=1):
+    highest_amplitude_indices = np.argpartition(-amplitudes, range(nmodes))[:nmodes]  # TODO: peak picking algorithm
+    fundamental_periods = periods[highest_amplitude_indices]
+    fundamental_amplitudes = amplitudes[highest_amplitude_indices]
+    return (fundamental_periods, fundamental_amplitudes)
