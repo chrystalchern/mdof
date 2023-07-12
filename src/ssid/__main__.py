@@ -108,19 +108,19 @@ def parse_srim(argi, config):
 
         elif arg == "--inputs":
             # inputs = next(argi)[1:-1].split(",")
-            inputs = ast.literal_eval(next(argi))
-            if isinstance(inputs, str):
-                channels[0] = [int(inputs)]
-            else:
-                channels[0] = list(map(int, inputs))
+            channels[0] = ast.literal_eval(next(argi))
+           #if isinstance(inputs, str):
+           #    channels[0] = [int(inputs)]
+           #else:
+           #    channels[0] = list(map(int, inputs))
 
         elif arg == "--outputs":
             # outputs = next(argi)[1:-1].split(",")
-            outputs = ast.literal_eval(next(argi))
-            if isinstance(outputs, str):
-                channels[1] = [int(outputs)]
-            else:
-                channels[1] = list(map(int, outputs))
+            channels[1] = ast.literal_eval(next(argi))
+           #if isinstance(outputs, str):
+           #    channels[1] = [int(outputs)]
+           #else:
+           #    channels[1] = list(map(int, outputs))
 
         elif arg == "--":
             continue
