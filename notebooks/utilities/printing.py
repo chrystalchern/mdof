@@ -8,7 +8,7 @@ nln = "\n"
 
 def print_modes(modes, Tn=None, zeta=None):
 
-    header = "       T(s)        \N{Greek Small Letter Zeta}"
+    header = "       T(s)        \N{Greek Small Letter Zeta}        EMACO        MPC     EMACO*MPC"
 
     if Tn is not None:
         header += "          T % error"
@@ -21,7 +21,9 @@ def print_modes(modes, Tn=None, zeta=None):
     for mode in sorted(modes.values(), key=lambda x: x["freq"]):
         f = mode["freq"]
         z = mode["damp"]
-        row = f"      {1/f: <9.4}  {z: <9.4}"
+        emaco = mode["energy_condensed_emaco"]
+        mpc = mode["mpc"]
+        row = f"      {1/f: <9.4}  {z: <9.4}  {emaco: <9.4}  {mpc: <9.4}  {emaco*mpc: <9.4}"
         if Tn is not None:
             row += f"    {100*(1/f-Tn)/(Tn): <9.4}"
         if zeta is not None:
@@ -121,6 +123,22 @@ def plot_pred(ytrue, models, t, title=None):
     ax.set_ylabel("outputs")# , fontsize=13)
     fig.legend(fontsize=12, frameon=True, framealpha=1)    
     fig.suptitle(title, fontsize=14)
+
+def plot_transfer(models, title=None, labels=None):
+    fig, ax = plt.subplots(figsize=(10,4))
+    if type(models) is np.ndarray:
+        if len(models.shape) > 2:
+            for i in range(models.shape[0]):
+                ax.plot(models[i,0],models[i,1],label=labels[i])
+        else:
+            ax.plot(models[0],models[1],label=labels)
+    else:
+        for method in models:
+            ax.plot(models[method][0],models[method][1],label=method)
+    ax.set_xlabel("Period (s)")
+    ax.set_ylabel("Amplitude")
+    ax.legend(fontsize=12)
+    ax.set_title(title, fontsize=14)
 
 def make_hover_data(data, ln=None):
     import numpy as np
