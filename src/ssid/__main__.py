@@ -150,7 +150,9 @@ def parse_srim(argi, config):
         {
             "period":  1/mode["freq"],
             "frequency": mode["freq"],
-            "damping":   mode["damp"]
+            "damping":   mode["damp"],
+            "emac":      mode["energy_condensed_emaco"],
+            "mpc":       mode["mpc"],
         }
         for mode in sorted(ss_modes.values(), key=lambda item: item["freq"])
     ]

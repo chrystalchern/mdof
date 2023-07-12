@@ -40,7 +40,19 @@ def system_modes(realization, dt, Observability=None, nt=None):
     # Omega = np.real_if_close((Lam*np.conj(Lam))**0.5) # use real_if_close
     freq = Omega/(2*pi) # cycles per second (Hz)
     Omega.__str__() # helps to avoid "divide by zero" numpy warning message
-    # print(Omega)
+    # Lam_real = np.real(Lam)
+    # Lam_real+=1
+    # Lam_real-=1
+    # Omega_real = np.real(Omega)
+    # Omega_real+=1
+    # Omega_real-=1
+    # del Omega
+    # del Lam
+    # import gc
+    # gc.collect()
+    # print(Omega_real)
+    # print(Lam_real)
+    # damp = -Lam_real/Omega_real
     damp = -np.real(Lam)/Omega
 
     # get modeshapes from C and eigendecomp of A

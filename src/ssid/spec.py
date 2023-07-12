@@ -13,7 +13,7 @@ def fourier_transfer(inputs, outputs, step, **kwds):
     assert len(inputs) == len(outputs)
     input_transform = fspec(inputs, step, **kwds)
     output_transform = fspec(outputs, step, **kwds)
-    # print(1/input_transform[0]) # prevents unwarranted "divide by zero" warning
+    input_transform[0]=np.real(input_transform[0]) # prevents unwarranted "divide by zero" warning
     return (1/input_transform[0], output_transform[1]/input_transform[1])
 
 def pspec(series, step):
