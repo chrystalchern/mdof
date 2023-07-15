@@ -1,7 +1,6 @@
+
 import numpy as np
-import scipy
-linsolve = np.linalg.solve
-lsqminnorm = lambda *args: np.linalg.lstsq(*args, rcond=None)[0]
+lin_solve = np.linalg.solve
 import multiprocessing
 from functools import partial
 import warnings
@@ -9,7 +8,9 @@ try:
     from tqdm import tqdm as progress_bar
 
 except:
-    def progress_bar(arg, **kwds): return arg 
+    def progress_bar(arg, **kwds): return arg
+
+from . import numerics
 
 ## ERA ##
 # Y = output data: response to unit impulse, or "impulse response," or "Markov parameters".
@@ -21,10 +22,10 @@ def era(Y,no=None,nc=None,r=None,**options):
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
     if r is None:
         r = min(20, int(nt/2))
-    
+
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
-    
+
     # size of Hankel matrix
     if no is None:
         if nc is None:
@@ -36,7 +37,7 @@ def era(Y,no=None,nc=None,r=None,**options):
     else:
         # make sure there are enough timesteps to assemble this size of Hankel matrix
         assert nt >= no+nc
-    
+
     # make impulse response into Hankel matrix and shifted Hankel matrix
     H = np.zeros((p*(no), q*(nc+1)))
     for i in range(no):
@@ -47,9 +48,8 @@ def era(Y,no=None,nc=None,r=None,**options):
     assert H0.shape == H1.shape == (p*(no), q*(nc))
 
     # reduced SVD of Hankel matrix
-    def _svd(*args):
-        U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
-        return U,S,V.T.conj()
+    _svd = numerics.svd_routine(options.get("svd", {}))
+
     U,S,V = _svd(H0)
     SigmaInvSqrt = np.diag(S[:r]**-0.5)
     SigmaSqrt = np.diag(S[:r]**0.5)
@@ -113,9 +113,8 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
             HRl1[dimR*i:dimR*(i+1), dimR*j:dimR*(j+1)] = R1
 
     # reduced SVD of Hankel matrix of correlation matrices
-    def _svd(*args):
-        U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
-        return U,S,V.T.conj()
+    _svd = numerics.svd_routine(options.get("svd", {}))
+
     U,S,V = _svd(HRl)
     SigmaInvSqrt = np.diag(S[:r]**-0.5)
     SigmaSqrt = np.diag(S[:r]**0.5)
@@ -146,6 +145,8 @@ def _blk_3(i, CA, U):
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
 def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
+    lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
+
     if len(inputs.shape) == 1:
         inputs = inputs[None,:]
     if len(outputs.shape) == 1:
@@ -196,7 +197,7 @@ def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
     assert Ruy.shape[1] == no*p
 
     # Compute the correlation matrix (Eq. 3.69)
-    Rhh = Ryy - Ruy.T@linsolve(Ruu,Ruy)
+    Rhh = Ryy - Ruy.T@lin_solve(Ruu,Ruy)
 
     # 2c. Obtain observability matrix using full or partial decomposition 
     #     (Eqs. 3.72 & 3.74).
@@ -204,13 +205,13 @@ def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
         # Full Decomposition Method
         un,*_ = np.linalg.svd(Rhh,0)           # Eq. 3.74
         Observability = un[:,:r]               # Eq. 3.72
-        A = lsqminnorm(Observability[:(no-1)*p,:], Observability[p:no*p,:])
+        A = lsq_solve(Observability[:(no-1)*p,:], Observability[p:no*p,:])
         C = Observability[:p,:]
     else:
         # Partial Decomposition Method
         un,*_ = np.linalg.svd(Rhh[:,:(no-1)*p+1],0)
         Observability = un[:,:r]
-        A = lsqminnorm(Observability[:(no-1)*p,:], Observability[p:no*p,:])
+        A = lsq_solve(Observability[:(no-1)*p,:], Observability[p:no*p,:])
         C = un[:p,:]
 
     # Computation of system matrices B & D
@@ -258,7 +259,7 @@ def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
 
     y = outputs[:,:ns].flatten()
 
-    teta = lsqminnorm(Phi,y)
+    teta = lsq_solve(Phi,y)
 
     x0 = teta[:r]
     dcol = teta[r:r+p*q]
@@ -285,7 +286,7 @@ def subspace(outputs,no=None,r=None,cov_driven=True,**options):
         no = min(300, int(nt/2))
     if r == None:
         r = min(10,no-1)
-    
+
     if cov_driven:
         Toep = np.zeros((p*no,p*no))
         for i in range(2*no-1):
