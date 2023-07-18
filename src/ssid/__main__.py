@@ -75,20 +75,86 @@ def extract_channels(event, channels, decimate=1, permissive=True):
         else:
             raise ValueError("Could not extract all desired channels")
 
-    dt = find(channels[0]).accel["time_step"]*decimate 
+    dt = find(channels[0]).accel["time_step"]*decimate
     return data, dt
 
 
-def parse_srim(argi, config):
+
+def parse_time(argi, config, method=None):
+    help = f"""\
+    ssid {method} <event>
+
+
+    --inputs  <int>
+    --outputs <int>
+
+    Options
+    --threads <int>
+    """
+    damping  = None
+    decimate = 1
+    channels = [None, None]
+    for arg in argi:
+        if arg == "--threads" and method == "response":
+            config["threads"] = int(next(argi))
+
+        elif arg == "--inputs":
+            channels[0] = next(argi)
+
+        elif arg == "--outputs":
+            channels[1] = next(argi)
+
+        elif arg == "--damping" and method == "response":
+            damp = next(argi)
+            try:
+                config["damping"] = [float(damp)]
+            except:
+                config["damping"] = ast.literal_eval(damp)
+
+        elif arg == "-h" or arg == "--help":
+            print(help)
+            sys.exit()
+
+        else:
+            config["event_file"] = arg
+
+    event = quakeio.read(config["event_file"], exclusions=["filter*"])
+
+    try:
+        inputs,  dt = extract_channels(event, [channels[0]], decimate=decimate)
+        outputs, dt = extract_channels(event, [channels[1]], decimate=decimate)
+    except Exception as e:
+        print(json.dumps({"error": str(e), "data": []}))
+        return
+
+    import ssid.spec
+    from ssid.modal import spectrum_modes
+    f = {
+        "response": ssid.spec.response_transfer,
+        "fourier":  ssid.spec.fourier_transfer,
+    }[method]
+
+    periods, amplitudes = spectrum_modes(
+                          *f(inputs=inputs.flatten(), outputs=outputs.flatten(), step = dt, **config)
+                        )
+    output = [
+            {"period": period, "amplitude": amplitude}
+            for period, amplitude in zip(periods, amplitudes)
+    ]
+    print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
+
+
+def parse_srim(argi, config, method=None):
     help="""
     SRIM -- System Identification with Information Matrix
 
     Parameters
     no          order of the observer Kalman ARX filter (formerly p).
-    r           size of the state-space model used for 
+    r           size of the state-space model used for
                 representing the system. (formerly orm/n)
     """
     config.update({"p"  :  5, "orm":  4})
+    decimate = 8
 
     #argi = iter(args)
     channels = [[], []]
@@ -107,20 +173,13 @@ def parse_srim(argi, config):
             sys.exit()
 
         elif arg == "--inputs":
-            # inputs = next(argi)[1:-1].split(",")
             channels[0] = ast.literal_eval(next(argi))
-           #if isinstance(inputs, str):
-           #    channels[0] = [int(inputs)]
-           #else:
-           #    channels[0] = list(map(int, inputs))
 
         elif arg == "--outputs":
-            # outputs = next(argi)[1:-1].split(",")
             channels[1] = ast.literal_eval(next(argi))
-           #if isinstance(outputs, str):
-           #    channels[1] = [int(outputs)]
-           #else:
-           #    channels[1] = list(map(int, outputs))
+
+        elif arg == "--decimate":
+            decimate = float(next(argi))
 
         elif arg == "--":
             continue
@@ -130,8 +189,8 @@ def parse_srim(argi, config):
 
     event = quakeio.read(config["event_file"], exclusions=["filter*"])
     try:
-        inputs,  dt = extract_channels(event, channels[0], decimate=8)
-        outputs, dt = extract_channels(event, channels[1], decimate=8)
+        inputs,  dt = extract_channels(event, channels[0], decimate=decimate)
+        outputs, dt = extract_channels(event, channels[1], decimate=decimate)
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -164,17 +223,19 @@ def parse_srim(argi, config):
 def parse_args(args):
     outputs = []
     sub_parsers = {
-        "srim": parse_srim,
+        "srim":     parse_srim,
+        "response": parse_time,
+        "fourier":  parse_time,
         "test": parse_srim,
-        "okid": parse_okid,
-        "okid": parse_okid
+        "okid": parse_srim,
+        "okid": parse_srim
     }
+    method = None
     config = {
             "method": None,
             "operation": None,
             "protocol": None
     }
-    config["channels"] = channels = [[], []]
 
     argi = iter(args[1:])
     for arg in argi:
@@ -188,27 +249,10 @@ def parse_args(args):
         elif arg == "--protocol":
             config["protocol"] = next(arg)
 
-        elif arg == "--inputs":
-            inputs = next(argi)[1:-1].split(",")
-            if isinstance(inputs, str):
-                channels[0] = [int(inputs)]
-            else:
-                channels[0] = list(map(int, inputs))
-
-        elif arg == "--outputs":
-            outputs = next(argi)[1:-1].split(",")
-            if isinstance(outputs, str):
-                channels[1] = [int(outputs)]
-            else:
-                channels[1] = list(map(int, outputs))
-
         # Positional args
-        elif config["method"] is None:
-            config["method"] = arg
+        elif method is None:
+            method = arg
             break
-
-        # elif config["protocol"] and config["operation"] is None:
-        #     config["operation"] = arg
 
         elif arg == "--":
             continue
@@ -218,7 +262,7 @@ def parse_args(args):
             sys.exit()
 
 
-    return sub_parsers[config.pop("method")](argi, config), outputs
+    return sub_parsers[method](argi, config, method=method), outputs
 
 
 def main():
