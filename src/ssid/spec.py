@@ -19,7 +19,7 @@ def response_transfer(inputs, outputs, step, pseudo=False, **kwds):
     else:
         output_spectrum = Aout[1]
 
-    return (periods, output_spectrum[1]/input_spectrum[1])
+    return (periods, output_spectrum/input_spectrum)
 
 def fourier_transfer(inputs, outputs, step, **kwds):
     assert len(inputs) == len(outputs)
