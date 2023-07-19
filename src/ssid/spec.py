@@ -3,11 +3,23 @@ from scipy.fft import fft, fftfreq
 
 def power_transfer(inputs, outputs, step): pass
 
-def response_transfer(inputs, outputs, step, **kwds):
+def response_transfer(inputs, outputs, step, pseudo=False, **kwds):
     from sdof import spectrum
-    input_spectrum, *_  = spectrum(inputs,  step, **kwds)
-    output_spectrum, *_ = spectrum(outputs, step, **kwds)
-    return (input_spectrum[0], output_spectrum[1]/input_spectrum[1])
+    Din,  _,  Ain = spectrum(inputs,  step, **kwds)
+    Dout, _, Aout = spectrum(outputs, step, **kwds)
+    periods = Din[0]
+
+    if pseudo:
+        input_spectrum = Din[1,:]*(2*np.pi/periods)**2
+    else:
+        input_spectrum = Ain[1]
+
+    if pseudo:
+        output_spectrum = Dout[1,:]*(2*np.pi/periods)**2
+    else:
+        output_spectrum = Aout[1]
+
+    return (periods, output_spectrum[1]/input_spectrum[1])
 
 def fourier_transfer(inputs, outputs, step, **kwds):
     assert len(inputs) == len(outputs)
