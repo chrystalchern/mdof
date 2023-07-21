@@ -28,7 +28,7 @@ def extract_channels(event, channels, decimate=1):
     elif len(data) != len(channels):
         print(f"Only extracted {len(data)} channels, {len(channels)-len(data)} missing.", file=sys.stderr)
 
-    dt = event.match("r", file_name=rf".*{channels[0]}\.[vV]2").accel["time_step"]*decimate 
+    dt = find(channels[0]).accel["time_step"]*decimate
     return data, dt
 
 

@@ -1,9 +1,16 @@
 import numpy as np
 from scipy.fft import fft, fftfreq
+from .numerics import decimate
 
 def power_transfer(inputs, outputs, step): pass
 
-def response_transfer(inputs, outputs, step, pseudo=False, **kwds):
+def response_transfer(inputs, outputs, step, pseudo=False, decimation=None, **kwds):
+
+    if decimation is not None:
+        inputs = decimate(inputs, decimation=decimation)
+        outputs = decimate(outputs, decimation=decimation)
+        step = step*decimation
+
     from sdof import spectrum
     Din,  _,  Ain = spectrum(inputs,  step, **kwds)
     Dout, _, Aout = spectrum(outputs, step, **kwds)
@@ -21,7 +28,13 @@ def response_transfer(inputs, outputs, step, pseudo=False, **kwds):
 
     return (periods, output_spectrum/input_spectrum)
 
-def fourier_transfer(inputs, outputs, step, **kwds):
+def fourier_transfer(inputs, outputs, step, decimation=None, **kwds):
+
+    if decimation is not None:
+        inputs = decimate(inputs, decimation=decimation)
+        outputs = decimate(outputs, decimation=decimation)
+        step = step*decimation
+
     assert len(inputs) == len(outputs)
     input_transform = fspec(inputs, step, **kwds)
     output_transform = fspec(outputs, step, **kwds)

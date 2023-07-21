@@ -1,6 +1,17 @@
 from ssid import markov, realize, modal
+from .numerics import decimate
 
-def system(inputs, outputs, method="srim", **options):
+def system(inputs, outputs, method="srim", decimation=None, **options):
+
+    if method not in {
+        "srim",
+        "okid-era",
+        "okid-era-dc"
+    }: raise ValueError(f"Unknown method {method}")
+
+    if decimation is not None:
+        inputs = decimate(inputs, decimation=decimation)
+        outputs = decimate(outputs, decimation=decimation)
 
     if method == "okid-era":
         Y = markov.okid(inputs, outputs, **options)
@@ -15,12 +26,9 @@ def system(inputs, outputs, method="srim", **options):
 
     return realization
 
-# def spectrum():
-    # return
+def modes(inputs, outputs, dt, method="srim", decimation=None, **options):
 
-def modes(inputs, outputs, dt, method="srim", **options):
-    
-    realization = system(inputs, outputs, method, **options)
+    realization = system(inputs, outputs, method, decimation, **options)
 
-    return modal.system_modes(realization, dt)
+    return modal.system_modes(realization, dt, decimation)
 

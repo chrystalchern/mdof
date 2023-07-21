@@ -6,8 +6,7 @@ import ssid
 import ssid.modal
 import quakeio
 import numpy as np
-from .okid import parse_okid
-
+# from .okid import parse_okid
 
 HELP = """
 ssid [-p|w <>...] <method> <event> <inputs> <outputs>
@@ -48,11 +47,13 @@ class JSON_Encoder(json.JSONEncoder):
         return json.JSONEncoder.default(self, obj)
 
 
-def _decimate(series, d):
-    import numpy as np
-    return series[np.arange(0,len(series),d)]
+# def _decimate(series, decimation, **options):
+#     import numpy as np
+#     return series[np.arange(0,len(series),decimation)]
 
-def extract_channels(event, channels, decimate=1, permissive=True):
+
+# def extract_channels(event, channels, decimate=1, permissive=True):
+def extract_channels(event, channels, permissive=True):
     import numpy as np
     import sys
 
@@ -61,10 +62,10 @@ def extract_channels(event, channels, decimate=1, permissive=True):
         return event.match("l", station_channel=f"{chan}")
 
     data = np.asarray([
-        _decimate(find(chan).accel.data, d=decimate)
+        # _decimate(find(chan).accel.data, d=decimate)
+        find(chan).accel.data
         for chan in channels if find(chan) is not None
     ])
-
 
     if len(data) == 0:
         raise ValueError(f"No channels found, requested '{channels}'")
@@ -75,7 +76,8 @@ def extract_channels(event, channels, decimate=1, permissive=True):
         else:
             raise ValueError("Could not extract all desired channels")
 
-    dt = find(channels[0]).accel["time_step"]*decimate
+    # dt = find(channels[0]).accel["time_step"]*decimate
+    dt = find(channels[0]).accel["time_step"]
     return data, dt
 
 
@@ -110,6 +112,9 @@ def parse_time(argi, config, method=None):
                 config["damping"] = [float(damp)]
             except:
                 config["damping"] = ast.literal_eval(damp)
+        
+        elif arg == "--periodband":
+            config["period_band"] = tuple(float(x) for x in (next(argi).split(" ")))
 
         elif arg == "-h" or arg == "--help":
             print(help)
@@ -121,8 +126,10 @@ def parse_time(argi, config, method=None):
     event = quakeio.read(config["event_file"], exclusions=["filter*"])
 
     try:
-        inputs,  dt = extract_channels(event, [channels[0]], decimate=decimate)
-        outputs, dt = extract_channels(event, [channels[1]], decimate=decimate)
+        # inputs,  dt = extract_channels(event, [channels[0]], decimate=decimate)
+        inputs,  dt = extract_channels(event, [channels[0]])
+        # outputs, dt = extract_channels(event, [channels[1]], decimate=decimate)
+        outputs, dt = extract_channels(event, [channels[1]])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -179,7 +186,7 @@ def parse_srim(argi, config, method=None):
             channels[1] = ast.literal_eval(next(argi))
 
         elif arg == "--decimate":
-            decimate = float(next(argi))
+            config["decimate"] = int(next(argi))
 
         elif arg == "--":
             continue
@@ -189,8 +196,10 @@ def parse_srim(argi, config, method=None):
 
     event = quakeio.read(config["event_file"], exclusions=["filter*"])
     try:
-        inputs,  dt = extract_channels(event, channels[0], decimate=decimate)
-        outputs, dt = extract_channels(event, channels[1], decimate=decimate)
+        # inputs,  dt = extract_channels(event, [channels[0]], decimate=decimate)
+        inputs,  dt = extract_channels(event, channels[0])
+        # outputs, dt = extract_channels(event, [channels[1]], decimate=decimate)
+        outputs, dt = extract_channels(event, channels[1])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -198,8 +207,8 @@ def parse_srim(argi, config, method=None):
     config["dt"] = dt
 
     try:
-        A,B,C,D = ssid.system(inputs=inputs, outputs=outputs, full=True, **config)
-        ss_modes = ssid.modal.system_modes((A,B,C,D),dt)
+        realization = ssid.system(inputs=inputs, outputs=outputs, full=True, method=method, **config)
+        ss_modes = ssid.modal.system_modes(realization,dt,decimation=config.get("decimate",1))
 
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
@@ -232,7 +241,6 @@ def parse_args(args):
     }
     method = None
     config = {
-            "method": None,
             "operation": None,
             "protocol": None
     }

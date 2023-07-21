@@ -48,7 +48,7 @@ def era(Y,no=None,nc=None,r=None,**options):
     assert H0.shape == H1.shape == (p*(no), q*(nc))
 
     # reduced SVD of Hankel matrix
-    _svd = numerics.svd_routine(options.get("svd", {}))
+    _svd = numerics.svd_routine(**options.get("svd", {}))
 
     U,S,V = _svd(H0)
     SigmaInvSqrt = np.diag(S[:r]**-0.5)
@@ -113,7 +113,7 @@ def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
             HRl1[dimR*i:dimR*(i+1), dimR*j:dimR*(j+1)] = R1
 
     # reduced SVD of Hankel matrix of correlation matrices
-    _svd = numerics.svd_routine(options.get("svd", {}))
+    _svd = numerics.svd_routine(**options.get("svd", {}))
 
     U,S,V = _svd(HRl)
     SigmaInvSqrt = np.diag(S[:r]**-0.5)

@@ -1,0 +1,136 @@
+CE14406: # Vincent
+  Ingham, Rodriguez, and Nader 1997, Lateral https://doi.org/10.1016/S0045-7949(97)00031-X:
+    - [[7.41, 2.38], [6.9, 2.4]]  # Detailed SAM, System ID
+
+CE68185: # Carquinez West
+  Celebi, Ghahari, and Taciroglu 2019 https://doi.org/10.1007/s13349-019-00363-6, Transverse:
+    - [[5.882, 2.703, 2.564, 1.053]] # OKID
+
+CE68184: # Carquinez East
+
+CE23631: # Bernardino
+  Huang and Shakal 1995 https://doi.org/10.1193/1.1585811:
+    - [[1.7, 1.4]] # Eyeballing
+  Desroches and Fenves 1997 https://doi.org/10.1193/1.1585953:
+    - [[1.51, 1.19, 1.02, 0.79], [1.56, 1.30, 0.98, 0.83]] # RSTF, ????
+    - [[1.78, 1.24, 1.14, 0.95], [1.75, 1.29, 1.09, 0.96]] # RSTF, ????
+  Kim and Elgamal 2014 https://link.springer.com/chapter/10.1007/978-3-319-03182-8_9:
+    - [[1.5]] # SAM
+  Mosquera, Smyth, and Betti 2009 https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=0e2241c3b82ba791c53d6b5c77e378aa345154fb#page=75:
+    - [[1.136, 1.111, 0.971, 0.813, 0.356, 0.322, 0.216,  null,  null, 0.15 ,  null, 0.112]] # OKID
+    - [[1.087, 0.962,  null, 0.752, 0.369, 0.332, 0.215, 0.201, 0.192, 0.155, 0.139, 0.109]] # OKID
+
+CE24694: # Sylmar
+  Arici and Mosalam 2003 https://doi.org/10.1002/eqe.259, South:
+    - [[1.020, 0.833, 0.588, 0.488, 0.405, 0.360,  null], [1.020, 0.833, 0.588, 0.488, 0.405, 0.360,  null], [ null,  null,  null,  null,  null,  null,  null]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[1.235, 0.990, 0.870, 0.699, 0.575,  null,  null], [1.190, 0.962,  null,  null, 0.610, 0.488, 0.418], [1.266,  null, 0.781,  null, 0.629, 0.495, 0.444]] # FSTF, ARMA(OE), ARMA(ARX)
+  Arici and Mosalam 2003 https://doi.org/10.1002/eqe.259, North:
+    - [[1.429, 1.000, 0.847, 0.571, 0.488, 0.405, 0.385], [1.299,  null, 0.833, 0.581, 0.483,  null, 0.385], [1.351,  null, 0.833, 0.538,  null, 0.397, 0.380]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[1.587, 1.220, 1.020, 0.855, 0.769, 0.606,  null], [1.667, 1.333, 1.064,  null, 0.763, 0.565, 0.503], [1.754, 1.235, 0.935,  null, 0.781, 0.585,  null]] # FSTF, ARMA(OE), ARMA(ARX)
+  Arici and Mosalam 2005 https://doi.org/10.1002/stc.76, 1/8 reduction:
+    - [[1.282, 0.952, 0.775, 0.571, 0.427, 0.332, 0.282, 0.275, 0.253, 0.222, 0.200, 0.193], [ null, 0.962, 0.763, 0.581, 0.433,  null, 0.279, 0.272,  null, 0.223,  null, 0.195], [1.266, 0.943, 0.763, 0.578, 0.429, 0.327, 0.285,  null,  null, 0.225, 0.204, 0.194]] # OKID, Subspace, SRIM
+  Arici and Mosalam 2005 https://doi.org/10.1002/stc.76, 1/4 reduction:
+    - [[0.752, 0.581, 0.433, 0.385, 0.346, 0.284, 0.271, 0.236, 0.212, 0.196, 0.156, 0.147, 0.123, 0.116, 0.094], [0.775, 0.578, 0.420, 0.389, 0.338, 0.287, 0.282, 0.239, 0.214, 0.196, 0.157, 0.147, 0.125, 0.117, 0.093], [0.730, 0.562, 0.429, 0.377, 0.340, 0.290, 0.276, 0.225,  null, 0.193,  null, 0.148, 0.121, 0.115, 0.094]] # OKID, Subspace, SRIM
+  Mosquera, Smyth, and Betti 2009 https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=0e2241c3b82ba791c53d6b5c77e378aa345154fb#page=75:
+    - [[ null, 0.962, 0.763, 0.592, 0.452,  null, 0.313, 0.271, 0.221, 0.205, 0.152, 0.124, 0.093]] # OKID
+    - [[1.333, 0.99 , 0.775, 0.585, 0.472, 0.412, 0.336, 0.274, 0.226, 0.204, 0.153, 0.125, 0.096]] # OKID
+
+CE89735: # Eureka - Middle Channel
+
+CE89736: # Eureka Channel
+  Almutairi, Lu, Wang, and Elgamal 2016 https://dot.ca.gov/-/media/dot-media/programs/research-innovation-system-Nanormation/documents/f0016529-ca15-2582-finalreport.pdf:
+    - [[1.24, 1.18, 1.02, 0.89, 0.85]] # SAM
+    
+CE89686: # Eureka - Samoa Channel
+  Almutairi, Lu, Wang, and Elgamal 2016 https://dot.ca.gov/-/media/dot-media/programs/research-innovation-system-information/documents/f0016529-ca15-2582-finalreport.pdf:
+    - [[1.14, 0.96, 0.91, 0.73, 0.68]] # SAM
+  Taciroglu et al 2014, Transverse https://dot.ca.gov/-/media/dot-media/programs/research-innovation-system-information/documents/final-reports/ca14-2418-finalreport-a11y.pdf:
+    - [[1.000, 0.862, 0.758, 0.68 , 0.633, 0.578, 0.535, 0.481, 0.435, 0.392, 0.358, 0.303, 0.281, 0.2], [1.000, 0.855, 0.746, 0.676, 0.625, 0.571, 0.541, 0.485, 0.444, 0.386, 0.356, 0.303, 0.283, 0.200]]  # FDD, PARAFAC 
+
+CE13795: # Capistrano
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.372]] # EFDD
+    - [[0.396]] # EFDD
+    - [[0.381]] # EFDD
+
+CE01336: # Meloland
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.269]] # EFDD
+    - [[0.297]] # EFDD
+    - [[0.259]] # EFDD
+    - [[0.288]] # EFDD
+    - [[0.273]] # EFDD
+  Arici and Mosalam 2003 https://doi.org/10.1002/eqe.259:
+    - [[0.323, 0.286], [0.325, 0.275], [0.311, 0.275]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.294, null ], [0.300, 0.259], [0.295, 0.260]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.294, 0.250], [0.303, 0.253], [0.298, 0.254]] # FSTF, ARMA(OE), ARMA(ARX)
+  Mosquera, Smyth, and Betti 2009 https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=0e2241c3b82ba791c53d6b5c77e378aa345154fb#page=75:
+    - [[0.297, 0.225, 0.206, 0.14 , 0.098, 0.068]]  # OKID
+    - [[0.292, 0.232, 0.203, 0.137, 0.098, 0.068]]  # OKID
+    - [[0.292, 0.224, 0.204, 0.137, 0.099, 0.068]]  # OKID
+    - [[0.296, 0.251, 0.207, 0.139, 0.103,  null]]  # OKID
+    - [[0.296, 0.252, 0.208, 0.138, 0.102,  null]]  # OKID
+
+CE89324: # Painter
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.281]] # EFDD
+    - [[0.241]] # EFDD
+    - [[0.243]] # EFDD
+    - [[0.247]] # EFDD
+  Arici and Mosalam 2003 https://doi.org/10.1002/eqe.259:
+    - [[0.282, null ], [0.286, 0.237], [0.286, 0.216]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.299, 0.230], [0.300, 0.206], [0.272, 0.211]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.339, 0.215], [null , null ], [0.318, 0.231]] # FSTF, ARMA(OE), ARMA(ARX)
+  Mosquera, Smyth, and Betti 2009 https://citeseerx.ist.psu.edu/document?repid=rep1&type=pdf&doi=0e2241c3b82ba791c53d6b5c77e378aa345154fb#page=75:
+    - [[0.295, 0.231, 0.206, null, 0.164, 0.137]] # OKID
+    - [[0.298, 0.242, 0.204, 0.196, null, 0.139]] # OKID
+
+CE24706: # Palmdale
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.203]] # EFDD
+    - [[0.239]] # EFDD
+
+CE47315: # San Juan Bautista
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.190]] # EFDD
+    - [[0.202]] # EFDD
+    - [[0.172]] # EFDD
+
+CE54730: # Crowley
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.186]] # EFDD
+    - [[0.192]] # EFDD
+    - [[0.187]] # EFDD
+  Arici and Mosalam 2003 https://doi.org/10.1002/eqe.259:
+    - [[0.204, 0.179], [0.197, 0.177], [0.200, 0.173]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.217, 0.183], [0.205, 0.181], [0.208, 0.163]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.217, 0.185], [0.211, 0.188], [0.211, 0.177]] # FSTF, ARMA(OE), ARMA(ARX)
+
+CE89708: # Arcata
+  Fraino et al 2012 https://www.iitk.ac.in/nicee/wcee/article/WCEE2012_5307.pdf:
+    - [[0.152]] # EFDD
+
+CE33742: # Ridgecrest
+  Arici and Mosalam 2003 https://doi.org/10.1002/eqe.259:
+    - [[0.280], [0.282], [0.272]] # FSTF, ARMA(OE), ARMA(ARX)
+    - [[0.300], [0.295], [0.295]] # FSTF, ARMA(OE), ARMA(ARX)
+
+CE24704: # La Cienega
+  Boore et al 2003 https://doi.org/10.1785/0120020197:
+    - [[0.2, 0.5]] # Caltrans engineering judgement
+  Broderick and Elnashai 1995 https://doi.org/10.1002/eqe.4290240205, Transverse:
+    - [[0.46, 0.28]] # SAM
+  Broderick and Elnashai 1995 https://doi.org/10.1002/eqe.4290240205, Deck:
+    - [[0.20, 0.16, 0.16]] # SAM
+  Broderick and Elnashai 1995 https://doi.org/10.1002/eqe.4290240205, Longitudinal:
+    - [[0.11]] # SAM
+  Venkittaraman and Banerjee 2013 https://doi.org/10.1002/eqe.2392, Transverse:
+    - [[0.44, 0.29]] # SAM
+  Venkittaraman and Banerjee 2013 https://doi.org/10.1002/eqe.2392, Deck:
+    - [[0.24, 0.20, 0.18]] # SAM
+
+CE58658: # Hayward, no literature found
+CE13705: # Corona, no literature found
+CE89973: # Eel River, no literature found
+CE24775: # Grapevine, no literature found
+CE79421: # Confusion Hill, no literature found

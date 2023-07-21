@@ -24,7 +24,9 @@ def condeig(a): # TODO: make this match matlab source code for condeig
     c = abs(1 / np.diag(np.dot(vl, vr))) 
     return vr, lamr, c
 
-def system_modes(realization, dt, Observability=None, nt=None):
+def system_modes(realization, dt, decimation=1, Observability=None, nt=None):
+
+    dt = dt*decimation
 
     if nt is None:
         nt = 100
