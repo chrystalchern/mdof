@@ -120,14 +120,8 @@ CE24704: # La Cienega
     - [[0.2, 0.5]] # Caltrans engineering judgement
   Broderick and Elnashai 1995 https://doi.org/10.1002/eqe.4290240205, Transverse:
     - [[0.46, 0.28]] # SAM
-  Broderick and Elnashai 1995 https://doi.org/10.1002/eqe.4290240205, Deck:
-    - [[0.20, 0.16, 0.16]] # SAM
-  Broderick and Elnashai 1995 https://doi.org/10.1002/eqe.4290240205, Longitudinal:
-    - [[0.11]] # SAM
   Venkittaraman and Banerjee 2013 https://doi.org/10.1002/eqe.2392, Transverse:
     - [[0.44, 0.29]] # SAM
-  Venkittaraman and Banerjee 2013 https://doi.org/10.1002/eqe.2392, Deck:
-    - [[0.24, 0.20, 0.18]] # SAM
 
 CE58658: # Hayward, no literature found
 CE13705: # Corona, no literature found
