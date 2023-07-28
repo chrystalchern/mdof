@@ -1,6 +1,14 @@
+from typing import Any
+
+
 class Config(dict):
     def __setattr__(self, name, value):
         self[name]  = value
+        
+    def __getattribute__(self, __name: str) -> Any:
+        if __name in self:
+            return self[__name]
+        return super().__getattribute__(__name)
 
 
 def _decimate(series, d):

@@ -144,7 +144,7 @@ def _blk_3(i, CA, U):
     # ARX filter used in OKID-ERA-DC.
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
+def srim(inputs,outputs,no=None,r=None,full=True,threads=6,chunk=200,find="AC",**options):
     lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
 
     if len(inputs.shape) == 1:
@@ -245,13 +245,15 @@ def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
     # Execute a loop in parallel that looks something like:
     #    for i in  range(1,ns):
     #        Phi[] = _blk_3(i, CA_Powers, np.flip(...))
+    if "b" not in find.lower() and "d" not in find.lower():
+        return (A,None,C,None)
 
-    with multiprocessing.Pool(pool_size) as pool:
+    with multiprocessing.Pool(threads) as pool:
         for i,res in progress_bar(
                 pool.imap_unordered(
                     partial(_blk_3, CA=CA_powers,U=np.flip(krn,0)),
                     range(1,ns),
-                    200
+                    chunk
                 ),
                 total = ns
             ):

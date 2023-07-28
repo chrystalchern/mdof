@@ -1,3 +1,6 @@
+# gets called when running ssid from the command line:
+#    python -m ssid ...
+#
 import ast
 import sys
 import json

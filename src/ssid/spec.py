@@ -41,11 +41,6 @@ def fourier_transfer(inputs, outputs, step, decimation=None, **kwds):
     input_transform[0]=np.real(input_transform[0]) # prevents unwarranted "divide by zero" warning
     return (1/input_transform[0], output_transform[1]/input_transform[1])
 
-def pspec(series, step):
-    import scipy.signal
-
-def rspec(series, step):
-    pass
 
 def fspec(series, step, period_band=None, **kwds):
     assert len(series.shape) == 1
