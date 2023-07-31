@@ -97,7 +97,6 @@ def parse_time(argi, config, method=None):
     --threads <int>
     """
     damping  = None
-    decimate = 1
     channels = [None, None]
     for arg in argi:
         if arg == "--threads" and method == "response":
@@ -108,6 +107,9 @@ def parse_time(argi, config, method=None):
 
         elif arg == "--outputs":
             channels[1] = next(argi)
+            
+        elif arg == "--decimate":
+            config["decimate"] = int(next(argi))
 
         elif arg == "--damping" and method == "response":
             damp = next(argi)
@@ -164,7 +166,6 @@ def parse_srim(argi, config, method=None):
                 representing the system. (formerly orm/n)
     """
     config.update({"p"  :  5, "orm":  4})
-    decimate = 8
 
     #argi = iter(args)
     channels = [[], []]
