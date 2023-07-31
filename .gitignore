@@ -14,6 +14,7 @@ notebooks/uploads/opensees_sdof
 notebooks/uploads/bernardino
 notebooks/uploads/hayward
 notebooks/output
+notebooks/PEERNGARecords_Unscaled/
 CESMD/*
 !CESMD/CE58658
 dist
