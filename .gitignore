@@ -19,3 +19,6 @@ CESMD/*
 dist
 tests
 docs/theory/*.md
+
+PUBLISHING.md
+scrape.py
