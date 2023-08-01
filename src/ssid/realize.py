@@ -144,7 +144,7 @@ def _blk_3(i, CA, U):
     # ARX filter used in OKID-ERA-DC.
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-def srim(inputs,outputs,no=None,r=None,full=True,threads=6,chunk=200,find="AC",**options):
+def srim(inputs,outputs,no=None,r=None,full=True,threads=6,chunk=200,find="ABCD",**options):
     lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
 
     if len(inputs.shape) == 1:
