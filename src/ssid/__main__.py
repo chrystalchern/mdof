@@ -102,12 +102,15 @@ def parse_time(argi, config, method=None):
         if arg == "--threads" and method == "response":
             config["threads"] = int(next(argi))
 
+        elif arg == "--config":
+            config.update(json.loads(next(argi)))
+
         elif arg == "--inputs":
             channels[0] = next(argi)
 
         elif arg == "--outputs":
             channels[1] = next(argi)
-            
+
         elif arg == "--decimate":
             config["decimate"] = int(next(argi))
 
@@ -117,7 +120,7 @@ def parse_time(argi, config, method=None):
                 config["damping"] = [float(damp)]
             except:
                 config["damping"] = ast.literal_eval(damp)
-        
+
         elif arg == "--periodband":
             config["period_band"] = tuple(float(x) for x in (next(argi).split(" ")))
 
@@ -173,6 +176,9 @@ def parse_srim(argi, config, method=None):
         if arg == "--arx-order":
             config["no"] = int(next(argi))
 
+        elif arg == "--config":
+            config.update(json.loads(next(argi)))
+
         elif arg == "--dt":
             config["dt"] = float(next(argi))
 
@@ -184,10 +190,10 @@ def parse_srim(argi, config, method=None):
             sys.exit()
 
         elif arg == "--inputs":
-            channels[0] = ast.literal_eval(next(argi))
+            channels[0] = json.loads(next(argi))
 
         elif arg == "--outputs":
-            channels[1] = ast.literal_eval(next(argi))
+            channels[1] = json.loads(next(argi))
 
         elif arg == "--decimate":
             config["decimate"] = int(next(argi))
