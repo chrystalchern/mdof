@@ -80,7 +80,7 @@ def extract_channels(event, channels, permissive=True):
             raise ValueError("Could not extract all desired channels")
 
     # dt = find(channels["inputs"]).accel["time_step"]*decimate
-    dt = find(channels["inputs"]).accel["time_step"]
+    dt = find(channels[0]).accel["time_step"]
     return data, dt
 
 
@@ -102,10 +102,16 @@ def parse_time(argi, config, channels, method=None):
             config["threads"] = int(next(argi))
 
         elif arg == "--config":
-            config.update(json.loads(next(argi)))
+            conf_arg = json.loads(next(argi))
+            for i in conf_arg.pop("channels", []):
+                channels[i["type"]+"s"].append(i["id"])
+            for i in {"inputs", "outputs"}:
+                if i in conf_arg:
+                    channels[i] = conf_arg.pop(i)
+            config.update(conf_arg)
 
         elif arg == "--inputs":
-            config["intpus"] = next(argi)
+            channels["intpus"] = next(argi)
 
         elif arg == "--outputs":
             channels["outputs"] = next(argi)
@@ -134,7 +140,7 @@ def parse_time(argi, config, channels, method=None):
 
     try:
         # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
-        inputs,  dt = extract_channels(event, [channels["inputs"]]])
+        inputs,  dt = extract_channels(event, [channels["inputs"]])
         # outputs, dt = extract_channels(event, [channels["outputs"]], decimate=decimate)
         outputs, dt = extract_channels(event, [channels["outputs"]])
     except Exception as e:
@@ -174,7 +180,13 @@ def parse_srim(argi, config, channels, method=None):
             config["no"] = int(next(argi))
 
         elif arg == "--config":
-            config.update(json.loads(next(argi)))
+            conf_arg = json.loads(next(argi))
+            for i in conf_arg.pop("channels", []):
+                channels[i["type"]+"s"].append(i["id"])
+            for i in {"inputs", "outputs"}:
+                if i in conf_arg:
+                    channels[i] = conf_arg.pop(i)
+            config.update(conf_arg)
 
         elif arg == "--dt":
             config["dt"] = float(next(argi))
@@ -247,6 +259,7 @@ def parse_args(args):
         "okid": parse_srim
     }
     method = None
+    config = {}
     channels = {
 #           "operation": None,
 #           "protocol": None,
@@ -264,6 +277,7 @@ def parse_args(args):
             method = conf_arg.pop("method", method)
             for i in conf_arg.pop("channels", []):
                 channels[i["type"]+"s"].append(i["id"])
+            config.update(conf_arg)
 
         elif arg in ["--help", "-h"]:
             print(HELP)
