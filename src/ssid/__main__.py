@@ -79,13 +79,13 @@ def extract_channels(event, channels, permissive=True):
         else:
             raise ValueError("Could not extract all desired channels")
 
-    # dt = find(channels[0]).accel["time_step"]*decimate
-    dt = find(channels[0]).accel["time_step"]
+    # dt = find(channels["inputs"]).accel["time_step"]*decimate
+    dt = find(channels["inputs"]).accel["time_step"]
     return data, dt
 
 
 
-def parse_time(argi, config, method=None):
+def parse_time(argi, config, channels, method=None):
     help = f"""\
     ssid {method} <event>
 
@@ -97,7 +97,6 @@ def parse_time(argi, config, method=None):
     --threads <int>
     """
     damping  = None
-    channels = [None, None]
     for arg in argi:
         if arg == "--threads" and method == "response":
             config["threads"] = int(next(argi))
@@ -106,10 +105,10 @@ def parse_time(argi, config, method=None):
             config.update(json.loads(next(argi)))
 
         elif arg == "--inputs":
-            channels[0] = next(argi)
+            config["intpus"] = next(argi)
 
         elif arg == "--outputs":
-            channels[1] = next(argi)
+            channels["outputs"] = next(argi)
 
         elif arg == "--decimate":
             config["decimate"] = int(next(argi))
@@ -134,10 +133,10 @@ def parse_time(argi, config, method=None):
     event = quakeio.read(config["event_file"], exclusions=["filter*"])
 
     try:
-        # inputs,  dt = extract_channels(event, [channels[0]], decimate=decimate)
-        inputs,  dt = extract_channels(event, [channels[0]])
-        # outputs, dt = extract_channels(event, [channels[1]], decimate=decimate)
-        outputs, dt = extract_channels(event, [channels[1]])
+        # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
+        inputs,  dt = extract_channels(event, [channels["inputs"]]])
+        # outputs, dt = extract_channels(event, [channels["outputs"]], decimate=decimate)
+        outputs, dt = extract_channels(event, [channels["outputs"]])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -159,7 +158,7 @@ def parse_time(argi, config, method=None):
     print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
 
 
-def parse_srim(argi, config, method=None):
+def parse_srim(argi, config, channels, method=None):
     help="""
     SRIM -- System Identification with Information Matrix
 
@@ -168,10 +167,8 @@ def parse_srim(argi, config, method=None):
     r           size of the state-space model used for
                 representing the system. (formerly orm/n)
     """
-    config.update({"p"  :  5, "orm":  4})
+#   config.update({"p"  :  5, "orm":  4})
 
-    #argi = iter(args)
-    channels = [[], []]
     for arg in argi:
         if arg == "--arx-order":
             config["no"] = int(next(argi))
@@ -190,10 +187,10 @@ def parse_srim(argi, config, method=None):
             sys.exit()
 
         elif arg == "--inputs":
-            channels[0] = json.loads(next(argi))
+            channels["inputs"] = json.loads(next(argi))
 
         elif arg == "--outputs":
-            channels[1] = json.loads(next(argi))
+            channels["outputs"] = json.loads(next(argi))
 
         elif arg == "--decimate":
             config["decimate"] = int(next(argi))
@@ -206,10 +203,10 @@ def parse_srim(argi, config, method=None):
 
     event = quakeio.read(config["event_file"], exclusions=["filter*"])
     try:
-        # inputs,  dt = extract_channels(event, [channels[0]], decimate=decimate)
-        inputs,  dt = extract_channels(event, channels[0])
-        # outputs, dt = extract_channels(event, [channels[1]], decimate=decimate)
-        outputs, dt = extract_channels(event, channels[1])
+        # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
+        inputs,  dt = extract_channels(event, channels["inputs"])
+        # outputs, dt = extract_channels(event, [channels["outputs"]], decimate=decimate)
+        outputs, dt = extract_channels(event, channels["outputs"])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -250,9 +247,11 @@ def parse_args(args):
         "okid": parse_srim
     }
     method = None
-    config = {
-            "operation": None,
-            "protocol": None
+    channels = {
+#           "operation": None,
+#           "protocol": None,
+            "inputs":  [],
+            "outputs": []
     }
 
     argi = iter(args[1:])
@@ -260,12 +259,18 @@ def parse_args(args):
         if arg == "-p":
             outputs.append(next(arg))
 
+        elif arg == "--config":
+            conf_arg = json.loads(next(argi))
+            method = conf_arg.pop("method", method)
+            for i in conf_arg.pop("channels", []):
+                channels[i["type"]+"s"].append(i["id"])
+
         elif arg in ["--help", "-h"]:
             print(HELP)
             sys.exit()
 
-        elif arg == "--protocol":
-            config["protocol"] = next(arg)
+#       elif arg == "--protocol":
+#           config["protocol"] = next(arg)
 
         # Positional args
         elif method is None:
@@ -280,7 +285,7 @@ def parse_args(args):
             sys.exit()
 
 
-    return sub_parsers[method](argi, config, method=method), outputs
+    return sub_parsers[method](argi, config, channels, method=method), outputs
 
 
 def main():
