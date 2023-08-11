@@ -18,10 +18,13 @@ from . import numerics
 # no = number of block rows in Hankel matrix = order of observability matrix
 # nc = number of block columns in Hankel matrix = order of controllability matrix
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
-def era(Y,no=None,nc=None,r=None,**options):
+def era(Y,no=None,nc=None,**options):
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
-    if r is None:
-        r = min(20, int(nt/2))
+    r = options.get("r", 
+        options.get("order", min(20, int(nt/2))))
+
+    no = options.get("no",
+         options.get("prediction_horizon"), None)
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
