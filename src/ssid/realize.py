@@ -20,11 +20,17 @@ from . import numerics
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
 def era(Y,no=None,nc=None,**options):
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
+
     r = options.get("r", 
-        options.get("order", min(20, int(nt/2))))
+        options.get("order",
+                    min(20, int(nt/2))))
 
     no = options.get("no",
-         options.get("prediction_horizon"), None)
+         options.get("prediction_horizon",
+                    None))
+
+    # if r is None:
+    #     r = min(20, int(nt/2))
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
