@@ -9,11 +9,14 @@ def lin_solver():
 def svd_routine(**kwds):
     import scipy
     def _svd(*args):
-        U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd")
+        U,S,V = scipy.linalg.svd(*args, lapack_driver="gesvd", **kwds)
         return U,S,V.T.conj()
     return _svd
 
 def form_observability():
+    pass
+
+def form_controllability():
     pass
 
 def decimate(series, decimation):
@@ -25,3 +28,7 @@ def decimate(series, decimation):
             return series[:,np.arange(0,series.shape[1],decimation)]
     if isinstance(series, list):
         return np.asarry(series)[np.arange(0,len(series),decimation)]
+    
+def block_hankel(series):
+
+    pass
