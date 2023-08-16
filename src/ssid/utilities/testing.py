@@ -7,7 +7,7 @@ def test_method(method, inputs, outputs, dt, t, **conf):
     time0 = time()
     A,B,C,D = ssid.system(method=method, inputs=inputs, outputs=outputs, **conf)
     time1 = time()
-    modedict = modal.system_modes((A,B,C,D),dt)
+    modedict = modal.system_modes((A,B,C,D),dt,**conf)
     model = {
                 "time":    time1-time0,
                 "ypred":   forced_response(ss(A,B,C,D,dt), T=t, U=inputs, squeeze=False, return_x=False).outputs,

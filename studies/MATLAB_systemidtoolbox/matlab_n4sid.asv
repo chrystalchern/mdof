@@ -1,0 +1,21 @@
+input_channels = [25 2 7 18];
+output_channels = [23 13 15 20];
+
+inputs = zeros(length(importdata("berke_25.txt")),length(input_channels));
+outputs = zeros(length(importdata("berke_23.txt")),length(output_channels));
+
+for i = 1:length(input_channels)
+    inputs(:,i) = importdata("berke_"+input_channels(i)+".txt");
+end
+
+for i = 1:length(output_channels)
+    outputs(:,i) = importdata("berke_"+output_channels(i)+".txt");
+end
+
+Ts = 0.01;
+
+sys = n4sid(inputs,outputs,12,'Ts',Ts,'Form','modal','Feedthrough',1);
+
+[~,f] = modalfrf(sys);
+[fd, zeta] = modalfit(sys,f,3)
+1./fd

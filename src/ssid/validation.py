@@ -17,6 +17,7 @@ def EMAC_Matrix(Phi_final, Phi_final_hat):
     emac = np.zeros((n,p))
     for i in range(n):
         for j in range(p):
+            # print(f"{Phi_final[j,i]=}, {Phi_final_hat[j,i]=}")
             Rij = min(
                 (abs(Phi_final[j,i])/abs(Phi_final_hat[j,i])),
                 (abs(Phi_final_hat[j,i])/abs(Phi_final[j,i]))
@@ -29,30 +30,36 @@ def EMAC_Matrix(Phi_final, Phi_final_hat):
             emac[i,j] = Rij*Wij
     return emac
 
-# nt = number of timesteps (for OKID-ERA-DC and OKID-ERA, number of Markov parameters)
+# no = number of timesteps for which to consider temporal consistency
 # Psi = eigenvectors of A, as columns of a matrix. can be reused from modal.system_modes().
 # Gam = eigenvalues of A, as items of a vector. can be reused from modal.system_modes().
 # Observability matrix can be reused from realize.srim().
 # p = number of outputs
 # n = model order (number of system variables)
-def OutputEMAC(A,C,nt,Observability=None,Psi=None,Gam=None):
+def OutputEMAC(A,C,Psi=None,Gam=None,**options):
     p,n = C.shape
     assert A.shape == (n,n)
+    no = options.get("outlook",
+         options.get("no",
+         options.get("horizon",
+                     100)))
+    Observability = options.get("Observability",
+                                None)
     """Output EMAC (Eqs. 3.88-3.89)"""
     if Gam is None:
         assert Psi is None
         from ssid.modal import condeig 
         Psi,Gam,_ = condeig(A)
     if Observability is None:
-        Observability = np.empty((nt,p,n))
+        Observability = np.empty((no,p,n))
         Observability[0,:,:] = C
         A_pwr = A
-        for pwr in range(1,nt):
+        for pwr in range(1,no):
             Observability[pwr,:,:] =  C@A_pwr
             A_pwr = A@A_pwr
-        Observability = Observability.reshape((nt*p,n))
+        Observability = Observability.reshape((no*p,n))
     Phi_final = Observability[-p:,:]@Psi                    # identified modal observability at the last timestep (last block row)
-    Phi_final_hat = C@Psi@np.diag(Gam**(nt-1))              # expected modal observability at the last timestep
+    Phi_final_hat = C@Psi@np.diag(Gam**(no-1))              # expected modal observability at the last timestep
     assert Phi_final.shape == Phi_final_hat.shape == (p,n)
     emaco  = EMAC_Matrix(Phi_final,Phi_final_hat)
     return EnergyCondensedEMAC(emaco,(C@Psi).T)             # DIM: nxp, nxp
@@ -73,6 +80,7 @@ def MPC(A,C,Psi=None):
         s11[i] = np.real(mode_i).conjugate().transpose()@np.real(mode_i)
         s22[i] = np.imag(mode_i).conjugate().transpose()@np.imag(mode_i)
         s12[i] = np.real(mode_i).conjugate().transpose()@np.imag(mode_i)
+        # print(f"{mode_i=}, {s11[i]=}, {s22[i]=}, {s12[i]=}")
         nu[i]    = (s22[i]-s11[i])/(2*s12[i])
         lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
         lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)

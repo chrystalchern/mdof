@@ -18,8 +18,10 @@ from . import numerics
 # no = number of block rows in Hankel matrix = order of observability matrix
 # nc = number of block columns in Hankel matrix = order of controllability matrix
 # r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
-def era(Y,no=None,nc=None,**options):
+def era(Y,nc=None,**options):
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
+    # if r is None:
+    #     r = min(20, int(nt/2))
 
     r = options.get("r", 
         options.get("order",
@@ -27,10 +29,7 @@ def era(Y,no=None,nc=None,**options):
 
     no = options.get("no",
          options.get("prediction_horizon",
-                    None))
-
-    # if r is None:
-    #     r = min(20, int(nt/2))
+                     None))
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
@@ -79,10 +78,18 @@ def era(Y,no=None,nc=None,**options):
 # b = (beta) number of block columns in Hankel of correlation matrix
 # l = initial lag for data correlations
 # g = lags (gap) between correlation matrices
-def era_dc(Y,no=None,nc=None,a=0,b=0,l=0,g=1,r=None,**options):
+def era_dc(Y,nc=None,a=0,b=0,l=0,g=1,**options):
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
-    if r is None:
-        r = int(nt/2)
+    # if r is None:
+    #     r = int(nt/2)
+
+    r = options.get("r", 
+        options.get("order",
+                    min(20, int(nt/2))))
+
+    no = options.get("no",
+         options.get("prediction_horizon",
+                     None))
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
@@ -153,7 +160,8 @@ def _blk_3(i, CA, U):
     # ARX filter used in OKID-ERA-DC.
 # r = size of the state-space model used for representing the system.
 # Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-def srim(inputs,outputs,no=None,r=None,full=True,threads=6,chunk=200,find="ABCD",**options):
+# def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
+def srim(inputs,outputs,full=True,find="ABCD",threads=6,chunk=200,**options):
     lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
 
     if len(inputs.shape) == 1:
@@ -170,11 +178,20 @@ def srim(inputs,outputs,no=None,r=None,full=True,threads=6,chunk=200,find="ABCD"
     p = outputs.shape[0]
     assert nt == outputs.shape[1]
 
-    if no is None:
-        no = min(300, nt)
+    # if no is None:
+    #     no = min(300, nt)
 
-    if r is None:
-        r = min(10, int(no/2))
+    # if r is None:
+    #     r = min(10, int(no/2))
+
+    no = options.get("no",
+         options.get("horizon",
+                     min(300, nt)))
+
+    r = options.get("r", 
+        options.get("order",
+                    min(20, int(no/2))))
+
 
     # maximum possible number of columns in the Y and U data matrices
     ns = nt-1-no+2
@@ -254,6 +271,7 @@ def srim(inputs,outputs,no=None,r=None,full=True,threads=6,chunk=200,find="ABCD"
     # Execute a loop in parallel that looks something like:
     #    for i in  range(1,ns):
     #        Phi[] = _blk_3(i, CA_Powers, np.flip(...))
+
     if "b" not in find.lower() and "d" not in find.lower():
         return (A,None,C,None)
 

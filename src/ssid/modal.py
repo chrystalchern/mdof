@@ -24,12 +24,12 @@ def condeig(a): # TODO: make this match matlab source code for condeig
     c = abs(1 / np.diag(np.dot(vl, vr))) 
     return vr, lamr, c
 
-def system_modes(realization, dt, decimation=1, Observability=None, nt=None):
+def system_modes(realization, dt, Observability=None, **options):
 
+    decimation = options.get("decimation",
+                             1)
+    
     dt = dt*decimation
-
-    if nt is None:
-        nt = 100
 
     A,_,C,_ = realization
     # eigendecomp A
@@ -61,7 +61,7 @@ def system_modes(realization, dt, decimation=1, Observability=None, nt=None):
     modeshape = C@Psi
 
     # energy condensed output EMAC (extended modal amplitude coherence)
-    energy_condensed_emaco = OutputEMAC(A,C,nt,Observability=Observability,Psi=Psi,Gam=Gam)
+    energy_condensed_emaco = OutputEMAC(A,C,Observability=Observability,Psi=Psi,Gam=Gam,**options)
 
     # MPC (modal phase collinearity)
     mpc = MPC(A,C,Psi=Psi)
