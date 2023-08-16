@@ -26,7 +26,12 @@ for d = 1:16
     [~,f] = modalfrf(sys);
     [fd, damping] = modalfit(sys,f,nModes);
     periods = 1./fd;
+    
+    A = sys.A;
+    B = sys.B;
+    C = sys.C;
+    D = sys.D;
 
     result_filename = "decimation_"+d+".mat";
-    save(result_filename, "sys", "periods", "damping")
+    save(result_filename, "A", "B", "C", "D", "periods", "damping")
 end

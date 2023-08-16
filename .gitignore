@@ -26,3 +26,4 @@ scrape.py
 
 notebooks/PEERNGARecords_Unscaled
 studies/Gavin/
+studies/MATLAB_systemidtoolbox/n4sid/*.mat
