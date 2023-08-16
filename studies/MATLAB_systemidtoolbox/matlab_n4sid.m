@@ -1,10 +1,11 @@
 input_channels = [25 2 7 18];
 output_channels = [23 13 15 20];
 
-d = 1;
+nt = length(importdata("berke_25.txt"));
+
+d = 8;
 decimation = 1:d:nt;
 
-nt = length(importdata("berke_25.txt"));
 inputs = zeros(length(decimation),length(input_channels));
 outputs = zeros(length(decimation),length(input_channels));
 
@@ -25,5 +26,5 @@ Ts = 0.01;
 sys = n4sid(inputs,outputs,12,'Ts',Ts,'Form','modal','Feedthrough',1);
 
 [~,f] = modalfrf(sys);
-[fd, zeta] = modalfit(sys,f,3)
+[fd, zeta] = modalfit(sys,f,6)
 periods = 1./fd
