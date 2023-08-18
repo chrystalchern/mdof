@@ -18,6 +18,7 @@ def okid(inputs,outputs,m=None,**options):
     q,nt = inputs.shape
     p = outputs.shape[0]
     assert nt == outputs.shape[1]
+    print(p,q,nt)
     
     if m is None:
         m = min(300,nt)
@@ -32,7 +33,7 @@ def okid(inputs,outputs,m=None,**options):
     V = np.delete(V, slice(q,q+p), axis=0)      # Remove rows q+1 to q+p (TODO: see if it's necessary to remove rows, or if solving for Ybar can include these)
 
     # Solve for observer Markov parameters Ybar
-    Ybar = outputs @ np.linalg.pinv(V,rcond=10**(-3))  # DIM: (p)x(q+m(q+p))
+    Ybar = outputs @ np.linalg.pinv(V,rcond=10e-3)  # DIM: (p)x(q+m(q+p))
     assert Ybar.shape == (p,q+m*(q+p))
     
     # Isolate system Markov parameters
@@ -42,7 +43,7 @@ def okid(inputs,outputs,m=None,**options):
 
     Y = np.zeros((p,q,m))
     Ybar1 = np.zeros((p,q,m))
-    Ybar2 = np.zeros((p,q,m))
+    Ybar2 = np.zeros((p,p,m))
     
     for i in range(m):
         Ybar1[:,:,i] = Ybar[:,q+(q+p)*i : q+(q+p)*i+q]
