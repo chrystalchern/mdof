@@ -1,0 +1,784 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Theory &#8212; ssid</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script src="../_static/documentation_options.js?v=5c79bd3c"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/index';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Library" href="../api/index.html" />
+    <link rel="prev" title="SSID documentation" href="../index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">ssid</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        Library
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BRACE2/ssid" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="#">
+                        Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        Library
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BRACE2/ssid" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page">Theory</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="theory">
+<h1>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h1>
+<section id="state-space-model-of-structural-dynamics">
+<h2>State Space Model of Structural Dynamics<a class="headerlink" href="#state-space-model-of-structural-dynamics" title="Link to this heading">#</a></h2>
+<figure class="align-default" id="id1">
+<img alt="MDOF Structure" src="../_images/si_msmdof.png" />
+<figcaption>
+<p><span class="caption-text">MDOF Structure</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>When an multiple degree-of-freedom (MDOF) system is subject to multiple
+support excitation, such as in the figure above, the displacement vector
+is extended to include the support DOF. An <a class="reference internal" href="#equation-of-motion"><span class="std std-ref">equation of
+motion</span></a> is derived as follows.</p>
+<p>Begin by forming a partitioned equation of dynamic equilibrium for all
+the DOF:</p>
+<section id="partitioned-equation-of-dynamic-equilibrium">
+<h3>Partitioned Equation of Dynamic Equilibrium<a class="headerlink" href="#partitioned-equation-of-dynamic-equilibrium" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix} \mathbf{m} &amp; \mathbf{m}_{g} \\ \mathbf{m}^T_{g} &amp; \mathbf{m}_{gg} \end{bmatrix}
+\begin{bmatrix} \mathbf{\ddot{u}}^{t}_{f} \\ \mathbf{\ddot{u}}_{g} \end{bmatrix}
++
+\begin{bmatrix} \mathbf{c} &amp; \mathbf{c}_{g} \\ \mathbf{c}^T_{g} &amp; \mathbf{c}_{gg} \end{bmatrix}
+\begin{bmatrix} \mathbf{\dot{u}}^{t}_{f} \\ \mathbf{\dot{u}}_{g} \end{bmatrix}
++
+\begin{bmatrix} \mathbf{k} &amp; \mathbf{k}_{g} \\ \mathbf{k}^T_{g} &amp; \mathbf{k}_{gg} \end{bmatrix}
+\begin{bmatrix} \mathbf{u}^{t}_{f} \\ \mathbf{u}_{g} \end{bmatrix}
+=
+\begin{bmatrix} \mathbf{0} \\ \mathbf{p}_{g} \end{bmatrix}\end{split}\]</div>
+<p>where the subscript <span class="math notranslate nohighlight">\(g\)</span> indicates support DOF, the subscript
+<span class="math notranslate nohighlight">\(f\)</span> indicates structural DOF, and the superscript <span class="math notranslate nohighlight">\(t\)</span>
+indicates the total of quasi-static (<span class="math notranslate nohighlight">\(\mathbf{u}^{s}_{f}\)</span>, due to
+static application of support displacements) and dynamic
+(<span class="math notranslate nohighlight">\(\mathbf{u}_{f}\)</span>, evaluated by dynamic analysis) structural
+displacements.</p>
+<p>Taking the first half of the partitioned equilibrium, separating the
+structural displacements
+(<span class="math notranslate nohighlight">\(\mathbf{u}^{t}_{f}=\mathbf{u}^{s}_{f}+\mathbf{u}_{f}\)</span>), and
+moving all <span class="math notranslate nohighlight">\(\mathbf{u}_{g}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}^{s}_{f}\)</span> terms
+to the right side,</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
+= -(\mathbf{m}\mathbf{\ddot{u}}^{s}_{f}+\mathbf{m}_{g}\mathbf{\ddot{u}}_{g})
+-(\mathbf{c}\mathbf{\dot{u}}^{s}_{f}+\mathbf{c}_{g}\mathbf{\dot{u}}_{g})
+-(\mathbf{k}\mathbf{u}^{s}_{f}+\mathbf{k}_{g}\mathbf{u}_{g})\]</div>
+<p>The term
+<span class="math notranslate nohighlight">\((\mathbf{k}\mathbf{u}^{s}_{f}+\mathbf{k}_{g}\mathbf{u}_{g})=\mathbf{0}\)</span>
+due to static equilibrium, allowing the term to be dropped and giving
+<span class="math notranslate nohighlight">\(\mathbf{u}^{s}_{f} = \mathbf{-k}^{-1}\mathbf{k}_{g}\mathbf{u}_{g} = \mathbf{\iota u}_{g}\)</span>;
+the term
+<span class="math notranslate nohighlight">\((\mathbf{c}\mathbf{\dot{u}}^{s}_{f}+\mathbf{c}_{g}\mathbf{\dot{u}}_{g})\)</span>
+is dropped because it is usually small relative to the inertia term; and
+the term <span class="math notranslate nohighlight">\(\mathbf{m}_{g}\mathbf{\ddot{u}}_{g}\)</span> is dropped because
+mass is usually neglected at supports.</p>
+<p>The equilibrium equation thus simplifies.</p>
+</section>
+<section id="equation-of-motion">
+<h3>Equation of Motion<a class="headerlink" href="#equation-of-motion" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{M\ddot{u}}_{f}(t) + \mathbf{Z\dot{u}}_{f}(t) + \mathbf{Ku}_{f}(t) &amp;= -\mathbf{M\iota}\mathbf{\ddot{u}}_{g}(t) \\
+    \mathbf{m}\mathbf{\ddot{u}}_{f} + \mathbf{c}\mathbf{\dot{u}}_{f} + \mathbf{k}\mathbf{u}_{f}
+    &amp;= -\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_{g}
+\end{aligned}\end{split}\]</div>
+<p>Hence, the following equation presents the continuous linear
+time-invariant (LTI) state-space representation of a structural system.</p>
+</section>
+<section id="continuous-lti-state-space-representation">
+<h3>Continuous LTI State-Space Representation<a class="headerlink" href="#continuous-lti-state-space-representation" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{\dot{x}} &amp;= \mathbf{A}_{c}\mathbf{x} + \mathbf{B}_{c}\mathbf{u} \\
+    \begin{bmatrix} \mathbf{\dot{u}}_{f}(t) \\ \mathbf{\ddot{u}}_{f}(t) \end{bmatrix}
+    &amp;=
+    \begin{bmatrix} \mathbf{0} &amp; \mathbf{I} \\ -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{Z} \end{bmatrix}
+    \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
+    +
+    \begin{bmatrix} \mathbf{0} \\ -\mathbf{\iota} \end{bmatrix}
+    \mathbf{\ddot{u}}_{g}(t) \\ \\
+    \mathbf{y} &amp;= \mathbf{Cx} + \mathbf{Du} \\
+    \mathbf{\ddot{u}}_{f}(t) &amp;=
+    \begin{bmatrix} -\mathbf{M}^{-1}\mathbf{K} &amp; -\mathbf{M}^{-1}\mathbf{Z} \end{bmatrix}
+    \begin{bmatrix} \mathbf{u}_{f}(t) \\ \mathbf{\dot{u}}_{f}(t) \end{bmatrix}
+    +
+    \begin{bmatrix} -\mathbf{\iota} \end{bmatrix}
+    \mathbf{\ddot{u}}_{g}(t)
+\end{aligned}\end{split}\]</div>
+<p>In order to move from the continuous to the discrete case, the
+coefficients <span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{B}_{c}\)</span> are
+transformed by solving the first-order differential equation with the
+signal’s value held constant between time steps (“zero-order hold
+method”). The coefficients <span class="math notranslate nohighlight">\(\mathbf{C}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{D}\)</span> are
+unchanged. The results are shown in the following equation.</p>
+<figure class="align-default" id="id2">
+<img alt="Signal Discretization" src="../_images/si_discretize.png" />
+<figcaption>
+<p><span class="caption-text">Signal Discretization</span><a class="headerlink" href="#id2" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="discrete-lti-state-space-representation">
+<h3>Discrete LTI State-Space Representation<a class="headerlink" href="#discrete-lti-state-space-representation" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\mathbf{x}_{k} = \mathbf{x}(k\Delta t), \hspace{1cm} \mathbf{u}_{k} = \mathbf{u}(k\Delta t), \hspace{1cm} \mathbf{y}_{k} = \mathbf{y}(k\Delta t)\]</div>
+<div class="math notranslate nohighlight">
+\[\mathbf{A} = e^{\mathbf{A}_{c}\Delta t}, \hspace{1cm} \mathbf{B} = \int_{0}^{\Delta t}{e^{\mathbf{A}_{c}\tau}}\mathbf{B}_{c}d\tau\]</div>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{A} &amp; \text{: discrete state transition matrix} \\
+    \mathbf{B} &amp; \text{: discrete input influence matrix} \\
+    \mathbf{C} &amp; \text{: output influence matrix} \\
+    \mathbf{D} &amp; \text{: direct transmission or feed-through matrix}
+\end{aligned}\end{split}\]</div>
+</section>
+</section>
+<section id="eigensystem-realization-algorithm-era">
+<h2>Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#eigensystem-realization-algorithm-era" title="Link to this heading">#</a></h2>
+<p>As shown in the previous section, a structural system’s dynamic behavior
+can be represented by the four coefficients
+(<span class="math notranslate nohighlight">\(\mathbf{A},\mathbf{B},\mathbf{C},\mathbf{D}\)</span>) of its discrete
+LTI state-space representation. The <a class="reference external" href="https://doi.org/10.1524/auto.1966.14.112.545">Ho-Kalman
+Algorithm</a>, or
+<a class="reference external" href="https://doi.org/10.2514/3.20031">Eigensystem Realization Algorithm</a>,
+produces a <em>reduced order model</em> for these four coefficients,
+(<span class="math notranslate nohighlight">\(\mathbf{\tilde{A}},\mathbf{\tilde{B}},\mathbf{\tilde{C}},\mathbf{\tilde{D}}\)</span>),
+based on an impulse input and its corresponding response output. Then,
+modal properties can be extracted from <span class="math notranslate nohighlight">\(\mathbf{\tilde{A}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{\tilde{C}}\)</span>.</p>
+<p>With the discrete LTI model, a unit impulse input with zero initial
+conditions produces an output of constants
+(<span class="math notranslate nohighlight">\(\mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B}\)</span>). These constants are
+called <em>Markov parameters</em> because they must be unique for a given
+system – there is only one possible output for a unit impulse input.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{u}_{0},\mathbf{u}_{1},\mathbf{u}_{2},...,\mathbf{u}_{k} &amp;= \mathbf{I,0,0,...,0} \\
+    \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} &amp;= \mathbf{0,B,AB,...,A}^{k-1}\mathbf{B} \\
+    \mathbf{y}_{0},\mathbf{y}_{1},\mathbf{y}_{2},...,\mathbf{y}_{k} &amp;= \mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B} \\
+\end{aligned}\end{split}\]</div>
+<p>Knowing that the impulse response output data directly give the Markov
+parameters, the data can then be stacked into the generalized blockwise
+Hankel matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H}
+=
+\begin{bmatrix}
+    \mathbf{y}_{1}     &amp; \mathbf{y}_{2}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}}          \\
+    \mathbf{y}_{2}     &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
+    \vdots             &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
+    \mathbf{y}_{m_{o}} &amp; \mathbf{y}_{m_{o}+1}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}-1}  \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \mathbf{CB}                     &amp; \mathbf{CAB}                  &amp; \cdots  &amp; \mathbf{CA}^{m_{c}-1}\mathbf{B}       \\
+    \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}         \\
+    \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                \\
+    \mathbf{CA}^{m_{o}-1}\mathbf{B} &amp; \mathbf{CA}^{m_{o}}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-2}\mathbf{B} \\
+\end{bmatrix}
+=
+\mathbf{\mathcal{OC}}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\mathcal{O}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\mathcal{C}}\)</span> are
+the observability and controllability matrices of the system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{\mathcal{O}} = \begin{bmatrix}
+    \mathbf{C} \\ \mathbf{CA} \\ \mathbf{CA}^{2} \\ \vdots \\ \mathbf{CA}^{m_{o}-1}
+\end{bmatrix}, \hspace{1cm}
+\mathbf{\mathcal{C}} = \begin{bmatrix} \mathbf{B} &amp; \mathbf{AB} &amp; \mathbf{A}^{2}\mathbf{B} &amp; \cdots &amp; \mathbf{A}^{m_{c}-1}\mathbf{B}  \end{bmatrix}\end{split}\]</div>
+<p>The shifted Hankel matrix, <span class="math notranslate nohighlight">\(\mathbf{H'}\)</span> (one time step ahead of
+<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>), is shown below:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H'}
+=
+\begin{bmatrix}
+    \mathbf{y}_{2}       &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
+    \mathbf{y}_{3}       &amp; \mathbf{y}_{4}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+2}        \\
+    \vdots               &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
+    \mathbf{y}_{m_{o}+1} &amp; \mathbf{y}_{m_{o}+2}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}}    \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}          \\
+    \mathbf{CA}^{2}\mathbf{B}       &amp; \mathbf{CA}^{3}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+1}\mathbf{B}        \\
+    \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                 \\
+    \mathbf{CA}^{m_{o}}\mathbf{B}   &amp; \mathbf{CA}^{m_{o}+1}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-1}\mathbf{B}\\
+\end{bmatrix}
+=
+\mathbf{\mathcal{O}A\mathcal{C}}\end{split}\]</div>
+<p>By taking the dominant terms of the singular value decomposition (SVD)
+of <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, and transforming the relationship between
+<span class="math notranslate nohighlight">\(\mathbf{H} = \mathbf{\mathcal{OC}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{H'} = \mathbf{\mathcal{O}A\mathcal{C}}\)</span>, a reduced-order
+model is constructed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H} = \mathbf{U}\Sigma\mathbf{V}^{H} =
+\begin{bmatrix} \mathbf{\tilde{U}} &amp; \mathbf{U}_{t} \end{bmatrix}
+\begin{bmatrix} \tilde{\Sigma} &amp; \mathbf{0} \\ \mathbf{0} &amp; \Sigma_{t} \end{bmatrix}
+\begin{bmatrix} \mathbf{\tilde{V}}^{H} \\ \mathbf{V}_{t}^{H} \end{bmatrix}
+\approx \mathbf{\tilde{U}}\tilde{\Sigma}\mathbf{\tilde{V}}^{H}\end{split}\]</div>
+<p>where the superscript <span class="math notranslate nohighlight">\(H\)</span> denotes conjugate transpose and the
+subscript <span class="math notranslate nohighlight">\(t\)</span> indicates elements to be truncated such that only
+the first <span class="math notranslate nohighlight">\(r\)</span> dominant singular values in <span class="math notranslate nohighlight">\(\tilde{\Sigma}\)</span>
+are retained,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{\tilde{A}} &amp;= \tilde{\Sigma}^{-1/2}\mathbf{\tilde{U}}^{H}\mathbf{H'\tilde{V}}\tilde{\Sigma}^{-1/2} \\
+    \mathbf{\tilde{B}} &amp;= \tilde{\Sigma}^{1/2}\mathbf{\tilde{V}}^{H}
+                        \begin{bmatrix} \mathbf{I}_{q} \\ \mathbf{0} \end{bmatrix} \\
+    \mathbf{\tilde{C}} &amp;= \begin{bmatrix} \mathbf{I}_{p} &amp; \mathbf{0} \end{bmatrix} \mathbf{\tilde{U}}\tilde{\Sigma}^{1/2} \\
+    \mathbf{\tilde{D}} &amp;= \mathbf{y}_{0}
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> indicates the number of outputs and <span class="math notranslate nohighlight">\(q\)</span> the number
+of inputs, and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{\tilde{x}}_{k+1} &amp;= \mathbf{\tilde{A}\tilde{x}}_{k} + \mathbf{\tilde{B}u}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{\tilde{C}\tilde{x}}_{k} + \mathbf{\tilde{D}u}_{k}. \\
+\end{aligned}\end{split}\]</div>
+</section>
+<section id="observer-kalman-filter-identification-okid">
+<h2>Observer Kalman Filter Identification (OKID)<a class="headerlink" href="#observer-kalman-filter-identification-okid" title="Link to this heading">#</a></h2>
+<p>Structural dynamics are noisy, hard to measure, and lightly damped, and
+ERA is intended only to characterize impulse responses rather than time
+histories. However, available data from ambient or small excitations
+during structure service can be de-noised and used to estimate impulse
+response data. Then, ERA can be used to obtain a reduced order model
+even if the available data are not a clean impulse response. This
+process is called <a class="reference external" href="https://doi.org/10.2514/3.21006">Observer Kalman
+Identification</a>, or OKID-ERA when
+combined with ERA.</p>
+<p>When noise is incorporated into the discrete LTI state-space
+representation of a structural system, it becomes a <em>linear Gaussian
+model</em> of a <em>hidden Markov process</em>.</p>
+<p>Because the data are assumed to follow a linear Gaussian model, Kalman
+filtering can estimate an impulse response that is most consistent with
+the input-output data. The estimated model after filtering is the same
+as that of ERA:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
+\end{aligned}\end{split}\]</div>
+<p>Since the input is no longer an impulse, the state-space evolution
+includes more terms than ERA.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{u}_{0},\mathbf{u}_{1},\mathbf{u}_{2},...,\mathbf{u}_{k} :=&amp; \text{given input} \\
+    \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} =&amp;  \mathbf{0},(\mathbf{Bu}_{0}),(\mathbf{ABu}_{0}+\mathbf{Bu}_{1}),...,(\mathbf{A}^{k-1}\mathbf{Bu}_{0}+\mathbf{A}^{k-2}\mathbf{Bu}_{1}+...+\mathbf{Bu}_{k-1}) \\
+    \mathbf{y}_{0},\mathbf{y}_{1},\mathbf{y}_{2},...,\mathbf{y}_{k} =&amp;  \mathbf{Du}_0,(\mathbf{CBu}_{0}+\mathbf{Du}_{1}),(\mathbf{CABu}_{0}+\mathbf{CBu}_{1}+\mathbf{Du}_{2}),..., \\
+    &amp; (\mathbf{CA}^{k-1}\mathbf{Bu}_{0}+\mathbf{CA}^{k-2}\mathbf{Bu}_{1}+...+\mathbf{Du}_{k}).
+\end{aligned}\end{split}\]</div>
+<p>The output data can be expressed in terms of the Markov parameters and
+an upper triangular <em>data matrix</em> <span class="math notranslate nohighlight">\(\mathscr{B}\)</span> built from the
+input data; however, inverting <span class="math notranslate nohighlight">\(\mathscr{B}\)</span> is often
+computationally expensive or ill-conditioned.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\underbrace{\begin{bmatrix} \mathbf{y}_{0} &amp; \mathbf{y}_{1} &amp; \mathbf{y}_{2} &amp; \cdots &amp; \mathbf{y}_{m} \end{bmatrix}}_{\mathbf{S}}
+=
+\underbrace{\begin{bmatrix} \mathbf{y}_{0} &amp; \mathbf{y}_{1} &amp; \mathbf{y}_{2} &amp; \cdots &amp; \mathbf{y}_{m} \end{bmatrix}_{\delta}}_{\mathbf{S}_{\delta}}
+\underbrace{\begin{bmatrix}
+    \mathbf{u}_{0} &amp; \mathbf{u}_{1} &amp; \cdots &amp; \mathbf{u}_{m}   \\
+    \mathbf{0}     &amp; \mathbf{u}_{0} &amp; \cdots &amp; \mathbf{u}_{m-1} \\
+    \vdots         &amp; \vdots         &amp; \ddots &amp; \vdots           \\
+    \mathbf{0}     &amp; \mathbf{0}     &amp; \cdots &amp; \mathbf{u}_{0}   \\
+\end{bmatrix}}_{\mathscr{B}}\end{split}\]</div>
+<p>where the subscript <span class="math notranslate nohighlight">\(\delta\)</span> indicates that the response comes
+from an impulse input.</p>
+<p>The Kalman filter is applied by augmenting the system with the outputs
+<span class="math notranslate nohighlight">\(\mathbf{y}_{i}\)</span> to form the <em>augmented data matrix</em>
+<span class="math notranslate nohighlight">\(\mathscr{V}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathscr{V}
+=
+\begin{bmatrix}
+    \mathbf{u}_{0} &amp; \mathbf{u}_{1} &amp; \cdots &amp; \mathbf{u}_{l}   &amp; \cdots &amp; \mathbf{u}_{m}   \\
+    \mathbf{0}     &amp; \mathbf{v}_{0} &amp; \cdots &amp; \mathbf{v}_{l-1} &amp; \cdots &amp; \mathbf{v}_{m-1} \\
+    \vdots         &amp; \vdots         &amp; \ddots &amp; \vdots           &amp; \ddots &amp; \vdots           \\
+    \mathbf{0}     &amp; \mathbf{0}     &amp; \cdots &amp; \mathbf{v}_{0}   &amp; \cdots &amp; \mathbf{v}_{m-l} \\
+\end{bmatrix}, \hspace{1cm}
+\mathbf{v}_{i} = \begin{bmatrix} \mathbf{u}_{i} \\ \mathbf{y}_{i} \end{bmatrix}.\end{split}\]</div>
+<p>Then, the Markov parameters (i.e., the impulse response) can be
+estimated as a function of the input and output data as follows:</p>
+<div class="math notranslate nohighlight">
+\[\hat{\mathbf{S}}_\delta = \mathbf{S}\mathscr{V}^{\dagger}\]</div>
+<p>where the superscript <span class="math notranslate nohighlight">\(\dagger\)</span> indicates pseudo-inverse,</p>
+<p>Extract the estimated, or <em>observer</em>, Markov parameters from the block
+columns of <span class="math notranslate nohighlight">\(\hat{\mathbf{S}}_\delta\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+        \hat{\mathbf{S}}_{\delta 0} &amp;\in \mathbb{R}^{p\times q} \\
+        \hat{\mathbf{S}}_{\delta k} &amp;=
+        \begin{bmatrix} \hat{\mathbf{S}}_{\delta k}^{(1)} &amp; \hat{\mathbf{S}}_{\delta k}^{(2)} \end{bmatrix} , \hspace{0.5cm} k\in[1,2,...] \\
+    \hat{\mathbf{S}}_{\delta k}^{(1)} &amp;\in\mathbb{R}^{p\times q}, \hspace{0.5cm}
+    \hat{\mathbf{S}}_{\delta k}^{(2)}  \in\mathbb{R}^{p\times p}
+\end{aligned}\end{split}\]</div>
+<p>Reconstruct the system Markov parameters:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{y}_{\delta 0} = \hat{\mathbf{S}}_{\delta 0} = \mathbf{D}, \hspace{0.5cm}
+\mathbf{y}_{\delta k} = \hat{\mathbf{S}}_{\delta k}^{(1)}
++ \sum_{i=1}^{k}{\hat{\mathbf{S}}_{\delta k}^{(2)}}\mathbf{y}_{\delta (k-i)}.\]</div>
+</section>
+<section id="era-with-data-correlations-era-dc">
+<h2>ERA with Data Correlations (ERA-DC)<a class="headerlink" href="#era-with-data-correlations-era-dc" title="Link to this heading">#</a></h2>
+</section>
+<section id="system-realization-with-information-matrix-srim">
+<h2>System Realization with Information Matrix (SRIM)<a class="headerlink" href="#system-realization-with-information-matrix-srim" title="Link to this heading">#</a></h2>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">SSID documentation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../api/index.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Library</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-space-model-of-structural-dynamics">State Space Model of Structural Dynamics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#partitioned-equation-of-dynamic-equilibrium">Partitioned Equation of Dynamic Equilibrium</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#equation-of-motion">Equation of Motion</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#continuous-lti-state-space-representation">Continuous LTI State-Space Representation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-lti-state-space-representation">Discrete LTI State-Space Representation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eigensystem-realization-algorithm-era">Eigensystem Realization Algorithm (ERA)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observer-kalman-filter-identification-okid">Observer Kalman Filter Identification (OKID)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#era-with-data-correlations-era-dc">ERA with Data Correlations (ERA-DC)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#system-realization-with-information-matrix-srim">System Realization with Information Matrix (SRIM)</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Chrystal Chern.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
