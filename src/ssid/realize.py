@@ -37,11 +37,11 @@ def era(Y,nc=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, int((nt-1)/2))
+            no = nc = min(150, int((nt-1)/2))
         else:
-            no = min(300, int(nt-1-nc))
+            no = min(150, int(nt-1-nc))
     elif nc is None:
-        nc = min(300, int(nt-1-no))
+        nc = min(150, int(nt-1-no))
     else:
         # make sure there are enough timesteps to assemble this size of Hankel matrix
         assert nt >= no+nc

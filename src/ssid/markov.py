@@ -20,7 +20,7 @@ def okid(inputs,outputs,m=None,**options):
     assert nt == outputs.shape[1]
     
     if m is None:
-        m = min(600,nt)
+        m = min(1000,nt)
 
     # Form data matrix V
     V = np.zeros((m+1,nt,q+p))                  # m+1 block rows, each with nt columns and q+p rows each.  DIM: (m+1)x(nt)x(q+p)
