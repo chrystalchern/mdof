@@ -30,26 +30,25 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/index';</script>
-    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="System Identification with the ssid package" href="01_SISO_Intro.html" />
-    <link rel="prev" title="Theory" href="../theory/index.html" />
+    <link rel="prev" title="Observer Kalman Filter Identification (OKID)" href="../theory/okid.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -134,6 +133,13 @@
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../api/index.html">
                         Library
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
                       </a>
                     </li>
                 
@@ -248,6 +254,13 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../theory/index.html">
                         Theory
                       </a>
@@ -306,18 +319,6 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO System Identification for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Multiple Support Excitation and State Space Representation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO System Identification for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">Data inputs</a></li>
-
-
-
-
-
-
-
 </ul>
 </div>
 </nav></div>
@@ -373,7 +374,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="examples">
-<h1>Examples<a class="headerlink" href="#examples" title="Link to this heading">#</a></h1>
+<h1>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a><ul>
@@ -399,64 +400,6 @@ document.write(`
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="02_SISO_Event.html#Unknown-system-with-one-input-and-one-output">Unknown system with one input and one output</a></li>
-<li class="toctree-l2"><a class="reference internal" href="02_SISO_Event.html#Configure">Configure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="02_SISO_Event.html#Inputs">Inputs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="02_SISO_Event.html#Outputs">Outputs</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="02_SISO_Event.html#Method">Method</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="02_SISO_Event.html#Analysis-with-System-Identification">Analysis with System Identification</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO System Identification for Ground Motion Events</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="03_SISO_History.html#Upload-a-Dataset-and-Identify-Spectral-Quantities">Upload a Dataset and Identify Spectral Quantities</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="03_SISO_History.html#Method-Inputs">Method Inputs</a></li>
-<li class="toctree-l3"><a class="reference internal" href="03_SISO_History.html#Perform-System-Identification">Perform System Identification</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Multiple Support Excitation and State Space Representation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="04_MIMO_Intro.html#Chopra-Section-9.7">Chopra Section 9.7</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#Partitioned-equation-of-dynamic-equilibrium-(Chopra-Eq.-9.7.1)">Partitioned equation of dynamic equilibrium (Chopra Eq. 9.7.1)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#Problem-Statement">Problem Statement</a></li>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#General-equation-of-motion-for-multiple-support-excitation">General equation of motion for multiple support excitation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#Example-9.10">Example 9.10</a></li>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#Equation-of-motion-for-chopra-example-9.10">Equation of motion for chopra example 9.10</a></li>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#Plot-example-input-and-output-motions-for-chopra-example-9.10">Plot example input and output motions for chopra example 9.10</a></li>
-<li class="toctree-l3"><a class="reference internal" href="04_MIMO_Intro.html#Parameterization-of-inputs-and-outputs-for-OKID-ERA-and-SRIM">Parameterization of inputs and outputs for OKID-ERA and SRIM</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="04_MIMO_Intro.html#Continuous-vs-Discrete">Continuous vs Discrete</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_MIMO_Intro.html#Trajectories">Trajectories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="04_MIMO_Intro.html#ERA">ERA</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO System Identification for Ground Motion Events</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="05_MIMO_Event.html#Unknown-multi-input,-multi-output-system">Unknown multi-input, multi-output system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="05_MIMO_Event.html#Configure">Configure</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="05_MIMO_Event.html#Method">Method</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="05_MIMO_Event.html#Analysis-with-System-Identification">Analysis with System Identification</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="05_MIMO_Event.html#Transfer-Function-Methods">Transfer Function Methods</a></li>
-<li class="toctree-l3"><a class="reference internal" href="05_MIMO_Event.html#State-Space-(%22Parametric%22)-Methods">State Space (“Parametric”) Methods</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">Data inputs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#Method-Inputs">Method Inputs</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#General-Parameters">General Parameters</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#Specific-to-Observer-Kalman-Identification-(OKID)">Specific to Observer Kalman Identification (OKID)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#Specific-to-Eigensystem-Realization-Algorithm-(ERA)">Specific to Eigensystem Realization Algorithm (ERA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#Specific-to-Data-Correlations-(DC)">Specific to Data Correlations (DC)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#Specific-to-System-Realization-with-Information-Matrix-(SRIM)">Specific to System Realization with Information Matrix (SRIM)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html#Parameters-for-Mode-Validation">Parameters for Mode Validation</a></li>
 </ul>
 </div>
 </section>
@@ -473,12 +416,12 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../theory/index.html"
+       href="../theory/okid.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Theory</p>
+        <p class="prev-next-title">Observer Kalman Filter Identification (OKID)</p>
       </div>
     </a>
     <a class="right-next"
@@ -530,7 +473,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.1.
     <br/>
   </p>
 </div>

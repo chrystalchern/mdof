@@ -65,9 +65,9 @@ def plot_models(models, Tn, zeta):
     ax[1,2].set_ylabel("time (s)")# , fontsize=13)
     ax[1,2].set_xlabel("Method")# , fontsize=13)
 
-    # for axi in fig.axes:
-    #     axi.tick_params(axis='x', labelsize=12)
-    #     axi.tick_params(axis='y', labelsize=12)
+    for axi in fig.axes:
+        axi.tick_params(axis='x', rotation=45)#, labelsize=12)
+        # axi.tick_params(axis='y', labelsize=12)
 
     for i,error in zip([0,1,2],[period_errors,damping_errors,times_list]):
         rects = ax[1,i].patches
@@ -81,7 +81,7 @@ def plot_models(models, Tn, zeta):
     fig.suptitle("Spectral Quantity Prediction with System Identification") #,fontsize=14)
 
 def plot_io(inputs, outputs, t, title=None):
-    fig, ax = plt.subplots(1,2,figsize=(12,4))
+    fig, ax = plt.subplots(1,2,figsize=(12,4),constrained_layout=True)
     # fig, ax = plt.subplots(1,2,figsize=(8,3))
     if len(inputs.shape) > 1:
         for i in range(inputs.shape[0]):
@@ -92,24 +92,24 @@ def plot_io(inputs, outputs, t, title=None):
     ax[0].set_ylabel("inputs")# , fontsize=13)
     if len(outputs.shape) > 1:
         for i in range(outputs.shape[0]):
-            ax[1].plot(t,outputs[i,:])
+            ax[1].plot(t,outputs[i,:], color="b", alpha=0.5)
     else:
         ax[1].plot(t,outputs)
     ax[1].set_xlabel("time (s)")# , fontsize=13)
     ax[1].set_ylabel("outputs")# , fontsize=13)
-    fig.suptitle(title, fontsize=14)
+    fig.suptitle(title) #, fontsize=14)
 
 def plot_pred(ytrue, models, t, title=None):
     fig, ax = plt.subplots(figsize=(8,4))
     if len(ytrue.shape) > 1:
         for i in range(ytrue.shape[0]):
-            ax.plot(t,ytrue[i,:],label="true")
+            ax.plot(t,ytrue[i,:],label=["true" if i==0 else None][0],color="b",alpha=0.5)
     else:
         ax.plot(t,ytrue,label="true")
     if type(models) is np.ndarray:
         if len(models.shape) > 1:
             for i in range(models.shape[0]):
-                ax.plot(t,models[i,:],"--",label=f"prediction")
+                ax.plot(t,models[i,:],"--",label=["prediction" if i==0 else None][0],color="r",alpha=0.5)
         else:
             ax.plot(t,models,"--",label=f"prediction")
     else:
@@ -122,7 +122,7 @@ def plot_pred(ytrue, models, t, title=None):
     ax.set_xlabel("time (s)")# , fontsize=13)
     ax.set_ylabel("outputs")# , fontsize=13)
     fig.legend(fontsize=12, frameon=True, framealpha=1)    
-    fig.suptitle(title, fontsize=14)
+    fig.suptitle(title) #, fontsize=14)
 
 def plot_transfer(models, title=None, labels=None):
     fig, ax = plt.subplots(figsize=(10,4))
@@ -137,8 +137,8 @@ def plot_transfer(models, title=None, labels=None):
             ax.plot(models[method][0],models[method][1],label=method)
     ax.set_xlabel("Period (s)")
     ax.set_ylabel("Amplitude")
-    ax.legend(fontsize=12)
-    ax.set_title(title, fontsize=14)
+    ax.legend()#fontsize=12)
+    ax.set_title(title)#, fontsize=14)
 
 def make_hover_data(data, ln=None):
     import numpy as np

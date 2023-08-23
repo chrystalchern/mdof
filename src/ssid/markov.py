@@ -18,10 +18,9 @@ def okid(inputs,outputs,m=None,**options):
     q,nt = inputs.shape
     p = outputs.shape[0]
     assert nt == outputs.shape[1]
-    print(p,q,nt)
     
     if m is None:
-        m = min(300,nt)
+        m = min(1000,nt)
 
     # Form data matrix V
     V = np.zeros((m+1,nt,q+p))                  # m+1 block rows, each with nt columns and q+p rows each.  DIM: (m+1)x(nt)x(q+p)

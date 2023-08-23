@@ -37,11 +37,11 @@ def era(Y,nc=None,**options):
     # size of Hankel matrix
     if no is None:
         if nc is None:
-            no = nc = min(300, int((nt-1)/2))
+            no = nc = min(150, int((nt-1)/2))
         else:
-            no = min(300, int(nt-1-nc))
+            no = min(150, int(nt-1-nc))
     elif nc is None:
-        nc = min(300, int(nt-1-no))
+        nc = min(150, int(nt-1-no))
     else:
         # make sure there are enough timesteps to assemble this size of Hankel matrix
         assert nt >= no+nc
@@ -101,7 +101,7 @@ def era_dc(Y,nc=None,a=0,b=0,l=0,g=1,**options):
         else:
             no = min(300, int(nt/2-1))
     elif nc is None:
-        nc = min(300, int(nt-no-2))
+        nc = max(0, min(300, int(nt-no-2)))
     # make sure there are enough timesteps to assemble the Hankel matrices
     assert nt >= l+(a+1+b+1)*g+no+nc
 
@@ -122,8 +122,8 @@ def era_dc(Y,nc=None,a=0,b=0,l=0,g=1,**options):
             Hl = H[:, q*(l+1+(i+j)*g):q*(l+1+(i+j)*g+nc)]
             Hl1 = H[:, q*(l+1+(i+j)*g+1):q*(l+1+(i+j)*g+nc+1)]
             assert Hl.shape == Hl1.shape == (p*(no), q*(nc))
-            R = Hl@H0       # correlation matrix
-            R1 = Hl1@H0     # shifted correlation matrix
+            R = Hl@H0.T       # correlation matrix
+            R1 = Hl1@H0.T     # shifted correlation matrix
             assert R.shape == R1.shape == (dimR,dimR)
             HRl[dimR*i:dimR*(i+1), dimR*j:dimR*(j+1)] = R
             HRl1[dimR*i:dimR*(i+1), dimR*j:dimR*(j+1)] = R1

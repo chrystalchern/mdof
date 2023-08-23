@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; ssid</title>
+    <title>Eigensystem Realization Algorithm (ERA) &#8212; ssid</title>
   
   
   
@@ -30,26 +30,27 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'theory/era';</script>
-    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Observer Kalman Filter Identification (OKID)" href="okid.html" />
+    <link rel="prev" title="State Space Model of Structural Dynamics" href="statespace.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -139,6 +140,13 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Theory
                       </a>
@@ -215,10 +223,6 @@ document.write(`
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
-      <span class="fa-solid fa-outdent"></span>
-    </label>
-  
 </div>
 
     </nav>
@@ -226,7 +230,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -252,6 +256,13 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Theory
                       </a>
@@ -304,6 +315,19 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Eigensystem Realization Algorithm (ERA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -336,7 +360,10 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">&lt;no title&gt;</li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Theory</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Eigensystem Realization Algorithm (ERA)</li>
   </ul>
 </nav>
 </div>
@@ -353,7 +380,9 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <p>As shown in the previous section, a structural system’s dynamic behavior
+  <section id="eigensystem-realization-algorithm-era">
+<h1>Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#eigensystem-realization-algorithm-era" title="Permalink to this heading">#</a></h1>
+<p>As shown in the previous section, a structural system’s dynamic behavior
 can be represented by the four coefficients
 (<span class="math notranslate nohighlight">\(\mathbf{A},\mathbf{B},\mathbf{C},\mathbf{D}\)</span>) of its discrete
 LTI state-space representation. The <a class="reference external" href="https://doi.org/10.1524/auto.1966.14.112.545">Ho-Kalman
@@ -458,6 +487,7 @@ of inputs, and</p>
     \mathbf{\tilde{x}}_{k+1} &amp;= \mathbf{\tilde{A}\tilde{x}}_{k} + \mathbf{\tilde{B}u}_{k} \\
     \mathbf{y}_{k} &amp;= \mathbf{\tilde{C}\tilde{x}}_{k} + \mathbf{\tilde{D}u}_{k}. \\
 \end{aligned}\end{split}\]</div>
+</section>
 
 
                 </article>
@@ -470,6 +500,24 @@ of inputs, and</p>
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="statespace.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">State Space Model of Structural Dynamics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="okid.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Observer Kalman Filter Identification (OKID)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
@@ -479,20 +527,6 @@ of inputs, and</p>
             </div>
             
             
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-  </nav></div>
-
-</div></div>
               
             
           </div>
@@ -524,7 +558,7 @@ of inputs, and</p>
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.1.
     <br/>
   </p>
 </div>
