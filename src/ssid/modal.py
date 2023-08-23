@@ -1,9 +1,13 @@
+"""
+This module implements functions that extract modal information
+from a state space realization.
+"""
 import numpy as np
 import scipy.linalg as sl
 from numpy import pi
 from ssid.validation import OutputEMAC, MPC
 
-def condeig(a): # TODO: make this match matlab source code for condeig
+def _condeig(a): # TODO: make this match matlab source code for condeig
     """
     vals, vecs, conds = condeig(A) Computes condition numbers for the
     eigenvalues of a matrix. The condition numbers are the reciprocals
@@ -33,7 +37,7 @@ def system_modes(realization, dt, Observability=None, **options):
 
     A,_,C,_ = realization
     # eigendecomp A
-    Psi,Gam,cnd = condeig(A)  # eigenvectors (Psi) & eigenvalues (Gam) of the matrix A
+    Psi,Gam,cnd = _condeig(A)  # eigenvectors (Psi) & eigenvalues (Gam) of the matrix A
 
     # get damping and frequencies from eigendecomp of A
     Lam = (np.log(Gam))/dt
