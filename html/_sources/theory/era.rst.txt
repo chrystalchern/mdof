@@ -1,3 +1,8 @@
+
+Eigensystem Realization Algorithm (ERA)
+---------------------------------------
+
+
 As shown in the previous section, a structural system’s dynamic behavior
 can be represented by the four coefficients
 (:math:`\mathbf{A},\mathbf{B},\mathbf{C},\mathbf{D}`) of its discrete
