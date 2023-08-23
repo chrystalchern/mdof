@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>SISO System Identification for Ground Motion Events &#8212; ssid</title>
+    <title>SISO for Ground Motion Events &#8212; ssid</title>
   
   
   
@@ -31,25 +31,28 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
+    <script src="../_static/documentation_options.js?v=94eb6667"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/03_SISO_History';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Multiple Support Excitation and State Space Representation" href="04_MIMO_Intro.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="03_SISO_History_Archive.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,7 +155,7 @@
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -233,7 +236,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -272,7 +275,7 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -318,6 +321,22 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Multiple Support Excitation and State Space Representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -350,7 +369,10 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">SISO System Identification for Ground Motion Events</li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">SISO for Ground Motion Events</li>
   </ul>
 </nav>
 </div>
@@ -367,8 +389,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="SISO-System-Identification-for-Ground-Motion-Events">
-<h1>SISO System Identification for Ground Motion Events<a class="headerlink" href="#SISO-System-Identification-for-Ground-Motion-Events" title="Permalink to this heading">#</a></h1>
+  <section id="SISO-for-Ground-Motion-Events">
+<h1>SISO for Ground Motion Events<a class="headerlink" href="#SISO-for-Ground-Motion-Events" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -382,7 +404,7 @@ document.write(`
 </div>
 </div>
 <section id="Upload-a-Dataset-and-Identify-Spectral-Quantities">
-<h2>Upload a Dataset and Identify Spectral Quantities<a class="headerlink" href="#Upload-a-Dataset-and-Identify-Spectral-Quantities" title="Permalink to this heading">#</a></h2>
+<h2>Upload a Dataset and Identify Spectral Quantities<a class="headerlink" href="#Upload-a-Dataset-and-Identify-Spectral-Quantities" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -397,7 +419,7 @@ document.write(`
 </div>
 </div>
 <section id="Method-Inputs">
-<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Permalink to this heading">#</a></h3>
+<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Link to this heading">#</a></h3>
 <p>See <code class="docutils literal notranslate"><span class="pre">`01_SISO_Intro</span></code> &lt;01_SISO_Intro&gt;`__ for parameter definitions</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -420,7 +442,7 @@ document.write(`
 </div>
 </section>
 <section id="Perform-System-Identification">
-<h3>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Permalink to this heading">#</a></h3>
+<h3>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -429,16 +451,19 @@ document.write(`
 <span class="n">plt</span><span class="o">.</span><span class="n">rc</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span><span class="n">motion</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:]):</span>
-    <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">8</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">8</span>         <span class="c1"># transfer function decimation</span>
     <span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span> <span class="o">=</span> <span class="n">ssid</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;srim&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">motion</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:],</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">((</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">),</span><span class="n">dt</span><span class="p">,</span><span class="n">decimation</span><span class="o">=</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">)</span>
     <span class="n">mode_predictions</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">[[</span><span class="mi">1</span><span class="o">/</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="s2">&quot;damp&quot;</span><span class="p">]]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()][</span><span class="mi">0</span><span class="p">]</span>  <span class="c1"># save predicted period and damping</span>
-    <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span>         <span class="c1"># transfer function decimation</span>
     <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">motion</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Fourier&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">v</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()],</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">(</span><span class="n">amplitudes</span><span class="p">),</span> <span class="n">colors</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;State Space&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">motion</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">,:],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">periods</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;Period (s)&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;Amplitude&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   period(s)  damping</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">mode_predictions</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -448,17 +473,17 @@ document.write(`
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 885/886 [00:00&lt;00:00, 203050.11it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 145698.44it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 139952.46it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 151360.26it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 158895.55it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 113972.15it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 175067.63it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 380635.67it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 150452.30it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 217506.10it/s]
-100%|█████████▉| 885/886 [00:00&lt;00:00, 195345.70it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 68839.42it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 178253.89it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 114779.19it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 165019.96it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 115253.18it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 58999.59it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 12933.66it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 74812.24it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 82636.72it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 25513.50it/s]
+100%|█████████▉| 885/886 [00:00&lt;00:00, 46430.83it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -502,6 +527,24 @@ document.write(`
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="03_SISO_History_Archive.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">&lt;no title&gt;</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="04_MIMO_Intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Multiple Support Excitation and State Space Representation</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
@@ -560,7 +603,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.1.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
     <br/>
   </p>
 </div>
