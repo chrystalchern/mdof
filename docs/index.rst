@@ -13,6 +13,7 @@ SSID documentation
    :caption: Contents:
 
    api/index
+   library/modules
    theory/index
    examples/index
 
