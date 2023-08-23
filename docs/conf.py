@@ -3,7 +3,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 #
 from pathlib import Path
-project = 'ssid'
+project = 'lilo'
 copyright = '2023, Chrystal Chern'
 author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."
@@ -24,6 +24,12 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 
 
 source_suffix = '.rst'
+from sphinxcontrib.pandoc_markdown import MarkdownParser
+
+source_suffix = [source_suffix, '.md']
+source_parsers = {
+   '.md': MarkdownParser,
+}
 root_doc = 'index'
 language = 'en'
 
@@ -41,12 +47,12 @@ html_additional_pages = {'index': 'home.html'}
 html_context = {
     'description': description,
     'examples': [
-        {"title": "SISO Intro",          "link": "examples/01_SISO_Intro", "image": "sdof.png"},
-        {"title": "SISO Event",          "link": "examples/02_SISO_Event"},
-        {"title": "MIMO Intro",          "link": "examples/05_MIMO_Intro"},
+        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof.svg"},
+        {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "sdof.svg"},
+        {"title": "SIMO Event",          "link": "examples/04_SIMO_Event", "image": "lumps.svg"},
+        {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro"},
         {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
         {"title": "SISO History",        "link": "examples/03_SISO_History"},
-        {"title": "SIMO Event",          "link": "examples/04_SIMO_Event"},
         {"title": "MIMO History",        "link": "examples/06_MIMO_History"},
         {"title": "ResponseSpectrum",    "link": "examples/ResponseSpectrum"},
         {"title": "transfer function",   "link": "examples/transfer_function"},
