@@ -1,3 +1,7 @@
+
+Observer Kalman Filter Identification (OKID)
+---------------------------------------------
+
 Structural dynamics are noisy, hard to measure, and lightly damped, and
 ERA is intended only to characterize impulse responses rather than time
 histories. However, available data from ambient or small excitations

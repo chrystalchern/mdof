@@ -31,27 +31,25 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/01_SISO_Intro';</script>
-    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="SISO System Identification for Ground Motion Events" href="02_SISO_Event.html" />
     <link rel="prev" title="Examples" href="index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -135,15 +133,15 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../theory/index.html">
-                        Theory
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        Library
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        Library
+                      <a class="nav-link nav-internal" href="../theory/index.html">
+                        Theory
                       </a>
                     </li>
                 
@@ -248,15 +246,15 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../theory/index.html">
-                        Theory
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        Library
                       </a>
                     </li>
                 
 
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        Library
+                      <a class="nav-link nav-internal" href="../theory/index.html">
+                        Theory
                       </a>
                     </li>
                 
@@ -313,18 +311,6 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO System Identification for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Multiple Support Excitation and State Space Representation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO System Identification for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">Data inputs</a></li>
-
-
-
-
-
-
-
 </ul>
 </div>
 </nav></div>
@@ -383,7 +369,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="System-Identification-with-the-ssid-package">
-<h1>System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package<a class="headerlink" href="#System-Identification-with-the-ssid-package" title="Link to this heading">#</a></h1>
+<h1>System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package<a class="headerlink" href="#System-Identification-with-the-ssid-package" title="Permalink to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -399,7 +385,7 @@ document.write(`
 </div>
 </div>
 <section id="Define-a-SDOF-system">
-<h2>Define a SDOF system<a class="headerlink" href="#Define-a-SDOF-system" title="Link to this heading">#</a></h2>
+<h2>Define a SDOF system<a class="headerlink" href="#Define-a-SDOF-system" title="Permalink to this heading">#</a></h2>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -424,7 +410,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<img alt="sdof" src="../_images/sdof.png" />
+<p><img alt="sdof" src="../_images/sdof.png" /></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -501,9 +487,9 @@ damping ratio: 0.01
 </div>
 </section>
 <section id="Perform-System-Identification">
-<h2>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Link to this heading">#</a></h2>
+<h2>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Permalink to this heading">#</a></h2>
 <section id="Transfer-Function-Methods">
-<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Link to this heading">#</a></h3>
+<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -542,7 +528,7 @@ damping ratio: 0.01
 </div>
 </section>
 <section id="State-Space-Methods">
-<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Link to this heading">#</a></h3>
+<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -603,9 +589,9 @@ Standard Dev(s): 0.0
 </section>
 </section>
 <section id="Breakdown-of-State-Space-Methods">
-<h2>Breakdown of State Space Methods<a class="headerlink" href="#Breakdown-of-State-Space-Methods" title="Link to this heading">#</a></h2>
+<h2>Breakdown of State Space Methods<a class="headerlink" href="#Breakdown-of-State-Space-Methods" title="Permalink to this heading">#</a></h2>
 <section id="General-Parameters">
-<h3>General Parameters<a class="headerlink" href="#General-Parameters" title="Link to this heading">#</a></h3>
+<h3>General Parameters<a class="headerlink" href="#General-Parameters" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -635,7 +621,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Specific-to-Observer-Kalman-Identification-(OKID)">
-<h3>Specific to Observer Kalman Identification (OKID)<a class="headerlink" href="#Specific-to-Observer-Kalman-Identification-(OKID)" title="Link to this heading">#</a></h3>
+<h3>Specific to Observer Kalman Identification (OKID)<a class="headerlink" href="#Specific-to-Observer-Kalman-Identification-(OKID)" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -650,7 +636,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Specific-to-Eigensystem-Realization-Algorithm-(ERA)">
-<h3>Specific to Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)" title="Link to this heading">#</a></h3>
+<h3>Specific to Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -668,7 +654,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Specific-to-Data-Correlations-(DC)">
-<h3>Specific to Data Correlations (DC)<a class="headerlink" href="#Specific-to-Data-Correlations-(DC)" title="Link to this heading">#</a></h3>
+<h3>Specific to Data Correlations (DC)<a class="headerlink" href="#Specific-to-Data-Correlations-(DC)" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -692,7 +678,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Specific-to-System-Realization-with-Information-Matrix-(SRIM)">
-<h3>Specific to System Realization with Information Matrix (SRIM)<a class="headerlink" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)" title="Link to this heading">#</a></h3>
+<h3>Specific to System Realization with Information Matrix (SRIM)<a class="headerlink" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -707,7 +693,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Parameters-for-Mode-Validation">
-<h3>Parameters for Mode Validation<a class="headerlink" href="#Parameters-for-Mode-Validation" title="Link to this heading">#</a></h3>
+<h3>Parameters for Mode Validation<a class="headerlink" href="#Parameters-for-Mode-Validation" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -722,7 +708,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Method-Inputs">
-<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Link to this heading">#</a></h3>
+<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Permalink to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -745,7 +731,7 @@ Standard Dev(s): 0.0
 </div>
 </section>
 <section id="OKID-ERA">
-<h3>OKID-ERA<a class="headerlink" href="#OKID-ERA" title="Link to this heading">#</a></h3>
+<h3>OKID-ERA<a class="headerlink" href="#OKID-ERA" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -772,7 +758,7 @@ Standard Dev(s): 0.0
 </div>
 </section>
 <section id="OKID-ERA-DC">
-<h3>OKID-ERA-DC<a class="headerlink" href="#OKID-ERA-DC" title="Link to this heading">#</a></h3>
+<h3>OKID-ERA-DC<a class="headerlink" href="#OKID-ERA-DC" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -799,7 +785,7 @@ Standard Dev(s): 0.0
 </div>
 </section>
 <section id="SRIM">
-<h3>SRIM<a class="headerlink" href="#SRIM" title="Link to this heading">#</a></h3>
+<h3>SRIM<a class="headerlink" href="#SRIM" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -841,7 +827,7 @@ Standard Dev(s): 0.0
 </div>
 </section>
 <section id="Compare-Methods">
-<h3>Compare Methods<a class="headerlink" href="#Compare-Methods" title="Link to this heading">#</a></h3>
+<h3>Compare Methods<a class="headerlink" href="#Compare-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -895,15 +881,6 @@ Standard Dev(s): 0.0
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Examples</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="02_SISO_Event.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">SISO System Identification for Ground Motion Events</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div></div>
   
@@ -978,7 +955,7 @@ Standard Dev(s): 0.0
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.1.
     <br/>
   </p>
 </div>

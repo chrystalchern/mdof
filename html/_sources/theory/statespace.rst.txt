@@ -1,3 +1,6 @@
+State Space Model of Structural Dynamics
+----------------------------------------
+
 .. figure:: figures/si_msmdof.png
    :alt: MDOF Structure
 
