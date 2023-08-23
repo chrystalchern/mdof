@@ -41,17 +41,16 @@ html_additional_pages = {'index': 'home.html'}
 html_context = {
     'description': description,
     'examples': [
-        {"title": "SISO Intro",          "path": "examples/01_SISO_Intro"},
-        {"title": "MIMO Event",          "path": "examples/05_MIMO_Event"},
-        {"title": "SISO Event",          "path": "examples/02_SISO_Event"},
-        {"title": "MIMO Intro",          "path": "examples/04_MIMO_Intro"},
-        {"title": "MIMO Intro",          "path": "examples/05_MIMO_Intro"},
-        {"title": "SISO History",        "path": "examples/03_SISO_History"},
-        {"title": "SIMO Event",          "path": "examples/04_SIMO_Event"},
-        {"title": "MIMO History",        "path": "examples/06_MIMO_History"},
-        {"title": "ResponseSpectrum",    "path": "examples/ResponseSpectrum"}, 
-        {"title": "transfer function",   "path": "examples/transfer_function"},        
-        {"title": "juang experiment",    "path": "examples/juang_experiment"},
+        {"title": "SISO Intro",          "link": "examples/01_SISO_Intro", "image": "sdof.png"},
+        {"title": "SISO Event",          "link": "examples/02_SISO_Event"},
+        {"title": "MIMO Intro",          "link": "examples/05_MIMO_Intro"},
+        {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
+        {"title": "SISO History",        "link": "examples/03_SISO_History"},
+        {"title": "SIMO Event",          "link": "examples/04_SIMO_Event"},
+        {"title": "MIMO History",        "link": "examples/06_MIMO_History"},
+        {"title": "ResponseSpectrum",    "link": "examples/ResponseSpectrum"},
+        {"title": "transfer function",   "link": "examples/transfer_function"},
+        {"title": "juang experiment",    "link": "examples/juang_experiment"},
     ],
     **globals()
 }

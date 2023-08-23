@@ -275,34 +275,30 @@
     <div class=container>
       <h1 class=casestudies-title>Gallery</h1>
       <div class=casestudies-box-container>
+        {% for example in examples[:3] %}
         <a class="casestudies-box-content casestudies-underline"
-          href="{{pathto('examples',1)}}/{{project}}-0001/index.html">
-          <div class=casestudies-box-title>Basic Python</div><img
-            src="{{ pathto('_static/../_images', 1) }}/{{ project }}-0001.png"
-            alt="First image of a black hole. It is an orange circle in a black background.">
-          <div class=casestudies-box-text>Get to know the basics of the library.</div>
+          href="{{pathto(example.link)}}">
+          <div class=casestudies-box-title>{{ example.title }}</div><img
+               src="{{ pathto('_static/../_images', 1) }}/{{ example.image }}" alt="">
+          <div class=casestudies-box-text>{{ example.description }}</div>
         </a>
+        {% endfor %}
+        {% if False %}
         <a class="casestudies-box-content casestudies-underline"
           href="{{ pathto('examples', 1) }}/{{project}}-0002/index.html">
           <div class=casestudies-box-title>Parallel Spectra</div><img
             src="{{ pathto('_static/../_images', 1) }}/{{ project }}-0002.png"
             alt="Two orbs orbiting each other. They are displacing gravity around them.">
-          <div class=casestudies-box-text>In 1916, Albert Einstein predicted gravitational waves; 100 years later their
-            existence was confirmed by LIGO scientists using sdof.</div>
+          <div class=casestudies-box-text>...</div>
         </a>
         <a class="casestudies-box-content casestudies-underline"
-          href="{{pathto('examples',1)}}/examples/sdof-0003/index.html">
+           href="{{pathto('examples',1)}}/examples/{{project}}-0003/index.html">
           <div class=casestudies-box-title>Javascript</div><img
             src="{{ pathto('_static/../_images', 1) }}/{{ project }}-0003.png" alt="Cricket ball on green field.">
-          <div class=casestudies-box-text>Cricket Analytics is changing the game by improving player and team
-            performance through statistical modelling and predictive analytics. sdof enables many of these analyses.
+          <div class=casestudies-box-text>
           </div>
         </a>
-        <!--
-    <a class="casestudies-box-content casestudies-underline" href=/case-studies/deeplabcut-dnn>
-      <div class=casestudies-box-title>Pose Estimation using deep learning</div><img src="{{ pathto('_static/images', 1) }}/content_images/case_studies/deeplabcut.png" alt="Cheetah pose analysis">
-      <div class=casestudies-box-text>DeepLabCut uses sdof for accelerating scientific studies that involve observing animal behavior for better understanding of motor control, across species and timescales.</div></a></div></div>
-    -->
+        {% endif %}
   </section>
 
   <section class=tabs-section>
