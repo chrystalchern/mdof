@@ -28,10 +28,28 @@ def _condeig(a): # TODO: make this match matlab source code for condeig
     c = abs(1 / np.diag(np.dot(vl, vr))) 
     return vr, lamr, c
 
-def system_modes(realization, dt, Observability=None, **options):
+def system_modes(realization, dt, **options):
+    """
+    Modal identification from a state space system realization.
 
+    :param realization:     realization in the form of state space coefficients ``(A,B,C,D)``
+    :type realization:      tuple
+    :param dt:              timestep.
+    :type dt:               float
+    :param decimation:      decimation factor. default: 1
+    :type decimation:       int, optional
+    :param Observability:   Observability matrix; can be reused from :func:`ssid.realize.srim`.
+                            default: None
+    :type Observability:    array, optional
+
+    :return:                system modes, including natural frequencies, damping ratios, mode shapes,
+                            condition numbers, and modal validation metrics EMAC and MPC.
+    :rtype:                 dictionary
+    """
     decimation = options.get("decimation",
                              1)
+    Observability = options.get("Observability",
+                                None)
     
     dt = dt*decimation
 
@@ -88,8 +106,25 @@ def system_modes(realization, dt, Observability=None, **options):
 
     return modes
 
-def spectrum_modes(periods, amplitudes, nmodes=1):
-    highest_amplitude_indices = np.argpartition(-amplitudes, range(nmodes))[:nmodes]  # TODO: peak picking algorithm
-    fundamental_periods = periods[highest_amplitude_indices]
-    fundamental_amplitudes = amplitudes[highest_amplitude_indices]
+def spectrum_modes(periods, amplitudes, **options):
+    """
+    Modal identification from a transfer function.
+
+    :param periods:     transfer function periods
+    :type periods:      array
+    :param amplitudes:  transfer function amplitudes
+    :type amplitudes:   array
+
+    :return:            (fundamental_periods, fundamental_amplitudes)
+    :rtype:             tuple
+    """
+    from scipy.signal import find_peaks
+    height = options.get("height", 0.4)
+    width = options.get("width", 0.2)
+    rel_height = options.get("rel_height", 0.1)
+    
+    peaks, _ = find_peaks(amplitudes, height=height, width=width, rel_height=rel_height)
+    fundamental_periods = periods[peaks]
+    fundamental_amplitudes = amplitudes[peaks]
+    
     return (fundamental_periods, fundamental_amplitudes)

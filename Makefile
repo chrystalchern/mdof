@@ -29,7 +29,7 @@ test:
 SPHINXOPTS    ?=
 SPHINXBUILD   ?= sphinx-build
 SOURCEDIR     = docs
-BUILDDIR      = site
+BUILDDIR      = _build
 
 # Put it first so that "make" without argument is like "make help".
 help:

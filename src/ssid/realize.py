@@ -1,4 +1,3 @@
-
 import numpy as np
 lin_solve = np.linalg.solve
 import multiprocessing
@@ -12,39 +11,49 @@ except:
 
 from . import numerics
 
-## ERA ##
-# Y = output data: response to unit impulse, or "impulse response," or "Markov parameters".
-# dimensions of Y: p x q x nt, where nt = number of timesteps = number of Markov parameters = number of blocks
-# no = number of block rows in Hankel matrix = order of observability matrix
-# nc = number of block columns in Hankel matrix = order of controllability matrix
-# r = reduced model order = dimension of reduced A = newly assumed dimension of state variable
-def era(Y,nc=None,**options):
-    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
-    # if r is None:
-    #     r = min(20, int(nt/2))
 
-    r = options.get("r", 
-        options.get("order",
-                    min(20, int(nt/2))))
+def era(Y,**options):
+    """
+    System realization from Markov parameters (discrete impulse response data).
+    Eigensystem Realization Algorithm (ERA) (Ho and Kalman 1966, Juang and Pappa 1985).
+
+    :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
+                    :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
+    :type Y:        array
+    :param horizon: number of block rows in Hankel matrix = order of observability matrix.
+                    default: :math:`min(150, (nt-1)/2)`
+    :type horizon:  int, optional
+    :param nc:      number of block columns in Hankel matrix = order of controllability matrix.
+                    default: :math:`min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
+    :type nc:       int, optional
+    :param order:   model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :type order:    int, optional
+
+    :return:        realization in the form of state space coefficients ``(A,B,C,D)``
+    :rtype:         tuple of arrays
+    """
+    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
 
     no = options.get("no",
-         options.get("prediction_horizon",
+         options.get("horizon",
                      None))
+    nc = options.get("nc",
+                     None)
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
 
     # size of Hankel matrix
     if no is None:
-        if nc is None:
-            no = nc = min(150, int((nt-1)/2))
-        else:
-            no = min(150, int(nt-1-nc))
-    elif nc is None:
-        nc = min(150, int(nt-1-no))
-    else:
-        # make sure there are enough timesteps to assemble this size of Hankel matrix
-        assert nt >= no+nc
+        no = min(150, int((nt-1)/2))
+    if nc is None:
+        nc = min(150, max(nt-1-no, int((nt-1)/2)))
+    # make sure there are enough timesteps to assemble this size of Hankel matrix
+    assert nt >= no+nc
+
+    r = options.get("r", 
+        options.get("order",
+                    min(20, int(no/2))))
 
     # make impulse response into Hankel matrix and shifted Hankel matrix
     H = np.zeros((p*(no), q*(nc+1)))
@@ -73,37 +82,61 @@ def era(Y,nc=None,**options):
 
     return (Ar,Br,Cr,Dr)
 
-## ERA-DC ##
-# a = (alpha) number of block rows in Hankel of correlation matrix
-# b = (beta) number of block columns in Hankel of correlation matrix
-# l = initial lag for data correlations
-# g = lags (gap) between correlation matrices
-def era_dc(Y,nc=None,a=0,b=0,l=0,g=1,**options):
-    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
-    # if r is None:
-    #     r = int(nt/2)
 
-    r = options.get("r", 
-        options.get("order",
-                    min(20, int(nt/2))))
+def era_dc(Y,**options):
+    """
+    System realization from Markov parameters (discrete impulse response data).
+    Eigensystem Realization Algorithm with Data Correlations (ERA/DC) (Juang, Cooper, and Wright, 1988).
+
+    :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
+                    :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
+    :type Y:        array
+    :param horizon: number of block rows in Hankel matrix = order of observability matrix.
+                    default: :math:`min(150, (nt-1)/2)`
+    :type horizon:  int, optional
+    :param nc:      number of block columns in Hankel matrix = order of controllability matrix.
+                    default: :math:`min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
+    :type nc:       int, optional
+    :param order:   model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :type order:    int, optional
+    :param a:       :math:`(\\alpha)` number of block rows in Hankel of correlation matrix. default: 0
+    :type a:        int, optional
+    :param b:       :math:`(\\beta)` number of block columns in Hankel of correlation matrix. default: 0
+    :type b:        int, optional
+    :param l:       initial lag for data correlations. default: 0
+    :type l:        int, optional
+    :param g:       lags (gap) between correlation matrices. default: 1
+    :type g:        int, optional
+
+    :return:        realization in the form of state space coefficients ``(A,B,C,D)``
+    :rtype:         tuple of arrays
+    """
+    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
 
     no = options.get("no",
-         options.get("prediction_horizon",
+         options.get("horizon",
                      None))
+    nc = options.get("nc",
+                     None)
+    a = options.get("a", None)
+    b = options.get("b", None)
+    l = options.get("l", None)
+    g = options.get("g", None)
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
 
     # size of Hankel matrix
     if no is None:
-        if nc is None:
-            no = nc = min(300, int(nt/2-1))
-        else:
-            no = min(300, int(nt/2-1))
-    elif nc is None:
-        nc = max(0, min(300, int(nt-no-2)))
+        no = min(150, int((nt-1)/2))
+    if nc is None:
+        nc = min(150, max(nt-1-no, int((nt-1)/2)))
     # make sure there are enough timesteps to assemble the Hankel matrices
     assert nt >= l+(a+1+b+1)*g+no+nc
+
+    r = options.get("r", 
+        options.get("order",
+                    min(20, int(no/2))))
 
     # Hankel matrix of impulse response (Markov parameters)
     H = np.zeros((p*(no), q*(nc+l+(a+1+b+1)*g)))
@@ -151,17 +184,36 @@ def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
 
 
-## SRIM ##
-# inputs = input data. dimensions of inputs: q x nt, where nt = number of timesteps.
-# outputs = response data due to input data. dimensions of outputs: p x nt.
-# no = number of steps used for identification (prediction horizon),
-    # and the order of the observability matrix.
-    # analagous to order (number of autoregressors) of the observer Kalman
-    # ARX filter used in OKID-ERA-DC.
-# r = size of the state-space model used for representing the system.
-# Juang 1997, "System Realization Using Information Matrix," Journal of Guidance, Control, and Dynamics
-# def srim(inputs,outputs,no=None,r=None,full=True,pool_size=6,**options):
-def srim(inputs,outputs,full=True,find="ABCD",threads=6,chunk=200,**options):
+def srim(inputs,outputs,**options):
+    """
+    System realization from input and output data, with output error minimization method.
+    System Realization Using Information Matrix (SRIM) (Juang, 1997).
+    
+    :param inputs:  input time history. dimensions: :math:`(q,nt)`, where
+                    :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :type inputs:   array
+    :param outputs: output response history.
+                    dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                    :math:`nt` = number of timesteps
+    :type outputs:  array
+    :param horizon: number of steps used for identification (prediction horizon).
+                    default: :math:`min(300, nt)`
+    :type horizon:  int, optional
+    :param order:   model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :type order:    int, optional
+    :param full:    if True, full SVD. default: True
+    :type full:     bool, optional
+    :param find:    "ABCD" or "AC". default: "ABCD"
+    :type find:     string, optional
+    :param threads: number of threads used during the output error minimization method.
+                    default: 6
+    :type threads:  int, optional
+    :param chunk:   chunk size in output error minimization method. default: 200
+    :type chunk:    int, optional
+
+    :return:        realization in the form of state space coefficients ``(A,B,C,D)``
+    :rtype:         tuple of arrays
+    """
     lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
 
     if len(inputs.shape) == 1:
@@ -178,12 +230,6 @@ def srim(inputs,outputs,full=True,find="ABCD",threads=6,chunk=200,**options):
     p = outputs.shape[0]
     assert nt == outputs.shape[1]
 
-    # if no is None:
-    #     no = min(300, nt)
-
-    # if r is None:
-    #     r = min(10, int(no/2))
-
     no = options.get("no",
          options.get("horizon",
                      min(300, nt)))
@@ -192,6 +238,10 @@ def srim(inputs,outputs,full=True,find="ABCD",threads=6,chunk=200,**options):
         options.get("order",
                     min(20, int(no/2))))
 
+    full = options.get("full", True)
+    find = options.get("find","ABCD")
+    threads = options.get("threads",6)
+    chunk = options.get("chunk", 200)
 
     # maximum possible number of columns in the Y and U data matrices
     ns = nt-1-no+2
@@ -306,28 +356,3 @@ def srim(inputs,outputs,full=True,find="ABCD",threads=6,chunk=200,**options):
 
     return A,B,C,D
 
-def subspace(outputs,no=None,r=None,cov_driven=True,**options):
-    outputs = np.atleast_2d(outputs)
-    p,nt = outputs.shape
-    assert nt > p
-
-    if no == None:
-        no = min(300, int(nt/2))
-    if r == None:
-        r = min(10,no-1)
-
-    if cov_driven:
-        Toep = np.zeros((p*no,p*no))
-        for i in range(2*no-1):
-            covs = np.zeros((p,p,no-1))
-            for k in range(no-1):
-                covs[:,:,k] = outputs[:,k+i]@outputs[k]
-            Ri = np.sum(covs,axis=3)/no
-            for j in range(i):
-                for l in range(j):
-                    Toep[j,-l-1] = Ri
-
-    else:
-        pass
-
-    return

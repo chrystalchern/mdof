@@ -30,13 +30,66 @@ def EMAC_Matrix(Phi_final, Phi_final_hat):
             emac[i,j] = Rij*Wij
     return emac
 
-# no = number of timesteps for which to consider temporal consistency
-# Psi = eigenvectors of A, as columns of a matrix. can be reused from modal.system_modes().
-# Gam = eigenvalues of A, as items of a vector. can be reused from modal.system_modes().
-# Observability matrix can be reused from realize.srim().
-# p = number of outputs
-# n = model order (number of system variables)
+
 def OutputEMAC(A,C,Psi=None,Gam=None,**options):
+    """
+    :param outlook:         number of timesteps for which to consider temporal consistency. default: 100
+    :param Psi:             eigenvectors of A, as columns of a matrix. can be reused from modal.system_modes().
+    :param Gam:             eigenvalues of A, as items of a vector. can be reused from modal.system_modes().
+    :param Observability:   Observability matrix; can be reused from :func:`ssid.realize.srim`.
+    """
+    # """
+    # :param p:               number of outputs
+    # :param n:               model order (number of system variables)
+
+    # Examples
+    # --------
+    # >>> a = np.random.randn(9, 6) + 1j*np.random.randn(9, 6)
+    # >>> b = np.random.randn(2, 7, 8, 3) + 1j*np.random.randn(2, 7, 8, 3)
+
+    # Reconstruction based on full SVD, 2D case:
+
+    # >>> U, S, Vh = np.linalg.svd(a, full_matrices=True)
+    # >>> U.shape, S.shape, Vh.shape
+    # ((9, 9), (6,), (6, 6))
+    # >>> np.allclose(a, np.dot(U[:, :6] * S, Vh))
+    # True
+    # >>> smat = np.zeros((9, 6), dtype=complex)
+    # >>> smat[:6, :6] = np.diag(S)
+    # >>> np.allclose(a, np.dot(U, np.dot(smat, Vh)))
+    # True
+
+    # Reconstruction based on reduced SVD, 2D case:
+
+    # >>> U, S, Vh = np.linalg.svd(a, full_matrices=False)
+    # >>> U.shape, S.shape, Vh.shape
+    # ((9, 6), (6,), (6, 6))
+    # >>> np.allclose(a, np.dot(U * S, Vh))
+    # True
+    # >>> smat = np.diag(S)
+    # >>> np.allclose(a, np.dot(U, np.dot(smat, Vh)))
+    # True
+
+    # Reconstruction based on full SVD, 4D case:
+
+    # >>> U, S, Vh = np.linalg.svd(b, full_matrices=True)
+    # >>> U.shape, S.shape, Vh.shape
+    # ((2, 7, 8, 8), (2, 7, 3), (2, 7, 3, 3))
+    # >>> np.allclose(b, np.matmul(U[..., :3] * S[..., None, :], Vh))
+    # True
+    # >>> np.allclose(b, np.matmul(U[..., :3], S[..., None] * Vh))
+    # True
+
+    # Reconstruction based on reduced SVD, 4D case:
+
+    # >>> U, S, Vh = np.linalg.svd(b, full_matrices=False)
+    # >>> U.shape, S.shape, Vh.shape
+    # ((2, 7, 8, 3), (2, 7, 3), (2, 7, 3, 3))
+    # >>> np.allclose(b, np.matmul(U * S[..., None, :], Vh))
+    # True
+    # >>> np.allclose(b, np.matmul(U, S[..., None] * Vh))
+    # True
+    # """
     p,n = C.shape
     assert A.shape == (n,n)
     no = options.get("outlook",

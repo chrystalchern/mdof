@@ -1,7 +1,27 @@
 from ssid import markov, realize, modal
 from .numerics import decimate
 
-def system(inputs, outputs, method="srim", decimation=None, **options):
+def system(inputs, outputs, **options):
+    """
+    State space system realization from input and output data.
+
+    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
+                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :type inputs:       array
+    :param outputs:     output response history.
+                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        :math:`nt` = number of timesteps
+    :type outputs:      array
+    :param method:      system identification method. default is "srim", other options are "okid-era" and "okid-era-dc".
+    :type method:       string, optional
+    :param decimation:  decimation factor. default: 8
+    :type decimation:   int, optional
+
+    :return:            system realization in the form of state space coefficients ``(A,B,C,D)``
+    :rtype:             tuple of arrays
+    """
+    method = options.get("method", "srim")
+    decimation = options.get("decimation", None)
 
     if method not in {
         "srim",
@@ -26,9 +46,32 @@ def system(inputs, outputs, method="srim", decimation=None, **options):
 
     return realization
 
-def modes(inputs, outputs, dt, method="srim", decimation=None, **options):
 
-    realization = system(inputs, outputs, method, decimation, **options)
 
-    return modal.system_modes(realization, dt, decimation)
+def modes(inputs, outputs, dt, **options):
+    """
+    Modal identification using state space system realization from input and output data.
+
+    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
+                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :type inputs:       array
+    :param outputs:     output response history.
+                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        :math:`nt` = number of timesteps
+    :type outputs:      array
+    :param dt:          timestep.
+    :type dt:           float
+    :param method:      system identification method. default is "srim", other options are
+                        "okid-era" and "okid-era-dc".
+    :type method:       string, optional
+    :param decimation:  decimation factor. default: 8
+    :type decimation:   int, optional
+
+    :return:            system modes, including natural frequencies, damping ratios, mode shapes,
+                        condition numbers, and modal validation metrics EMAC and MPC.
+    :rtype:             dictionary
+    """
+    realization = system(inputs, outputs, **options)
+
+    return modal.system_modes(realization, dt, options["decimation"])
 
