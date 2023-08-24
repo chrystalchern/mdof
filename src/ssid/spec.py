@@ -7,6 +7,7 @@ from .numerics import decimate
 def response_transfer(inputs, outputs, step, **options):
     """
     Response spectrum transfer function from input and output data.
+    
     :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
                         :math:`q` = number of inputs, and :math:`nt` = number of timesteps
     :type inputs:       array
@@ -52,6 +53,7 @@ def response_transfer(inputs, outputs, step, **options):
 def fourier_transfer(inputs, outputs, step, **options):
     """
     Fourier spectrum transfer function from input and output data.
+
     :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
                         :math:`q` = number of inputs, and :math:`nt` = number of timesteps
     :type inputs:       array
@@ -84,6 +86,7 @@ def fourier_transfer(inputs, outputs, step, **options):
 def fourier_spectrum(series, step, period_band=None, **options):
     """
     Fourier amplitude spectrum from a signal.
+
     :param series:      time series.
     :type series:       1D array
     :param step:        timestep.
