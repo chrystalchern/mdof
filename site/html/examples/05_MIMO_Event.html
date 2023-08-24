@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>MIMO System Identification for Ground Motion Events &#8212; ssid</title>
+    <title>MIMO System Identification for Ground Motion Events &#8212; lilo</title>
   
   
   
@@ -31,25 +31,28 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
+    <script src="../_static/documentation_options.js?v=94eb6667"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'examples/05_MIMO_Event';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MIMO for Ground Motion Events" href="06_MIMO_History.html" />
+    <link rel="prev" title="Multiple Support Excitation and State Space Representation" href="04_MIMO_Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -111,7 +114,7 @@
   
   
   
-    <p class="title logo__title">ssid</p>
+    <p class="title logo__title">lilo</p>
   
 </a></div>
     
@@ -139,13 +142,20 @@
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../theory/index.html">
                         Theory
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -193,7 +203,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/ssid" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/BRACE2/lilo" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
 </ul></div>
@@ -226,7 +236,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -252,13 +262,20 @@ document.write(`
                 
 
                     <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="../theory/index.html">
                         Theory
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -295,7 +312,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/ssid" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/BRACE2/lilo" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
 </ul></div>
@@ -303,6 +320,22 @@ document.write(`
       </div>
     
   </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Multiple Support Excitation and State Space Representation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">MIMO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
   
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
@@ -336,6 +369,9 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page">MIMO System Identification for Ground Motion Events</li>
   </ul>
 </nav>
@@ -354,7 +390,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="MIMO-System-Identification-for-Ground-Motion-Events">
-<h1>MIMO System Identification for Ground Motion Events<a class="headerlink" href="#MIMO-System-Identification-for-Ground-Motion-Events" title="Permalink to this heading">#</a></h1>
+<h1>MIMO System Identification for Ground Motion Events<a class="headerlink" href="#MIMO-System-Identification-for-Ground-Motion-Events" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -371,11 +407,13 @@ document.write(`
 </div>
 </div>
 <section id="Unknown-multi-input,-multi-output-system">
-<h2>Unknown multi-input, multi-output system<a class="headerlink" href="#Unknown-multi-input,-multi-output-system" title="Permalink to this heading">#</a></h2>
+<h2>Unknown multi-input, multi-output system<a class="headerlink" href="#Unknown-multi-input,-multi-output-system" title="Link to this heading">#</a></h2>
+<img alt="2dof" src="../_images/2dof.png" />
+<p>The problem at hand is parameterized as follows:</p>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
+<th class="head"><p>description</p></th>
 </tr>
 </thead>
 <tbody>
@@ -411,11 +449,12 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p><img alt="2dof" src="../_images/2dof.png" /></p>
+<p>The following dimensionless values are introduced:</p>
 <div class="math notranslate nohighlight">
-\[a = \frac{m_{1}}{m_{2}}\]</div>
+\[a = \frac{m_{1}}{m_{2}} \qquad\text{ and }\qquad b = \frac{k_{1}}{k_{2}}\]</div>
+<p>so that the governing equations can be expressed as follows:</p>
 <div class="math notranslate nohighlight">
-\[b = \frac{k_{1}}{k_{2}}\]</div>
+\[\mathbf{M\ddot{u}} + \mathbf{Ku} = \mathbf{f(t)}\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\mathbf{M} = \begin{bmatrix} m_{1} &amp; 0 \\ 0 &amp; m_{2} \end{bmatrix} = m_{2}\begin{bmatrix} a &amp; 0 \\ 0 &amp; 1 \end{bmatrix}\end{split}\]</div>
 <div class="math notranslate nohighlight">
@@ -426,8 +465,6 @@ document.write(`
 \[(1+b-\lambda)(a-\lambda)+a = 0\]</div>
 <div class="math notranslate nohighlight">
 \[\lambda^{2}+(-b-a{m}-1)\lambda+2a+ab = 0\]</div>
-<div class="math notranslate nohighlight">
-\[\mathbf{M\ddot{u}} + \mathbf{Ku} = \mathbf{f(t)}\]</div>
 <div class="math notranslate nohighlight">
 \[\mathbf{\ddot{u}}  + \mathbf{M^{-1}Ku} = \mathbf{M^{-1}f(t)}\]</div>
 <div class="math notranslate nohighlight">
@@ -564,14 +601,14 @@ array([[ 0.04641016, -1.29282032],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_MIMO_Event_10_0.png" src="../_images/examples_05_MIMO_Event_10_0.png" />
+<img alt="../_images/examples_05_MIMO_Event_12_0.png" src="../_images/examples_05_MIMO_Event_12_0.png" />
 </div>
 </div>
 </section>
 <section id="Configure">
-<h2>Configure<a class="headerlink" href="#Configure" title="Permalink to this heading">#</a></h2>
+<h2>Configure<a class="headerlink" href="#Configure" title="Link to this heading">#</a></h2>
 <section id="Method">
-<h3>Method<a class="headerlink" href="#Method" title="Permalink to this heading">#</a></h3>
+<h3>Method<a class="headerlink" href="#Method" title="Link to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -585,9 +622,9 @@ array([[ 0.04641016, -1.29282032],
 </section>
 </section>
 <section id="Analysis-with-System-Identification">
-<h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Permalink to this heading">#</a></h2>
+<h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Link to this heading">#</a></h2>
 <section id="Transfer-Function-Methods">
-<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
+<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -618,12 +655,12 @@ array([[ 0.04641016, -1.29282032],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_MIMO_Event_16_0.png" src="../_images/examples_05_MIMO_Event_16_0.png" />
+<img alt="../_images/examples_05_MIMO_Event_18_0.png" src="../_images/examples_05_MIMO_Event_18_0.png" />
 </div>
 </div>
 </section>
 <section id="State-Space-(%22Parametric%22)-Methods">
-<h3>State Space (“Parametric”) Methods<a class="headerlink" href="#State-Space-(%22Parametric%22)-Methods" title="Permalink to this heading">#</a></h3>
+<h3>State Space (“Parametric”) Methods<a class="headerlink" href="#State-Space-(%22Parametric%22)-Methods" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -643,42 +680,24 @@ array([[ 0.04641016, -1.29282032],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-2 1 2500
+[1.0025200636857878, 1.360787538044372, 2.5390363420961073]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
+<div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">ValueError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 3</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> # Generate a state space realization of the system
-<span class="ansi-green-intense-fg ansi-bold">      2</span> conf.decimation = 2
-<span class="ansi-green-fg">----&gt; 3</span> realization = ssid.system(method=&#34;okid-era-dc&#34;, inputs=inputs, outputs=outputs, **conf)
-<span class="ansi-green-intense-fg ansi-bold">      4</span> # Obtain natural period and damping ratio from the state space model
-<span class="ansi-green-intense-fg ansi-bold">      5</span> ss_modes = modal.system_modes(realization, dt, **conf)
-
-File <span class="ansi-green-fg">/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/system.py:22</span>, in <span class="ansi-cyan-fg">system</span><span class="ansi-blue-fg">(inputs, outputs, method, decimation, **options)</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> if method == &#34;okid-era-dc&#34;:
-<span class="ansi-green-intense-fg ansi-bold">     21</span>     Y = markov.okid(inputs, outputs, **options)
-<span class="ansi-green-fg">---&gt; 22</span>     realization = realize.era_dc(Y, **options)
-<span class="ansi-green-intense-fg ansi-bold">     24</span> if method == &#34;srim&#34;:
-<span class="ansi-green-intense-fg ansi-bold">     25</span>     realization = realize.srim(inputs, outputs, **options)
-
-File <span class="ansi-green-fg">/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/realize.py:125</span>, in <span class="ansi-cyan-fg">era_dc</span><span class="ansi-blue-fg">(Y, nc, a, b, l, g, **options)</span>
-<span class="ansi-green-intense-fg ansi-bold">    123</span> Hl1 = H[:, q*(l+1+(i+j)*g+1):q*(l+1+(i+j)*g+nc+1)]
-<span class="ansi-green-intense-fg ansi-bold">    124</span> assert Hl.shape == Hl1.shape == (p*(no), q*(nc))
-<span class="ansi-green-fg">--&gt; 125</span> R = Hl@H0       # correlation matrix
-<span class="ansi-green-intense-fg ansi-bold">    126</span> R1 = Hl1@H0     # shifted correlation matrix
-<span class="ansi-green-intense-fg ansi-bold">    127</span> assert R.shape == R1.shape == (dimR,dimR)
-
-<span class="ansi-red-fg">ValueError</span>: matmul: Input operand 1 has a mismatch in its core dimension 0, with gufunc signature (n?,k),(k,m?)-&gt;(n?,m?) (size 298 is different from 149)
+/home/claudio/brace/SystemIdentification/src/ssid/validation.py:84: RuntimeWarning: divide by zero encountered in scalar divide
+  nu[i]    = (s22[i]-s11[i])/(2*s12[i])
+/home/claudio/brace/SystemIdentification/src/ssid/validation.py:85: RuntimeWarning: invalid value encountered in scalar multiply
+  lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
+/home/claudio/brace/SystemIdentification/src/ssid/validation.py:86: RuntimeWarning: invalid value encountered in scalar multiply
+  lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_io</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;SDOF Response&quot;</span><span class="p">)</span>
@@ -689,11 +708,11 @@ File <span class="ansi-green-fg">/mnt/c/Users/cmp/Documents/GitHub/SystemIdentif
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_MIMO_Event_19_0.png" src="../_images/examples_05_MIMO_Event_19_0.png" />
+<img alt="../_images/examples_05_MIMO_Event_21_0.png" src="../_images/examples_05_MIMO_Event_21_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
@@ -707,7 +726,15 @@ File <span class="ansi-green-fg">/mnt/c/Users/cmp/Documents/GitHub/SystemIdentif
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_05_MIMO_Event_20_0.png" src="../_images/examples_05_MIMO_Event_20_0.png" />
+<img alt="../_images/examples_05_MIMO_Event_22_0.png" src="../_images/examples_05_MIMO_Event_22_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -741,6 +768,24 @@ File <span class="ansi-green-fg">/mnt/c/Users/cmp/Documents/GitHub/SystemIdentif
   
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="04_MIMO_Intro.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Multiple Support Excitation and State Space Representation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="06_MIMO_History.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">MIMO for Ground Motion Events</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div></div>
   
 </div>
@@ -804,7 +849,7 @@ File <span class="ansi-green-fg">/mnt/c/Users/cmp/Documents/GitHub/SystemIdentif
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.1.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
     <br/>
   </p>
 </div>

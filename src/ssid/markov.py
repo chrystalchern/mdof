@@ -4,7 +4,25 @@ import warnings
 # inputs = input data. dimensions of inputs: q x nt, where nt = number of timesteps.
 # outputs = response data due to input data. dimensions of outputs: p x nt.
 # m = number of Markov parameters (impulse response timesteps), not including timestep zero, to solve for.
-def okid(inputs,outputs,m=None,**options):
+def okid(inputs,outputs,**options):
+    """
+    Identify Markov parameters, or discrete impulse response data, for a given set of input and output data.
+    Observer Kalman Identification Algorithm (OKID) (Juang, Phan, Horta, Longman, 1993).
+
+    :param inputs:  input time history. dimensions: :math:`(q,nt)`, where
+                    :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :type inputs:   array
+    :param outputs: output response history.
+                    dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                    :math:`nt` = number of timesteps
+    :type outputs:  array
+    :param m:       number of Markov parameters to compute. default: :math:`min(300, nt)`
+    :type m:        int, optional
+
+    :return: the Markov parameters, with dimensions :math:`(p,q,m+1)`
+    :rtype: array
+    """
+
     if len(inputs.shape) == 1:
         inputs = inputs[None,:]
     if len(outputs.shape) == 1:
@@ -19,6 +37,7 @@ def okid(inputs,outputs,m=None,**options):
     p = outputs.shape[0]
     assert nt == outputs.shape[1]
     
+    m = options.get("m", None)
     if m is None:
         m = min(1000,nt)
 
