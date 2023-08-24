@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 import scienceplots
 
-plt.style.use(["science", "no-latex"])# , "notebook"])
+plt.style.use(["poster"])# ,"science", "notebook"])
 
 nln = "\n"
 
@@ -83,6 +83,7 @@ def plot_models(models, Tn, zeta):
 def plot_io(inputs, outputs, t, title=None):
     fig, ax = plt.subplots(1,2,figsize=(12,4),constrained_layout=True)
     # fig, ax = plt.subplots(1,2,figsize=(8,3))
+    color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
     if len(inputs.shape) > 1:
         for i in range(inputs.shape[0]):
             ax[0].plot(t,inputs[i,:])
@@ -92,7 +93,7 @@ def plot_io(inputs, outputs, t, title=None):
     ax[0].set_ylabel("inputs")# , fontsize=13)
     if len(outputs.shape) > 1:
         for i in range(outputs.shape[0]):
-            ax[1].plot(t,outputs[i,:], color="b", alpha=0.5)
+            ax[1].plot(t,outputs[i,:], color=color_cycle[0], alpha=0.5)
     else:
         ax[1].plot(t,outputs)
     ax[1].set_xlabel("time (s)")# , fontsize=13)
@@ -100,16 +101,17 @@ def plot_io(inputs, outputs, t, title=None):
     fig.suptitle(title) #, fontsize=14)
 
 def plot_pred(ytrue, models, t, title=None):
+    color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
     fig, ax = plt.subplots(figsize=(8,4))
     if len(ytrue.shape) > 1:
         for i in range(ytrue.shape[0]):
-            ax.plot(t,ytrue[i,:],label=["true" if i==0 else None][0],color="b",alpha=0.5)
+            ax.plot(t,ytrue[i,:],label=["true" if i==0 else None][0],color=color_cycle[0],alpha=0.5)
     else:
         ax.plot(t,ytrue,label="true")
     if type(models) is np.ndarray:
         if len(models.shape) > 1:
             for i in range(models.shape[0]):
-                ax.plot(t,models[i,:],"--",label=["prediction" if i==0 else None][0],color="r",alpha=0.5)
+                ax.plot(t,models[i,:],"--",label=["prediction" if i==0 else None][0],color=color_cycle[1],alpha=0.5)
         else:
             ax.plot(t,models,"--",label=f"prediction")
     else:
