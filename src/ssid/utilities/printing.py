@@ -129,12 +129,12 @@ def plot_transfer(models, title=None, labels=None):
     if type(models) is np.ndarray:
         if len(models.shape) > 2:
             for i in range(models.shape[0]):
-                ax.plot(models[i,0],models[i,1],label=labels[i])
+                ax.plot(models[i,0],models[i,1]/max(models[i,1]),label=labels[i])
         else:
-            ax.plot(models[0],models[1],label=labels)
+            ax.plot(models[0],models[1]/max(models[1]),label=labels)
     else:
         for method in models:
-            ax.plot(models[method][0],models[method][1],label=method)
+            ax.plot(models[method][0],models[method][1]/max(models[method][1]),label=method)
     ax.set_xlabel("Period (s)")
     ax.set_ylabel("Amplitude")
     ax.legend()#fontsize=12)
