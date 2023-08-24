@@ -118,10 +118,10 @@ def era_dc(Y,**options):
                      None))
     nc = options.get("nc",
                      None)
-    a = options.get("a", None)
-    b = options.get("b", None)
-    l = options.get("l", None)
-    g = options.get("g", None)
+    a = options.get("a", 0)
+    b = options.get("b", 0)
+    l = options.get("l", 0)
+    g = options.get("g", 1)
 
     # get D from first p x q block of impulse response
     Dr = Y[:,:,0]  # first block of output data
