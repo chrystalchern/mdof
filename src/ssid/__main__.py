@@ -147,11 +147,11 @@ def parse_time(argi, config, channels, method=None):
         print(json.dumps({"error": str(e), "data": []}))
         return
 
-    import ssid.spec
+    import ssid.transform
     from ssid.modal import spectrum_modes
     f = {
-        "response": ssid.spec.response_transfer,
-        "fourier":  ssid.spec.fourier_transfer,
+        "response": ssid.transform.response_transfer,
+        "fourier":  ssid.transform.fourier_transfer,
     }[method]
 
     periods, amplitudes = spectrum_modes(
