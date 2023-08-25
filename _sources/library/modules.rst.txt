@@ -8,7 +8,7 @@ mdof
    mdof.markov
    mdof.realize
    mdof.modal
-   mdof.spec
+   mdof.transform
 
 
 .. automodule:: mdof.system
