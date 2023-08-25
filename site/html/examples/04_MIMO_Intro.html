@@ -1,0 +1,1514 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Multiple Support Excitation and State Space Representation &#8212; lilo</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+
+    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'examples/04_MIMO_Intro';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="MIMO System Identification for Ground Motion Events" href="05_MIMO_Event.html" />
+    <link rel="prev" title="SISO for Ground Motion Events" href="03_SISO_History.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  <div class="navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">lilo</p>
+  
+</a></div>
+    
+  </div>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../theory/index.html">
+                        Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BRACE2/lilo" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+  </button>
+`);
+</script>
+    </div>
+  
+
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        ssid
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../theory/index.html">
+                        Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
+    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
+    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BRACE2/lilo" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+            <label class="sr-only">GitHub</label></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Multiple Support Excitation and State Space Representation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumbs">
+  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Multiple Support Excitation and State Space Representation</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="Multiple-Support-Excitation-and-State-Space-Representation">
+<h1>Multiple Support Excitation and State Space Representation<a class="headerlink" href="#Multiple-Support-Excitation-and-State-Space-Representation" title="Link to this heading">#</a></h1>
+<section id="Chopra-Section-9.7">
+<h2>Chopra Section 9.7<a class="headerlink" href="#Chopra-Section-9.7" title="Link to this heading">#</a></h2>
+<img alt="structure_diagram" src="../_images/structure_diagram.png" />
+<section id="Partitioned-equation-of-dynamic-equilibrium-(Chopra-Eq.-9.7.1)">
+<h3>Partitioned equation of dynamic equilibrium (Chopra Eq. 9.7.1)<a class="headerlink" href="#Partitioned-equation-of-dynamic-equilibrium-(Chopra-Eq.-9.7.1)" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{bmatrix}
+\mathbf{m} &amp; \mathbf{m}_g \\
+\mathbf{m}^T_g &amp; \mathbf{m}_{gg}
+\end{bmatrix}
+\begin{Bmatrix}
+\mathbf{\ddot{u}}^t \\
+\mathbf{\ddot{u}}_g
+\end{Bmatrix}
++
+\begin{bmatrix}
+\mathbf{c} &amp; \mathbf{c}_g \\
+\mathbf{c}^T_g &amp; \mathbf{c}_{gg}
+\end{bmatrix}
+\begin{Bmatrix}
+\mathbf{\dot{u}}^t \\
+\mathbf{\dot{u}}_g
+\end{Bmatrix}
++
+\begin{bmatrix}
+\mathbf{k} &amp; \mathbf{k}_g \\
+\mathbf{k}^T_g &amp; \mathbf{k}_{gg}
+\end{bmatrix}
+\begin{Bmatrix}
+\mathbf{u}^t \\
+\mathbf{u}_g
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+\mathbf{0} \\
+\mathbf{p}_g(t)
+\end{Bmatrix}\end{split}\]</div>
+</section>
+<section id="Problem-Statement">
+<h3>Problem Statement<a class="headerlink" href="#Problem-Statement" title="Link to this heading">#</a></h3>
+<p>given: <span class="math notranslate nohighlight">\(\mathbf{u}_g\)</span>, <span class="math notranslate nohighlight">\(\mathbf{\dot{u}}_g\)</span>, and <span class="math notranslate nohighlight">\(\mathbf{\ddot{u}}_g\)</span></p>
+<p>find: <span class="math notranslate nohighlight">\(\mathbf{u}^t\)</span> and <span class="math notranslate nohighlight">\(\mathbf{p}_g(t)\)</span></p>
+<p>–&gt; (system ID: given output <span class="math notranslate nohighlight">\(\mathbf{u}^t\)</span> and input <span class="math notranslate nohighlight">\(\mathbf{\ddot{u}}_g\)</span>, determine fundamental frequencies and mode shapes of the structure.)</p>
+</section>
+<section id="General-equation-of-motion-for-multiple-support-excitation">
+<h3>General equation of motion for multiple support excitation<a class="headerlink" href="#General-equation-of-motion-for-multiple-support-excitation" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>split displacements into quasi-static (<span class="math notranslate nohighlight">\(\mathbf{u}^s\)</span>) and dynamic (<span class="math notranslate nohighlight">\(\mathbf{u}\)</span>) displacements (chopra eq 9.7.2):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{Bmatrix}
+\mathbf{u}^t \\
+\mathbf{u}_g
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+\mathbf{u}^s \\
+\mathbf{u}_g
+\end{Bmatrix}
++
+\begin{Bmatrix}
+\mathbf{u} \\
+\mathbf{0}
+\end{Bmatrix}\end{split}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>take the first half of the partitioned equilibrium equation from eq 9.7.1 (chopra eq 9.7.4)</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\mathbf{m}\mathbf{\ddot{u}}^t + \mathbf{m}_g\mathbf{\ddot{u}}_g
++
+\mathbf{c}\mathbf{\dot{u}}^t + \mathbf{c}_g\mathbf{\dot{u}}_g
++
+\mathbf{k}\mathbf{u}^t + \mathbf{k}_g\mathbf{u}_g
+=
+\mathbf{0}\]</div>
+<ol class="arabic" start="3">
+<li><p>substitute eq 9.7.2 (<span class="math notranslate nohighlight">\(\mathbf{u}^t=\mathbf{u}^s+\mathbf{u}\)</span>) and move all <span class="math notranslate nohighlight">\(\mathbf{u}_g\)</span> and <span class="math notranslate nohighlight">\(\mathbf{u}^s\)</span> terms to the right side (chopra eq 9.7.5):</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{m}\mathbf{\ddot{u}} + \mathbf{c}\mathbf{\dot{u}} + \mathbf{k}\mathbf{u}
+= \mathbf{p}_{eff}(t)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{p}_{eff}(t) =
+-(\mathbf{m}\mathbf{\ddot{u}}^s+\mathbf{m}_g\mathbf{\ddot{u}}_g)
+-(\mathbf{c}\mathbf{\dot{u}}^s+\mathbf{c}_g\mathbf{\dot{u}}_g)
+-(\mathbf{k}\mathbf{u}^s+\mathbf{k}_g\mathbf{u}_g)\]</div>
+<p>which simplifies to</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{p}_{eff}(t) =
+-\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_g(t)\]</div>
+</li>
+<li><p>final equation of motion</p>
+<div class="math notranslate nohighlight">
+\[\mathbf{m}\mathbf{\ddot{u}} + \mathbf{c}\mathbf{\dot{u}} + \mathbf{k}\mathbf{u}
+= -\mathbf{m}\mathbf{\iota}\mathbf{\ddot{u}}_g(t)\]</div>
+</li>
+</ol>
+</section>
+<section id="Example-9.10">
+<h3>Example 9.10<a class="headerlink" href="#Example-9.10" title="Link to this heading">#</a></h3>
+<img alt="structure_diagram" src="../_images/ex9.10.png" />
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+
+<span class="c1"># EI/L^3 = 1</span>
+<span class="n">EIL3</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># m = 1</span>
+<span class="n">m_node</span> <span class="o">=</span> <span class="mi">1</span>
+
+<span class="n">k_hat</span> <span class="o">=</span> <span class="n">EIL3</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+    <span class="p">[</span>
+        <span class="p">[</span><span class="mf">78.86</span><span class="p">,</span> <span class="mf">30.86</span><span class="p">,</span> <span class="o">-</span><span class="mf">29.14</span><span class="p">,</span> <span class="o">-</span><span class="mf">75.43</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.14</span><span class="p">],</span>
+        <span class="p">[</span><span class="mf">30.86</span><span class="p">,</span> <span class="mf">78.86</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.13</span><span class="p">,</span> <span class="o">-</span><span class="mf">75.43</span><span class="p">,</span> <span class="o">-</span><span class="mf">29.14</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">29.14</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.14</span><span class="p">,</span> <span class="mf">12.86</span><span class="p">,</span> <span class="mf">20.57</span><span class="p">,</span> <span class="mf">0.86</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">75.43</span><span class="p">,</span> <span class="o">-</span><span class="mf">75.43</span><span class="p">,</span> <span class="mf">20.57</span><span class="p">,</span> <span class="mf">109.71</span><span class="p">,</span> <span class="mf">20.57</span><span class="p">],</span>
+        <span class="p">[</span><span class="o">-</span><span class="mf">5.14</span><span class="p">,</span> <span class="o">-</span><span class="mf">29.14</span><span class="p">,</span> <span class="mf">0.86</span><span class="p">,</span> <span class="mf">20.57</span><span class="p">,</span> <span class="mf">12.86</span><span class="p">]</span>
+    <span class="p">]</span>
+<span class="p">)</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="n">k_hat</span><span class="p">[:</span><span class="mi">2</span><span class="p">,:</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">k_g</span> <span class="o">=</span> <span class="n">k_hat</span><span class="p">[:</span><span class="mi">2</span><span class="p">,</span><span class="mi">2</span><span class="p">:]</span>
+<span class="n">k_gg</span> <span class="o">=</span> <span class="n">k_hat</span><span class="p">[</span><span class="mi">2</span><span class="p">:,</span><span class="mi">2</span><span class="p">:]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">k</span><span class="si">=}</span><span class="s2">, </span><span class="se">\n</span><span class="si">{</span><span class="n">k_g</span><span class="si">=}</span><span class="s2">, </span><span class="se">\n</span><span class="si">{</span><span class="n">k_gg</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">m</span> <span class="o">=</span> <span class="n">m_node</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">identity</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">m</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">iota</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">k</span><span class="p">)</span><span class="nd">@k_g</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">iota</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+k=array([[78.86, 30.86],
+       [30.86, 78.86]]),
+k_g=array([[-29.14, -75.43,  -5.14],
+       [ -5.13, -75.43, -29.14]]),
+k_gg=array([[ 12.86,  20.57,   0.86],
+       [ 20.57, 109.71,  20.57],
+       [  0.86,  20.57,  12.86]])
+m=array([[1., 0.],
+       [0., 1.]])
+iota=array([[ 0.40627442,  0.68747721, -0.09378418],
+       [-0.09393392,  0.68747721,  0.40621582]])
+</pre></div></div>
+</div>
+</section>
+<section id="Equation-of-motion-for-chopra-example-9.10">
+<h3>Equation of motion for chopra example 9.10<a class="headerlink" href="#Equation-of-motion-for-chopra-example-9.10" title="Link to this heading">#</a></h3>
+<div class="math notranslate nohighlight">
+\[\mathbf{m}\mathbf{\ddot{u}} + \mathbf{k}\mathbf{u}
+= -\sum_{l=1}^{3}\mathbf{m}\mathbf{\iota}_l\mathbf{\ddot{u}}_{gl}(t)\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}m = m\begin{bmatrix}
+1 &amp; 0 \\
+0 &amp; 1
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}k = \frac{EI}{L^3}\begin{bmatrix}
+78.86 &amp; 30.86 \\
+30.86 &amp; 78.86
+\end{bmatrix}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\iota_1 = \begin{Bmatrix}0.40625\\-0.09375\end{Bmatrix}
+\iota_2 = \begin{Bmatrix}0.68750\\0.68750\end{Bmatrix}
+\iota_1 = \begin{Bmatrix}-0.09375\\0.40625\end{Bmatrix}\end{split}\]</div>
+</section>
+<section id="Plot-example-input-and-output-motions-for-chopra-example-9.10">
+<h3>Plot example input and output motions for chopra example 9.10<a class="headerlink" href="#Plot-example-input-and-output-motions-for-chopra-example-9.10" title="Link to this heading">#</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">integrate</span>
+<span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">pi</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="n">pi</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">ns</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">nf</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mf">0.1</span><span class="p">),</span>
+    <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span><span class="p">),</span>
+    <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">t</span> <span class="o">&gt;</span> <span class="mi">3</span><span class="o">*</span><span class="n">pi</span><span class="p">)</span>
+    <span class="c1"># lambda t: np.sin(t),</span>
+    <span class="c1"># lambda t: np.sin(t),</span>
+    <span class="c1"># lambda t: np.sin(t-0.1)</span>
+<span class="p">]</span>
+<span class="c1"># input = np.sin(t) + 20*np.random.rand(nt)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="nb">input</span><span class="p">[</span><span class="mi">0</span><span class="p">](</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="nb">input</span><span class="p">[</span><span class="mi">1</span><span class="p">](</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="nb">input</span><span class="p">[</span><span class="mi">2</span><span class="p">](</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;support 1&quot;</span><span class="p">,</span> <span class="s2">&quot;support 2&quot;</span><span class="p">,</span> <span class="s2">&quot;support 3&quot;</span><span class="p">])</span>
+<span class="n">minvk</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="nd">@k</span>
+<span class="k">def</span> <span class="nf">ex910</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">minvk</span><span class="p">,</span><span class="n">iota</span><span class="p">):</span>
+    <span class="n">dydt</span> <span class="o">=</span> <span class="n">y</span>
+    <span class="n">mipeff</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="nb">input</span><span class="p">[</span><span class="n">i</span><span class="p">](</span><span class="n">t</span><span class="p">)</span><span class="o">*</span><span class="n">iota</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ns</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+        <span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="n">nf</span><span class="p">:],</span>
+        <span class="o">*</span><span class="p">(</span><span class="n">mipeff</span> <span class="o">-</span> <span class="n">minvk</span><span class="nd">@y</span><span class="p">[:</span><span class="n">nf</span><span class="p">])</span>
+    <span class="p">])</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">odeint</span><span class="p">(</span><span class="n">ex910</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">minvk</span><span class="p">,</span><span class="n">iota</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">output</span><span class="p">[:,</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">output</span><span class="p">[:,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">([</span><span class="s2">&quot;dof 1&quot;</span><span class="p">,</span> <span class="s2">&quot;dof 2&quot;</span><span class="p">]);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_8_0.png" src="../_images/examples_04_MIMO_Intro_8_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy</span>
+<span class="n">D</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V</span><span class="si">=}</span><span class="s2">, </span><span class="se">\n</span><span class="si">{</span><span class="n">D</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">D</span><span class="p">,</span> <span class="n">V</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">minvk</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">V</span><span class="si">=}</span><span class="s2">, </span><span class="se">\n</span><span class="si">{</span><span class="n">D</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">freqs</span> <span class="o">=</span> <span class="n">D</span><span class="o">**</span><span class="mf">0.5</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freqs</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+V=array([[-0.70710678, -0.70710678],
+       [ 0.70710678, -0.70710678]]),
+D=array([ 48.  +0.j, 109.72+0.j])
+V=array([[ 0.70710678, -0.70710678],
+       [ 0.70710678,  0.70710678]]),
+D=array([109.72,  48.  ])
+freqs=array([10.4747315 ,  6.92820323])
+</pre></div></div>
+</div>
+<p>The fundamental frequencies of the system are <strong>10.47 rad/s</strong> and <strong>6.93 rad/s.</strong></p>
+<ul class="simple">
+<li><p>☐ get fundamental frequencies and mode shapes from equation of motion</p></li>
+<li><p>☐ use system identification to determine fundamental frequencies and mode shapes</p></li>
+</ul>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.018868424345884642
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scipy.fft</span> <span class="kn">import</span> <span class="n">fft</span><span class="p">,</span> <span class="n">fftfreq</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="c1"># T = t[1]</span>
+<span class="c1"># T = 0.0189</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mf">1.0</span><span class="o">/</span><span class="mi">800</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">N</span><span class="o">*</span><span class="n">T</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mf">50.0</span><span class="o">*</span><span class="mf">2.0</span><span class="o">*</span><span class="n">pi</span><span class="o">*</span><span class="n">x</span><span class="p">)</span>
+<span class="n">xf</span> <span class="o">=</span> <span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span> <span class="n">T</span><span class="p">)[:</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">yf</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">yff</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">yf</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">yff</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequency Response Spectrum&quot;</span><span class="p">)</span>
+<span class="n">freqs_fft</span> <span class="o">=</span> <span class="n">xf</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">yff</span><span class="p">,</span> <span class="o">-</span><span class="mi">3</span><span class="p">)[</span><span class="o">-</span><span class="mi">3</span><span class="p">:]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freqs_fft</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+freqs_fft=array([48.8, 50.4, 49.6])
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_13_1.png" src="../_images/examples_04_MIMO_Intro_13_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">t</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">output</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">N</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="c1"># T = x[1]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="mi">800</span>
+<span class="n">xf</span> <span class="o">=</span> <span class="n">fftfreq</span><span class="p">(</span><span class="n">N</span><span class="p">,</span><span class="n">T</span><span class="p">)[:</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">yf</span> <span class="o">=</span> <span class="n">fft</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+<span class="n">yff</span> <span class="o">=</span> <span class="mf">2.0</span><span class="o">/</span><span class="n">N</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">yf</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">N</span><span class="o">//</span><span class="mi">2</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xf</span><span class="p">,</span> <span class="n">yff</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">&quot;frequency&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;amplitude&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Frequency Response Spectrum&quot;</span><span class="p">)</span>
+<span class="c1"># plt.xlim([0,5])</span>
+<span class="nb">print</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">yff</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]])</span>
+<span class="n">freqs_fft</span> <span class="o">=</span> <span class="n">xf</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argpartition</span><span class="p">(</span><span class="n">yff</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">)[</span><span class="o">-</span><span class="mi">5</span><span class="p">:]]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freqs_fft</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[array([ 1, 21, 31, 32,  0], dtype=int64)]
+freqs_fft=array([ 0.8, 16.8, 24.8, 25.6,  0. ])
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_14_1.png" src="../_images/examples_04_MIMO_Intro_14_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freqs</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">freqs</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">freqs_fft</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">freqs_fft</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+freqs[1]/freqs[0]=0.6614206034955363
+freqs_fft[1]/freqs_fft[0]=21.0
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">freqs_fft</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span><span class="o">/</span><span class="n">freqs</span><span class="o">/</span><span class="n">pi</span>
+
+<span class="c1"># np.sqrt(2)/2</span>
+<span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+0.8660254037844386
+</pre></div></div>
+</div>
+</section>
+<section id="Parameterization-of-inputs-and-outputs-for-OKID-ERA-and-SRIM">
+<h3>Parameterization of inputs and outputs for OKID-ERA and SRIM<a class="headerlink" href="#Parameterization-of-inputs-and-outputs-for-OKID-ERA-and-SRIM" title="Link to this heading">#</a></h3>
+<p>I X O -&gt; SS</p>
+<p>Class SS - coeff: A, B, C, D - obsv: <span class="math notranslate nohighlight">\(\mathcal{O}_{p}\)</span> or <span class="math notranslate nohighlight">\(V\)</span> or <span class="math notranslate nohighlight">\(V_r\)</span> - ctrl: <span class="math notranslate nohighlight">\(\mathcal{C}_{p}\)</span> or <span class="math notranslate nohighlight">\(W\)</span> or <span class="math notranslate nohighlight">\(W_s\)</span> - shapes: <span class="math notranslate nohighlight">\(\Phi, \Psi\)</span> - freq: <span class="math notranslate nohighlight">\(\Omega, \Lambda\)</span></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tf</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">pi</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">td</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">t</span><span class="p">),</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;continuous&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">td</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">td</span><span class="p">),</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;discrete&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time (s)&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;signal&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;major&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_18_0.png" src="../_images/examples_04_MIMO_Intro_18_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># SDOF example for impulse response and system id</span>
+
+<span class="c1"># Timesteps</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mi">6</span><span class="o">*</span><span class="n">pi</span>
+<span class="n">nt</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.</span><span class="p">,</span> <span class="n">tf</span><span class="p">,</span> <span class="n">nt</span><span class="p">)</span>
+<span class="c1"># Impulse input</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="o">-</span><span class="mf">0.1</span> <span class="o">&lt;</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">pi</span><span class="o">/</span><span class="mi">3</span><span class="o">+</span><span class="mf">0.1</span><span class="p">)</span>
+
+<span class="c1"># Mass, stiffness, and damping</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">0.05</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">w</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="c1"># fig, ax = plt.subplots(1,2, figsize=(10,3.5))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="nb">input</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">],</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">eom</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="nb">input</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">odeint</span><span class="p">(</span><span class="n">eom</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
+<span class="c1"># ax[1].step(t, output[:,0], where=&#39;post&#39;)</span>
+<span class="c1"># ax[1].plot(t, output[:,0], where=&#39;post&#39;)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="nb">input</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nt</span><span class="p">)])</span>
+<span class="c1"># ax[1].plot(t, [-k*output[i,0]/m-c*output[i,1]/m-input(i) for i in range(nt)])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">);</span>
+<span class="c1"># ax[1].plot(t+pi/3-0.1, -1*np.sin(w*(t+pi/3-0.1)));</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_19_0.png" src="../_images/examples_04_MIMO_Intro_19_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="nb">input</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">],</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;impulse input&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$ (s)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\ddot</span><span class="si">{u}</span><span class="s1">$ (cm/s$^2$)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">);</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="p">[</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">output</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="nb">input</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nt</span><span class="p">)])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;impulse output&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$ (s)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\ddot</span><span class="si">{u}</span><span class="s1">$ (cm/s$^2$)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_20_0.png" src="../_images/examples_04_MIMO_Intro_20_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_20_1.png" src="../_images/examples_04_MIMO_Intro_20_1.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">husid</span><span class="p">(</span><span class="n">accRH</span><span class="p">,</span> <span class="n">plothusid</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mf">0.95</span><span class="p">):</span>
+    <span class="n">ai</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">tril</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">accRH</span><span class="p">)))</span><span class="nd">@accRH</span><span class="o">**</span><span class="mi">2</span>
+    <span class="n">husid</span> <span class="o">=</span> <span class="n">ai</span><span class="o">/</span><span class="n">ai</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">ilb</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">husid</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">lb</span><span class="p">)</span>
+    <span class="n">iub</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span><span class="p">,</span> <span class="n">val</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">husid</span><span class="p">)</span> <span class="k">if</span> <span class="n">val</span> <span class="o">&gt;</span> <span class="n">ub</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">plothusid</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">dt</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;duration between &quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">lb</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="s2">&quot; and &quot;</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">ub</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">,</span> <span class="s2">&quot; (s): &quot;</span><span class="p">,</span> <span class="n">dt</span><span class="o">*</span><span class="p">(</span><span class="n">iub</span><span class="o">-</span><span class="n">ilb</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">dt</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">accRH</span><span class="p">)),</span> <span class="n">husid</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;time (s)&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">accRH</span><span class="p">)),</span> <span class="n">husid</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;timestep&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">husid</span><span class="p">[</span><span class="n">ilb</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;:&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">lb</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">husid</span><span class="p">[</span><span class="n">iub</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;--&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="mi">100</span><span class="o">*</span><span class="n">ub</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Husid Plot&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">ilb</span><span class="p">,</span> <span class="n">iub</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># San Lorenzo Bent 4 south column base input</span>
+<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span> <span class="nn">quakeio</span>
+<span class="n">event_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./hayward/58658_003_20210628_18.29.26.P_SanLo.zip&quot;</span><span class="p">)</span>
+<span class="n">event</span> <span class="o">=</span> <span class="n">quakeio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">event_path</span><span class="p">)</span>
+<span class="n">channel</span> <span class="o">=</span> <span class="n">event</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="n">station_channel</span><span class="o">=</span><span class="s1">&#39;25&#39;</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">channel</span><span class="o">.</span><span class="n">accel</span><span class="o">.</span><span class="n">data</span>
+<span class="n">wt</span> <span class="o">=</span> <span class="n">husid</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="kc">False</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">lb</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">ub</span><span class="o">=</span><span class="mf">0.99</span><span class="p">)</span>
+<span class="n">nt</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">nf</span> <span class="o">=</span> <span class="n">dt</span><span class="o">*</span><span class="n">nt</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">nf</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>
+<span class="nb">input</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span><span class="p">:</span> <span class="n">response</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">t</span><span class="o">/</span><span class="n">dt</span><span class="p">)]</span>
+
+<span class="c1"># Mass, stiffness, and damping</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">0.05</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">w</span>
+
+<span class="c1"># fig, ax = plt.subplots(1,2, figsize=(15,5))</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="nb">input</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">][</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">eom</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">t</span><span class="p">,</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="nb">input</span><span class="p">(</span><span class="n">t</span><span class="p">)]</span>
+<span class="n">output</span> <span class="o">=</span> <span class="n">integrate</span><span class="o">.</span><span class="n">odeint</span><span class="p">(</span><span class="n">eom</span><span class="p">,</span> <span class="p">[</span><span class="mf">1e-5</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span> <span class="n">t</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">))</span>
+<span class="n">accel_output</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">output</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ti</span><span class="o">/</span><span class="n">dt</span><span class="p">),</span><span class="mi">0</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="n">c</span><span class="o">*</span><span class="n">output</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">ti</span><span class="o">/</span><span class="n">dt</span><span class="p">),</span><span class="mi">1</span><span class="p">]</span><span class="o">/</span><span class="n">m</span><span class="o">-</span><span class="nb">input</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">]</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">accel_output</span><span class="p">[</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="c1"># markerline, stemlines, baseline = ax[1].stem(t[wt[0]:wt[1]], accel_output[wt[0]:wt[1]], basefmt=&#39; &#39;, linefmt=&#39;-&#39;, markerfmt=&#39; &#39;)</span>
+<span class="c1"># plt.setp(stemlines, &#39;linewidth&#39;, 0.5)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">);</span>
+<span class="c1"># ax[1].plot(t+pi/3, -0.01*np.sin(w*(t+pi/3)));</span>
+
+<span class="c1"># plt.subplots(figsize=(12,3))</span>
+<span class="c1"># markerline, stemlines, baseline = plt.stem(t[wt[0]:wt[1]], accel_output[wt[0]:wt[1]], basefmt=&#39; &#39;)</span>
+<span class="c1"># plt.setp(stemlines, &#39;linewidth&#39;, 0.5)</span>
+<span class="c1"># plt.setp(markerline, &#39;markersize&#39;, 2);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_22_0.png" src="../_images/examples_04_MIMO_Intro_22_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="p">[</span><span class="nb">input</span><span class="p">(</span><span class="n">ti</span><span class="p">)</span> <span class="k">for</span> <span class="n">ti</span> <span class="ow">in</span> <span class="n">t</span><span class="p">][</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;time history input&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$ (s)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\ddot</span><span class="si">{u}</span><span class="s1">$ (cm/s$^2$)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">);</span>
+
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">step</span><span class="p">(</span><span class="n">t</span><span class="p">[</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">accel_output</span><span class="p">[</span><span class="n">wt</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span><span class="n">wt</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span> <span class="n">where</span><span class="o">=</span><span class="s1">&#39;post&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;time history output&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_xaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">get_yaxis</span><span class="p">()</span><span class="o">.</span><span class="n">set_visible</span><span class="p">(</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">labelsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$t$ (s)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$\ddot</span><span class="si">{u}</span><span class="s1">$ (cm/s$^2$)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">20</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_23_0.png" src="../_images/examples_04_MIMO_Intro_23_0.png" />
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_23_1.png" src="../_images/examples_04_MIMO_Intro_23_1.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="Continuous-vs-Discrete">
+<h2>Continuous vs Discrete<a class="headerlink" href="#Continuous-vs-Discrete" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\dot{x} = A_{c}x\]</div>
+<div class="math notranslate nohighlight">
+\[A_{c} = \Psi \Lambda \Psi^{-1}\]</div>
+<div class="math notranslate nohighlight">
+\[x\left((k+1)\Delta t\right) = A_{d}x(k\Delta t)\]</div>
+<div class="math notranslate nohighlight">
+\[A_{d} = e^{A_{c}\Delta t}\]</div>
+<div class="math notranslate nohighlight">
+\[A_{d} = \Psi \Gamma \Psi^{-1} = e^{\Psi \Lambda \Psi^{-1}\Delta t} = {\Psi e^{\Lambda\Delta t}\Psi^{-1}}\]</div>
+<div class="math notranslate nohighlight">
+\[\Gamma = e^{\Lambda\Delta t}\]</div>
+<div class="math notranslate nohighlight">
+\[\lambda_{j} = \frac{\ln{\gamma_{j}}}{\Delta t}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[15]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scipy.linalg</span> <span class="k">as</span> <span class="nn">sl</span>
+
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">0.01</span>
+<span class="n">tf</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="n">nt</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">tf</span><span class="o">/</span><span class="n">dt</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">tf</span><span class="p">,</span><span class="n">dt</span><span class="p">)</span>
+<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">t</span><span class="p">)</span> <span class="o">==</span> <span class="n">nt</span>
+
+<span class="c1"># Mass, stiffness, and damping</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="n">m</span><span class="p">)</span>
+<span class="n">c</span> <span class="o">=</span> <span class="mf">0.02</span><span class="o">*</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">w</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">c</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">m</span><span class="o">*</span><span class="n">w</span><span class="p">)</span>
+
+<span class="n">Ac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],[</span><span class="o">-</span><span class="n">k</span><span class="o">/</span><span class="n">m</span><span class="p">,</span> <span class="o">-</span><span class="n">c</span><span class="o">/</span><span class="n">m</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Ac</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">Ad</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">expm</span><span class="p">(</span><span class="n">Ac</span><span class="o">*</span><span class="n">dt</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Ad</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">Gam</span><span class="p">,</span><span class="n">Psi</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">Ad</span><span class="p">)</span>
+<span class="n">Lam</span><span class="p">,</span><span class="n">Psic</span> <span class="o">=</span> <span class="n">sl</span><span class="o">.</span><span class="n">eig</span><span class="p">(</span><span class="n">Ac</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Psi</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Psic</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Gam</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">Lam</span><span class="o">*</span><span class="n">dt</span><span class="p">)</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">Lam</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Gam</span><span class="p">)</span><span class="o">/</span><span class="n">dt</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">lams</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">Gam</span><span class="p">)</span><span class="o">/</span><span class="n">dt</span>
+<span class="n">omegas</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">lams</span><span class="o">*</span><span class="n">lams</span><span class="o">.</span><span class="n">conj</span><span class="p">())</span>
+<span class="n">zetas</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">lams</span><span class="o">/</span><span class="n">omegas</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">omegas</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">zetas</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">w</span><span class="si">=}</span><span class="s2">&quot;</span><span class="p">)</span>
+<br/></pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Ac=array([[   0. ,    1. ],
+       [-100. ,   -0.4]])
+Ad=array([[ 0.99501082,  0.0099634 ],
+       [-0.99634016,  0.99102546]])
+Psi=array([[-0.00199007-0.09948382j, -0.00199007+0.09948382j],
+       [ 0.99503719+0.j        ,  0.99503719-0.j        ]])
+Psic=array([[-0.00199007-0.09948382j, -0.00199007+0.09948382j],
+       [ 0.99503719+0.j        ,  0.99503719-0.j        ]])
+Gam=array([0.99301814+0.09961409j, 0.99301814-0.09961409j])
+np.exp(Lam*dt)=array([0.99301814+0.09961409j, 0.99301814-0.09961409j])
+Lam=array([-0.2+9.9979998j, -0.2-9.9979998j])
+np.log(Gam)/dt=array([-0.2+9.9979998j, -0.2-9.9979998j])
+omegas=array([10.+0.j, 10.+0.j])
+zetas=array([0.02, 0.02])
+w=10.0
+</pre></div></div>
+</div>
+</section>
+<section id="Trajectories">
+<h2>Trajectories<a class="headerlink" href="#Trajectories" title="Link to this heading">#</a></h2>
+<div class="math notranslate nohighlight">
+\[\dot{x} = A_{c}x\]</div>
+<div class="math notranslate nohighlight">
+\[A_{d} = e^{A_{c}\Delta t}\]</div>
+<div class="math notranslate nohighlight">
+\[x\left((k+1)\Delta t\right) = A_{d}x(k\Delta t) = e^{A_{c}\Delta t}x(k\Delta t)\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mf">0.1</span><span class="p">],[</span><span class="o">-</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">1</span><span class="p">]])</span>
+<span class="n">A2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.5</span><span class="p">],[</span><span class="o">-</span><span class="mf">0.5</span><span class="p">,</span><span class="mi">0</span><span class="p">]])</span>
+<span class="n">A3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mf">0.5</span><span class="p">]])</span>
+
+<span class="kn">from</span> <span class="nn">sympy.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span>
+<span class="n">display</span><span class="p">(</span><span class="n">Matrix</span><span class="p">(</span><span class="n">Ac</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}0 &amp; 1.0\\-100.0 &amp; -0.4\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[17]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x0</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">xs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="n">nt</span><span class="p">))</span>
+<span class="n">xs</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">x0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nt</span><span class="p">):</span>
+    <span class="c1"># xs[:,i] = A3@xs[:,i-1]</span>
+    <span class="n">xs</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">Ad</span><span class="nd">@xs</span><span class="p">[:,</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="c1"># xs[:,i] = xs[:,i-1]+Ac@xs[:,i-1]*dt</span>
+</pre></div>
+</div>
+</div>
+<div class="math notranslate nohighlight">
+\[x_{k+1} = e^{A_{c}\Delta t}x_{k}\]</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[18]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;x2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;State Evolution&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_30_0.png" src="../_images/examples_04_MIMO_Intro_30_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[19]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;x0&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_31_0.png" src="../_images/examples_04_MIMO_Intro_31_0.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sdof</span>
+<span class="n">u</span><span class="p">,</span><span class="n">v</span><span class="p">,</span><span class="n">a</span> <span class="o">=</span> <span class="n">sdof</span><span class="o">.</span><span class="n">integrate</span><span class="p">(</span><span class="n">m</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">k</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nt</span><span class="p">),</span> <span class="n">dt</span><span class="p">,</span> <span class="n">v0</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="s2">&quot;--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[20]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[&lt;matplotlib.lines.Line2D at 0x20b087f5a00&gt;]
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_32_1.png" src="../_images/examples_04_MIMO_Intro_32_1.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[21]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">xs</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;x1&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_33_0.png" src="../_images/examples_04_MIMO_Intro_33_0.png" />
+</div>
+</div>
+</section>
+<section id="ERA">
+<h2>ERA<a class="headerlink" href="#ERA" title="Link to this heading">#</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[22]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sympy.matrices</span> <span class="kn">import</span> <span class="n">Matrix</span>
+<span class="kn">from</span> <span class="nn">sympy</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="n">k</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="n">tau</span> <span class="o">=</span> <span class="n">symbols</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;k,m,\omega_</span><span class="si">{n}</span><span class="s1">,{\Delta}t,\tau&#39;</span><span class="p">)</span>
+<span class="n">Ac</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">],[</span><span class="o">-</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]]))</span>
+<span class="n">Bc</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">],[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+<span class="n">C</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="n">w</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="mi">0</span><span class="p">]]))</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="o">-</span><span class="mi">1</span><span class="p">]]))</span>
+
+<span class="n">display</span><span class="p">(</span><span class="s2">&quot;Ac=&quot;</span><span class="p">,</span> <span class="n">Ac</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&#39;Ac=&#39;
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}0 &amp; 1\\- \omega_{n}^{2} &amp; 0\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Ac</span><span class="o">.</span><span class="n">diagonalize</span><span class="p">()[</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}\frac{i}{\omega_{n}} &amp; - \frac{i}{\omega_{n}}\\1 &amp; 1\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[24]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">display</span><span class="p">(</span><span class="n">Ac</span><span class="o">.</span><span class="n">diagonalize</span><span class="p">()[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}- i \omega_{n} &amp; 0\\0 &amp; i \omega_{n}\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[25]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">Lam</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">i</span><span class="o">*</span><span class="n">w</span><span class="p">,</span> <span class="mi">0</span><span class="p">],[</span><span class="mi">0</span><span class="p">,</span>  <span class="o">-</span><span class="n">i</span><span class="o">*</span><span class="n">w</span><span class="p">]]))</span>
+<span class="n">Psi</span> <span class="o">=</span> <span class="n">Matrix</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],[</span><span class="n">i</span><span class="o">*</span><span class="n">w</span><span class="p">,</span> <span class="o">-</span><span class="n">i</span><span class="o">*</span><span class="n">w</span><span class="p">]]))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Psi</span><span class="nd">@Lam@Psi</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[26]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}0 &amp; 1.0\\- 1.0 \omega_{n}^{2} &amp; 0\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[27]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">Psi</span><span class="nd">@exp</span><span class="p">(</span><span class="n">Lam</span><span class="o">*</span><span class="n">dt</span><span class="p">)</span><span class="nd">@Psi</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[28]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">A</span> <span class="o">=</span> <span class="n">simplify</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">Ac</span><span class="o">*</span><span class="n">dt</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simplify</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[29]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}\cos{\left(\omega_{n} {\Delta}t \right)} &amp; \frac{\sin{\left(\omega_{n} {\Delta}t \right)}}{\omega_{n}}\\- \omega_{n} \sin{\left(\omega_{n} {\Delta}t \right)} &amp; \cos{\left(\omega_{n} {\Delta}t \right)}\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">Bintegrand</span> <span class="o">=</span> <span class="n">simplify</span><span class="p">(</span><span class="n">exp</span><span class="p">(</span><span class="n">Ac</span><span class="o">*</span><span class="n">tau</span><span class="p">)</span><span class="nd">@Bc</span><span class="p">)</span>
+<span class="n">Bintegrand</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[30]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}- \frac{\sin{\left(\omega_{n} \tau \right)}}{\omega_{n}}\\- \cos{\left(\omega_{n} \tau \right)}\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">B</span> <span class="o">=</span> <span class="n">integrate</span><span class="p">(</span><span class="n">Bintegrand</span><span class="p">,(</span><span class="n">tau</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="n">dt</span><span class="p">))</span>
+<span class="n">B</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}\begin{cases} \frac{\cos{\left(\omega_{n} {\Delta}t \right)}}{\omega_{n}^{2}} - \frac{1}{\omega_{n}^{2}} &amp; \text{for}\: \omega_{n} &gt; -\infty \wedge \omega_{n} &lt; \infty \wedge \omega_{n} \neq 0 \\0 &amp; \text{otherwise} \end{cases}\\\begin{cases} - \frac{\sin{\left(\omega_{n} {\Delta}t \right)}}{\omega_{n}} &amp; \text{for}\: \omega_{n} &gt; -\infty \wedge \omega_{n} &lt; \infty \wedge \omega_{n} \neq 0 \\- {\Delta}t &amp; \text{otherwise} \end{cases}\end{matrix}\right]$</div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">simplify</span><span class="p">(</span><span class="n">A</span><span class="o">.</span><span class="n">inv</span><span class="p">()</span><span class="nd">@B</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<div class="math notranslate nohighlight">
+$\displaystyle \left[\begin{matrix}\begin{cases} \frac{1 - \cos{\left(\omega_{n} {\Delta}t \right)}}{\omega_{n}^{2}} &amp; \text{for}\: \omega_{n} &gt; -\infty \wedge \omega_{n} &lt; \infty \wedge \omega_{n} \neq 0 \\\frac{{\Delta}t \sin{\left(\omega_{n} {\Delta}t \right)}}{\omega_{n}} &amp; \text{otherwise} \end{cases}\\\begin{cases} - \frac{\sin{\left(\omega_{n} {\Delta}t \right)}}{\omega_{n}} &amp; \text{for}\: \omega_{n} &gt; -\infty \wedge \omega_{n} &lt; \infty \wedge \omega_{n} \neq 0 \\- {\Delta}t \cos{\left(\omega_{n} {\Delta}t \right)} &amp; \text{otherwise} \end{cases}\end{matrix}\right]$</div></div>
+</div>
+</section>
+</section>
+
+
+                </article>
+              
+              
+              
+                <footer class="bd-footer-article">
+                  
+<div class="footer-article-items footer-article__inner">
+  
+    <div class="footer-article-item"><!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="03_SISO_History.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">SISO for Ground Motion Events</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_MIMO_Event.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">MIMO System Identification for Ground Motion Events</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div></div>
+  
+</div>
+
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Chopra-Section-9.7">Chopra Section 9.7</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Partitioned-equation-of-dynamic-equilibrium-(Chopra-Eq.-9.7.1)">Partitioned equation of dynamic equilibrium (Chopra Eq. 9.7.1)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Problem-Statement">Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#General-equation-of-motion-for-multiple-support-excitation">General equation of motion for multiple support excitation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Example-9.10">Example 9.10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Equation-of-motion-for-chopra-example-9.10">Equation of motion for chopra example 9.10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Plot-example-input-and-output-motions-for-chopra-example-9.10">Plot example input and output motions for chopra example 9.10</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Parameterization-of-inputs-and-outputs-for-OKID-ERA-and-SRIM">Parameterization of inputs and outputs for OKID-ERA and SRIM</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Continuous-vs-Discrete">Continuous vs Discrete</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Trajectories">Trajectories</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ERA">ERA</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Chrystal Chern.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
