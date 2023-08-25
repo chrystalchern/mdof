@@ -326,7 +326,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO System Identification for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">MIMO for Ground Motion Events</a></li>
 </ul>
@@ -395,7 +395,7 @@ document.write(`
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">ssid</span>
 <span class="kn">import</span> <span class="nn">quakeio</span>
-<span class="kn">from</span> <span class="nn">ssid</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">spec</span>
+<span class="kn">from</span> <span class="nn">ssid</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">transform</span>
 <span class="kn">from</span> <span class="nn">ssid.utilities</span> <span class="kn">import</span> <span class="n">Config</span><span class="p">,</span> <span class="n">extract_channels</span><span class="p">,</span> <span class="n">list_files</span><span class="p">,</span> <span class="n">print_modes</span><span class="p">,</span> <span class="n">mode_statistics</span>
 </pre></div>
 </div>
@@ -535,7 +535,7 @@ document.write(`
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
 <td><p>decimation (downsampling) factor</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">r</span></code>, <code class="docutils literal notranslate"><span class="pre">order</span></code></p></td>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">order</span></code></p></td>
 <td><p>model order (2 times number of DOF)</p></td>
 </tr>
 </tbody>
@@ -565,7 +565,7 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">no</span></code>, <code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
 <td><p>number of observability parameters, or prediction horizon</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nc</span></code></p></td>
@@ -607,7 +607,7 @@ document.write(`
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">no</span></code>, <code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
 <td><p>number of steps used for identification, or prediction horizon</p></td>
 </tr>
 </tbody>
@@ -682,10 +682,10 @@ document.write(`
     <span class="n">event_modes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
     <span class="n">print_modes</span><span class="p">(</span><span class="n">ss_modes</span><span class="p">)</span>
     <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># decimation factor for transfer function methods</span>
-    <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+    <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">amplitudes</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;fourier&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span> <span class="c1">#, alpha = (1/(len(files)+2))*(i+1))</span>
-    <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">periods</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+    <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">periods</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">amplitudes</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;response spectrum&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span> <span class="c1">#, alpha = (1/(len(files)+2))*(i+1))</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;energy_condensed_emaco&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;mpc&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;state space (</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
@@ -711,7 +711,7 @@ peak acceleration (cm/s/s): 87.954
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:01&lt;00:00, 894.29it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2007.26it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -738,12 +738,12 @@ peak acceleration (cm/s/s): -30.371
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 686/687 [00:00&lt;00:00, 1773.39it/s]
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:84: RuntimeWarning: divide by zero encountered in scalar divide
+100%|█████████▉| 686/687 [00:00&lt;00:00, 2508.85it/s]
+/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:137: RuntimeWarning: divide by zero encountered in scalar divide
   nu[i]    = (s22[i]-s11[i])/(2*s12[i])
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:85: RuntimeWarning: invalid value encountered in scalar multiply
+/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:138: RuntimeWarning: invalid value encountered in scalar multiply
   lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:86: RuntimeWarning: invalid value encountered in scalar multiply
+/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:139: RuntimeWarning: invalid value encountered in scalar multiply
   lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
 </pre></div></div>
 </div>
@@ -770,7 +770,7 @@ peak acceleration (cm/s/s): -285.334
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 874/875 [00:00&lt;00:00, 918.01it/s]
+100%|█████████▉| 874/875 [00:00&lt;00:00, 2415.63it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -796,7 +796,7 @@ peak acceleration (cm/s/s): 243.242
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 831/832 [00:00&lt;00:00, 1109.82it/s]
+100%|█████████▉| 831/832 [00:00&lt;00:00, 2255.68it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -823,7 +823,7 @@ peak acceleration (cm/s/s): -53.539
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 868/869 [00:00&lt;00:00, 2473.39it/s]
+100%|█████████▉| 868/869 [00:00&lt;00:00, 2256.03it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -850,7 +850,7 @@ peak acceleration (cm/s/s): 30.272
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 631/632 [00:00&lt;00:00, 2808.48it/s]
+100%|█████████▉| 631/632 [00:00&lt;00:00, 2484.48it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -877,7 +877,7 @@ peak acceleration (cm/s/s): 32.846
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 647/648 [00:00&lt;00:00, 1054.21it/s]
+100%|█████████▉| 647/648 [00:00&lt;00:00, 2373.78it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -903,7 +903,7 @@ peak acceleration (cm/s/s): 54.457
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 694/695 [00:00&lt;00:00, 2742.78it/s]
+100%|█████████▉| 694/695 [00:00&lt;00:00, 2696.58it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -930,7 +930,7 @@ peak acceleration (cm/s/s): -1356.923
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1229/1230 [00:00&lt;00:00, 2132.45it/s]
+100%|█████████▉| 1229/1230 [00:00&lt;00:00, 1838.26it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -957,7 +957,7 @@ peak acceleration (cm/s/s): -139.897
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 662/663 [00:00&lt;00:00, 2627.43it/s]
+100%|█████████▉| 662/663 [00:00&lt;00:00, 2582.61it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -984,7 +984,7 @@ peak acceleration (cm/s/s): 50.951
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 673/674 [00:00&lt;00:00, 2898.01it/s]
+100%|█████████▉| 673/674 [00:00&lt;00:00, 2629.66it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1011,7 +1011,7 @@ peak acceleration (cm/s/s): -1012.657
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 914/915 [00:00&lt;00:00, 2121.82it/s]
+100%|█████████▉| 914/915 [00:00&lt;00:00, 2480.76it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1037,7 +1037,7 @@ peak acceleration (cm/s/s): 33.218
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 694/695 [00:00&lt;00:00, 2992.68it/s]
+100%|█████████▉| 694/695 [00:00&lt;00:00, 2483.06it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1064,7 +1064,7 @@ peak acceleration (cm/s/s): 165.262
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 1997.27it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2099.58it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1091,7 +1091,7 @@ peak acceleration (cm/s/s): -219.633
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2289.09it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2071.89it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1118,7 +1118,7 @@ peak acceleration (cm/s/s): -60.641
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 671/672 [00:00&lt;00:00, 2733.38it/s]
+100%|█████████▉| 671/672 [00:00&lt;00:00, 2792.88it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1144,7 +1144,7 @@ peak acceleration (cm/s/s): 30.272
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 631/632 [00:00&lt;00:00, 2714.82it/s]
+100%|█████████▉| 631/632 [00:00&lt;00:00, 2398.69it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
