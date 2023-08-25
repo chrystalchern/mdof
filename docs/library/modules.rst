@@ -1,17 +1,17 @@
-ssid
+mdof
 ====
 
 
 .. toctree::
    :maxdepth: 1
 
-   ssid.markov
-   ssid.realize
-   ssid.modal
-   ssid.spec
+   mdof.markov
+   mdof.realize
+   mdof.modal
+   mdof.spec
 
 
-.. automodule:: ssid.system
+.. automodule:: mdof.system
    :members:
    :undoc-members:
    :show-inheritance:

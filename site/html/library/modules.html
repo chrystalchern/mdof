@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>ssid &#8212; mdof</title>
+    <title>mdof &#8212; mdof</title>
   
   
   
@@ -44,11 +44,13 @@
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'library/modules';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="ssid.markov module" href="ssid.markov.html" />
+    <link rel="next" title="mdof.markov module" href="mdof.markov.html" />
     <link rel="prev" title="realize Module" href="../api/realize.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -140,7 +142,7 @@
 
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
-                        ssid
+                        mdof
                       </a>
                     </li>
                 
@@ -222,6 +224,10 @@ document.write(`
   
 
   
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
+  
 </div>
 
     </nav>
@@ -256,7 +262,7 @@ document.write(`
 
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="#">
-                        ssid
+                        mdof
                       </a>
                     </li>
                 
@@ -319,10 +325,10 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="ssid.markov.html">ssid.markov module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ssid.realize.html">ssid.realize module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ssid.modal.html">ssid.modal module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ssid.spec.html">ssid.spec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.realize.html">mdof.realize module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.spec.html">mdof.spec module</a></li>
 </ul>
 </div>
 </nav></div>
@@ -360,7 +366,7 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">ssid</li>
+    <li class="breadcrumb-item active" aria-current="page">mdof</li>
   </ul>
 </nav>
 </div>
@@ -377,16 +383,69 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="ssid">
-<h1>ssid<a class="headerlink" href="#ssid" title="Link to this heading">#</a></h1>
+  <section id="mdof">
+<h1>mdof<a class="headerlink" href="#mdof" title="Link to this heading">#</a></h1>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="ssid.markov.html">ssid.markov module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ssid.realize.html">ssid.realize module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ssid.modal.html">ssid.modal module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ssid.spec.html">ssid.spec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.realize.html">mdof.realize module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.spec.html">mdof.spec module</a></li>
 </ul>
 </div>
+<dl class="py function" id="module-mdof.system">
+<dt class="sig sig-object py" id="mdof.system.system">
+<span class="sig-prename descclassname"><span class="pre">mdof.system.</span></span><span class="sig-name descname"><span class="pre">system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.system.system" title="Link to this definition">#</a></dt>
+<dd><p>State space system realization from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are “okid-era” and “okid-era-dc”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.system.modes">
+<span class="sig-prename descclassname"><span class="pre">mdof.system.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.system.modes" title="Link to this definition">#</a></dt>
+<dd><p>Modal identification using state space system realization from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are
+“okid-era” and “okid-era-dc”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system modes, including natural frequencies, damping ratios, mode shapes,
+condition numbers, and modal validation metrics EMAC and MPC.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 
 
@@ -410,11 +469,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="ssid.markov.html"
+       href="mdof.markov.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">ssid.markov module</p>
+        <p class="prev-next-title">mdof.markov module</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -427,6 +486,21 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.system.system"><code class="docutils literal notranslate"><span class="pre">system()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.system.modes"><code class="docutils literal notranslate"><span class="pre">modes()</span></code></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
