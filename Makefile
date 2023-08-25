@@ -8,7 +8,8 @@ NOTEBOOKS = notebooks/01_SISO_Intro.ipynb \
 			studies/06_MIMO_History_All_CGS_Motions.ipynb
 
 publish:
-	git add site && git commit -m'cmp - rebuild site' && git subtree push --prefix site/ brace gh-pages
+	cp -r _build/html/* site/
+	git add site && git commit -m'cmp - rebuild site' && git subtree push --prefix site/ origin gh-pages
 
 test:
 	#pytest --nbmake notebooks/*.ipynb 
