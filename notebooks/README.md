@@ -6,7 +6,7 @@
 
 <dl>
 <dt><a href="01_SISO_Intro.ipynb"><code>01_SISO_Intro.ipynb</code></a></dt>
-<dd><p>Introduction to system identification using the <code>ssid</code> package, with an example SDOF system, input, and output as a demonstration.</p>
+<dd><p>Introduction to system identification using the <code>mdof</code> package, with an example SDOF system, input, and output as a demonstration.</p>
 </dd>
 <dt><a href="02_SISO_Event.ipynb"><code>02_SISO_Event.ipynb</code></a></dt>
 <dd><p>Perform system identification for a single event for a Single Input, Single Output (SISO) system.</p>
@@ -23,7 +23,7 @@
 <dd><p>Perform system identification for a single event for a MIMO system.</p>
 </dd>
 <dt><a href="05_MIMO_Intro.ipynb"><code>05_MIMO_Intro.ipynb</code></a></dt>
-<dd><p>Introduction to Multiple Input, Multiple Output (MIMO) system identification using the <code>ssid</code> package.</p>
+<dd><p>Introduction to Multiple Input, Multiple Output (MIMO) system identification using the <code>mdof</code> package.</p>
 </dd>
 <dt><a href="06_MIMO_History.ipynb"><code>06_MIMO_History.ipynb</code></a></dt>
 <dd><p>Perform system identification for a set of events over time for a MIMO system.</p>

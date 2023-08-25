@@ -6,7 +6,7 @@ quakeio
 matplotlib
 plotly
 pandas
-ssid
+mdof
 control
 sdof
 
