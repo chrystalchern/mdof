@@ -7,6 +7,9 @@ NOTEBOOKS = notebooks/01_SISO_Intro.ipynb \
 			studies/PeakPicking.ipynb \
 			studies/06_MIMO_History_All_CGS_Motions.ipynb
 
+publish:
+	git add site && git commit -m'cmp - rebuild site' && git subtree push --prefix site/ brace gh-pages
+
 test:
 	#pytest --nbmake notebooks/*.ipynb 
 	pytest --nbmake $(NOTEBOOKS)
@@ -41,3 +44,14 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+APIDOC = python3 tools/doc.py
+APIDIR = docs/user/
+
+conda:
+	for i in 7 8 9 10; do conda mambabuild -c local -c conda-forge etc/conda --py 3.$i; done
+
+pypa:
+	sudo ./etc/pypa/docker-build
+	
+
+.PHONY: docs
