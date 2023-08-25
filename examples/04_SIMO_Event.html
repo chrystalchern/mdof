@@ -375,7 +375,7 @@ document.write(`
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">ssid</span>
-<span class="kn">from</span> <span class="nn">ssid</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">spec</span>
+<span class="kn">from</span> <span class="nn">ssid</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">transform</span>
 <span class="kn">import</span> <span class="nn">sdof</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">linspace</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">pi</span>
@@ -604,7 +604,7 @@ array([[ 0.04641016, -1.29282032],
 <section id="Transfer-Function-Methods">
 <h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set parameters</span>
@@ -616,14 +616,13 @@ array([[ 0.04641016, -1.29282032],
 <span class="n">transfer_models</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="c1"># Generate a transfer function representation of the system</span>
-<span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">spec</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">plot_transfer</span><span class="p">(</span><span class="n">transfer_models</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Transfer Functions&quot;</span><span class="p">)</span>
+<span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+<span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
 
 <span class="c1"># Determing the fundamental frequency</span>
-<span class="n">fundamental_fourier</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">])</span>
-<span class="n">fundamental_response</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span><span class="p">])</span>
-
+<span class="n">fourier_periods</span><span class="p">,</span> <span class="n">fourier_amplitudes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">])</span>
+<span class="n">response_periods</span><span class="p">,</span> <span class="n">response_amplitudes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span><span class="p">],</span><span class="n">height</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">,</span> <span class="n">response_periods</span><span class="p">)</span>
 
 <span class="c1"># Generate a state space realization of the system</span>
 <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">2</span>
@@ -634,25 +633,38 @@ array([[ 0.04641016, -1.29282032],
 <span class="nb">print</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">)</span>
 <span class="c1"># print_modes(ss_modes, Tn=Tn, zeta=zeta)</span>
 
-<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="n">fundamental_fourier</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fundamental_response</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="n">ymin</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">],</span><span class="n">ymax</span><span class="o">=</span><span class="p">[</span><span class="n">fundamental_fourier</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">fundamental_response</span><span class="p">[</span><span class="mi">1</span><span class="p">]],</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="nb">max</span><span class="p">(</span><span class="n">fundamental_fourier</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="n">fundamental_response</span><span class="p">[</span><span class="mi">1</span><span class="p">]),</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;State Space&#39;</span><span class="p">)</span>
+<span class="n">plot_transfer</span><span class="p">(</span><span class="n">transfer_models</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Transfer Functions&quot;</span><span class="p">)</span>
+<span class="n">color_cycle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">[:</span><span class="mi">2</span><span class="p">],</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="s1">&#39;State Space&#39;</span><span class="p">)</span>
+<span class="c1"># plt.gcf().axes[0].vlines([*fourier_periods[:2], *response_periods[:2]],ymin=0,ymax=1,linestyles=&#39;--&#39;,colors=[color_cycle[0],color_cycle[0],color_cycle[1],color_cycle[1]])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="o">*</span><span class="n">fourier_periods</span><span class="p">[:</span><span class="mi">2</span><span class="p">]],</span><span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="n">color_cycle</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.975</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{fourier}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="c1"># plt.gcf().axes[0].text(response_periods[i]+0.05,0.875,r&quot;$T_{response}$ = &quot;+str(np.round(response_periods[i],3)),fontsize=15)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fundamental_fourier</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">fundamental_fourier</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{1}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fundamental_fourier</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)))</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fundamental_response</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="n">fundamental_response</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{1}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fundamental_response</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)));</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.1</span><span class="p">));</span>
 </pre></div>
 </div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[0.98684211 0.26595745] [0.63396985 1.21798995]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 2200/2201 [00:00&lt;00:00, 5317.56it/s]
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:84: RuntimeWarning: divide by zero encountered in scalar divide
+100%|█████████▉| 2200/2201 [00:00&lt;00:00, 5189.26it/s]
+/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:137: RuntimeWarning: divide by zero encountered in scalar divide
   nu[i]    = (s22[i]-s11[i])/(2*s12[i])
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:85: RuntimeWarning: invalid value encountered in scalar multiply
+/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:138: RuntimeWarning: invalid value encountered in scalar multiply
   lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:86: RuntimeWarning: invalid value encountered in scalar multiply
+/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/ssid/validation.py:139: RuntimeWarning: invalid value encountered in scalar multiply
   lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
 </pre></div></div>
 </div>
@@ -668,14 +680,14 @@ array([[ 0.04641016, -1.29282032],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_SIMO_Event_16_2.png" src="../_images/examples_04_SIMO_Event_16_2.png" />
+<img alt="../_images/examples_04_SIMO_Event_16_3.png" src="../_images/examples_04_SIMO_Event_16_3.png" />
 </div>
 </div>
 </section>
 <section id="State-Space-(%22Parametric%22)-Methods">
 <h3>State Space (“Parametric”) Methods<a class="headerlink" href="#State-Space-(%22Parametric%22)-Methods" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a state space realization of the system</span>
@@ -694,50 +706,11 @@ array([[ 0.04641016, -1.29282032],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[1.0025200636857887, 1.3607875380443741, 2.5390363420961104]
+[1.3413986642990088, 1.4632046001334909, 2.554609804643676, 4.189005193618333]
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a state space realization of the system</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">realization</span> <span class="o">=</span> <span class="n">ssid</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;srim&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="c1"># Obtain natural period and damping ratio from the state space model</span>
-<span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">(</span><span class="n">realization</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">ss_periods</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ss_modes</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">keys</span><span class="p">()]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">)</span>
-<span class="c1"># print_modes(ss_modes, Tn=Tn, zeta=zeta)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|█████████▉| 2200/2201 [00:00&lt;00:00, 5557.75it/s]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[0.2655586578711061, 0.991078403564804, 2.589501843696377]
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_io</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;SDOF Response&quot;</span><span class="p">)</span>
@@ -748,11 +721,11 @@ array([[ 0.04641016, -1.29282032],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_SIMO_Event_20_0.png" src="../_images/examples_04_SIMO_Event_20_0.png" />
+<img alt="../_images/examples_04_SIMO_Event_19_0.png" src="../_images/examples_04_SIMO_Event_19_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
@@ -766,15 +739,7 @@ array([[ 0.04641016, -1.29282032],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_SIMO_Event_21_0.png" src="../_images/examples_04_SIMO_Event_21_0.png" />
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
+<img alt="../_images/examples_04_SIMO_Event_20_0.png" src="../_images/examples_04_SIMO_Event_20_0.png" />
 </div>
 </div>
 </section>
