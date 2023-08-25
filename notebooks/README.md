@@ -1,5 +1,6 @@
 # `mdof` Examples
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BRACE2/mdof/HEAD?labpath=notebooks%2FREADME.ipynb)
 
 <h3 id="siso">SISO</h3>
 
