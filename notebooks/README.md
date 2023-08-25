@@ -1,4 +1,4 @@
-# BRACE2 Structural System Identification Library (`ssid`)
+# `mdof` Examples
 
 
 <h3 id="siso">SISO</h3>
