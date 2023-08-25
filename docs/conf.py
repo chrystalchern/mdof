@@ -3,7 +3,7 @@
 # https://www.sphinx-doc.org/en/master/usage/configuration.html
 #
 from pathlib import Path
-project = 'lilo'
+project = 'mdof'
 copyright = '2023, Chrystal Chern'
 author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."

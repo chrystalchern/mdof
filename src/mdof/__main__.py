@@ -1,19 +1,19 @@
-# gets called when running ssid from the command line:
-#    python -m ssid ...
+# gets called when running mdof from the command line:
+#    python -m mdof ...
 #
 import ast
 import sys
 import json
 
-import ssid
-import ssid.modal
+import mdof
+import mdof.modal
 import quakeio
 import numpy as np
 # from .okid import parse_okid
 
 HELP = """
-ssid [-p|w <>...] <method> <event> <inputs> <outputs>
-ssid [-p|w <>...] <method> -i <inputs> -o <outputs>
+mdof [-p|w <>...] <method> <event> <inputs> <outputs>
+mdof [-p|w <>...] <method> -i <inputs> -o <outputs>
 
 -i/--inputs  FILE...   Input data
 -o/--outputs FILE...   Output data
@@ -87,7 +87,7 @@ def extract_channels(event, channels, permissive=True):
 
 def parse_time(argi, config, channels, method=None):
     help = f"""\
-    ssid {method} <event>
+    mdof {method} <event>
 
 
     --inputs  <int>
@@ -147,11 +147,11 @@ def parse_time(argi, config, channels, method=None):
         print(json.dumps({"error": str(e), "data": []}))
         return
 
-    import ssid.transform
-    from ssid.modal import spectrum_modes
+    import mdof.transform
+    from mdof.modal import spectrum_modes
     f = {
-        "response": ssid.transform.response_transfer,
-        "fourier":  ssid.transform.fourier_transfer,
+        "response": mdof.transform.response_transfer,
+        "fourier":  mdof.transform.fourier_transfer,
     }[method]
 
     periods, amplitudes = spectrum_modes(
@@ -226,8 +226,8 @@ def parse_srim(argi, config, channels, method=None):
     config["dt"] = dt
 
     try:
-        realization = ssid.system(inputs=inputs, outputs=outputs, full=True, method=method, **config)
-        ss_modes = ssid.modal.system_modes(realization,dt,decimation=config.get("decimate",1))
+        realization = mdof.system(inputs=inputs, outputs=outputs, full=True, method=method, **config)
+        ss_modes = mdof.modal.system_modes(realization,dt,decimation=config.get("decimate",1))
 
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))

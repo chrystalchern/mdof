@@ -5,7 +5,7 @@ from a state space realization.
 import numpy as np
 import scipy.linalg as sl
 from numpy import pi
-from ssid.validation import OutputEMAC, MPC
+from mdof.validation import OutputEMAC, MPC
 
 def _condeig(a): # TODO: make this match matlab source code for condeig
     """
@@ -38,7 +38,7 @@ def system_modes(realization, dt, **options):
     :type dt:               float
     :param decimation:      decimation factor. default: 1
     :type decimation:       int, optional
-    :param Observability:   Observability matrix; can be reused from :func:`ssid.realize.srim`.
+    :param Observability:   Observability matrix; can be reused from :func:`mdof.realize.srim`.
                             default: None
     :type Observability:    array, optional
 

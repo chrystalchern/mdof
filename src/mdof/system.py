@@ -1,4 +1,4 @@
-from ssid import markov, realize, modal
+from mdof import markov, realize, modal
 from .numerics import decimate
 
 def system(inputs, outputs, **options):

@@ -36,7 +36,7 @@ def OutputEMAC(A,C,Psi=None,Gam=None,**options):
     :param outlook:         number of timesteps for which to consider temporal consistency. default: 100
     :param Psi:             eigenvectors of A, as columns of a matrix. can be reused from modal.system_modes().
     :param Gam:             eigenvalues of A, as items of a vector. can be reused from modal.system_modes().
-    :param Observability:   Observability matrix; can be reused from :func:`ssid.realize.srim`.
+    :param Observability:   Observability matrix; can be reused from :func:`mdof.realize.srim`.
     """
     # """
     # :param p:               number of outputs
@@ -101,7 +101,7 @@ def OutputEMAC(A,C,Psi=None,Gam=None,**options):
     """Output EMAC (Eqs. 3.88-3.89)"""
     if Gam is None:
         assert Psi is None
-        from ssid.modal import condeig 
+        from mdof.modal import condeig 
         Psi,Gam,_ = condeig(A)
     if Observability is None:
         Observability = np.empty((no,p,n))
@@ -120,7 +120,7 @@ def OutputEMAC(A,C,Psi=None,Gam=None,**options):
 def MPC(A,C,Psi=None):
     """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
     if Psi is None:
-        from ssid.modal import condeig 
+        from mdof.modal import condeig 
         Psi,_,_ = condeig(A)
     _,n = C.shape
     assert Psi.shape == (n,n)
