@@ -7,7 +7,7 @@ import warnings
 def okid(inputs,outputs,**options):
     """
     Identify Markov parameters, or discrete impulse response data, for a given set of input and output data.
-    Observer Kalman Identification Algorithm (OKID) (Juang, Phan, Horta, Longman, 1993).
+    Observer Kalman Identification Algorithm (OKID) [1]_.
 
     :param inputs:  input time history. dimensions: :math:`(q,nt)`, where
                     :math:`q` = number of inputs, and :math:`nt` = number of timesteps
@@ -21,6 +21,12 @@ def okid(inputs,outputs,**options):
 
     :return: the Markov parameters, with dimensions :math:`(p,q,m+1)`
     :rtype: array
+
+    References
+    ----------
+    .. [1]  Juang, J. N., Phan, M., Horta, L. G., & Longman, R. W. (1993). Identification of
+            observer/Kalman filter Markov parameters-Theory and experiments. Journal of Guidance,
+            Control, and Dynamics, 16(2), 320-329. (https://doi.org/10.2514/3.21006)
     """
 
     if len(inputs.shape) == 1:

@@ -15,7 +15,7 @@ from . import numerics
 def era(Y,**options):
     """
     System realization from Markov parameters (discrete impulse response data).
-    Eigensystem Realization Algorithm (ERA) (Ho and Kalman 1966, Juang and Pappa 1985).
+    Ho-Kalman / Eigensystem Realization Algorithm (ERA) [1]_, [2]_.
 
     :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
@@ -31,6 +31,16 @@ def era(Y,**options):
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:         tuple of arrays
+
+    References
+    ----------
+    .. [1]  Ho, Β. L., & Kálmán, R. E. (1966). Effective construction of linear state-variable models
+            from input/output functions: Die Konstruktion von linearen Modeilen in der Darstellung
+            durch Zustandsvariable aus den Beziehungen für Ein-und Ausgangsgrößen. at-Automatisierungstechnik,
+            14(1-12), 545-548. (https://doi.org/10.1524/auto.1966.14.112.545)
+    .. [2]  Juang, J. N., & Pappa, R. S. (1985). An eigensystem realization algorithm for modal parameter
+            identification and model reduction. Journal of guidance, control, and dynamics, 8(5), 620-627.
+            (https://doi.org/10.2514/3.20031)
     """
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
 
@@ -86,7 +96,8 @@ def era(Y,**options):
 def era_dc(Y,**options):
     """
     System realization from Markov parameters (discrete impulse response data).
-    Eigensystem Realization Algorithm with Data Correlations (ERA/DC) (Juang, Cooper, and Wright, 1988).
+    Eigensystem Realization Algorithm with Data Correlations (ERA/DC) [1]_.
+
 
     :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
@@ -110,6 +121,12 @@ def era_dc(Y,**options):
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:         tuple of arrays
+
+    References
+    ----------
+    .. [1]  Juang, J. N., Cooper, J. E., & Wright, J. R. (1987). An eigensystem realization algorithm
+            using data correlations (ERA/DC) for modal parameter identification.
+            (https://ntrs.nasa.gov/citations/19870035963)    
     """
     p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
 
@@ -187,7 +204,7 @@ def _blk_3(i, CA, U):
 def srim(inputs,outputs,**options):
     """
     System realization from input and output data, with output error minimization method.
-    System Realization Using Information Matrix (SRIM) (Juang, 1997).
+    System Realization Using Information Matrix (SRIM) [1]_.
     
     :param inputs:  input time history. dimensions: :math:`(q,nt)`, where
                     :math:`q` = number of inputs, and :math:`nt` = number of timesteps
@@ -213,6 +230,12 @@ def srim(inputs,outputs,**options):
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:         tuple of arrays
+
+    References
+    ----------
+    .. [1]  Juang, J. N. (1997). System realization using information matrix. Journal
+            of Guidance, Control, and Dynamics, 20(3), 492-500.
+            (https://doi.org/10.2514/2.4068)
     """
     lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
 
