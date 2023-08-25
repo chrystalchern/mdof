@@ -43,7 +43,7 @@ def plot_models(models, Tn, zeta):
     period_errors = [100*(p-Tn)/Tn for p in period]
     ax[1,0].bar(models.keys(), period_errors, color=None, edgecolor="k", linewidth=0.5)
     ax[1,0].set_title("Period Errors")# , fontsize=14)
-    ax[1,0].set_ylabel("Percent Error (%)")# , fontsize=13)
+    ax[1,0].set_ylabel("Percent Error (\%)")# , fontsize=13)
     ax[1,0].set_xlabel("Method")# , fontsize=13)
 
     damp = [models[method]["damping"][0] for method in models]
@@ -54,7 +54,7 @@ def plot_models(models, Tn, zeta):
     damping_errors = [100*(d-zeta)/zeta for d in damp]
     ax[1,1].bar(models.keys(), damping_errors, color=None, edgecolor="k", linewidth=0.5)
     ax[1,1].set_title("Damping Errors")# , fontsize=14)
-    ax[1,1].set_ylabel("Percent Error (%)")# , fontsize=13)
+    ax[1,1].set_ylabel("Percent Error (\%)")# , fontsize=13)
     ax[1,1].set_xlabel("Method")# , fontsize=13)
 
     ax[0,2].axis('off')
@@ -78,7 +78,7 @@ def plot_models(models, Tn, zeta):
                 rect.get_x() + rect.get_width() / 2, height, label, ha="center", va="bottom"
             )
     
-    fig.suptitle("Spectral Quantity Prediction with System Identification") #,fontsize=14)
+    fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=16)
 
 def plot_io(inputs, outputs, t, title=None):
     fig, ax = plt.subplots(1,2,figsize=(12,4),constrained_layout=True)
@@ -98,7 +98,7 @@ def plot_io(inputs, outputs, t, title=None):
         ax[1].plot(t,outputs)
     ax[1].set_xlabel("time (s)")# , fontsize=13)
     ax[1].set_ylabel("outputs")# , fontsize=13)
-    fig.suptitle(title) #, fontsize=14)
+    fig.suptitle(title, fontsize=16)
 
 def plot_pred(ytrue, models, t, title=None):
     color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
@@ -124,7 +124,7 @@ def plot_pred(ytrue, models, t, title=None):
     ax.set_xlabel("time (s)")# , fontsize=13)
     ax.set_ylabel("outputs")# , fontsize=13)
     fig.legend(fontsize=12, frameon=True, framealpha=1)    
-    fig.suptitle(title) #, fontsize=14)
+    ax.set_title(title) #, fontsize=14)
 
 def plot_transfer(models, title=None, labels=None):
     fig, ax = plt.subplots(figsize=(10,4))

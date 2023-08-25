@@ -30,3 +30,4 @@ tests/DATA
 tests/brunton_examples
 tests/seismology_lab
 tests/siso/
+src/ssid/archive/
