@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>&lt;no title&gt; &#8212; lilo</title>
+    <title>&lt;no title&gt; &#8212; mdof</title>
   
   
   
@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="markov Module" href="markov.html" />
-    <link rel="prev" title="&lt;no title&gt;" href="system.html" />
+    <link rel="prev" title="system Module" href="system.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -111,7 +111,7 @@
   
   
   
-    <p class="title logo__title">lilo</p>
+    <p class="title logo__title">mdof</p>
   
 </a></div>
     
@@ -133,7 +133,7 @@
     
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
-                        Library
+                        API
                       </a>
                     </li>
                 
@@ -200,7 +200,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/lilo" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
 </ul></div>
@@ -221,6 +221,10 @@ document.write(`
     </div>
   
 
+  
+    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+      <span class="fa-solid fa-outdent"></span>
+    </label>
   
 </div>
 
@@ -249,7 +253,7 @@ document.write(`
     
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
-                        Library
+                        API
                       </a>
                     </li>
                 
@@ -305,7 +309,7 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/lilo" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
             <label class="sr-only">GitHub</label></a>
         </li>
 </ul></div>
@@ -318,9 +322,8 @@ document.write(`
         <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="system.html"><code class="docutils literal notranslate"><span class="pre">ssid.system()</span></code></a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#"><code class="docutils literal notranslate"><span class="pre">ssid.modes.modes()</span></code></a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="system.html"><code class="docutils literal notranslate"><span class="pre">system</span></code> Module</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="markov.html"><code class="docutils literal notranslate"><span class="pre">markov</span></code> Module</a></li>
@@ -363,7 +366,7 @@ document.write(`
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Library</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">API</a></li>
     
     <li class="breadcrumb-item active" aria-current="page">&lt;no title&gt;</li>
   </ul>
@@ -382,27 +385,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <dl class="py function">
-<dt class="sig sig-object py" id="ssid.modes.modes">
-<span class="sig-prename descclassname"><span class="pre">ssid.modes.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realization</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ssid.modes.modes" title="Link to this definition">#</a></dt>
-<dd><p>Determine the modal parameters of a given state space system realization.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>realization</strong> (<em>tuple</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
-<li><p><strong>dt</strong> (<em>float</em>) – timestep</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>natural frequencies, damping ratios, mode shapes, and eigenvalue condition numbers for each mode. stored as a dictionary in the <code class="docutils literal notranslate"><span class="pre">freq</span></code>, <code class="docutils literal notranslate"><span class="pre">damp</span></code>, <code class="docutils literal notranslate"><span class="pre">modeshape</span></code>, and <code class="docutils literal notranslate"><span class="pre">cnd</span></code> fields, respectively.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dictionary</p>
-</dd>
-</dl>
-</dd></dl>
-
-
+  
 
                 </article>
               
@@ -420,7 +403,7 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title"><code class="docutils literal notranslate"><span class="pre">system</span></code> Module</p>
       </div>
     </a>
     <a class="right-next"
@@ -441,6 +424,20 @@ document.write(`
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="simple visible nav section-nav flex-column">
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
