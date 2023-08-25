@@ -1,7 +1,7 @@
 mdof.spec module
 ================
 
-.. automodule:: mdof.spec
+.. automodule:: mdof.transform
    :members:
    :undoc-members:
    :show-inheritance:
