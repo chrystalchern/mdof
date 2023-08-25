@@ -1,11 +1,11 @@
-import ssid
-from ssid import modal
+import mdof
+from mdof import modal
 from time import time
 from control import ss, forced_response
 
 def test_method(method, inputs, outputs, dt, t, **conf):
     time0 = time()
-    A,B,C,D = ssid.system(method=method, inputs=inputs, outputs=outputs, **conf)
+    A,B,C,D = mdof.system(method=method, inputs=inputs, outputs=outputs, **conf)
     time1 = time()
     modedict = modal.system_modes((A,B,C,D),dt,**conf)
     model = {
