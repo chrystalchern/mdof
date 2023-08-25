@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>Theory &#8212; mdof</title>
+    <title>mdof.spec module &#8212; mdof</title>
   
   
   
@@ -44,12 +44,12 @@
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/index';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'library/mdof.transform';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="State Space Model of Structural Dynamics" href="statespace.html" />
-    <link rel="prev" title="mdof.spec module" href="../library/mdof.transform.html" />
+    <link rel="next" title="Theory" href="../theory/index.html" />
+    <link rel="prev" title="mdof.modal module" href="mdof.modal.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -138,15 +138,15 @@
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="modules.html">
                         mdof
                       </a>
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../theory/index.html">
                         Theory
                       </a>
                     </li>
@@ -254,15 +254,15 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="modules.html">
                         mdof
                       </a>
                     </li>
                 
 
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="#">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../theory/index.html">
                         Theory
                       </a>
                     </li>
@@ -318,10 +318,11 @@ document.write(`
         <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="era.html">Eigensystem Realization Algorithm (ERA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.realize.html">mdof.realize module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">mdof.spec module</a></li>
 </ul>
 </div>
 </nav></div>
@@ -359,7 +360,10 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">Theory</li>
+    
+    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">mdof</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">mdof.spec module</li>
   </ul>
 </nav>
 </div>
@@ -376,21 +380,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="theory">
-<h1>Theory<a class="headerlink" href="#theory" title="Link to this heading">#</a></h1>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="statespace.html#partitioned-equation-of-dynamic-equilibrium">Partitioned Equation of Dynamic Equilibrium</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statespace.html#equation-of-motion">Equation of Motion</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statespace.html#continuous-lti-state-space-representation">Continuous LTI State-Space Representation</a></li>
-<li class="toctree-l2"><a class="reference internal" href="statespace.html#discrete-lti-state-space-representation">Discrete LTI State-Space Representation</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="era.html">Eigensystem Realization Algorithm (ERA)</a></li>
-<li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
-</ul>
-</div>
+  <section id="mdof-spec-module">
+<h1>mdof.spec module<a class="headerlink" href="#mdof-spec-module" title="Link to this heading">#</a></h1>
 </section>
 
 
@@ -405,20 +396,20 @@ document.write(`
     <div class="footer-article-item"><!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../library/mdof.transform.html"
+       href="mdof.modal.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">mdof.spec module</p>
+        <p class="prev-next-title">mdof.modal module</p>
       </div>
     </a>
     <a class="right-next"
-       href="statespace.html"
+       href="../theory/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">State Space Model of Structural Dynamics</p>
+        <p class="prev-next-title">Theory</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
