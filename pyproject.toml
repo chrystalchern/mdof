@@ -1,9 +1,8 @@
 [project]
 name = "mdof"
-version = "0.0.2"
+version = "0.0.4"
 authors = [
-  {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"},
-  {name="Yalin Arici"}
+  {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"}
 ]
 
 description="Fast and friendly system identification for structures."
