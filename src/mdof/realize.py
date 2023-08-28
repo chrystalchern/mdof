@@ -15,7 +15,7 @@ from . import numerics
 def era(Y,**options):
     """
     System realization from Markov parameters (discrete impulse response data).
-    Ho-Kalman / Eigensystem Realization Algorithm (ERA) [1]_, [2]_.
+    Ho-Kalman / Eigensystem Realization Algorithm (ERA) [1]_ [2]_.
 
     :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
@@ -96,7 +96,7 @@ def era(Y,**options):
 def era_dc(Y,**options):
     """
     System realization from Markov parameters (discrete impulse response data).
-    Eigensystem Realization Algorithm with Data Correlations (ERA/DC) [1]_.
+    Eigensystem Realization Algorithm with Data Correlations (ERA/DC) [3]_.
 
 
     :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
@@ -124,7 +124,7 @@ def era_dc(Y,**options):
 
     References
     ----------
-    .. [1]  Juang, J. N., Cooper, J. E., & Wright, J. R. (1987). An eigensystem realization algorithm
+    .. [3]  Juang, J. N., Cooper, J. E., & Wright, J. R. (1987). An eigensystem realization algorithm
             using data correlations (ERA/DC) for modal parameter identification.
             (https://ntrs.nasa.gov/citations/19870035963)    
     """
@@ -204,7 +204,7 @@ def _blk_3(i, CA, U):
 def srim(inputs,outputs,**options):
     """
     System realization from input and output data, with output error minimization method.
-    System Realization Using Information Matrix (SRIM) [1]_.
+    System Realization Using Information Matrix (SRIM) [4]_.
     
     :param inputs:  input time history. dimensions: :math:`(q,nt)`, where
                     :math:`q` = number of inputs, and :math:`nt` = number of timesteps
@@ -233,7 +233,7 @@ def srim(inputs,outputs,**options):
 
     References
     ----------
-    .. [1]  Juang, J. N. (1997). System realization using information matrix. Journal
+    .. [4]  Juang, J. N. (1997). System realization using information matrix. Journal
             of Guidance, Control, and Dynamics, 20(3), 492-500.
             (https://doi.org/10.2514/2.4068)
     """

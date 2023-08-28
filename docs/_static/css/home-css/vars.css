@@ -1,9 +1,9 @@
 /* prettier-ignore */
 :root {
-  --fontFamily: {{ .Site.Params.font.name }};
+  --fontFamily: 'Libre Bodoni';
 
-  --colorPrimaryDark: rgb(1, 50, 67);
-  --colorPrimary: #003262;
+  --colorPrimaryDark: #3D576E;
+  --colorPrimary: #52899C;
   --colorPrimaryLight: rgb(77, 171, 207);
 
   --colorSecondaryDark: rgb(108, 122, 137);

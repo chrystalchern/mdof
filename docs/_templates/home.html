@@ -17,38 +17,41 @@
   {{ _webpack.head_pre_icons() }}
   {#- css() #}
   {{ _webpack.head_js_preload() }}
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Libre+Bodoni">
   <!--  -->
   <link rel=icon href=/images/favicon.ico>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900">
   <link rel="stylesheet" href=https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css>
   <link rel="stylesheet" type=text/css
-    href="https://numpy.org/css/theme-css/fresh/core.min.3997f86943b5337a6aab5eac5003a41b9a03e1159a7e779d8e99f5c1353ad503.css">
-  <!--
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/code-highlight.css.min.60358f6aca833402d029f1625f9d78ac9331cb988429c4541f68207cfe3894ed.css" >
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/notices.css.min.a1ba05c782ca3a59361d6e284f0c2e1ff14e5a17a87057974212c60aa30fed2c.css" >
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/posts.css.min.6d27826ef3e7467b2bc97db6a0068283b47dddb32f6bf29504911aea6c237dd7.css" >
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/shortcuts.css.min.66eb490f98d06a7f1980356f649d586f140b68294e9aa3600404f393ce50dacb.css" >
-  -->
+	href="{{ pathto('_static/css',1) }}/home-css/fresh/core.css">
+  <!-- -->
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/code-highlight.css" >
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/notices.css" >
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/posts.css" >
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/shortcuts.css" >
+
   <link rel="stylesheet"
-    href="{{ pathto('_static/css', 1) }}/theme-css/content.css.min.04e1e257bae2de28e38445f3f5d76e28317dc313cb7ead5536bcb52baccf91f9.css">
+    href="{{ pathto('_static/css', 1) }}/home-css/content.css">
   <link rel="stylesheet"
-    href="{{ pathto('_static/css', 1) }}/theme-css/panel.css.min.d42639c23c159bedb13ee97ac0c12439a6ff5bf2e557fc976b54856abe4a616b.css">
+    href="{{ pathto('_static/css', 1) }}/home-css/panel.css">
   <link rel="stylesheet"
-    href="{{ pathto('_static/css', 1) }}/theme-css/keyfeatures.css.min.9fa68a6309048c965a6dc7f402cd45cbf0e6cb056ddde59b4e31a0594900caf0.css">
+    href="{{ pathto('_static/css', 1) }}/home-css/keyfeatures.css">
   <link rel="stylesheet"
-    href="{{ pathto('_static/css', 1) }}/theme-css/news.css.min.4bffc1f3e8e1dfedfa26d21423b0f206b10be408002e80d7628649afd6bb6a9d.css">
+    href="{{ pathto('_static/css', 1) }}/home-css/news.css">
   <link rel="stylesheet"
-    href="{{ pathto('_static/css', 1) }}/theme-css/styles.css.min.e52a9f63524ec98f63a3f6939054fa0313cac0c151de8a2ba4089dc9db834fb2.css">
-  <!--
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/tables.css.min.fb97ebea26ca35733dddd7051622133c047b532bf1aa066155c69a118d445803.css" >
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/teams.css.min.fcfb8db7476eab78560aefc0efcec4366740523e08279ec26c568590c69002fc.css" >
-  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/theme-css/videos.css.min.b305d98ddc47a74381f484299ab14f9483f69d62928c4ed32697a5701355f138.css" >
-  -->
+    href="{{ pathto('_static/css', 1) }}/home-css/styles.css">
+  <!-- -->
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/tables.css" >
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/teams.css" >
+  <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/home-css/videos.css" >
+
   <link rel="stylesheet"
-    href="{{ pathto('_static/css', 1) }}/theme-css/vars.css.min.aad4d4b106de179c549cb071137b8b97c38926db91edaaff08af8ab9055df90e.css">
+    href="{{ pathto('_static/css', 1) }}/home-css/vars.css">
 
   <link rel="stylesheet"
     href="{{ pathto('_static/css', 1) }}/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css">
+
   <!--
   <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css" >
   <link rel="stylesheet" href="{{ pathto('_static/css', 1) }}/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css" >

@@ -35,8 +35,10 @@ html_favicon = '_static/favicon.ico'
 html_css_files = [
     "css/peer.css",
 ] + [
-    'css/css/'+str(file.name) for file in (Path(__file__).parents[0]/"_static/css/css/").glob("*.css")
-]
+    'css/home-css/'+str(file.name) for file in (Path(__file__).parents[0]/"_static/css/home-css/").glob("vars*.css")
+] # + [
+#     'css/css/'+str(file.name) for file in (Path(__file__).parents[0]/"_static/css/css/").glob("*.css")
+# ]
 html_additional_pages = {'index': 'home.html'}
 html_context = {
     'description': description,
