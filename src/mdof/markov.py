@@ -48,13 +48,13 @@ def okid(inputs,outputs,**options):
         m = min(1000,nt)
 
     # Form data matrix V
-    V = np.zeros((m+1,nt,q+p))                  # m+1 block rows, each with nt columns and q+p rows each.  DIM: (m+1)x(nt)x(q+p)
-    for i in range(m+1):                        # From block row 0 to block row m
-        V[i,-(nt-i):,:q] = inputs[:,:nt-i].T     # Populate the first q rows of the ith block row, last nt-i columns, with the first nt-i inputs.  DIM: (nt-i)x(q)
-        V[i,-(nt-i):,-p:] = outputs[:,:nt-i].T   # Populate the last p rows of the ith block row, last nt-i columns, with the first nt-i outputs.  DIM: (nt-i)x(p)
+    V = np.zeros((m+1,nt,q+p))                    # m+1 block rows, each with nt columns and q+p rows each.  DIM: (m+1)x(nt)x(q+p)
+    for i in range(m+1):                          # From block row 0 to block row m
+        V[i,-(nt-i):,:q] = inputs[:,:nt-i].T      # Populate the first q rows of the ith block row, last nt-i columns, with the first nt-i inputs.  DIM: (nt-i)x(q)
+        V[i,-(nt-i):,-p:] = outputs[:,:nt-i].T    # Populate the last p rows of the ith block row, last nt-i columns, with the first nt-i outputs.  DIM: (nt-i)x(p)
     V = V.transpose((1,0,2)).reshape((nt,(m+1)*(p+q))).T    # Transpose and reshape data matrix to stack the block rows in.  DIM: ((m+1)(q+p))x(nt)
     # V = np.concatenate((V[:q,:],V[q+p:,:]))     # Remove rows q+1 to q+p (TODO: see if it's necessary to remove rows, or if solving for Ybar can include these)
-    V = np.delete(V, slice(q,q+p), axis=0)      # Remove rows q+1 to q+p (TODO: see if it's necessary to remove rows, or if solving for Ybar can include these)
+    V = np.delete(V, slice(q,q+p), axis=0)        # Remove rows q+1 to q+p (TODO: see if it's necessary to remove rows, or if solving for Ybar can include these)
 
     # Solve for observer Markov parameters Ybar
     Ybar = outputs @ np.linalg.pinv(V,rcond=10e-3)  # DIM: (p)x(q+m(q+p))
