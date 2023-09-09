@@ -1,5 +1,6 @@
 import numpy as np
 from scipy.fft import fft, fftfreq
+from scipy import signal
 from .numerics import decimate
 
 # def power_transfer(inputs, outputs, step): pass
@@ -82,6 +83,26 @@ def fourier_transfer(inputs, outputs, step, **options):
     input_transform[0]=np.real(input_transform[0]) # prevents unwarranted "divide by zero" warning
     return (1/input_transform[0], output_transform[1]/input_transform[1])
 
+def power_spectrum(series, step, **options):
+    """
+    Power spectral density from a signal.
+
+    :param series:      time series.
+    :type series:       1D array
+    :param step:        timestep.
+    :type step:         float
+    :param period_band: minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple, optional
+
+    :return:            (frequencies, amplitudes)
+    :rtype:             tuple of arrays.
+    """
+    frequencies, amplitudes = fourier_spectrum(series, step, **options)
+    return (1/frequencies, np.abs(amplitudes))
+
+def power_spectrum2(series, step, **options):
+    frequencies, power_spectral_density = signal.periodogram(series, step)
+    return (1/frequencies, power_spectral_density)
 
 def fourier_spectrum(series, step, period_band=None, **options):
     """
@@ -92,6 +113,7 @@ def fourier_spectrum(series, step, period_band=None, **options):
     :param step:        timestep.
     :type step:         float
     :param period_band: minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple, optional
 
     :return:            (frequencies, amplitudes)
     :rtype:             tuple of arrays.
