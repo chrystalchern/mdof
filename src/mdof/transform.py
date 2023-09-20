@@ -97,7 +97,9 @@ def power_spectrum(series, step, **options):
     :return:            (frequencies, amplitudes)
     :rtype:             tuple of arrays.
     """
+    output = fourier_spectrum(series, step, **options)
     frequencies, amplitudes = fourier_spectrum(series, step, **options)
+    print(f"{amplitudes=}")
     return (1/frequencies, np.abs(amplitudes))
 
 def power_spectrum2(series, step, **options):
