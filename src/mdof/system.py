@@ -73,5 +73,5 @@ def modes(inputs, outputs, dt, **options):
     """
     realization = system(inputs, outputs, **options)
 
-    return modal.system_modes(realization, dt, options["decimation"])
+    return modal.system_modes(realization, dt, decimation=options["decimation"])
 
