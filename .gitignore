@@ -4,6 +4,8 @@ PUBLISHING.md
 __pycache__/
 assets/
 dist
+_build/latex
+docs/_build/doctrees/
 notebooks/PEERNGARecords_Unscaled
 notebooks/PEERNGARecords_Unscaled/
 notebooks/output
