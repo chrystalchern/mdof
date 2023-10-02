@@ -45,7 +45,7 @@ html_context = {
     'examples': [
         {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof_full.png"},
         {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "examples_02_SISO_Event_20_0.png"},
-        {"title": "SIMO Event",          "link": "examples/04_SIMO_Event", "image": "lumps.svg"},
+        {"title": "SIMO Event",          "link": "examples/04_SIMO_Event", "image": "simo_event.png"},
         {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro", "image": "2dof_full.png"},
         {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
         {"title": "SISO History",        "link": "examples/03_SISO_History", "image": "examples_03_SISO_History_7_2.png"},
