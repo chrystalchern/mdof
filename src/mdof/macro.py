@@ -27,10 +27,10 @@ def stabilization(inputs, outputs, dt, **options):
     mode_properties = np.array([[order, 1/mode["freq"], mode["damp"]] for order in range(*orders) for mode in modes(inputs, outputs, dt, order=order, **options).values()])
 
     fig, ax = plt.subplots(2,1,figsize=(8,8))
-    ax[0].plot(mode_properties[:,1],mode_properties[:,0],'o')
+    ax[0].plot(mode_properties[:,1],mode_properties[:,0],'o',markersize=2)
     ax[0].set_title("Periods")
     ax[0].set_ylabel("Model Order")
-    ax[1].plot(mode_properties[:,2],mode_properties[:,0],'o')
+    ax[1].plot(mode_properties[:,2],mode_properties[:,0],'o',markersize=2)
     ax[1].set_title("Damping Ratios")
     ax[1].set_ylabel("Model Order")
 
