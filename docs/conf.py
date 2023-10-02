@@ -43,10 +43,10 @@ html_additional_pages = {'index': 'home.html'}
 html_context = {
     'description': description,
     'examples': [
-        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof.svg"},
-        {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "sdof.svg"},
+        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof.png"},
+        {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "sdof.png"},
         {"title": "SIMO Event",          "link": "examples/04_SIMO_Event", "image": "lumps.svg"},
-        {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro"},
+        {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro", "image": "2dof.png"},
         {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
         {"title": "SISO History",        "link": "examples/03_SISO_History"},
         {"title": "MIMO History",        "link": "examples/06_MIMO_History"},
