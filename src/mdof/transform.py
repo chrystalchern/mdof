@@ -99,7 +99,7 @@ def power_spectrum(series, step, **options):
     """
     output = fourier_spectrum(series, step, **options)
     frequencies, amplitudes = fourier_spectrum(series, step, **options)
-    print(f"{amplitudes=}")
+    # print(f"{amplitudes=}")
     return (1/frequencies, np.abs(amplitudes))
 
 def power_spectrum2(series, step, **options):
@@ -122,7 +122,14 @@ def fourier_spectrum(series, step, period_band=None, **options):
     """
     assert len(series.shape) == 1
     N = len(series)
- 
+    frequencies = fftfreq(N,step)[1:N//2]
+    amplitudes = 2.0/N*np.abs(fft(series)[1:N//2])
+    if period_band is not None:
+        frequency_band = (1/period_band[1], 1/period_band[0])
+        frequency_indices = np.logical_and(frequencies>frequency_band[0], frequencies<frequency_band[1])
+        frequencies = frequencies[frequency_indices]
+        amplitudes = amplitudes[frequency_indices]
+    return np.array([frequencies, amplitudes])
 
 def _newmark():
     pass
