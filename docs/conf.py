@@ -49,10 +49,10 @@ html_context = {
         {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro", "image": "2dof_full.png"},
         {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
         {"title": "SISO History",        "link": "examples/03_SISO_History", "image": "examples_03_SISO_History_7_2.png"},
-        {"title": "MIMO History",        "link": "examples/06_MIMO_History"},
-        {"title": "ResponseSpectrum",    "link": "examples/ResponseSpectrum"},
-        {"title": "transfer function",   "link": "examples/transfer_function"},
-        {"title": "juang experiment",    "link": "examples/juang_experiment"},
+        {"title": "MIMO History",        "link": "examples/06_MIMO_History", "image": "examples_06_MIMO_History_9_36.png"},
+        {"title": "Response Spectrum",   "link": "examples/ResponseSpectrum"},
+        {"title": "Transfer Function",   "link": "examples/transfer_function"},
+        {"title": "Juang Experiment",    "link": "examples/juang_experiment"},
     ],
     **globals()
 }
