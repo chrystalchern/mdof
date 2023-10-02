@@ -43,12 +43,12 @@ html_additional_pages = {'index': 'home.html'}
 html_context = {
     'description': description,
     'examples': [
-        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof.png"},
-        {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "sdof.png"},
+        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof_full.png"},
+        {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "examples_02_SISO_Event_20_0.png"},
         {"title": "SIMO Event",          "link": "examples/04_SIMO_Event", "image": "lumps.svg"},
-        {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro", "image": "2dof.png"},
+        {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro", "image": "2dof_full.png"},
         {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
-        {"title": "SISO History",        "link": "examples/03_SISO_History"},
+        {"title": "SISO History",        "link": "examples/03_SISO_History", "image": "examples_03_SISO_History_7_2.png"},
         {"title": "MIMO History",        "link": "examples/06_MIMO_History"},
         {"title": "ResponseSpectrum",    "link": "examples/ResponseSpectrum"},
         {"title": "transfer function",   "link": "examples/transfer_function"},
