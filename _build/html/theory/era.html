@@ -1,0 +1,589 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Eigensystem Realization Algorithm (ERA) &#8212; mdof</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
+
+    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script src="../_static/doctools.js?v=888ff710"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/era';</script>
+    <link rel="icon" href="../_static/favicon.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Observer Kalman Filter Identification (OKID)" href="okid.html" />
+    <link rel="prev" title="State Space Model of Structural Dynamics" href="statespace.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+<div class="bd-header__inner bd-page-width">
+  <label class="sidebar-toggle primary-toggle" for="__primary">
+    <span class="fa-solid fa-bars"></span>
+  </label>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    <p class="title logo__title">mdof</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        mdof
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+        </div>
+      
+      
+        <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
+    </div>
+  
+
+  
+</div>
+
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          <div class="navbar-item"><nav class="navbar-nav">
+  <p class="sidebar-header-items__title"
+     role="heading"
+     aria-level="1"
+     aria-label="Site Navigation">
+    Site Navigation
+  </p>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../api/index.html">
+                        API
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/modules.html">
+                        mdof
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
+                        Theory
+                      </a>
+                    </li>
+                
+
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../examples/index.html">
+                        Examples
+                      </a>
+                    </li>
+                
+  </ul>
+</nav></div>
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links navbar-nav"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Eigensystem Realization Algorithm (ERA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+
+
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Theory</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page">Eigensystem...</li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section id="eigensystem-realization-algorithm-era">
+<h1>Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#eigensystem-realization-algorithm-era" title="Link to this heading">#</a></h1>
+<p>As shown in the previous section, a structural system’s dynamic behavior
+can be represented by the four coefficients
+(<span class="math notranslate nohighlight">\(\mathbf{A},\mathbf{B},\mathbf{C},\mathbf{D}\)</span>) of its discrete
+LTI state-space representation. The <a class="reference external" href="https://doi.org/10.1524/auto.1966.14.112.545">Ho-Kalman
+Algorithm</a>, or
+<a class="reference external" href="https://doi.org/10.2514/3.20031">Eigensystem Realization Algorithm</a>,
+produces a <em>reduced order model</em> for these four coefficients,
+(<span class="math notranslate nohighlight">\(\mathbf{\tilde{A}},\mathbf{\tilde{B}},\mathbf{\tilde{C}},\mathbf{\tilde{D}}\)</span>),
+based on an impulse input and its corresponding response output. Then,
+modal properties can be extracted from <span class="math notranslate nohighlight">\(\mathbf{\tilde{A}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{\tilde{C}}\)</span>.</p>
+<p>With the discrete LTI model, a unit impulse input with zero initial
+conditions produces an output of constants
+(<span class="math notranslate nohighlight">\(\mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B}\)</span>). These constants are
+called <em>Markov parameters</em> because they must be unique for a given
+system – there is only one possible output for a unit impulse input.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{x}_{k+1} &amp;= \mathbf{Ax}_{k} + \mathbf{Bu}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{Cx}_{k} + \mathbf{Du}_{k} \\
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{u}_{0},\mathbf{u}_{1},\mathbf{u}_{2},...,\mathbf{u}_{k} &amp;= \mathbf{I,0,0,...,0} \\
+    \mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},...,\mathbf{x}_{k} &amp;= \mathbf{0,B,AB,...,A}^{k-1}\mathbf{B} \\
+    \mathbf{y}_{0},\mathbf{y}_{1},\mathbf{y}_{2},...,\mathbf{y}_{k} &amp;= \mathbf{D,CB,CAB,...,CA}^{k-1}\mathbf{B} \\
+\end{aligned}\end{split}\]</div>
+<p>Knowing that the impulse response output data directly give the Markov
+parameters, the data can then be stacked into the generalized blockwise
+Hankel matrix <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H}
+=
+\begin{bmatrix}
+    \mathbf{y}_{1}     &amp; \mathbf{y}_{2}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}}          \\
+    \mathbf{y}_{2}     &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
+    \vdots             &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
+    \mathbf{y}_{m_{o}} &amp; \mathbf{y}_{m_{o}+1}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}-1}  \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \mathbf{CB}                     &amp; \mathbf{CAB}                  &amp; \cdots  &amp; \mathbf{CA}^{m_{c}-1}\mathbf{B}       \\
+    \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}         \\
+    \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                \\
+    \mathbf{CA}^{m_{o}-1}\mathbf{B} &amp; \mathbf{CA}^{m_{o}}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-2}\mathbf{B} \\
+\end{bmatrix}
+=
+\mathbf{\mathcal{OC}}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\mathbf{\mathcal{O}}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{\mathcal{C}}\)</span> are
+the observability and controllability matrices of the system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{\mathcal{O}} = \begin{bmatrix}
+    \mathbf{C} \\ \mathbf{CA} \\ \mathbf{CA}^{2} \\ \vdots \\ \mathbf{CA}^{m_{o}-1}
+\end{bmatrix}, \hspace{1cm}
+\mathbf{\mathcal{C}} = \begin{bmatrix} \mathbf{B} &amp; \mathbf{AB} &amp; \mathbf{A}^{2}\mathbf{B} &amp; \cdots &amp; \mathbf{A}^{m_{c}-1}\mathbf{B}  \end{bmatrix}\end{split}\]</div>
+<p>The shifted Hankel matrix, <span class="math notranslate nohighlight">\(\mathbf{H'}\)</span> (one time step ahead of
+<span class="math notranslate nohighlight">\(\mathbf{H}\)</span>), is shown below:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H'}
+=
+\begin{bmatrix}
+    \mathbf{y}_{2}       &amp; \mathbf{y}_{3}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+1}        \\
+    \mathbf{y}_{3}       &amp; \mathbf{y}_{4}        &amp; \cdots   &amp; \mathbf{y}_{m_{c}+2}        \\
+    \vdots               &amp; \vdots                &amp; \ddots   &amp; \vdots                      \\
+    \mathbf{y}_{m_{o}+1} &amp; \mathbf{y}_{m_{o}+2}  &amp; \cdots   &amp; \mathbf{y}_{m_{o}+m_{c}}    \\
+\end{bmatrix}
+=
+\begin{bmatrix}
+    \mathbf{CAB}                    &amp; \mathbf{CA}^{2}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}}\mathbf{B}          \\
+    \mathbf{CA}^{2}\mathbf{B}       &amp; \mathbf{CA}^{3}\mathbf{B}     &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+1}\mathbf{B}        \\
+    \vdots                          &amp; \vdots                        &amp; \ddots  &amp; \vdots                                 \\
+    \mathbf{CA}^{m_{o}}\mathbf{B}   &amp; \mathbf{CA}^{m_{o}+1}\mathbf{B} &amp; \cdots  &amp; \mathbf{CA}^{m_{c}+m_{o}-1}\mathbf{B}\\
+\end{bmatrix}
+=
+\mathbf{\mathcal{O}A\mathcal{C}}\end{split}\]</div>
+<p>By taking the dominant terms of the singular value decomposition (SVD)
+of <span class="math notranslate nohighlight">\(\mathbf{H}\)</span>, and transforming the relationship between
+<span class="math notranslate nohighlight">\(\mathbf{H} = \mathbf{\mathcal{OC}}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{H'} = \mathbf{\mathcal{O}A\mathcal{C}}\)</span>, a reduced-order
+model is constructed as follows:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf{H} = \mathbf{U}\Sigma\mathbf{V}^{H} =
+\begin{bmatrix} \mathbf{\tilde{U}} &amp; \mathbf{U}_{t} \end{bmatrix}
+\begin{bmatrix} \tilde{\Sigma} &amp; \mathbf{0} \\ \mathbf{0} &amp; \Sigma_{t} \end{bmatrix}
+\begin{bmatrix} \mathbf{\tilde{V}}^{H} \\ \mathbf{V}_{t}^{H} \end{bmatrix}
+\approx \mathbf{\tilde{U}}\tilde{\Sigma}\mathbf{\tilde{V}}^{H}\end{split}\]</div>
+<p>where the superscript <span class="math notranslate nohighlight">\(H\)</span> denotes conjugate transpose and the
+subscript <span class="math notranslate nohighlight">\(t\)</span> indicates elements to be truncated such that only
+the first <span class="math notranslate nohighlight">\(r\)</span> dominant singular values in <span class="math notranslate nohighlight">\(\tilde{\Sigma}\)</span>
+are retained,</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{\tilde{A}} &amp;= \tilde{\Sigma}^{-1/2}\mathbf{\tilde{U}}^{H}\mathbf{H'\tilde{V}}\tilde{\Sigma}^{-1/2} \\
+    \mathbf{\tilde{B}} &amp;= \tilde{\Sigma}^{1/2}\mathbf{\tilde{V}}^{H}
+                        \begin{bmatrix} \mathbf{I}_{q} \\ \mathbf{0} \end{bmatrix} \\
+    \mathbf{\tilde{C}} &amp;= \begin{bmatrix} \mathbf{I}_{p} &amp; \mathbf{0} \end{bmatrix} \mathbf{\tilde{U}}\tilde{\Sigma}^{1/2} \\
+    \mathbf{\tilde{D}} &amp;= \mathbf{y}_{0}
+\end{aligned}\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(p\)</span> indicates the number of outputs and <span class="math notranslate nohighlight">\(q\)</span> the number
+of inputs, and</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    \mathbf{\tilde{x}}_{k+1} &amp;= \mathbf{\tilde{A}\tilde{x}}_{k} + \mathbf{\tilde{B}u}_{k} \\
+    \mathbf{y}_{k} &amp;= \mathbf{\tilde{C}\tilde{x}}_{k} + \mathbf{\tilde{D}u}_{k}. \\
+\end{aligned}\end{split}\]</div>
+</section>
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="statespace.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">State Space Model of Structural Dynamics</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="okid.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Observer Kalman Filter Identification (OKID)</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+  <p class="copyright">
+    
+      © Copyright 2023, Chrystal Chern.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item"><p class="theme-version">
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
