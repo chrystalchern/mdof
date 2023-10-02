@@ -2,8 +2,6 @@
 !CESMD/CE89324
 *.egg-info
 .ipynb_checkpoints/
-CESMD
-CESMD/*
 PUBLISHING.md
 __pycache__/
 _build/
