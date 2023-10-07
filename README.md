@@ -7,15 +7,14 @@ Fast and friendly system identification for structures.
 
 <br>
 
-**The inverse eigenanalysis problem** is well-known to structural engineers -- from structural vibrations, the goal is to identify the system properties.
+**Conventional dynamic eigenanalysis** is well-known to structural engineers -- from system properties, the goal is to determine a system's dynamic response to a given input excitation.
 
 Conventional eigenanalysis:
 ```python
 output_motion = eigen(M,C,K, input_motion)
 ```
 
-
-**The `mdof` system id package** allows structural engineers to solve the inverse dynamic property problem from structural vibrations.
+**The `mdof` system id package** allows structural engineers to solve **inverse eigenanalysis** and related problems -- from structural vibrations, the goal is to identify the system properties.
 
 Inverse eigenanalysis:
 ```python
