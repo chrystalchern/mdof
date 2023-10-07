@@ -7,7 +7,7 @@ Fast and friendly system identification for structures.
 
 <br>
 
-**Conventional dynamic eigenanalysis** is well-known to structural engineers -- from system properties and a given excitation, the goal is to determine a system's dynamic responsess.
+**Conventional dynamic eigenanalysis** is well-known to structural engineers -- from system properties and a given excitation, the goal is to determine a system's dynamic response.
 
 ```python
 output_motion = eigen(M,C,K, input_motion)
