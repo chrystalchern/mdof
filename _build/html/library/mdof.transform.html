@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
     <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
   
@@ -37,12 +37,10 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'library/mdof.transform';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -139,15 +137,8 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="modules.html">
+                      <a class="nav-link nav-internal" href="index.html">
                         mdof
                       </a>
                     </li>
@@ -234,10 +225,6 @@ document.write(`
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
-      <span class="fa-solid fa-outdent"></span>
-    </label>
-  
 </div>
 
     </nav>
@@ -263,15 +250,8 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
                     <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="modules.html">
+                      <a class="nav-link nav-internal" href="index.html">
                         mdof
                       </a>
                     </li>
@@ -377,7 +357,7 @@ document.write(`
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="modules.html" class="nav-link">mdof</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">mdof</a></li>
     
     <li class="breadcrumb-item active" aria-current="page">mdof.spec module</li>
   </ul>
@@ -396,106 +376,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-mdof.transform">
-<span id="mdof-spec-module"></span><h1>mdof.spec module<a class="headerlink" href="#module-mdof.transform" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.response_transfer">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">response_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.response_transfer" title="Link to this definition">#</a></dt>
-<dd><p>Response spectrum transfer function from input and output data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
-dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
-<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>pseudo</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, uses pseudo accelerations. default: False</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.fourier_transfer">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_transfer" title="Link to this definition">#</a></dt>
-<dd><p>Fourier spectrum transfer function from input and output data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
-dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
-<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.power_spectrum">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">power_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.power_spectrum" title="Link to this definition">#</a></dt>
-<dd><p>Power spectral density from a signal.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>series</strong> (<em>1D array</em>) – time series.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(frequencies, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.power_spectrum2">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">power_spectrum2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.power_spectrum2" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.fourier_spectrum">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_spectrum" title="Link to this definition">#</a></dt>
-<dd><p>Fourier amplitude spectrum from a signal.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>series</strong> (<em>1D array</em>) – time series.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(frequencies, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays.</p>
-</dd>
-</dl>
-</dd></dl>
-
+  <section id="mdof-spec-module">
+<h1>mdof.spec module<a class="headerlink" href="#mdof-spec-module" title="Permalink to this heading">#</a></h1>
 </section>
 
 
@@ -533,24 +415,6 @@ dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where 
             
             
               
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> On this page
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.response_transfer"><code class="docutils literal notranslate"><span class="pre">response_transfer()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_transfer"><code class="docutils literal notranslate"><span class="pre">fourier_transfer()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_spectrum"><code class="docutils literal notranslate"><span class="pre">power_spectrum()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_spectrum2"><code class="docutils literal notranslate"><span class="pre">power_spectrum2()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_spectrum"><code class="docutils literal notranslate"><span class="pre">fourier_spectrum()</span></code></a></li>
-</ul>
-  </nav></div>
-
-</div></div>
-              
             
           </div>
           <footer class="bd-footer-content">
@@ -581,7 +445,7 @@ dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where 
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>

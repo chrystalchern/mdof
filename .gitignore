@@ -5,6 +5,7 @@ __pycache__/
 assets/
 dist
 _build/latex
+_build/html/
 docs/_build/doctrees/
 notebooks/PEERNGARecords_Unscaled
 notebooks/PEERNGARecords_Unscaled/
@@ -24,3 +25,4 @@ tests/brunton_examples
 tests/seismology_lab
 tests/siso/
 src/ssid/archive/
+_build/doctrees/environment.pickle

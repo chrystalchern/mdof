@@ -28,7 +28,7 @@
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
     <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
@@ -38,9 +38,9 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -139,14 +139,7 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         mdof
                       </a>
                     </li>
@@ -263,14 +256,7 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         mdof
                       </a>
                     </li>
@@ -379,7 +365,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="BRACE2-Structural-System-Identification-Library-(mdof)">
-<h1>BRACE2 Structural System Identification Library (<code class="docutils literal notranslate"><span class="pre">mdof</span></code>)<a class="headerlink" href="#BRACE2-Structural-System-Identification-Library-(mdof)" title="Link to this heading">#</a></h1>
+<h1>BRACE2 Structural System Identification Library (<code class="docutils literal notranslate"><span class="pre">mdof</span></code>)<a class="headerlink" href="#BRACE2-Structural-System-Identification-Library-(mdof)" title="Permalink to this heading">#</a></h1>
 <h3 id="siso"><p>SISO</p>
 </h3><dl><dt><p>01_SISO_Intro.ipynb</p>
 </dt><dd><p><p>Introduction to system identification using the mdof package, with an example SDOF system, input, and output as a demonstration.</p>
@@ -408,16 +394,66 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
+Defaulting to user installation because normal site-packages is not writeable
 <span class="ansi-red-fg">ERROR: Could not open requirements file: [Errno 2] No such file or directory: &#39;requirements.txt&#39;</span><span class="ansi-red-fg">
-</span>
+</span>--- Logging error ---
+Traceback (most recent call last):
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/utils/logging.py&#34;, line 177, in emit
+    self.console.print(renderable, overflow=&#34;ignore&#34;, crop=False, style=style)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_vendor/rich/console.py&#34;, line 1752, in print
+    extend(render(renderable, render_options))
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_vendor/rich/console.py&#34;, line 1390, in render
+    for render_output in iter_render:
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/utils/logging.py&#34;, line 134, in __rich_console__
+    for line in lines:
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_vendor/rich/segment.py&#34;, line 245, in split_lines
+    for segment in segments:
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_vendor/rich/console.py&#34;, line 1368, in render
+    renderable = rich_cast(renderable)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_vendor/rich/protocol.py&#34;, line 36, in rich_cast
+    renderable = cast_method()
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/self_outdated_check.py&#34;, line 130, in __rich__
+    pip_cmd = get_best_invocation_for_this_pip()
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/utils/entrypoints.py&#34;, line 58, in get_best_invocation_for_this_pip
+    if found_executable and os.path.samefile(
+  File &#34;/usr/lib/python3.8/genericpath.py&#34;, line 101, in samefile
+    s2 = os.stat(f2)
+FileNotFoundError: [Errno 2] No such file or directory: &#39;/usr/bin/pip3.8&#39;
+Call stack:
+  File &#34;/home/xstal/.local/bin/pip&#34;, line 8, in &lt;module&gt;
+    sys.exit(main())
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/cli/main.py&#34;, line 70, in main
+    return command.main(cmd_args)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/cli/base_command.py&#34;, line 101, in main
+    return self._main(args)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/cli/base_command.py&#34;, line 223, in _main
+    self.handle_pip_version_check(options)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/cli/req_command.py&#34;, line 148, in handle_pip_version_check
+    pip_self_version_check(session, options)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/self_outdated_check.py&#34;, line 237, in pip_self_version_check
+    logger.info(&#34;[present-rich] %s&#34;, upgrade_prompt)
+  File &#34;/usr/lib/python3.8/logging/__init__.py&#34;, line 1446, in info
+    self._log(INFO, msg, args, **kwargs)
+  File &#34;/usr/lib/python3.8/logging/__init__.py&#34;, line 1589, in _log
+    self.handle(record)
+  File &#34;/usr/lib/python3.8/logging/__init__.py&#34;, line 1599, in handle
+    self.callHandlers(record)
+  File &#34;/usr/lib/python3.8/logging/__init__.py&#34;, line 1661, in callHandlers
+    hdlr.handle(record)
+  File &#34;/usr/lib/python3.8/logging/__init__.py&#34;, line 954, in handle
+    self.emit(record)
+  File &#34;/home/xstal/.local/lib/python3.8/site-packages/pip/_internal/utils/logging.py&#34;, line 179, in emit
+    self.handleError(record)
+Message: &#39;[present-rich] %s&#39;
+Arguments: (UpgradePrompt(old=&#39;22.1.2&#39;, new=&#39;23.2.1&#39;),)
 </pre></div></div>
 </div>
 <section id="Getting-Started">
-<h2>Getting Started<a class="headerlink" href="#Getting-Started" title="Link to this heading">#</a></h2>
+<h2>Getting Started<a class="headerlink" href="#Getting-Started" title="Permalink to this heading">#</a></h2>
 <p>To upload:</p>
-<p><img alt="Upload button" src="../_images/uploads.png" /></p>
+<img alt="Upload button" src="../_images/uploads.png" />
 <p>To run:</p>
-<p><img alt="Run button" src="../_images/run_cells.png" /></p>
+<img alt="Run button" src="../_images/run_cells.png" />
 </section>
 </section>
 
@@ -482,7 +518,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>

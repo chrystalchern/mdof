@@ -3,19 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-SSID documentation
+mdof documentation
 ================================
-
-**SSID** is a Python library that performs structural system identification procedures.
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   api/index
-   library/modules
+   library/index
    theory/index
    examples/index
 
-..
-   examples/index
