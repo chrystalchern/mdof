@@ -1,8 +1,8 @@
 SHELL=/bin/bash
 
 NOTEBOOKS = notebooks/01_SISO_Intro.ipynb \
+            notebooks/05_MIMO_Intro.ipynb \
             notebooks/02_SISO_Event.ipynb \
-            notebooks/05_MIMO_Event.ipynb \
 	    	notebooks/06_MIMO_History.ipynb \
 			studies/PeakPicking.ipynb \
 			studies/06_MIMO_History_All_CGS_Motions.ipynb

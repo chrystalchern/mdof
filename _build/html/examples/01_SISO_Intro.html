@@ -324,7 +324,10 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History_Archive.html">SISO for History of Events at a Station</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_SIMO_Event.html">SIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
 </ul>
 </div>
@@ -529,7 +532,6 @@ damping ratio: 0.01
 <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">response_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="n">color_cycle</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.975</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{fourier}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">response_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.875</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{response}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">response_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="c1"># plt.vlines([2*np.pi/f for f in omega_f],0,0.5,color=&quot;r&quot;,label=&quot;forcing periods&quot;)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">period_band</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
@@ -562,7 +564,7 @@ damping ratio: 0.01
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 4700/4701 [00:00&lt;00:00, 63680.42it/s]
+100%|█████████▉| 4700/4701 [00:00&lt;00:00, 63169.05it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -627,83 +629,11 @@ Standard Dev(s): 0.0
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dt</span></code></p></td>
 <td><p>timestep</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">decimation</span></code></p></td>
 <td><p>decimation (downsampling) factor</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">order</span></code></p></td>
 <td><p>model order (2 times number of DOF)</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-Observer-Kalman-Identification-(OKID)">
-<h3>Specific to Observer Kalman Identification (OKID)<a class="headerlink" href="#Specific-to-Observer-Kalman-Identification-(OKID)" title="Permalink to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
-<td><p>number of Markov parameters to compute (at most = nt)</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-Eigensystem-Realization-Algorithm-(ERA)">
-<h3>Specific to Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)" title="Permalink to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
-<td><p>number of observability parameters, or prediction horizon</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nc</span></code></p></td>
-<td><p>number of controllability parameters</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-Data-Correlations-(DC)">
-<h3>Specific to Data Correlations (DC)<a class="headerlink" href="#Specific-to-Data-Correlations-(DC)" title="Permalink to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
-<td><p>(alpha) number of additional block rows in Hankel matrix of correlation matrices</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">b</span></code></p></td>
-<td><p>(beta) number of additional block columns in Hankel matrix of correlation matrices</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
-<td><p>initial lag</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">g</span></code></p></td>
-<td><p>lag (gap) between correlations</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-System-Realization-with-Information-Matrix-(SRIM)">
-<h3>Specific to System Realization with Information Matrix (SRIM)<a class="headerlink" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)" title="Permalink to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
-<td><p>number of steps used for identification, or prediction horizon</p></td>
 </tr>
 </tbody>
 </table>
@@ -746,6 +676,39 @@ Standard Dev(s): 0.0
 </div>
 </div>
 </section>
+<section id="Specific-to-Observer-Kalman-Identification-(OKID)">
+<h3>Specific to Observer Kalman Identification (OKID)<a class="headerlink" href="#Specific-to-Observer-Kalman-Identification-(OKID)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
+<td><p>number of Markov parameters to compute (at most = nt)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="Specific-to-Eigensystem-Realization-Algorithm-(ERA)">
+<h3>Specific to Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
+<td><p>number of observability parameters, or prediction horizon</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nc</span></code></p></td>
+<td><p>number of controllability parameters</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="OKID-ERA">
 <h3>OKID-ERA<a class="headerlink" href="#OKID-ERA" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
@@ -771,6 +734,30 @@ Mean Period(s): 1.8011804589415457
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
+</section>
+<section id="Specific-to-Data-Correlations-(DC)">
+<h3>Specific to Data Correlations (DC)<a class="headerlink" href="#Specific-to-Data-Correlations-(DC)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p>(alpha) number of additional block rows in Hankel matrix of correlation matrices</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">b</span></code></p></td>
+<td><p>(beta) number of additional block columns in Hankel matrix of correlation matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
+<td><p>initial lag</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">g</span></code></p></td>
+<td><p>lag (gap) between correlations</p></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="OKID-ERA-DC">
 <h3>OKID-ERA-DC<a class="headerlink" href="#OKID-ERA-DC" title="Permalink to this heading">#</a></h3>
@@ -798,6 +785,21 @@ Standard Dev(s): 0.0
 </pre></div></div>
 </div>
 </section>
+<section id="Specific-to-System-Realization-with-Information-Matrix-(SRIM)">
+<h3>Specific to System Realization with Information Matrix (SRIM)<a class="headerlink" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
+<td><p>number of steps used for identification, or prediction horizon</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="SRIM">
 <h3>SRIM<a class="headerlink" href="#SRIM" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
@@ -816,10 +818,10 @@ Standard Dev(s): 0.0
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 4850/4851 [00:00&lt;00:00, 60909.32it/s]
+100%|█████████▉| 4850/4851 [00:00&lt;00:00, 59143.41it/s]
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
@@ -829,6 +831,14 @@ Spectral quantities:
       1.147      0.01       1.0        1.0        1.0          2.394e-11    1.701e-09
 Mean Period(s): 1.14714744190937
 Standard Dev(s): 0.0
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
 </pre></div></div>
 </div>
 </section>
@@ -846,7 +856,7 @@ Standard Dev(s): 0.0
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_26_0.png" src="../_images/examples_01_SISO_Intro_26_0.png" />
+<img alt="../_images/examples_01_SISO_Intro_30_0.png" src="../_images/examples_01_SISO_Intro_30_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -861,7 +871,7 @@ Standard Dev(s): 0.0
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_27_0.png" src="../_images/examples_01_SISO_Intro_27_0.png" />
+<img alt="../_images/examples_01_SISO_Intro_31_0.png" src="../_images/examples_01_SISO_Intro_31_0.png" />
 </div>
 </div>
 </section>
@@ -919,14 +929,14 @@ Standard Dev(s): 0.0
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Breakdown-of-State-Space-Methods">Breakdown of State Space Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#General-Parameters">General Parameters</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Observer-Kalman-Identification-(OKID)">Specific to Observer Kalman Identification (OKID)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)">Specific to Eigensystem Realization Algorithm (ERA)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Data-Correlations-(DC)">Specific to Data Correlations (DC)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)">Specific to System Realization with Information Matrix (SRIM)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Parameters-for-Mode-Validation">Parameters for Mode Validation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Method-Inputs">Method Inputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Observer-Kalman-Identification-(OKID)">Specific to Observer Kalman Identification (OKID)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)">Specific to Eigensystem Realization Algorithm (ERA)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#OKID-ERA">OKID-ERA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Data-Correlations-(DC)">Specific to Data Correlations (DC)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#OKID-ERA-DC">OKID-ERA-DC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)">Specific to System Realization with Information Matrix (SRIM)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SRIM">SRIM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Compare-Methods">Compare Methods</a></li>
 </ul>

@@ -48,7 +48,7 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="SISO for Ground Motion Events" href="03_SISO_History.html" />
+    <link rel="prev" title="Introduction to MIMO" href="05_MIMO_Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -323,7 +323,10 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History_Archive.html">SISO for History of Events at a Station</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_SIMO_Event.html">SIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">MIMO for Ground Motion Events</a></li>
 </ul>
 </div>
@@ -528,7 +531,7 @@ document.write(`
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dt</span></code></p></td>
 <td><p>timestep</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">decimation</span></code></p></td>
 <td><p>decimation (downsampling) factor</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">order</span></code></p></td>
@@ -687,9 +690,9 @@ document.write(`
     <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;energy_condensed_emaco&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;mpc&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;state space (</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">period_band</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_date&quot;</span><span class="p">])</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.5</span><span class="p">,</span><span class="mf">0.85</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.45</span><span class="p">,</span><span class="mf">0.85</span><span class="p">))</span>
 <span class="n">event_frequencies</span> <span class="o">=</span> <span class="n">mode_statistics</span><span class="p">(</span><span class="n">event_modes</span><span class="p">,</span> <span class="s2">&quot;freq&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -707,7 +710,7 @@ peak acceleration (cm/s/s): 87.954
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2007.26it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2237.95it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -734,7 +737,7 @@ peak acceleration (cm/s/s): -30.371
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 686/687 [00:00&lt;00:00, 2508.85it/s]
+100%|█████████▉| 686/687 [00:00&lt;00:00, 2885.01it/s]
 /mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:137: RuntimeWarning: divide by zero encountered in scalar divide
   nu[i]    = (s22[i]-s11[i])/(2*s12[i])
 /mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:138: RuntimeWarning: invalid value encountered in scalar multiply
@@ -766,7 +769,7 @@ peak acceleration (cm/s/s): -285.334
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 874/875 [00:00&lt;00:00, 2415.63it/s]
+100%|█████████▉| 874/875 [00:00&lt;00:00, 2546.99it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -792,7 +795,7 @@ peak acceleration (cm/s/s): 243.242
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 831/832 [00:00&lt;00:00, 2255.68it/s]
+100%|█████████▉| 831/832 [00:00&lt;00:00, 2802.56it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -819,7 +822,7 @@ peak acceleration (cm/s/s): -53.539
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 868/869 [00:00&lt;00:00, 2256.03it/s]
+100%|█████████▉| 868/869 [00:00&lt;00:00, 2740.65it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -846,7 +849,7 @@ peak acceleration (cm/s/s): 30.272
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 631/632 [00:00&lt;00:00, 2484.48it/s]
+100%|█████████▉| 631/632 [00:00&lt;00:00, 2616.91it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -873,7 +876,7 @@ peak acceleration (cm/s/s): 32.846
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 647/648 [00:00&lt;00:00, 2373.78it/s]
+100%|█████████▉| 647/648 [00:00&lt;00:00, 3019.03it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -899,7 +902,7 @@ peak acceleration (cm/s/s): 54.457
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 694/695 [00:00&lt;00:00, 2696.58it/s]
+100%|█████████▉| 694/695 [00:00&lt;00:00, 3319.68it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -926,7 +929,7 @@ peak acceleration (cm/s/s): -1356.923
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1229/1230 [00:00&lt;00:00, 1838.26it/s]
+100%|█████████▉| 1229/1230 [00:00&lt;00:00, 2421.65it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -953,7 +956,7 @@ peak acceleration (cm/s/s): -139.897
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 662/663 [00:00&lt;00:00, 2582.61it/s]
+100%|█████████▉| 662/663 [00:00&lt;00:00, 2844.54it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -980,7 +983,7 @@ peak acceleration (cm/s/s): 50.951
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 673/674 [00:00&lt;00:00, 2629.66it/s]
+100%|█████████▉| 673/674 [00:00&lt;00:00, 3177.12it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1007,7 +1010,7 @@ peak acceleration (cm/s/s): -1012.657
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 914/915 [00:00&lt;00:00, 2480.76it/s]
+100%|█████████▉| 914/915 [00:00&lt;00:00, 2689.89it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1033,7 +1036,7 @@ peak acceleration (cm/s/s): 33.218
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 694/695 [00:00&lt;00:00, 2483.06it/s]
+100%|█████████▉| 694/695 [00:00&lt;00:00, 2891.35it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1060,7 +1063,7 @@ peak acceleration (cm/s/s): 165.262
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2099.58it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2282.88it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1087,7 +1090,7 @@ peak acceleration (cm/s/s): -219.633
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2071.89it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2320.65it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1114,7 +1117,7 @@ peak acceleration (cm/s/s): -60.641
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 671/672 [00:00&lt;00:00, 2792.88it/s]
+100%|█████████▉| 671/672 [00:00&lt;00:00, 2351.78it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1140,7 +1143,7 @@ peak acceleration (cm/s/s): 30.272
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 631/632 [00:00&lt;00:00, 2398.69it/s]
+100%|█████████▉| 631/632 [00:00&lt;00:00, 2284.98it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1176,14 +1179,6 @@ Text(0.5, 0.98, &#39;Painter St Bridge Transverse Mode (In: Ch17, Out: Ch9)&#39;
 <img alt="../_images/examples_06_MIMO_History_9_36.png" src="../_images/examples_06_MIMO_History_9_36.png" />
 </div>
 </div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
-</div>
-</div>
 </section>
 </section>
 
@@ -1198,12 +1193,12 @@ Text(0.5, 0.98, &#39;Painter St Bridge Transverse Mode (In: Ch17, Out: Ch9)&#39;
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="03_SISO_History.html"
+       href="05_MIMO_Intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">SISO for Ground Motion Events</p>
+        <p class="prev-next-title">Introduction to MIMO</p>
       </div>
     </a>
 </div>

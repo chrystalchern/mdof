@@ -41,6 +41,8 @@
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'library/mdof';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -374,29 +376,436 @@ document.write(`
 <section id="mdof-integrate-module">
 <h2>mdof.integrate module<a class="headerlink" href="#mdof-integrate-module" title="Permalink to this heading">#</a></h2>
 </section>
-<section id="mdof-markov-module">
-<h2>mdof.markov module<a class="headerlink" href="#mdof-markov-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.markov">
+<span id="mdof-markov-module"></span><h2>mdof.markov module<a class="headerlink" href="#module-mdof.markov" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.markov.okid">
+<span class="sig-prename descclassname"><span class="pre">mdof.markov.</span></span><span class="sig-name descname"><span class="pre">okid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.markov.okid" title="Permalink to this definition">#</a></dt>
+<dd><p>Identify Markov parameters, or discrete impulse response data, for a given set of input and output data.
+Observer Kalman Identification Algorithm (OKID) (Juang, Phan, Horta, Longman, 1993).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>m</strong> (<em>int</em><em>, </em><em>optional</em>) – number of Markov parameters to compute. default: <span class="math notranslate nohighlight">\(min(300, nt)\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>the Markov parameters, with dimensions <span class="math notranslate nohighlight">\((p,q,m+1)\)</span></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="mdof-modal-module">
-<h2>mdof.modal module<a class="headerlink" href="#mdof-modal-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.modal">
+<span id="mdof-modal-module"></span><h2>mdof.modal module<a class="headerlink" href="#module-mdof.modal" title="Permalink to this heading">#</a></h2>
+<p>This module implements functions that extract modal information
+from a state space realization.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.modal.system_modes">
+<span class="sig-prename descclassname"><span class="pre">mdof.modal.</span></span><span class="sig-name descname"><span class="pre">system_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modal.system_modes" title="Permalink to this definition">#</a></dt>
+<dd><p>Modal identification from a state space system realization.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>realization</strong> (<em>tuple</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+<li><p><strong>Observability</strong> (<em>array</em><em>, </em><em>optional</em>) – Observability matrix; can be reused from <a class="reference internal" href="#mdof.realize.srim" title="mdof.realize.srim"><code class="xref py py-func docutils literal notranslate"><span class="pre">mdof.realize.srim()</span></code></a>.
+default: None</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system modes, including natural frequencies, damping ratios, mode shapes,
+condition numbers, and modal validation metrics EMAC and MPC.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.modal.spectrum_modes">
+<span class="sig-prename descclassname"><span class="pre">mdof.modal.</span></span><span class="sig-name descname"><span class="pre">spectrum_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitudes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modal.spectrum_modes" title="Permalink to this definition">#</a></dt>
+<dd><p>Modal identification from a transfer function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>periods</strong> (<em>array</em>) – transfer function periods</p></li>
+<li><p><strong>amplitudes</strong> (<em>array</em>) – transfer function amplitudes</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(fundamental_periods, fundamental_amplitudes)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="mdof-numerics-module">
-<h2>mdof.numerics module<a class="headerlink" href="#mdof-numerics-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.numerics">
+<span id="mdof-numerics-module"></span><h2>mdof.numerics module<a class="headerlink" href="#module-mdof.numerics" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.lsq_solver">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">lsq_solver</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.lsq_solver" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.lin_solver">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">lin_solver</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.lin_solver" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.svd_routine">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">svd_routine</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lapack_driver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'gesvd'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.svd_routine" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.form_observability">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">form_observability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.form_observability" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.form_controllability">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">form_controllability</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.form_controllability" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.decimate">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">decimate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decimation</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.decimate" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.numerics.block_hankel">
+<span class="sig-prename descclassname"><span class="pre">mdof.numerics.</span></span><span class="sig-name descname"><span class="pre">block_hankel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.numerics.block_hankel" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
 </section>
-<section id="mdof-realize-module">
-<h2>mdof.realize module<a class="headerlink" href="#mdof-realize-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.realize">
+<span id="mdof-realize-module"></span><h2>mdof.realize module<a class="headerlink" href="#module-mdof.realize" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.realize.era">
+<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">era</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.era" title="Permalink to this definition">#</a></dt>
+<dd><p>System realization from Markov parameters (discrete impulse response data).
+Eigensystem Realization Algorithm (ERA) (Ho and Kalman 1966, Juang and Pappa 1985).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs,
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of Markov parameters.</p></li>
+<li><p><strong>horizon</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block rows in Hankel matrix = order of observability matrix.
+default: <span class="math notranslate nohighlight">\(min(150, (nt-1)/2)\)</span></p></li>
+<li><p><strong>nc</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block columns in Hankel matrix = order of controllability matrix.
+default: <span class="math notranslate nohighlight">\(min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.realize.era_dc">
+<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">era_dc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.era_dc" title="Permalink to this definition">#</a></dt>
+<dd><p>System realization from Markov parameters (discrete impulse response data).
+Eigensystem Realization Algorithm with Data Correlations (ERA/DC) (Juang, Cooper, and Wright, 1988).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs,
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of Markov parameters.</p></li>
+<li><p><strong>horizon</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block rows in Hankel matrix = order of observability matrix.
+default: <span class="math notranslate nohighlight">\(min(150, (nt-1)/2)\)</span></p></li>
+<li><p><strong>nc</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block columns in Hankel matrix = order of controllability matrix.
+default: <span class="math notranslate nohighlight">\(min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
+<li><p><strong>a</strong> (<em>int</em><em>, </em><em>optional</em>) – <span class="math notranslate nohighlight">\((\alpha)\)</span> number of block rows in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>b</strong> (<em>int</em><em>, </em><em>optional</em>) – <span class="math notranslate nohighlight">\((\beta)\)</span> number of block columns in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>l</strong> (<em>int</em><em>, </em><em>optional</em>) – initial lag for data correlations. default: 0</p></li>
+<li><p><strong>g</strong> (<em>int</em><em>, </em><em>optional</em>) – lags (gap) between correlation matrices. default: 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.realize.srim">
+<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">srim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.srim" title="Permalink to this definition">#</a></dt>
+<dd><p>System realization from input and output data, with output error minimization method.
+System Realization Using Information Matrix (SRIM) (Juang, 1997).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>horizon</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps used for identification (prediction horizon).
+default: <span class="math notranslate nohighlight">\(min(300, nt)\)</span></p></li>
+<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
+<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, full SVD. default: True</p></li>
+<li><p><strong>find</strong> (<em>string</em><em>, </em><em>optional</em>) – “ABCD” or “AC”. default: “ABCD”</p></li>
+<li><p><strong>threads</strong> (<em>int</em><em>, </em><em>optional</em>) – number of threads used during the output error minimization method.
+default: 6</p></li>
+<li><p><strong>chunk</strong> (<em>int</em><em>, </em><em>optional</em>) – chunk size in output error minimization method. default: 200</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="mdof-spec-module">
-<h2>mdof.spec module<a class="headerlink" href="#mdof-spec-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.transform">
+<span id="mdof-spec-module"></span><h2>mdof.spec module<a class="headerlink" href="#module-mdof.transform" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.transform.response_transfer">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">response_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.response_transfer" title="Permalink to this definition">#</a></dt>
+<dd><p>Response spectrum transfer function from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>pseudo</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, uses pseudo accelerations. default: False</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(periods, amplitudes)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.transform.fourier_transfer">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_transfer" title="Permalink to this definition">#</a></dt>
+<dd><p>Fourier spectrum transfer function from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(periods, amplitudes)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.transform.fourier_spectrum">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_spectrum" title="Permalink to this definition">#</a></dt>
+<dd><p>Fourier amplitude spectrum from a signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>series</strong> (<em>1D array</em>) – time series.</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>period_band</strong> – minimum and maximum period of interest, in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(frequencies, amplitudes)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="mdof-system-module">
-<h2>mdof.system module<a class="headerlink" href="#mdof-system-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.system">
+<span id="mdof-system-module"></span><h2>mdof.system module<a class="headerlink" href="#module-mdof.system" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.system.system">
+<span class="sig-prename descclassname"><span class="pre">mdof.system.</span></span><span class="sig-name descname"><span class="pre">system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.system.system" title="Permalink to this definition">#</a></dt>
+<dd><p>State space system realization from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are “okid-era” and “okid-era-dc”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.system.modes">
+<span class="sig-prename descclassname"><span class="pre">mdof.system.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.system.modes" title="Permalink to this definition">#</a></dt>
+<dd><p>Modal identification using state space system realization from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are
+“okid-era” and “okid-era-dc”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system modes, including natural frequencies, damping ratios, mode shapes,
+condition numbers, and modal validation metrics EMAC and MPC.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
-<section id="mdof-validation-module">
-<h2>mdof.validation module<a class="headerlink" href="#mdof-validation-module" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof.validation">
+<span id="mdof-validation-module"></span><h2>mdof.validation module<a class="headerlink" href="#module-mdof.validation" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.validation.EnergyCondensedEMAC">
+<span class="sig-prename descclassname"><span class="pre">mdof.validation.</span></span><span class="sig-name descname"><span class="pre">EnergyCondensedEMAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emac</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.validation.EnergyCondensedEMAC" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.validation.EMAC_Matrix">
+<span class="sig-prename descclassname"><span class="pre">mdof.validation.</span></span><span class="sig-name descname"><span class="pre">EMAC_Matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Phi_final</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Phi_final_hat</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.validation.EMAC_Matrix" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.validation.OutputEMAC">
+<span class="sig-prename descclassname"><span class="pre">mdof.validation.</span></span><span class="sig-name descname"><span class="pre">OutputEMAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Psi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Gam</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.validation.OutputEMAC" title="Permalink to this definition">#</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outlook</strong> – number of timesteps for which to consider temporal consistency. default: 100</p></li>
+<li><p><strong>Psi</strong> – eigenvectors of A, as columns of a matrix. can be reused from modal.system_modes().</p></li>
+<li><p><strong>Gam</strong> – eigenvalues of A, as items of a vector. can be reused from modal.system_modes().</p></li>
+<li><p><strong>Observability</strong> – Observability matrix; can be reused from <a class="reference internal" href="#mdof.realize.srim" title="mdof.realize.srim"><code class="xref py py-func docutils literal notranslate"><span class="pre">mdof.realize.srim()</span></code></a>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.validation.MPC">
+<span class="sig-prename descclassname"><span class="pre">mdof.validation.</span></span><span class="sig-name descname"><span class="pre">MPC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">Psi</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.validation.MPC" title="Permalink to this definition">#</a></dt>
+<dd><ol class="loweralpha simple">
+<li><p>Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]</p></li>
+</ol>
+</dd></dl>
+
 </section>
-<section id="module-contents">
-<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">#</a></h2>
+<section id="module-mdof">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mdof" title="Permalink to this heading">#</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.impulse">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">impulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.impulse" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.sysid">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">sysid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.sysid" title="Permalink to this definition">#</a></dt>
+<dd><p>State space system realization from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are “okid-era” and “okid-era-dc”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.eigid">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">eigid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.eigid" title="Permalink to this definition">#</a></dt>
+<dd><p>System eigenspace identification from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><cite>(eigenvalues, eigenvectors)</cite></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of 1D array, ND array</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 
@@ -428,14 +837,55 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#subpackages">Subpackages</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#submodules">Submodules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-integrate-module">mdof.integrate module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-markov-module">mdof.markov module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-modal-module">mdof.modal module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-numerics-module">mdof.numerics module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-realize-module">mdof.realize module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-spec-module">mdof.spec module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-system-module">mdof.system module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof-validation-module">mdof.validation module</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-contents">Module contents</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.markov">mdof.markov module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.markov.okid"><code class="docutils literal notranslate"><span class="pre">okid()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.modal">mdof.modal module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.modal.system_modes"><code class="docutils literal notranslate"><span class="pre">system_modes()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.modal.spectrum_modes"><code class="docutils literal notranslate"><span class="pre">spectrum_modes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.numerics">mdof.numerics module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.lsq_solver"><code class="docutils literal notranslate"><span class="pre">lsq_solver()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.lin_solver"><code class="docutils literal notranslate"><span class="pre">lin_solver()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.svd_routine"><code class="docutils literal notranslate"><span class="pre">svd_routine()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.form_observability"><code class="docutils literal notranslate"><span class="pre">form_observability()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.form_controllability"><code class="docutils literal notranslate"><span class="pre">form_controllability()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.decimate"><code class="docutils literal notranslate"><span class="pre">decimate()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.numerics.block_hankel"><code class="docutils literal notranslate"><span class="pre">block_hankel()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.realize">mdof.realize module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era"><code class="docutils literal notranslate"><span class="pre">era()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era_dc"><code class="docutils literal notranslate"><span class="pre">era_dc()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.srim"><code class="docutils literal notranslate"><span class="pre">srim()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.transform">mdof.spec module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.response_transfer"><code class="docutils literal notranslate"><span class="pre">response_transfer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_transfer"><code class="docutils literal notranslate"><span class="pre">fourier_transfer()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_spectrum"><code class="docutils literal notranslate"><span class="pre">fourier_spectrum()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.system">mdof.system module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.system.system"><code class="docutils literal notranslate"><span class="pre">system()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.system.modes"><code class="docutils literal notranslate"><span class="pre">modes()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof.validation">mdof.validation module</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.validation.EnergyCondensedEMAC"><code class="docutils literal notranslate"><span class="pre">EnergyCondensedEMAC()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.validation.EMAC_Matrix"><code class="docutils literal notranslate"><span class="pre">EMAC_Matrix()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.validation.OutputEMAC"><code class="docutils literal notranslate"><span class="pre">OutputEMAC()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.validation.MPC"><code class="docutils literal notranslate"><span class="pre">MPC()</span></code></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof">Module contents</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.impulse"><code class="docutils literal notranslate"><span class="pre">impulse()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.sysid"><code class="docutils literal notranslate"><span class="pre">sysid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.eigid"><code class="docutils literal notranslate"><span class="pre">eigid()</span></code></a></li>
+</ul>
+</li>
 </ul>
   </nav></div>
 

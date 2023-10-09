@@ -48,6 +48,8 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to MIMO" href="05_MIMO_Intro.html" />
+    <link rel="prev" title="SISO for Ground Motion Events" href="03_SISO_History.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -152,7 +154,7 @@
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -237,7 +239,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
+      <div class="bd-sidebar-primary bd-sidebar">
         
 
   
@@ -269,7 +271,7 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item">
+                    <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -315,6 +317,23 @@ document.write(`
     
   </div>
   
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History_Archive.html">SISO for History of Events at a Station</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -347,6 +366,9 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
+    
     <li class="breadcrumb-item active" aria-current="page">SIMO for...</li>
   </ul>
 </nav>
@@ -402,12 +424,6 @@ document.write(`
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(k_{2}\)</span></p></td>
 <td><p>stiffness at dof 2</p></td>
 </tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(c_{1}\)</span></p></td>
-<td><p>damping at dof 1</p></td>
-</tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(c_{2}\)</span></p></td>
-<td><p>damping at dof 2</p></td>
-</tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\omega_{1}\)</span></p></td>
 <td><p>natural periods for mode 1</p></td>
 </tr>
@@ -418,7 +434,7 @@ document.write(`
 <td><p>modal damping for mode 1</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\zeta_{2}\)</span></p></td>
-<td><p>modal damping for mode 2 2</p></td>
+<td><p>modal damping for mode 2</p></td>
 </tr>
 </tbody>
 </table>
@@ -515,12 +531,11 @@ document.write(`
 <span class="n">Tns</span> <span class="o">=</span> <span class="p">[</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">omega_n</span> <span class="k">for</span> <span class="n">omega_n</span> <span class="ow">in</span> <span class="n">omega_ns</span><span class="p">]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;natural periods: </span><span class="si">{</span><span class="n">Tns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;3.3</span><span class="si">}</span><span class="s2">s, </span><span class="si">{</span><span class="n">Tns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="si">:</span><span class="s2">&lt;3.3</span><span class="si">}</span><span class="s2">s&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;damping ratios: </span><span class="si">{</span><span class="n">zeta1</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">zeta2</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="n">C</span>
+<span class="c1"># print(f&quot;damping matrix: {C}&quot;)</span>
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
@@ -529,26 +544,16 @@ natural periods: 0.991s, 0.266s
 damping ratios: 0.01, 0.02
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-array([[ 0.04641016, -1.29282032],
-       [ 0.12679492,  0.94641016]])
-</pre></div></div>
-</div>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># forcing function (input)</span>
-<span class="n">nt</span> <span class="o">=</span> <span class="mi">5000</span>       <span class="c1"># number of timesteps</span>
+<span class="n">nt</span> <span class="o">=</span> <span class="mi">2000</span>       <span class="c1"># number of timesteps</span>
 <span class="n">dt</span> <span class="o">=</span> <span class="mf">0.03</span>       <span class="c1"># timestep</span>
 <span class="n">tf</span> <span class="o">=</span> <span class="n">nt</span><span class="o">*</span><span class="n">dt</span>      <span class="c1"># final time</span>
 <span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">start</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">stop</span> <span class="o">=</span> <span class="n">tf</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="n">dt</span><span class="p">)</span>  <span class="c1"># times</span>
-<span class="n">forcing_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.017</span><span class="o">*</span><span class="n">omega_ns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">omega_ns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.467</span><span class="o">*</span><span class="n">omega_ns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.186</span><span class="o">*</span><span class="n">omega_ns</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="mf">0.2937</span><span class="o">*</span><span class="n">omega_ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>  <span class="c1"># forcing frequencies (rad/s)</span>
+<span class="n">forcing_frequencies</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.5</span><span class="o">*</span><span class="n">omega_ns</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span> <span class="c1"># [0.017*omega_ns[0], 0.14*omega_ns[0], 0.467*omega_ns[0], 0.186*omega_ns[0], 0.2937*omega_ns[0]]  # forcing frequencies (rad/s)</span>
 <span class="n">inputs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">([</span><span class="n">omega</span><span class="o">*</span><span class="n">t</span> <span class="k">for</span> <span class="n">omega</span> <span class="ow">in</span> <span class="n">forcing_frequencies</span><span class="p">]),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -588,8 +593,8 @@ array([[ 0.04641016, -1.29282032],
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">r</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">order</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">horizon</span> <span class="o">=</span> <span class="mi">1000</span>
 </pre></div>
 </div>
 </div>
@@ -597,8 +602,8 @@ array([[ 0.04641016, -1.29282032],
 </section>
 <section id="Analysis-with-System-Identification">
 <h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Permalink to this heading">#</a></h2>
-<section id="Transfer-Function-Methods">
-<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
+<section id="Transfer-Function-vs-State-Space-Methods">
+<h3>Transfer Function vs State Space Methods<a class="headerlink" href="#Transfer-Function-vs-State-Space-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -606,28 +611,27 @@ array([[ 0.04641016, -1.29282032],
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set parameters</span>
 <span class="n">conf</span><span class="o">.</span><span class="n">damping</span> <span class="o">=</span> <span class="n">zetas</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 <span class="n">conf</span><span class="o">.</span><span class="n">period_band</span> <span class="o">=</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span> <span class="c1"># Period band (s)</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">pseudo</span> <span class="o">=</span> <span class="kc">True</span> <span class="c1"># use pseudo accelerations (Sa)</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">pseudo</span> <span class="o">=</span> <span class="kc">False</span> <span class="c1"># use pseudo accelerations (Sa)</span>
 
 <span class="c1"># A place to store models and their predictions</span>
 <span class="n">transfer_models</span> <span class="o">=</span> <span class="p">{}</span>
 
 <span class="c1"># Generate a transfer function representation of the system</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+<span class="c1"># transfer_models[&quot;Response Spectrum&quot;] = transform.response_transfer(inputs, outputs[0], dt, **conf)</span>
 
 <span class="c1"># Determing the fundamental frequency</span>
 <span class="n">fourier_periods</span><span class="p">,</span> <span class="n">fourier_amplitudes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">])</span>
-<span class="n">response_periods</span><span class="p">,</span> <span class="n">response_amplitudes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Response Spectrum&quot;</span><span class="p">],</span><span class="n">height</span><span class="o">=</span><span class="mf">0.15</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">,</span> <span class="n">response_periods</span><span class="p">)</span>
+<span class="c1"># response_periods, response_amplitudes = modal.spectrum_modes(*transfer_models[&quot;Response Spectrum&quot;],height=0.15)</span>
 
 <span class="c1"># Generate a state space realization of the system</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span>
 <span class="n">realization</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;srim&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
 <span class="c1"># Obtain natural period and damping ratio from the state space model</span>
 <span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">(</span><span class="n">realization</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">ss_periods</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ss_modes</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">keys</span><span class="p">()]]</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">)</span>
-<span class="c1"># print_modes(ss_modes, Tn=Tn, zeta=zeta)</span>
 
 <span class="n">plot_transfer</span><span class="p">(</span><span class="n">transfer_models</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Transfer Functions&quot;</span><span class="p">)</span>
 <span class="n">color_cycle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
@@ -636,6 +640,7 @@ array([[ 0.04641016, -1.29282032],
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="o">*</span><span class="n">fourier_periods</span><span class="p">[:</span><span class="mi">2</span><span class="p">]],</span><span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="n">color_cycle</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.975</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{fourier}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_{state space}$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
     <span class="c1"># plt.gcf().axes[0].text(response_periods[i]+0.05,0.875,r&quot;$T_{response}$ = &quot;+str(np.round(response_periods[i],3)),fontsize=15)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.1</span><span class="p">));</span>
@@ -645,23 +650,9 @@ array([[ 0.04641016, -1.29282032],
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[0.98684211 0.26595745] [0.63396985 1.21798995]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 2200/2201 [00:00&lt;00:00, 5189.26it/s]
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:137: RuntimeWarning: divide by zero encountered in scalar divide
-  nu[i]    = (s22[i]-s11[i])/(2*s12[i])
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:138: RuntimeWarning: invalid value encountered in scalar multiply
-  lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:139: RuntimeWarning: invalid value encountered in scalar multiply
-  lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
+100%|█████████▉| 1000/1001 [00:00&lt;00:00, 12535.69it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -669,65 +660,27 @@ array([[ 0.04641016, -1.29282032],
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[0.2655586578711061, 0.991078403564804, 2.589501843696377]
+[0.991078403564801, 0.26555865787121163]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_SIMO_Event_16_3.png" src="../_images/examples_04_SIMO_Event_16_3.png" />
+<img alt="../_images/examples_04_SIMO_Event_16_2.png" src="../_images/examples_04_SIMO_Event_16_2.png" />
 </div>
 </div>
 </section>
-<section id="State-Space-(%22Parametric%22)-Methods">
-<h3>State Space (“Parametric”) Methods<a class="headerlink" href="#State-Space-(%22Parametric%22)-Methods" title="Permalink to this heading">#</a></h3>
+<section id="State-Space-Methods">
+<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a state space realization of the system</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="n">realization</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;okid-era-dc&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="c1"># Obtain natural period and damping ratio from the state space model</span>
-<span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">(</span><span class="n">realization</span><span class="p">,</span> <span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">ss_periods</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="n">f</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="p">[</span><span class="n">ss_modes</span><span class="p">[</span><span class="n">mode</span><span class="p">][</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">mode</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">keys</span><span class="p">()]]</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">)</span>
-<span class="c1"># print_modes(ss_modes, Tn=Tn, zeta=zeta)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-[1.3413986642990088, 1.4632046001334909, 2.554609804643676, 4.189005193618333]
-</pre></div></div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_io</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;SDOF Response&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../_images/examples_04_SIMO_Event_19_0.png" src="../_images/examples_04_SIMO_Event_19_0.png" />
-</div>
-</div>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
-</pre></div>
-</div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
 <span class="kn">from</span> <span class="nn">control</span> <span class="kn">import</span> <span class="n">ss</span><span class="p">,</span> <span class="n">forced_response</span>
-<span class="n">out_mdof</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="o">*</span><span class="n">realization</span><span class="p">,</span><span class="n">dt</span><span class="o">*</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">U</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
-<span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">models</span><span class="o">=</span><span class="n">out_mdof</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;State Space Model Displacement Response&quot;</span><span class="p">)</span>
+<span class="n">out_pred</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="o">*</span><span class="n">realization</span><span class="p">,</span><span class="n">dt</span><span class="o">*</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">U</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
+<span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">models</span><span class="o">=</span><span class="n">out_pred</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;State Space Model Displacement Response&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -735,7 +688,15 @@ array([[ 0.04641016, -1.29282032],
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_SIMO_Event_20_0.png" src="../_images/examples_04_SIMO_Event_20_0.png" />
+<img alt="../_images/examples_04_SIMO_Event_18_0.png" src="../_images/examples_04_SIMO_Event_18_0.png" />
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </section>
@@ -752,6 +713,24 @@ array([[ 0.04641016, -1.29282032],
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
+    <a class="left-prev"
+       href="03_SISO_History.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">SISO for Ground Motion Events</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="05_MIMO_Intro.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to MIMO</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
 </div>
                 </footer>
               
@@ -773,8 +752,8 @@ array([[ 0.04641016, -1.29282032],
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Analysis-with-System-Identification">Analysis with System Identification</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Transfer-Function-Methods">Transfer Function Methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#State-Space-(%22Parametric%22)-Methods">State Space (“Parametric”) Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Transfer-Function-vs-State-Space-Methods">Transfer Function vs State Space Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#State-Space-Methods">State Space Methods</a></li>
 </ul>
 </li>
 </ul>

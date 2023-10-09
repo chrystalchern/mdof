@@ -48,7 +48,7 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="03_SISO_History_Archive.html" />
+    <link rel="next" title="SISO for History of Events at a Station" href="03_SISO_History_Archive.html" />
     <link rel="prev" title="System Identification with the mdof package" href="01_SISO_Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -324,7 +324,10 @@ document.write(`
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History_Archive.html">SISO for History of Events at a Station</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_SIMO_Event.html">SIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
 </ul>
 </div>
@@ -386,7 +389,7 @@ document.write(`
   <section id="SISO-for-Ground-Motion-Events">
 <h1>SISO for Ground Motion Events<a class="headerlink" href="#SISO-for-Ground-Motion-Events" title="Permalink to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdof</span>
@@ -424,7 +427,7 @@ document.write(`
 <section id="Inputs">
 <h3>Inputs<a class="headerlink" href="#Inputs" title="Permalink to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">inputs</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="s2">&quot;uploads/elcentro.txt&quot;</span><span class="p">)</span>
@@ -439,7 +442,7 @@ document.write(`
 <section id="Outputs">
 <h3>Outputs<a class="headerlink" href="#Outputs" title="Permalink to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">outputs</span> <span class="o">=</span> <span class="kc">None</span>
@@ -447,7 +450,7 @@ document.write(`
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Example SDOF system</span>
@@ -459,7 +462,7 @@ document.write(`
 </div>
 <p>Generate output if one was not given:</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">if</span> <span class="n">outputs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -481,10 +484,11 @@ natural period: 1.1471s
 damping ratio:  0.01
 </pre></div></div>
 </div>
+</section>
 <section id="Method">
-<h4>Method<a class="headerlink" href="#Method" title="Permalink to this heading">#</a></h4>
+<h3>Method<a class="headerlink" href="#Method" title="Permalink to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
@@ -494,11 +498,12 @@ damping ratio:  0.01
 </div>
 </section>
 </section>
-</section>
 <section id="Analysis-with-System-Identification">
 <h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Permalink to this heading">#</a></h2>
+<section id="Transfer-Function-Methods">
+<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set parameters</span>
@@ -519,8 +524,11 @@ damping ratio:  0.01
 </pre></div>
 </div>
 </div>
+</section>
+<section id="State-Space-Methods">
+<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a state space realization of the system</span>
@@ -539,7 +547,7 @@ damping ratio:  0.01
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 3695/3696 [00:00&lt;00:00, 67680.79it/s]
+100%|█████████▉| 3695/3696 [00:00&lt;00:00, 28868.69it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -562,8 +570,11 @@ Standard Dev(s): 0.0
 
 </pre></div></div>
 </div>
+</section>
+<section id="Visualize-Transfer-Functions-vs.-State-Space-Methodds">
+<h3>Visualize Transfer Functions vs. State Space Methodds<a class="headerlink" href="#Visualize-Transfer-Functions-vs.-State-Space-Methodds" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_transfer</span><span class="p">(</span><span class="n">transfer_models</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Transfer Functions&quot;</span><span class="p">)</span>
@@ -593,7 +604,7 @@ Standard Dev(s): 0.0
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Tn</span><span class="p">,</span> <span class="n">ss_modes</span><span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">ss_modes</span><span class="o">.</span><span class="n">keys</span><span class="p">()))][</span><span class="s2">&quot;freq&quot;</span><span class="p">],</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-2</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="n">Tn</span><span class="p">,</span> <span class="mi">1</span><span class="o">/</span><span class="n">ss_modes</span><span class="p">[</span><span class="nb">next</span><span class="p">(</span><span class="nb">iter</span><span class="p">(</span><span class="n">ss_modes</span><span class="o">.</span><span class="n">keys</span><span class="p">()))][</span><span class="s2">&quot;freq&quot;</span><span class="p">])</span>
@@ -602,7 +613,7 @@ Standard Dev(s): 0.0
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_io</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;SDOF Response&quot;</span><span class="p">)</span>
@@ -617,7 +628,7 @@ Standard Dev(s): 0.0
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
@@ -646,6 +657,7 @@ Standard Dev(s): 0.0
 </div>
 </section>
 </section>
+</section>
 
 
                 </article>
@@ -671,7 +683,7 @@ Standard Dev(s): 0.0
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">SISO for History of Events at a Station</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -693,13 +705,16 @@ Standard Dev(s): 0.0
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Unknown-system-with-one-input-and-one-output">Unknown system with one input and one output</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Configure">Configure</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Inputs">Inputs</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Outputs">Outputs</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#Method">Method</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Outputs">Outputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Method">Method</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Analysis-with-System-Identification">Analysis with System Identification</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Transfer-Function-Methods">Transfer Function Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#State-Space-Methods">State Space Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Visualize-Transfer-Functions-vs.-State-Space-Methodds">Visualize Transfer Functions vs. State Space Methodds</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Analysis-with-System-Identification">Analysis with System Identification</a></li>
 </ul>
   </nav></div>
 
