@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>System Identification with the ssid package &#8212; mdof</title>
+    <title>System Identification with the mdof package &#8212; mdof</title>
   
   
   
@@ -18,32 +18,29 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -63,6 +60,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -103,7 +109,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -120,7 +127,6 @@
     
   </div>
   
-  
   <div class="col-lg-9 navbar-header-items">
     
     <div class="me-auto navbar-header-items__center">
@@ -135,14 +141,7 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         mdof
                       </a>
                     </li>
@@ -171,23 +170,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -203,8 +204,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -214,18 +215,20 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
       <span class="fa-solid fa-outdent"></span>
     </label>
   
@@ -255,14 +258,7 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         mdof
                       </a>
                     </li>
@@ -293,10 +289,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -312,8 +308,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -326,9 +322,12 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
 <li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History_Archive.html">SISO for History of Events at a Station</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_SIMO_Event.html">SIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
 </ul>
 </div>
@@ -359,8 +358,8 @@ document.write(`
 
 
 
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
@@ -370,7 +369,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package</li>
+    <li class="breadcrumb-item active" aria-current="page">System...</li>
   </ul>
 </nav>
 </div>
@@ -387,24 +386,24 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="System-Identification-with-the-ssid-package">
-<h1>System Identification with the <code class="docutils literal notranslate"><span class="pre">ssid</span></code> package<a class="headerlink" href="#System-Identification-with-the-ssid-package" title="Link to this heading">#</a></h1>
+  <section id="System-Identification-with-the-mdof-package">
+<h1>System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package<a class="headerlink" href="#System-Identification-with-the-mdof-package" title="Permalink to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">from</span> <span class="nn">ssid.utilities.printing</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">ssid.utilities.testing</span> <span class="kn">import</span> <span class="n">test_method</span>
-<span class="kn">from</span> <span class="nn">ssid.utilities.config</span> <span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">import</span> <span class="nn">ssid</span>
-<span class="kn">from</span> <span class="nn">ssid</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">transform</span>
+<span class="kn">from</span> <span class="nn">mdof.utilities.printing</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">from</span> <span class="nn">mdof.utilities.testing</span> <span class="kn">import</span> <span class="n">test_method</span>
+<span class="kn">from</span> <span class="nn">mdof.utilities.config</span> <span class="kn">import</span> <span class="n">Config</span>
+<span class="kn">import</span> <span class="nn">mdof</span>
+<span class="kn">from</span> <span class="nn">mdof</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">transform</span>
 <span class="kn">from</span> <span class="nn">control</span> <span class="kn">import</span> <span class="n">ss</span><span class="p">,</span> <span class="n">forced_response</span>
 </pre></div>
 </div>
 </div>
 <section id="Define-a-SDOF-system">
-<h2>Define a SDOF system<a class="headerlink" href="#Define-a-SDOF-system" title="Link to this heading">#</a></h2>
+<h2>Define a SDOF system<a class="headerlink" href="#Define-a-SDOF-system" title="Permalink to this heading">#</a></h2>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -429,7 +428,7 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<img alt="sdof" src="../_images/sdof.png" />
+<p><img alt="sdof" src="../_images/sdof.png" /></p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -506,9 +505,9 @@ damping ratio: 0.01
 </div>
 </section>
 <section id="Perform-System-Identification">
-<h2>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Link to this heading">#</a></h2>
+<h2>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Permalink to this heading">#</a></h2>
 <section id="Transfer-Function-Methods">
-<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Link to this heading">#</a></h3>
+<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -533,7 +532,6 @@ damping ratio: 0.01
 <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">response_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]],</span><span class="n">ymin</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ymax</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span><span class="n">colors</span><span class="o">=</span><span class="n">color_cycle</span><span class="p">[:</span><span class="mi">2</span><span class="p">])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.975</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{fourier}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">response_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.875</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{response}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">response_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="c1"># plt.vlines([2*np.pi/f for f in omega_f],0,0.5,color=&quot;r&quot;,label=&quot;forcing periods&quot;)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">period_band</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
 </pre></div>
@@ -548,13 +546,13 @@ damping ratio: 0.01
 </div>
 </section>
 <section id="State-Space-Methods">
-<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Link to this heading">#</a></h3>
+<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate a state space realization of the system</span>
-<span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span> <span class="o">=</span> <span class="n">ssid</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="c1"># Obtain natural period and damping ratio from the state space model</span>
 <span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">((</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">),</span><span class="n">dt</span><span class="p">,</span><span class="n">outlook</span><span class="o">=</span><span class="mi">190</span><span class="p">)</span>
 <span class="n">print_modes</span><span class="p">(</span><span class="n">ss_modes</span><span class="p">,</span> <span class="n">Tn</span><span class="o">=</span><span class="n">Tn</span><span class="p">,</span> <span class="n">zeta</span><span class="o">=</span><span class="n">zeta</span><span class="p">)</span>
@@ -566,7 +564,7 @@ damping ratio: 0.01
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 4700/4701 [00:00&lt;00:00, 63680.42it/s]
+100%|█████████▉| 4700/4701 [00:00&lt;00:00, 63169.05it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -594,8 +592,8 @@ Standard Dev(s): 0.0
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
-<span class="n">y_ssid</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="n">dt</span><span class="p">),</span> <span class="n">T</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
-<span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">y_ssid</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;System ID Predicted Displacement Response&quot;</span><span class="p">)</span>
+<span class="n">y_mdof</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="n">dt</span><span class="p">),</span> <span class="n">T</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
+<span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">y_mdof</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;System ID Predicted Displacement Response&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -609,9 +607,9 @@ Standard Dev(s): 0.0
 </section>
 </section>
 <section id="Breakdown-of-State-Space-Methods">
-<h2>Breakdown of State Space Methods<a class="headerlink" href="#Breakdown-of-State-Space-Methods" title="Link to this heading">#</a></h2>
+<h2>Breakdown of State Space Methods<a class="headerlink" href="#Breakdown-of-State-Space-Methods" title="Permalink to this heading">#</a></h2>
 <section id="General-Parameters">
-<h3>General Parameters<a class="headerlink" href="#General-Parameters" title="Link to this heading">#</a></h3>
+<h3>General Parameters<a class="headerlink" href="#General-Parameters" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -631,7 +629,7 @@ Standard Dev(s): 0.0
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">dt</span></code></p></td>
 <td><p>timestep</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">d</span></code></p></td>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">decimation</span></code></p></td>
 <td><p>decimation (downsampling) factor</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">order</span></code></p></td>
@@ -640,80 +638,8 @@ Standard Dev(s): 0.0
 </tbody>
 </table>
 </section>
-<section id="Specific-to-Observer-Kalman-Identification-(OKID)">
-<h3>Specific to Observer Kalman Identification (OKID)<a class="headerlink" href="#Specific-to-Observer-Kalman-Identification-(OKID)" title="Link to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
-<td><p>number of Markov parameters to compute (at most = nt)</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-Eigensystem-Realization-Algorithm-(ERA)">
-<h3>Specific to Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)" title="Link to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
-<td><p>number of observability parameters, or prediction horizon</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nc</span></code></p></td>
-<td><p>number of controllability parameters</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-Data-Correlations-(DC)">
-<h3>Specific to Data Correlations (DC)<a class="headerlink" href="#Specific-to-Data-Correlations-(DC)" title="Link to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
-<td><p>(alpha) number of additional block rows in Hankel matrix of correlation matrices</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">b</span></code></p></td>
-<td><p>(beta) number of additional block columns in Hankel matrix of correlation matrices</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
-<td><p>initial lag</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">g</span></code></p></td>
-<td><p>lag (gap) between correlations</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="Specific-to-System-Realization-with-Information-Matrix-(SRIM)">
-<h3>Specific to System Realization with Information Matrix (SRIM)<a class="headerlink" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)" title="Link to this heading">#</a></h3>
-<table class="table">
-<thead>
-<tr class="row-odd"><th class="head"><p>parameter</p></th>
-<th class="head"><p>value</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
-<td><p>number of steps used for identification, or prediction horizon</p></td>
-</tr>
-</tbody>
-</table>
-</section>
 <section id="Parameters-for-Mode-Validation">
-<h3>Parameters for Mode Validation<a class="headerlink" href="#Parameters-for-Mode-Validation" title="Link to this heading">#</a></h3>
+<h3>Parameters for Mode Validation<a class="headerlink" href="#Parameters-for-Mode-Validation" title="Permalink to this heading">#</a></h3>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -728,7 +654,7 @@ Standard Dev(s): 0.0
 </table>
 </section>
 <section id="Method-Inputs">
-<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Link to this heading">#</a></h3>
+<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Permalink to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
 </pre></div>
@@ -750,8 +676,41 @@ Standard Dev(s): 0.0
 </div>
 </div>
 </section>
+<section id="Specific-to-Observer-Kalman-Identification-(OKID)">
+<h3>Specific to Observer Kalman Identification (OKID)<a class="headerlink" href="#Specific-to-Observer-Kalman-Identification-(OKID)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">m</span></code></p></td>
+<td><p>number of Markov parameters to compute (at most = nt)</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="Specific-to-Eigensystem-Realization-Algorithm-(ERA)">
+<h3>Specific to Eigensystem Realization Algorithm (ERA)<a class="headerlink" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
+<td><p>number of observability parameters, or prediction horizon</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">nc</span></code></p></td>
+<td><p>number of controllability parameters</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="OKID-ERA">
-<h3>OKID-ERA<a class="headerlink" href="#OKID-ERA" title="Link to this heading">#</a></h3>
+<h3>OKID-ERA<a class="headerlink" href="#OKID-ERA" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -776,8 +735,32 @@ Standard Dev(s): 0.0
 </pre></div></div>
 </div>
 </section>
+<section id="Specific-to-Data-Correlations-(DC)">
+<h3>Specific to Data Correlations (DC)<a class="headerlink" href="#Specific-to-Data-Correlations-(DC)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">a</span></code></p></td>
+<td><p>(alpha) number of additional block rows in Hankel matrix of correlation matrices</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">b</span></code></p></td>
+<td><p>(beta) number of additional block columns in Hankel matrix of correlation matrices</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">l</span></code></p></td>
+<td><p>initial lag</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">g</span></code></p></td>
+<td><p>lag (gap) between correlations</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="OKID-ERA-DC">
-<h3>OKID-ERA-DC<a class="headerlink" href="#OKID-ERA-DC" title="Link to this heading">#</a></h3>
+<h3>OKID-ERA-DC<a class="headerlink" href="#OKID-ERA-DC" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -802,8 +785,23 @@ Standard Dev(s): 0.0
 </pre></div></div>
 </div>
 </section>
+<section id="Specific-to-System-Realization-with-Information-Matrix-(SRIM)">
+<h3>Specific to System Realization with Information Matrix (SRIM)<a class="headerlink" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)" title="Permalink to this heading">#</a></h3>
+<table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>parameter</p></th>
+<th class="head"><p>value</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">horizon</span></code></p></td>
+<td><p>number of steps used for identification, or prediction horizon</p></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="SRIM">
-<h3>SRIM<a class="headerlink" href="#SRIM" title="Link to this heading">#</a></h3>
+<h3>SRIM<a class="headerlink" href="#SRIM" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
@@ -820,10 +818,10 @@ Standard Dev(s): 0.0
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 4850/4851 [00:00&lt;00:00, 60909.32it/s]
+100%|█████████▉| 4850/4851 [00:00&lt;00:00, 59143.41it/s]
 </pre></div></div>
 </div>
-<div class="nboutput nblast docutils container">
+<div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
@@ -835,9 +833,17 @@ Mean Period(s): 1.14714744190937
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
 </section>
 <section id="Compare-Methods">
-<h3>Compare Methods<a class="headerlink" href="#Compare-Methods" title="Link to this heading">#</a></h3>
+<h3>Compare Methods<a class="headerlink" href="#Compare-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[13]:
 </pre></div>
@@ -850,7 +856,7 @@ Standard Dev(s): 0.0
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_26_0.png" src="../_images/examples_01_SISO_Intro_26_0.png" />
+<img alt="../_images/examples_01_SISO_Intro_30_0.png" src="../_images/examples_01_SISO_Intro_30_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
@@ -865,7 +871,7 @@ Standard Dev(s): 0.0
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_27_0.png" src="../_images/examples_01_SISO_Intro_27_0.png" />
+<img alt="../_images/examples_01_SISO_Intro_31_0.png" src="../_images/examples_01_SISO_Intro_31_0.png" />
 </div>
 </div>
 </section>
@@ -877,11 +883,10 @@ Standard Dev(s): 0.0
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
        href="index.html"
@@ -901,10 +906,7 @@ Standard Dev(s): 0.0
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -927,14 +929,14 @@ Standard Dev(s): 0.0
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Breakdown-of-State-Space-Methods">Breakdown of State Space Methods</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#General-Parameters">General Parameters</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Observer-Kalman-Identification-(OKID)">Specific to Observer Kalman Identification (OKID)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)">Specific to Eigensystem Realization Algorithm (ERA)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Data-Correlations-(DC)">Specific to Data Correlations (DC)</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)">Specific to System Realization with Information Matrix (SRIM)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Parameters-for-Mode-Validation">Parameters for Mode Validation</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Method-Inputs">Method Inputs</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Observer-Kalman-Identification-(OKID)">Specific to Observer Kalman Identification (OKID)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Eigensystem-Realization-Algorithm-(ERA)">Specific to Eigensystem Realization Algorithm (ERA)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#OKID-ERA">OKID-ERA</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-Data-Correlations-(DC)">Specific to Data Correlations (DC)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#OKID-ERA-DC">OKID-ERA-DC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Specific-to-System-Realization-with-Information-Matrix-(SRIM)">Specific to System Realization with Information Matrix (SRIM)</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#SRIM">SRIM</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Compare-Methods">Compare Methods</a></li>
 </ul>
@@ -955,8 +957,8 @@ Standard Dev(s): 0.0
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -974,7 +976,7 @@ Standard Dev(s): 0.0
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>
@@ -982,10 +984,11 @@ Standard Dev(s): 0.0
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
 </p></div>
       
     </div>

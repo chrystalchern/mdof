@@ -8,6 +8,6 @@ Examples
     02_SISO_Event
     03_SISO_History_Archive
     03_SISO_History
-    04_MIMO_Intro
-    05_MIMO_Event
+    04_SIMO_Event
+    05_MIMO_Intro
     06_MIMO_History

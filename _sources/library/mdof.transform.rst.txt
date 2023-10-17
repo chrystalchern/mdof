@@ -1,5 +1,5 @@
-mdof.spec module
-================
+mdof.transform module
+=====================
 
 .. automodule:: mdof.transform
    :members:
