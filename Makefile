@@ -1,30 +1,19 @@
 SHELL=/bin/bash
 
 NOTEBOOKS = notebooks/01_SISO_Intro.ipynb \
-            notebooks/05_MIMO_Intro.ipynb \
             notebooks/02_SISO_Event.ipynb \
 	    	notebooks/06_MIMO_History.ipynb \
-			studies/PeakPicking.ipynb \
-			studies/06_MIMO_History_All_CGS_Motions.ipynb
+			../mdof_studies/PeakPicking.ipynb \
+			../mdof_studies/PowerSpectrum.ipynb
 
 publish:
 	cp -r _build/html/* site/
-	git add site && git commit -m'cmp - rebuild site' && git subtree push --prefix site/ origin gh-pages
+	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site/ origin gh-pages
 
 test:
 	#pytest --nbmake notebooks/*.ipynb 
 	pytest --nbmake $(NOTEBOOKS)
 
-
-
-
-# notebook:
-	# for notebook in ssid_demo.ipynb state_space_studies.ipynb impulse_response_studies.ipynb time_history_studies.ipynb transfer_function.ipynb; do \
-# 	for notebook in ssid_demo.ipynb state_space_studies.ipynb; do \
-# 	cp tests/$$notebook docs/examples; \
-# 	cd docs/examples/ \
-#         && cat <(printf "$$notebook\n==========================\n" ) <(pandoc $$notebook -t rst --title "SDOF"  --extract-media ./ --resource-path ../../tests/ ) > $${notebook/ipynb/rst} \
-# 	&& cd - ; done
 # Minimal makefile for Sphinx documentation
 #
 
