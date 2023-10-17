@@ -6,16 +6,11 @@
 mdof documentation
 ================================
 
-**mdof** is a Python library that performs fast and friendly structural system identification.
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
-   api/index
-   library/modules
+   library/index
    theory/index
    examples/index
 
-..
-   examples/index
