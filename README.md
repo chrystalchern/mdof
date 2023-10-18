@@ -1,7 +1,7 @@
 # `mdof`
 
 
-<img align="left" src="https://raw.githubusercontent.com/BRACE2/OpenSeesRT/master/docs/figures/spectrum.svg" width="250px" alt="PEER Logo">
+<img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="PEER Logo">
 
 Fast and friendly system identification for structures.
 
@@ -27,7 +27,7 @@ A,B,C,D = sysid(input_motion, output_motion)
 
 
 ## Try it out!
-Click [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BRACE2/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) to access and experiment with example Jupyter notebooks.
+Click [**link to DataHub JupyterLab**](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FBRACE2%2Fmdof&urlpath=lab%2Ftree%2Fmdof%2Fnotebooks%2FREADME.ipynb&branch=master) or  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BRACE2/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) to access and experiment with example Jupyter notebooks.
 
 <div style="align:center">
 
