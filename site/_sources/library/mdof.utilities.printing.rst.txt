@@ -1,7 +1,0 @@
-mdof.utilities.printing module
-==============================
-
-.. automodule:: mdof.utilities.printing
-   :members:
-   :undoc-members:
-   :show-inheritance:
