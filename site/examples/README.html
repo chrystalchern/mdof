@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>BRACE2 Structural System Identification Library (ssid) &#8212; mdof</title>
+    <title>mdof examples &#8212; mdof</title>
   
   
   
@@ -18,32 +18,29 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=e353d410970836974a52" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=ac02cc09edc035673794" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=ac02cc09edc035673794" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=e353d410970836974a52" rel="stylesheet" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=ac02cc09edc035673794" rel="stylesheet" />
   <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
-    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=362ab14a" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=a746c00c" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
     <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/shell.css.min.5ee5a6b8d8faedbb5157b1bfb4d9be5b2482bbe4e40af84575a92ae6ab028842.css?v=77841b74" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/vars-override.css.min.ff70feeb43b75e041c44e6aba96a0979ee53f0e959cb0ecf8f4e00c2ec6c9494.css?v=f5d48dd0" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/mailchimp.css.min.81c28937ed202cb4f9a0783641e5f436902980a188f0a90a2fe9ec66cd0af677.css?v=1137ca8f" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=e353d410970836974a52" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52" />
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script src="../_static/documentation_options.js?v=94eb6667"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=65da795c"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -61,6 +58,15 @@
   
   
   <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
   
   <input type="checkbox"
           class="sidebar-toggle"
@@ -101,7 +107,8 @@
     <span class="fa-solid fa-bars"></span>
   </label>
   
-  <div class="navbar-header-items__start">
+  
+  <div class="col-lg-3 navbar-header-items__start">
     
       <div class="navbar-item">
   
@@ -118,7 +125,6 @@
     
   </div>
   
-  
   <div class="col-lg-9 navbar-header-items">
     
     <div class="me-auto navbar-header-items__center">
@@ -133,14 +139,7 @@
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         mdof
                       </a>
                     </li>
@@ -169,23 +168,25 @@
       
         <div class="navbar-item navbar-persistent--container">
           
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
         </div>
       
       
         <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -201,8 +202,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
       
@@ -212,18 +213,20 @@ document.write(`
   
   
     <div class="navbar-persistent--mobile">
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
     <i class="fa-solid fa-magnifying-glass"></i>
-  </button>
-`);
-</script>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script>
     </div>
   
 
   
-    <label class="sidebar-toggle secondary-toggle" for="__secondary">
+    <label class="sidebar-toggle secondary-toggle" for="__secondary" tabindex="0">
       <span class="fa-solid fa-outdent"></span>
     </label>
   
@@ -253,14 +256,7 @@ document.write(`
   <ul class="bd-navbar-elements navbar-nav">
     
                     <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../api/index.html">
-                        API
-                      </a>
-                    </li>
-                
-
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../library/modules.html">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         mdof
                       </a>
                     </li>
@@ -291,10 +287,10 @@ document.write(`
           <div class="navbar-item">
 <script>
 document.write(`
-  <button class="theme-switch-button btn btn-sm btn-outline-primary navbar-btn rounded-circle" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch" data-mode="light"><i class="fa-solid fa-sun"></i></span>
-    <span class="theme-switch" data-mode="dark"><i class="fa-solid fa-moon"></i></span>
-    <span class="theme-switch" data-mode="auto"><i class="fa-solid fa-circle-half-stroke"></i></span>
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
   </button>
 `);
 </script></div>
@@ -310,8 +306,8 @@ document.write(`
           
           
           
-          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github"></i></span>
-            <label class="sr-only">GitHub</label></a>
+          <a href="https://github.com/BRACE2/mdof" title="GitHub" class="nav-link" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><span><i class="fa-brands fa-square-github fa-lg" aria-hidden="true"></i></span>
+            <span class="sr-only">GitHub</span></a>
         </li>
 </ul></div>
         
@@ -343,15 +339,15 @@ document.write(`
 
 
 
-<nav aria-label="Breadcrumbs">
-  <ul class="bd-breadcrumbs" role="navigation" aria-label="Breadcrumb">
+<nav aria-label="Breadcrumb">
+  <ul class="bd-breadcrumbs">
     
     <li class="breadcrumb-item breadcrumb-home">
       <a href="../index.html" class="nav-link" aria-label="Home">
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    <li class="breadcrumb-item active" aria-current="page">BRACE2 Structural System Identification Library (<code class="docutils literal notranslate"><span class="pre">ssid</span></code>)</li>
+    <li class="breadcrumb-item active" aria-current="page"><code...</li>
   </ul>
 </nav>
 </div>
@@ -368,20 +364,20 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="BRACE2-Structural-System-Identification-Library-(ssid)">
-<h1>BRACE2 Structural System Identification Library (<code class="docutils literal notranslate"><span class="pre">ssid</span></code>)<a class="headerlink" href="#BRACE2-Structural-System-Identification-Library-(ssid)" title="Link to this heading">#</a></h1>
+  <section id="mdof-examples">
+<h1><code class="docutils literal notranslate"><span class="pre">mdof</span></code> examples<a class="headerlink" href="#mdof-examples" title="Permalink to this heading">#</a></h1>
 <h3 id="siso"><p>SISO</p>
 </h3><dl><dt><p>01_SISO_Intro.ipynb</p>
-</dt><dd><p><p>Introduction to system identification using the ssid package, with an example SDOF system, input, and output as a demonstration.</p>
+</dt><dd><p><p>Introduction to system identification using the mdof package, with an example SDOF system, input, and output as a demonstration.</p>
 </p></dd><dt><p>02_SISO_Event.ipynb</p>
 </dt><dd><p><p>Perform system identification for a single event for a Single Input, Single Output (SISO) system.</p>
 </p></dd><dt><p>03_SISO_History.ipynb</p>
 </dt><dd><p><p>Perform system identification for a set of events over time for a SISO system.</p>
-</p></dd></dl><h3 id="mimo"><p>MIMO (Under development)</p>
+</p></dd></dl><h3 id="mimo"><p>MIMO</p>
 </h3><dl><dt><p>04_SIMO_Event.ipynb</p>
-</dt><dd><p><p>Perform system identification for a single event for a MIMO system.</p>
+</dt><dd><p><p>Perform system identification for a single event for a SIMO system.</p>
 </p></dd><dt><p>05_MIMO_Intro.ipynb</p>
-</dt><dd><p><p>Introduction to Multiple Input, Multiple Output (MIMO) system identification using the ssid package.</p>
+</dt><dd><p><p>Introduction to Multiple Input, Multiple Output (MIMO) system identification using the mdof package.</p>
 </p></dd><dt><p>06_MIMO_History.ipynb</p>
 </dt><dd><p><p>Perform system identification for a set of events over time for a MIMO system.</p>
 </p></dd></dl><p>Run the following cell to install the BRACE2 packages:</p>
@@ -398,12 +394,34 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-<span class="ansi-red-fg">ERROR: Could not open requirements file: [Errno 2] No such file or directory: &#39;requirements.txt&#39;</span><span class="ansi-red-fg">
-</span>
+Requirement already satisfied: numpy in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 1)) (1.26.1)
+Requirement already satisfied: scipy in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 2)) (1.11.3)
+Requirement already satisfied: tqdm in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 3)) (4.66.1)
+Requirement already satisfied: quakeio in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 4)) (0.1.18)
+Requirement already satisfied: matplotlib in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 6)) (3.8.0)
+Requirement already satisfied: plotly in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 7)) (5.17.0)
+Requirement already satisfied: pandas in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 8)) (2.1.1)
+Requirement already satisfied: mdof in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 9)) (0.0.6)
+Requirement already satisfied: control in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 10)) (0.9.4)
+Requirement already satisfied: sdof in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 11)) (0.0.7)
+Requirement already satisfied: SciencePlots in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from -r requirements.txt (line 13)) (2.1.0)
+Requirement already satisfied: pyyaml in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from quakeio-&gt;-r requirements.txt (line 4)) (6.0.1)
+Requirement already satisfied: contourpy&gt;=1.0.1 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (1.1.1)
+Requirement already satisfied: cycler&gt;=0.10 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (0.12.1)
+Requirement already satisfied: fonttools&gt;=4.22.0 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (4.43.1)
+Requirement already satisfied: kiwisolver&gt;=1.0.1 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (1.4.5)
+Requirement already satisfied: packaging&gt;=20.0 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (23.2)
+Requirement already satisfied: pillow&gt;=6.2.0 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (10.1.0)
+Requirement already satisfied: pyparsing&gt;=2.3.1 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (3.1.1)
+Requirement already satisfied: python-dateutil&gt;=2.7 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from matplotlib-&gt;-r requirements.txt (line 6)) (2.8.2)
+Requirement already satisfied: tenacity&gt;=6.2.0 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from plotly-&gt;-r requirements.txt (line 7)) (8.2.3)
+Requirement already satisfied: pytz&gt;=2020.1 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from pandas-&gt;-r requirements.txt (line 8)) (2023.3.post1)
+Requirement already satisfied: tzdata&gt;=2022.1 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from pandas-&gt;-r requirements.txt (line 8)) (2023.3)
+Requirement already satisfied: six&gt;=1.5 in /home/xstal/mambaforge/envs/mdof-dev/lib/python3.12/site-packages (from python-dateutil&gt;=2.7-&gt;matplotlib-&gt;-r requirements.txt (line 6)) (1.16.0)
 </pre></div></div>
 </div>
 <section id="Getting-Started">
-<h2>Getting Started<a class="headerlink" href="#Getting-Started" title="Link to this heading">#</a></h2>
+<h2>Getting Started<a class="headerlink" href="#Getting-Started" title="Permalink to this heading">#</a></h2>
 <p>To upload:</p>
 <img alt="Upload button" src="../_images/uploads.png" />
 <p>To run:</p>
@@ -416,16 +434,12 @@ document.write(`
               
               
               
-                <footer class="bd-footer-article">
-                  
-<div class="footer-article-items footer-article__inner">
-  
-    <div class="footer-article-item"><!-- Previous / next buttons -->
+              
+              
+                <footer class="prev-next-footer">
+                  <!-- Previous / next buttons -->
 <div class="prev-next-area">
-</div></div>
-  
 </div>
-
                 </footer>
               
             </div>
@@ -457,8 +471,8 @@ document.write(`
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=e353d410970836974a52"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=e353d410970836974a52"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=ac02cc09edc035673794"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794"></script>
 
   <footer class="bd-footer">
 <div class="bd-footer__inner bd-page-width">
@@ -476,7 +490,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
     <br/>
   </p>
 </div>
@@ -484,10 +498,11 @@ document.write(`
     </div>
   
   
+  
     <div class="footer-items__end">
       
         <div class="footer-item"><p class="theme-version">
-  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.13.3.
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.14.1.
 </p></div>
       
     </div>
