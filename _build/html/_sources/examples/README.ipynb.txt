@@ -8,7 +8,7 @@
     "tags": []
    },
    "source": [
-    "# BRACE2 Structural System Identification Library (`mdof`)"
+    "# `mdof` examples"
    ]
   },
   {
@@ -29,10 +29,10 @@
     "<dd><p>Perform system identification for a set of events over time for a SISO system.</p>\n",
     "</dd>\n",
     "</dl>\n",
-    "<h3 id=\"mimo\">MIMO (Under development)</h3>\n",
+    "<h3 id=\"mimo\">MIMO</h3>\n",
     "<dl>\n",
     "<dt><a href=\"04_SIMO_Event.ipynb\"><code>04_SIMO_Event.ipynb</code></a></dt>\n",
-    "<dd><p>Perform system identification for a single event for a MIMO system.</p>\n",
+    "<dd><p>Perform system identification for a single event for a SIMO system.</p>\n",
     "</dd>\n",
     "<dt><a href=\"05_MIMO_Intro.ipynb\"><code>05_MIMO_Intro.ipynb</code></a></dt>\n",
     "<dd><p>Introduction to Multiple Input, Multiple Output (MIMO) system identification using the <code>mdof</code> package.</p>\n",

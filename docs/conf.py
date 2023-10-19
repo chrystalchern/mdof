@@ -7,8 +7,8 @@ project = 'mdof'
 copyright = '2023, Chrystal Chern'
 author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."
-version = '0.0.4'
-release = '0.0.4'
+version = '0.0.6'
+release = '0.0.6'
 
 # -- General configuration ---------------------------------------------------
 
@@ -50,9 +50,6 @@ html_context = {
         {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
         {"title": "SISO History",        "link": "examples/03_SISO_History", "image": "examples_03_SISO_History_7_2.png"},
         {"title": "MIMO History",        "link": "examples/06_MIMO_History", "image": "examples_06_MIMO_History_9_36.png"},
-        {"title": "Response Spectrum",   "link": "examples/ResponseSpectrum"},
-        {"title": "Transfer Function",   "link": "examples/transfer_function"},
-        {"title": "Juang Experiment",    "link": "examples/juang_experiment"},
     ],
     **globals()
 }

@@ -11,7 +11,7 @@ mdof
    mdof.transform
 
 
-.. automodule:: mdof.system
+.. automodule:: mdof
    :members:
    :undoc-members:
    :show-inheritance:

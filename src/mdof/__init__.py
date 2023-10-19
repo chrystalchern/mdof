@@ -5,12 +5,11 @@ from .modal import _condeig
 
 from control.matlab import impulse as _impulse
 
-
-def impulse(system, t, **kwds):
-    from control import ss
-    dt = t[1] - t[0]
-    a,t = _impulse(ss(*system, dt), t, **kwds)
-    return a.squeeze()*dt,t
+# def impulse(system, t, **kwds):
+#     from control import ss
+#     dt = t[1] - t[0]
+#     a,t = _impulse(ss(*system, dt), t, **kwds)
+#     return a.squeeze()*dt,t
 
 def sysid(inputs, outputs, **options):
     """

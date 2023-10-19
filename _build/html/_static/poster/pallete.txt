@@ -1,7 +1,0 @@
-var(--colorPrimaryDark), var(--pst-color-primary);       Hex #3D576E  RGB 61,87,110
-var(--pst-color-inline-code);  Hex #EB9B67  RGB 235,155,103
-Hex #771A35  RGB 119,26,53
-var(--colorPrimary);           Hex #52899C  RGB 82,137,156
-Hex #554467  RGB 85,68,103
-Hex #6B3B39  RGB 107,59,57
-var(--colorHighlight), var(--pst-color-attention:);      Hex #F0B773  RGB 240,183,115

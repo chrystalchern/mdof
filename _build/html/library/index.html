@@ -37,7 +37,7 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=ec2b97d1"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=65da795c"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -324,7 +324,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mdof.realize.html">mdof.realize module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdof.transform.html">mdof.spec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.transform.html">mdof.transform module</a></li>
 </ul>
 </div>
 </nav></div>
@@ -386,12 +386,17 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mdof.realize.html">mdof.realize module</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdof.transform.html">mdof.spec module</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.transform.html">mdof.transform module</a></li>
 </ul>
 </div>
-<span class="target" id="module-mdof.system"></span><dl class="py function">
-<dt class="sig sig-object py" id="mdof.system.system">
-<span class="sig-prename descclassname"><span class="pre">mdof.system.</span></span><span class="sig-name descname"><span class="pre">system</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.system.system" title="Permalink to this definition">#</a></dt>
+<span class="target" id="module-mdof"></span><dl class="py function">
+<dt class="sig sig-object py" id="mdof.impulse">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">impulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.impulse" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.sysid">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">sysid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.sysid" title="Permalink to this definition">#</a></dt>
 <dd><p>State space system realization from input and output data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -415,9 +420,9 @@ dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where 
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="mdof.system.modes">
-<span class="sig-prename descclassname"><span class="pre">mdof.system.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.system.modes" title="Permalink to this definition">#</a></dt>
-<dd><p>Modal identification using state space system realization from input and output data.</p>
+<dt class="sig sig-object py" id="mdof.eigid">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">eigid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.eigid" title="Permalink to this definition">#</a></dt>
+<dd><p>System eigenspace identification from input and output data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -427,17 +432,14 @@ dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where 
 dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
 <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are
-“okid-era” and “okid-era-dc”.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>system modes, including natural frequencies, damping ratios, mode shapes,
-condition numbers, and modal validation metrics EMAC and MPC.</p>
+<dd class="field-even"><p><cite>(eigenvalues, eigenvectors)</cite></p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dictionary</p>
+<dd class="field-odd"><p>tuple of 1D array, ND array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -487,8 +489,9 @@ condition numbers, and modal validation metrics EMAC and MPC.</p>
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.system.system"><code class="docutils literal notranslate"><span class="pre">system()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.system.modes"><code class="docutils literal notranslate"><span class="pre">modes()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.impulse"><code class="docutils literal notranslate"><span class="pre">impulse()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.sysid"><code class="docutils literal notranslate"><span class="pre">sysid()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.eigid"><code class="docutils literal notranslate"><span class="pre">eigid()</span></code></a></li>
 </ul>
   </nav></div>
 

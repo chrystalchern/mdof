@@ -1,10 +1,20 @@
 # `mdof`
 
+<hr>
+<br>
 
 <img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="PEER Logo">
 
 Fast and friendly system identification for structures.
 
+<div style="align:center">
+
+[![Latest PyPI version](https://img.shields.io/pypi/v/mdof?logo=pypi&style=for-the-badge)](https://pypi.python.org/pypi/mdof)
+[![Downloads per Month](https://img.shields.io/pypi/dm/mdof?style=for-the-badge)]((https://pypi.python.org/pypi/mdof))
+
+</div>
+
+<hr>
 <br>
 
 **Conventional dynamic eigenanalysis** is well-known to structural engineers -- from system properties and a given excitation, the goal is to determine a system's dynamic response.
@@ -26,15 +36,11 @@ A,B,C,D = sysid(input_motion, output_motion)
 ```
 
 
-## Try it out!
-Click [**link to DataHub JupyterLab**](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FBRACE2%2Fmdof&urlpath=lab%2Ftree%2Fmdof%2Fnotebooks%2FREADME.ipynb&branch=master) or  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BRACE2/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) to access and experiment with example Jupyter notebooks.
+## Getting Started
 
-<div style="align:center">
+Check out the [**Documentation Page**](https://brace2.github.io/mdof/)
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/mdof?logo=pypi&style=for-the-badge)](https://pypi.python.org/pypi/mdof)
-
-
-</div>
+Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FBRACE2%2Fmdof&urlpath=lab%2Ftree%2Fmdof%2Fnotebooks%2FREADME.ipynb&branch=master) (UC Berkeley users) or  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BRACE2/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) (non-UC Berkeley users) to access and experiment with example Jupyter notebooks.
 
 -------------------------------------------------
 

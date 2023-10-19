@@ -19,7 +19,10 @@
   {{ _webpack.head_js_preload() }}
   <!--  -->
   <link rel=icon href=/images/favicon.ico>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900"> -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href=https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css>
   <link rel="stylesheet" type=text/css
     href="https://numpy.org/css/theme-css/fresh/core.min.3997f86943b5337a6aab5eac5003a41b9a03e1159a7e779d8e99f5c1353ad503.css">
@@ -348,7 +351,7 @@
                 <td style=text-align:center><img class=first-column-layout
                     src="{{ pathto('_static/images', 1) }}/content_images/brace/sees.png" alt="sees"></td>
                 <td class=full-center-text><a href="https://pypi.org/project/sees">sees</a></td>
-                <td class=left-text>...</td>
+                <td class=left-text>A modern OpenSees renderer.</td>
               </tr>
             </table>
           </li>

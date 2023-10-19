@@ -3,7 +3,36 @@ from scipy.fft import fft, fftfreq
 from scipy import signal
 from .numerics import decimate
 
-# def power_transfer(inputs, outputs, step): pass
+def power_transfer(inputs, outputs, step, **options):
+    """
+    Power spectrum transfer function from input and output data.
+
+    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
+                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :type inputs:       array
+    :param outputs:     output response history.
+                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        :math:`nt` = number of timesteps
+    :type outputs:      array
+    :param step:        timestep.
+    :type step:         float
+    :param decimation:  decimation factor. default: 1
+    :type decimation:   int, optional
+
+    :return:            (periods, amplitudes)
+    :rtype:             tuple of arrays
+    """
+    decimation = options.get("decimation", None)
+
+    if decimation is not None:
+        inputs = decimate(inputs, decimation=decimation)
+        outputs = decimate(outputs, decimation=decimation)
+        step = step*decimation
+
+    assert len(inputs) == len(outputs)
+    input_transform = power_spectrum(inputs, step, **options)
+    output_transform = power_spectrum(outputs, step, **options)
+    return (input_transform[0], output_transform[1]/input_transform[1])
 
 def response_transfer(inputs, outputs, step, **options):
     """
@@ -83,7 +112,7 @@ def fourier_transfer(inputs, outputs, step, **options):
     input_transform[0]=np.real(input_transform[0]) # prevents unwarranted "divide by zero" warning
     return (1/input_transform[0], output_transform[1]/input_transform[1])
 
-def power_spectrum(series, step, **options):
+def power_spectrum(series, step, period_band=None, **options):
     """
     Power spectral density from a signal.
 
@@ -97,14 +126,17 @@ def power_spectrum(series, step, **options):
     :return:            (frequencies, amplitudes)
     :rtype:             tuple of arrays.
     """
-    output = fourier_spectrum(series, step, **options)
     frequencies, amplitudes = fourier_spectrum(series, step, **options)
-    # print(f"{amplitudes=}")
-    return (1/frequencies, np.abs(amplitudes))
+    if period_band is not None:
+        frequency_band = (1/period_band[1], 1/period_band[0])
+        frequency_indices = np.logical_and(frequencies>frequency_band[0], frequencies<frequency_band[1])
+        frequencies = frequencies[frequency_indices]
+        amplitudes = amplitudes[frequency_indices]
+    return np.array([1/frequencies, (np.abs(amplitudes))**2])
 
-def power_spectrum2(series, step, **options):
-    frequencies, power_spectral_density = signal.periodogram(series, step)
-    return (1/frequencies, power_spectral_density)
+# def power_spectrum2(series, step, **options):  # equivalent to power_spectrum()
+#     frequencies, power_spectral_density = signal.periodogram(series, step)
+#     return (1/frequencies, power_spectral_density)
 
 def fourier_spectrum(series, step, period_band=None, **options):
     """
@@ -122,8 +154,8 @@ def fourier_spectrum(series, step, period_band=None, **options):
     """
     assert len(series.shape) == 1
     N = len(series)
-    frequencies = fftfreq(N,step)[1:N//2]
-    amplitudes = 2.0/N*np.abs(fft(series)[1:N//2])
+    frequencies = fftfreq(N,step)[1:N//2+2]
+    amplitudes = 2.0/N*np.abs(fft(series)[1:N//2+2])
     if period_band is not None:
         frequency_band = (1/period_band[1], 1/period_band[0])
         frequency_indices = np.logical_and(frequencies>frequency_band[0], frequencies<frequency_band[1])
