@@ -1,0 +1,116 @@
+{
+ "cells": [
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "6cadac5c-e505-431c-9740-9268e17d2cf3",
+   "metadata": {
+    "tags": []
+   },
+   "source": [
+    "# `mdof` examples"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "4c369c63",
+   "metadata": {},
+   "source": [
+    "<h3 id=\"siso\">SISO</h3>\n",
+    "<dl>\n",
+    "<dt><a href=\"01_SISO_Intro.ipynb\"><code>01_SISO_Intro.ipynb</code></a></dt>\n",
+    "<dd><p>Introduction to system identification using the <code>mdof</code> package, with an example SDOF system, input, and output as a demonstration.</p>\n",
+    "</dd>\n",
+    "<dt><a href=\"02_SISO_Event.ipynb\"><code>02_SISO_Event.ipynb</code></a></dt>\n",
+    "<dd><p>Perform system identification for a single event for a Single Input, Single Output (SISO) system.</p>\n",
+    "</dd>\n",
+    "<dt><a href=\"03_SISO_History.ipynb\"><code>03_SISO_History.ipynb</code></a></dt>\n",
+    "<dd><p>Perform system identification for a set of events over time for a SISO system.</p>\n",
+    "</dd>\n",
+    "</dl>\n",
+    "<h3 id=\"mimo\">MIMO</h3>\n",
+    "<dl>\n",
+    "<dt><a href=\"04_SIMO_Event.ipynb\"><code>04_SIMO_Event.ipynb</code></a></dt>\n",
+    "<dd><p>Perform system identification for a single event for a SIMO system.</p>\n",
+    "</dd>\n",
+    "<dt><a href=\"05_MIMO_Intro.ipynb\"><code>05_MIMO_Intro.ipynb</code></a></dt>\n",
+    "<dd><p>Introduction to Multiple Input, Multiple Output (MIMO) system identification using the <code>mdof</code> package.</p>\n",
+    "</dd>\n",
+    "<dt><a href=\"06_MIMO_History.ipynb\"><code>06_MIMO_History.ipynb</code></a></dt>\n",
+    "<dd><p>Perform system identification for a set of events over time for a MIMO system.</p>\n",
+    "</dd>\n",
+    "</dl>"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "a089497e",
+   "metadata": {},
+   "source": [
+    "Run the following cell to install the BRACE2 packages:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cff7d6c5",
+   "metadata": {
+    "vscode": {
+     "languageId": "plaintext"
+    }
+   },
+   "outputs": [],
+   "source": [
+    "!pip install -Ur requirements.txt"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "b2fd8aa9",
+   "metadata": {},
+   "source": [
+    "### Getting Started\n"
+   ]
+  },
+  {
+   "attachments": {},
+   "cell_type": "markdown",
+   "id": "fafa29bc",
+   "metadata": {},
+   "source": [
+    "To upload:\n",
+    "\n",
+    "![Upload button](figures/uploads.png)\n",
+    "\n",
+    "To run:\n",
+    "\n",
+    "![Run button](figures/run_cells.png)\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3 (ipykernel)",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.9.10"
+  },
+  "toc-showtags": false
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
