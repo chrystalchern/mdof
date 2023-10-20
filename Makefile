@@ -1,9 +1,10 @@
 SHELL=/bin/bash
 
-NOTEBOOKS = notebooks/01_SISO_Intro.ipynb \
+NOTEBOOKS = notebooks/00_Overview.ipynb \
+            notebooks/01_SISO_Intro.ipynb \
             notebooks/02_SISO_Event.ipynb \
             notebooks/03_SISO_History.ipynb \
-            notebooks/04_SIMO_Event.ipynb \
+            notebooks/04_MIMO_Intro.ipynb \
 	    	notebooks/06_MIMO_History.ipynb \
 			../mdof_studies/PeakPicking.ipynb \
 			../mdof_studies/PowerSpectrum.ipynb
@@ -13,7 +14,6 @@ publish:
 	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site/ origin gh-pages
 
 test:
-	#pytest --nbmake notebooks/*.ipynb 
 	cp ./notebooks/0[0-9]_* ./docs/examples
 	cp -r ./notebooks/figures/* ./docs/examples/figures
 	pytest --nbmake $(NOTEBOOKS)

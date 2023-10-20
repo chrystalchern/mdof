@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>SISO for Ground Motion Events &#8212; mdof</title>
+    <title>SISO for a Ground Motion Event &#8212; mdof</title>
   
   
   
@@ -38,9 +38,9 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=65da795c"></script>
+    <script src="../_static/documentation_options.js?v=1d1a88ea"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -48,8 +48,8 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="SISO for Ground Motion Events" href="03_SISO_History.html" />
-    <link rel="prev" title="System Identification with the mdof package" href="01_SISO_Intro.html" />
+    <link rel="next" title="SISO for Event History" href="03_SISO_History.html" />
+    <link rel="prev" title="Introduction to SISO" href="01_SISO_Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -142,7 +142,7 @@
     
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../library/index.html">
-                        mdof
+                        Reference
                       </a>
                     </li>
                 
@@ -259,7 +259,7 @@ document.write(`
     
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../library/index.html">
-                        mdof
+                        Reference
                       </a>
                     </li>
                 
@@ -322,12 +322,13 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">SISO for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_SIMO_Event.html">SIMO for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="00_Overview.html">Overview of the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">Introduction to SISO</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SISO for a Ground Motion Event</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Event History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Introduction to MIMO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO for a Ground Motion Event</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Event History</a></li>
 </ul>
 </div>
 </nav></div>
@@ -368,7 +369,7 @@ document.write(`
     
     <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">SISO for...</li>
+    <li class="breadcrumb-item active" aria-current="page">SISO for a...</li>
   </ul>
 </nav>
 </div>
@@ -385,8 +386,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="SISO-for-Ground-Motion-Events">
-<h1>SISO for Ground Motion Events<a class="headerlink" href="#SISO-for-Ground-Motion-Events" title="Permalink to this heading">#</a></h1>
+  <section id="SISO-for-a-Ground-Motion-Event">
+<h1>SISO for a Ground Motion Event<a class="headerlink" href="#SISO-for-a-Ground-Motion-Event" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -403,7 +404,7 @@ document.write(`
 </div>
 </div>
 <section id="Unknown-system-with-one-input-and-one-output">
-<h2>Unknown system with one input and one output<a class="headerlink" href="#Unknown-system-with-one-input-and-one-output" title="Permalink to this heading">#</a></h2>
+<h2>Unknown system with one input and one output<a class="headerlink" href="#Unknown-system-with-one-input-and-one-output" title="Link to this heading">#</a></h2>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -422,9 +423,9 @@ document.write(`
 <img alt="sdof2" src="../_images/sdof2.png" />
 </section>
 <section id="Configure">
-<h2>Configure<a class="headerlink" href="#Configure" title="Permalink to this heading">#</a></h2>
+<h2>Configure<a class="headerlink" href="#Configure" title="Link to this heading">#</a></h2>
 <section id="Inputs">
-<h3>Inputs<a class="headerlink" href="#Inputs" title="Permalink to this heading">#</a></h3>
+<h3>Inputs<a class="headerlink" href="#Inputs" title="Link to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -439,7 +440,7 @@ document.write(`
 </div>
 </section>
 <section id="Outputs">
-<h3>Outputs<a class="headerlink" href="#Outputs" title="Permalink to this heading">#</a></h3>
+<h3>Outputs<a class="headerlink" href="#Outputs" title="Link to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -485,7 +486,7 @@ damping ratio:  0.01
 </div>
 </section>
 <section id="Method">
-<h3>Method<a class="headerlink" href="#Method" title="Permalink to this heading">#</a></h3>
+<h3>Method<a class="headerlink" href="#Method" title="Link to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -498,9 +499,9 @@ damping ratio:  0.01
 </section>
 </section>
 <section id="Analysis-with-System-Identification">
-<h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Permalink to this heading">#</a></h2>
+<h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Link to this heading">#</a></h2>
 <section id="Transfer-Function-Methods">
-<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
+<h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Link to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -525,7 +526,7 @@ damping ratio:  0.01
 </div>
 </section>
 <section id="State-Space-Methods">
-<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Permalink to this heading">#</a></h3>
+<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -571,7 +572,7 @@ Standard Dev(s): 0.0
 </div>
 </section>
 <section id="Visualize-Transfer-Functions-vs.-State-Space-Methodds">
-<h3>Visualize Transfer Functions vs. State Space Methodds<a class="headerlink" href="#Visualize-Transfer-Functions-vs.-State-Space-Methodds" title="Permalink to this heading">#</a></h3>
+<h3>Visualize Transfer Functions vs. State Space Methodds<a class="headerlink" href="#Visualize-Transfer-Functions-vs.-State-Space-Methodds" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
 </pre></div>
@@ -674,7 +675,7 @@ Standard Dev(s): 0.0
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</p>
+        <p class="prev-next-title">Introduction to SISO</p>
       </div>
     </a>
     <a class="right-next"
@@ -682,7 +683,7 @@ Standard Dev(s): 0.0
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">SISO for Ground Motion Events</p>
+        <p class="prev-next-title">SISO for Event History</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -749,7 +750,7 @@ Standard Dev(s): 0.0
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     <br/>
   </p>
 </div>

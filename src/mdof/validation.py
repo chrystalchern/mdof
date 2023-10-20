@@ -134,7 +134,10 @@ def MPC(A,C,Psi=None):
         s22[i] = np.imag(mode_i).conjugate().transpose()@np.imag(mode_i)
         s12[i] = np.real(mode_i).conjugate().transpose()@np.imag(mode_i)
         # print(f"{mode_i=}, {s11[i]=}, {s22[i]=}, {s12[i]=}")
-        nu[i]    = (s22[i]-s11[i])/(2*s12[i])
+        if s12[i] == 0:
+            nu[i] = np.nan
+        else:
+            nu[i]= (s22[i]-s11[i])/(2*s12[i])
         lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
         lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
         mpc[i]   = ((lam[0,i]-lam[1,i])/(lam[0,i]+lam[1,i]))**2

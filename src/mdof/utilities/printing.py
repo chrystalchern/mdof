@@ -8,10 +8,10 @@ nln = "\n"
 
 def print_modes(modes, Tn=None, zeta=None):
 
-    header = "       T(s)        \N{Greek Small Letter Zeta}        EMACO        MPC     EMACO*MPC"
+    header = "       T(s)        \N{Greek Small Letter Zeta}        EMACO      MPC       EMACO*MPC"
 
     if Tn is not None:
-        header += "          T % error"
+        header += "     T % error"
 
     if zeta is not None:
         header += "    \N{Greek Small Letter Zeta} % error"
@@ -43,7 +43,7 @@ def plot_models(models, Tn, zeta):
     period_errors = [100*(p-Tn)/Tn for p in period]
     ax[1,0].bar(models.keys(), period_errors, color=None, edgecolor="k", linewidth=0.5)
     ax[1,0].set_title("Period Errors")# , fontsize=14)
-    ax[1,0].set_ylabel("Percent Error (\%)")# , fontsize=13)
+    ax[1,0].set_ylabel("Percent Error (%)")# , fontsize=13)
     ax[1,0].set_xlabel("Method")# , fontsize=13)
 
     damp = [models[method]["damping"][0] for method in models]
@@ -54,7 +54,7 @@ def plot_models(models, Tn, zeta):
     damping_errors = [100*(d-zeta)/zeta for d in damp]
     ax[1,1].bar(models.keys(), damping_errors, color=None, edgecolor="k", linewidth=0.5)
     ax[1,1].set_title("Damping Errors")# , fontsize=14)
-    ax[1,1].set_ylabel("Percent Error (\%)")# , fontsize=13)
+    ax[1,1].set_ylabel("Percent Error (%)")# , fontsize=13)
     ax[1,1].set_xlabel("Method")# , fontsize=13)
 
     ax[0,2].axis('off')
@@ -81,7 +81,7 @@ def plot_models(models, Tn, zeta):
     fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=16)
 
 def plot_io(inputs, outputs, t, title=None):
-    fig, ax = plt.subplots(1,2,figsize=(12,4),constrained_layout=True)
+    fig, ax = plt.subplots(1,2,figsize=(8,3),constrained_layout=True)
     # fig, ax = plt.subplots(1,2,figsize=(8,3))
     color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
     if len(inputs.shape) > 1:
@@ -126,21 +126,46 @@ def plot_pred(ytrue, models, t, title=None):
     fig.legend(fontsize=12, frameon=True, framealpha=1)    
     ax.set_title(title) #, fontsize=14)
 
-def plot_transfer(models, title=None, labels=None):
-    fig, ax = plt.subplots(figsize=(10,4))
-    if type(models) is np.ndarray:
-        if len(models.shape) > 2:
-            for i in range(models.shape[0]):
-                ax.plot(models[i,0],models[i,1]/max(models[i,1]),label=labels[i])
+def plot_transfer(models, title=None, labels=None, plotly=False):
+    if plotly:
+        import plotly.graph_objects as go
+        layout = go.Layout(
+            title=title,
+            xaxis=dict(
+                title="Period (s)"
+            ),
+            yaxis=dict(
+                title="Amplitude"
+            ),
+            width=600, height=300,
+            margin=dict(l=70, r=20, t=20, b=20))
+        fig = go.Figure(layout=layout)
+        if type(models) is np.ndarray:
+            if len(models.shape) > 2:
+                for i in range(models.shape[0]):
+                    fig.add_trace(go.Scatter(x=models[i,0],y=models[i,1]/max(models[i,1]),name=labels[i]))
+            else:
+                fig.add_trace(go.Scatter(x=models[0],y=models[1]/max(models[1]),name=labels))
         else:
-            ax.plot(models[0],models[1]/max(models[1]),label=labels)
+            for method in models:
+                fig.add_trace(go.Scatter(x=models[method][0],y=models[method][1]/max(models[method][1]),name=method))
+        fig.show(renderer="notebook_connected")
     else:
-        for method in models:
-            ax.plot(models[method][0],models[method][1]/max(models[method][1]),label=method)
-    ax.set_xlabel("Period (s)")
-    ax.set_ylabel("Amplitude")
-    ax.legend()#fontsize=12)
-    ax.set_title(title)#, fontsize=14)
+        fig, ax = plt.subplots(figsize=(6,3))
+        if type(models) is np.ndarray:
+            if len(models.shape) > 2:
+                for i in range(models.shape[0]):
+                    ax.plot(models[i,0],models[i,1]/max(models[i,1]),label=labels[i])
+            else:
+                ax.plot(models[0],models[1]/max(models[1]),label=labels)
+        else:
+            for method in models:
+                ax.plot(models[method][0],models[method][1]/max(models[method][1]),label=method)
+        ax.set_xlabel("Period (s)")
+        ax.set_ylabel("Amplitude")
+        if labels is not None:
+            ax.legend()#fontsize=12)
+        ax.set_title(title)#, fontsize=14)
 
 def make_hover_data(data, ln=None):
     import numpy as np

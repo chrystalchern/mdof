@@ -109,12 +109,11 @@ def fourier_transfer(inputs, outputs, step, **options):
     assert len(inputs) == len(outputs)
     input_transform = fourier_spectrum(inputs, step, **options)
     output_transform = fourier_spectrum(outputs, step, **options)
-    input_transform[0]=np.real(input_transform[0]) # prevents unwarranted "divide by zero" warning
-    return (1/input_transform[0], output_transform[1]/input_transform[1])
+    return (input_transform[0], output_transform[1]/input_transform[1])
 
 def power_spectrum(series, step, period_band=None, **options):
     """
-    Power spectral density from a signal.
+    Power spectral density of a signal, as a function of period.
 
     :param series:      time series.
     :type series:       1D array
@@ -123,24 +122,23 @@ def power_spectrum(series, step, period_band=None, **options):
     :param period_band: minimum and maximum period of interest, in seconds.
     :type period_band:  tuple, optional
 
-    :return:            (frequencies, amplitudes)
+    :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.
     """
-    frequencies, amplitudes = fourier_spectrum(series, step, **options)
+    periods, amplitudes = fourier_spectrum(series, step, **options)
     if period_band is not None:
-        frequency_band = (1/period_band[1], 1/period_band[0])
-        frequency_indices = np.logical_and(frequencies>frequency_band[0], frequencies<frequency_band[1])
-        frequencies = frequencies[frequency_indices]
-        amplitudes = amplitudes[frequency_indices]
-    return np.array([1/frequencies, (np.abs(amplitudes))**2])
+        period_indices = np.logical_and(periods>period_band[0], periods<period_band[1])
+        periods = periods[period_indices]
+        amplitudes = amplitudes[period_indices]
+    return np.array([periods, (np.abs(amplitudes))**2])
 
-# def power_spectrum2(series, step, **options):  # equivalent to power_spectrum()
+# def _power_spectrum(series, step, **options):  # equivalent to power_spectrum()
 #     frequencies, power_spectral_density = signal.periodogram(series, step)
 #     return (1/frequencies, power_spectral_density)
 
 def fourier_spectrum(series, step, period_band=None, **options):
     """
-    Fourier amplitude spectrum from a signal.
+    Fourier amplitude spectrum of a signal, as a function of period.
 
     :param series:      time series.
     :type series:       1D array
@@ -149,19 +147,19 @@ def fourier_spectrum(series, step, period_band=None, **options):
     :param period_band: minimum and maximum period of interest, in seconds.
     :type period_band:  tuple, optional
 
-    :return:            (frequencies, amplitudes)
+    :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.
     """
     assert len(series.shape) == 1
     N = len(series)
     frequencies = fftfreq(N,step)[1:N//2+2]
     amplitudes = 2.0/N*np.abs(fft(series)[1:N//2+2])
+    periods = 1/frequencies
     if period_band is not None:
-        frequency_band = (1/period_band[1], 1/period_band[0])
-        frequency_indices = np.logical_and(frequencies>frequency_band[0], frequencies<frequency_band[1])
-        frequencies = frequencies[frequency_indices]
-        amplitudes = amplitudes[frequency_indices]
-    return np.array([frequencies, amplitudes])
+        period_indices = np.logical_and(periods>period_band[0], periods<period_band[1])
+        periods = periods[period_indices]
+        amplitudes = amplitudes[period_indices]
+    return np.array([periods, amplitudes])
 
 def _newmark():
     pass

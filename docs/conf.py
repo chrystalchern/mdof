@@ -14,10 +14,15 @@ release = '0.0.6'
 
 extensions = [
     'sphinx.ext.autodoc',
+    # 'autoapi.extension',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
     'nbsphinx'
 ]
+
+
+# autoapi_dirs = ['../src/mdof']
+
 
 templates_path = ['_templates']
 exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
@@ -31,7 +36,7 @@ language = 'en'
 html_title = project
 html_theme = "pydata_sphinx_theme"
 html_static_path = ['_static']
-html_favicon = '_static/favicon.ico'
+html_favicon = './_static/images/favicon.ico'
 html_css_files = [
     "css/peer.css",
 ] + [
@@ -43,13 +48,9 @@ html_additional_pages = {'index': 'home.html'}
 html_context = {
     'description': description,
     'examples': [
-        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "sdof_full.png"},
-        {"title": "SISO Event",          "link": "examples/02_SISO_Event", "image": "examples_02_SISO_Event_20_0.png"},
-        {"title": "SIMO Event",          "link": "examples/04_SIMO_Event", "image": "simo_event.png"},
-        {"title": "MIMO Basics",         "link": "examples/05_MIMO_Intro", "image": "2dof_full.png"},
-        {"title": "MIMO Event",          "link": "examples/05_MIMO_Event"},
-        {"title": "SISO History",        "link": "examples/03_SISO_History", "image": "examples_03_SISO_History_7_2.png"},
-        {"title": "MIMO History",        "link": "examples/06_MIMO_History", "image": "examples_06_MIMO_History_9_36.png"},
+        {"title": "Overview",            "link": "examples/00_Overview",   "image": "../_static/images/gallery/overview.svg"},
+        {"title": "SISO Basics",         "link": "examples/01_SISO_Intro", "image": "../_static/images/gallery/sdof_full.svg"},
+        {"title": "MIMO Basics",         "link": "examples/04_MIMO_Intro", "image": "../_static/images/gallery/2dof_full.svg"},
     ],
     **globals()
 }

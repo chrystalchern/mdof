@@ -3,9 +3,9 @@
 <hr>
 <br>
 
-<img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="PEER Logo">
+<img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
 
-Fast and friendly system identification for structures.
+Fast and friendly system identification for structures. *[Learn More](https://brace2.github.io/mdof/)*
 
 <div style="align:center">
 
@@ -17,7 +17,7 @@ Fast and friendly system identification for structures.
 <hr>
 <br>
 
-**Conventional dynamic eigenanalysis** is well-known to structural engineers -- from system properties and a given excitation, the goal is to determine a system's dynamic response.
+**Conventional dynamic eigenanalysis** is well-known to structural engineers -- from system properties and a given excitation, the goal is to determine the system's dynamic response.
 
 ```python
 output_motion = eigen(M,C,K, input_motion)
@@ -37,8 +37,6 @@ A,B,C,D = sysid(input_motion, output_motion)
 
 
 ## Getting Started
-
-Check out the [**Documentation Page**](https://brace2.github.io/mdof/)
 
 Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2FBRACE2%2Fmdof&urlpath=lab%2Ftree%2Fmdof%2Fnotebooks%2FREADME.ipynb&branch=master) (UC Berkeley users) or  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/BRACE2/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) (non-UC Berkeley users) to access and experiment with example Jupyter notebooks.
 

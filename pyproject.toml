@@ -54,7 +54,7 @@ classifiers = [
 
 [project.urls]
 repository = "http://github.com/BRACE2/mdof"
-# documentation = "https://brace2.github.io/mdof"
+documentation = "https://brace2.github.io/mdof"
 
 [project.scripts]
 mdof = "mdof.__main__:main"
