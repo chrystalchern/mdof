@@ -7,8 +7,8 @@ project = 'mdof'
 copyright = '2023, Chrystal Chern'
 author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."
-version = '0.0.6'
-release = '0.0.6'
+version = '0.0.7'
+release = '0.0.7'
 
 # -- General configuration ---------------------------------------------------
 
