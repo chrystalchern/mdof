@@ -1,0 +1,11 @@
+*.egg-info
+.ipynb_checkpoints/
+PUBLISHING.md
+__pycache__/
+assets/
+dist
+notebooks/PEERNGARecords_Unscaled/
+notebooks/uploads/
+studies/
+tests/
+src/ssid/

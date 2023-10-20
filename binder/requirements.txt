@@ -1,0 +1,11 @@
+numpy
+scipy
+quakeio
+
+opensees
+matplotlib
+plotly
+pandas
+control
+sdof
+mdof

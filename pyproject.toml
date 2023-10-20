@@ -1,0 +1,68 @@
+[project]
+name = "mdof"
+version = "0.0.7"
+authors = [
+  {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"}
+]
+
+description="Fast and friendly system identification for structures."
+
+readme = "README.md"
+
+keywords = [
+    "seismic",
+    "earthquake",
+] 
+
+dependencies = [
+  "numpy",
+  "scipy",
+  "tqdm",
+  "quakeio",
+  "matplotlib",
+  "plotly",
+  "pandas",
+  "control",
+  "sdof",
+# "opensees",
+  "quakeio"
+]
+
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Science/Research',
+    'Intended Audience :: Developers',
+    'License :: OSI Approved :: BSD License',
+    'Programming Language :: C',
+    'Programming Language :: Python',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3 :: Only',
+    'Programming Language :: Python :: Implementation :: CPython',
+    'Topic :: Software Development',
+    'Topic :: Scientific/Engineering',
+    'Operating System :: Microsoft :: Windows',
+    'Operating System :: POSIX',
+    'Operating System :: Unix',
+    'Operating System :: MacOS',
+]
+
+[project.urls]
+repository = "http://github.com/BRACE2/mdof"
+documentation = "https://brace2.github.io/mdof"
+
+[project.scripts]
+mdof = "mdof.__main__:main"
+
+[build-system]
+requires = [
+    "setuptools >= 52.0.2",
+]
+
+build-backend = "setuptools.build_meta"
+
