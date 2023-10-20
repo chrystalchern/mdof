@@ -1,7 +1,0 @@
-mdof.utilities.testing module
-=============================
-
-.. automodule:: mdof.utilities.testing
-   :members:
-   :undoc-members:
-   :show-inheritance:
