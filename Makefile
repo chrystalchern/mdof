@@ -11,7 +11,7 @@ NOTEBOOKS = notebooks/00_Overview.ipynb \
 
 publish:
 	cp -r _build/html/* site/
-	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site/ origin gh-pages
+	git.exe add site && git.exe commit -m'cc - rebuild site' && git subtree push --prefix site/ origin gh-pages
 
 test:
 	cp ./notebooks/0[0-9]_* ./docs/examples
