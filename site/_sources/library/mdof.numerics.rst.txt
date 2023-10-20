@@ -1,7 +1,0 @@
-mdof.numerics module
-====================
-
-.. automodule:: mdof.numerics
-   :members:
-   :undoc-members:
-   :show-inheritance:
