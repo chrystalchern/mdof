@@ -38,9 +38,9 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=65da795c"></script>
+    <script src="../_static/documentation_options.js?v=1d1a88ea"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -49,7 +49,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Introduction to MIMO" href="05_MIMO_Intro.html" />
-    <link rel="prev" title="SISO for Ground Motion Events" href="03_SISO_History.html" />
+    <link rel="prev" title="SISO for Event History" href="03_SISO_History.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -142,7 +142,7 @@
     
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../library/index.html">
-                        mdof
+                        Reference
                       </a>
                     </li>
                 
@@ -259,7 +259,7 @@ document.write(`
     
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../library/index.html">
-                        mdof
+                        Reference
                       </a>
                     </li>
                 
@@ -322,9 +322,10 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="00_Overview.html">Overview of the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">Introduction to SISO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for a Ground Motion Event</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Event History</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">SIMO for Ground Motion Events</a></li>
 <li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
@@ -386,7 +387,7 @@ document.write(`
                 <article class="bd-article" role="main">
                   
   <section id="SIMO-for-Ground-Motion-Events">
-<h1>SIMO for Ground Motion Events<a class="headerlink" href="#SIMO-for-Ground-Motion-Events" title="Permalink to this heading">#</a></h1>
+<h1>SIMO for Ground Motion Events<a class="headerlink" href="#SIMO-for-Ground-Motion-Events" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -403,7 +404,7 @@ document.write(`
 </div>
 </div>
 <section id="Unknown-multi-input,-multi-output-system">
-<h2>Unknown multi-input, multi-output system<a class="headerlink" href="#Unknown-multi-input,-multi-output-system" title="Permalink to this heading">#</a></h2>
+<h2>Unknown multi-input, multi-output system<a class="headerlink" href="#Unknown-multi-input,-multi-output-system" title="Link to this heading">#</a></h2>
 <table class="table">
 <thead>
 <tr class="row-odd"><th class="head"><p>parameter</p></th>
@@ -584,9 +585,9 @@ damping ratios: 0.01, 0.02
 </div>
 </section>
 <section id="Configure">
-<h2>Configure<a class="headerlink" href="#Configure" title="Permalink to this heading">#</a></h2>
+<h2>Configure<a class="headerlink" href="#Configure" title="Link to this heading">#</a></h2>
 <section id="Method">
-<h3>Method<a class="headerlink" href="#Method" title="Permalink to this heading">#</a></h3>
+<h3>Method<a class="headerlink" href="#Method" title="Link to this heading">#</a></h3>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
@@ -600,11 +601,11 @@ damping ratios: 0.01, 0.02
 </section>
 </section>
 <section id="Analysis-with-System-Identification">
-<h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Permalink to this heading">#</a></h2>
-<section id="Transfer-Function-vs-State-Space-Methods">
-<h3>Transfer Function vs State Space Methods<a class="headerlink" href="#Transfer-Function-vs-State-Space-Methods" title="Permalink to this heading">#</a></h3>
+<h2>Analysis with System Identification<a class="headerlink" href="#Analysis-with-System-Identification" title="Link to this heading">#</a></h2>
+<section id="Modal-Estimation">
+<h3>Modal Estimation<a class="headerlink" href="#Modal-Estimation" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[12]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set parameters</span>
@@ -641,6 +642,7 @@ damping ratios: 0.01, 0.02
     <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.975</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{fourier}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_{state space}$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
     <span class="c1"># plt.gcf().axes[0].text(response_periods[i]+0.05,0.875,r&quot;$T_{response}$ = &quot;+str(np.round(response_periods[i],3)),fontsize=15)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">set_figwidth</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">gcf</span><span class="p">()</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">((</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.1</span><span class="p">));</span>
 </pre></div>
@@ -651,7 +653,7 @@ damping ratios: 0.01, 0.02
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1000/1001 [00:00&lt;00:00, 12535.69it/s]
+100%|█████████▉| 1200/1201 [00:00&lt;00:00, 15390.62it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -659,7 +661,7 @@ damping ratios: 0.01, 0.02
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-[0.991078403564801, 0.26555865787121163]
+[0.9910784035648029, 0.2655586578710922]
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -670,14 +672,16 @@ damping ratios: 0.01, 0.02
 </div>
 </div>
 </section>
-<section id="State-Space-Methods">
-<h3>State Space Methods<a class="headerlink" href="#State-Space-Methods" title="Permalink to this heading">#</a></h3>
+<section id="Response-Prediction">
+<h3>Response Prediction<a class="headerlink" href="#Response-Prediction" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[16]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
 <span class="kn">from</span> <span class="nn">control</span> <span class="kn">import</span> <span class="n">ss</span><span class="p">,</span> <span class="n">forced_response</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">horizon</span> <span class="o">=</span> <span class="mi">800</span>
+<span class="n">realization</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;okid-era-dc&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">out_pred</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="o">*</span><span class="n">realization</span><span class="p">,</span><span class="n">dt</span><span class="o">*</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">U</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">inputs</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
 <span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">outputs</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">models</span><span class="o">=</span><span class="n">out_pred</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">decimate</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="n">conf</span><span class="o">.</span><span class="n">decimation</span><span class="p">),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;State Space Model Displacement Response&quot;</span><span class="p">)</span>
 </pre></div>
@@ -688,14 +692,6 @@ damping ratios: 0.01, 0.02
 </div>
 <div class="output_area docutils container">
 <img alt="../_images/examples_04_SIMO_Event_18_0.png" src="../_images/examples_04_SIMO_Event_18_0.png" />
-</div>
-</div>
-<div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-</pre></div>
 </div>
 </div>
 </section>
@@ -718,7 +714,7 @@ damping ratios: 0.01, 0.02
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">SISO for Ground Motion Events</p>
+        <p class="prev-next-title">SISO for Event History</p>
       </div>
     </a>
     <a class="right-next"
@@ -751,8 +747,8 @@ damping ratios: 0.01, 0.02
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Analysis-with-System-Identification">Analysis with System Identification</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Transfer-Function-vs-State-Space-Methods">Transfer Function vs State Space Methods</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#State-Space-Methods">State Space Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Modal-Estimation">Modal Estimation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Response-Prediction">Response Prediction</a></li>
 </ul>
 </li>
 </ul>
@@ -790,7 +786,7 @@ damping ratios: 0.01, 0.02
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     <br/>
   </p>
 </div>

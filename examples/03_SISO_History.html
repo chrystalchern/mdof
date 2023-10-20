@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>SISO for Ground Motion Events &#8212; mdof</title>
+    <title>SISO for Event History &#8212; mdof</title>
   
   
   
@@ -38,9 +38,9 @@
 <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=ac02cc09edc035673794" />
   <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=ac02cc09edc035673794"></script>
 
-    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=65da795c"></script>
+    <script src="../_static/documentation_options.js?v=1d1a88ea"></script>
     <script src="../_static/doctools.js?v=888ff710"></script>
-    <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -48,8 +48,8 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="SIMO for Ground Motion Events" href="04_SIMO_Event.html" />
-    <link rel="prev" title="SISO for Ground Motion Events" href="02_SISO_Event.html" />
+    <link rel="next" title="Introduction to MIMO" href="04_MIMO_Intro.html" />
+    <link rel="prev" title="SISO for a Ground Motion Event" href="02_SISO_Event.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -142,7 +142,7 @@
     
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../library/index.html">
-                        mdof
+                        Reference
                       </a>
                     </li>
                 
@@ -259,7 +259,7 @@ document.write(`
     
                     <li class="nav-item">
                       <a class="nav-link nav-internal" href="../library/index.html">
-                        mdof
+                        Reference
                       </a>
                     </li>
                 
@@ -322,12 +322,13 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">System Identification with the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for Ground Motion Events</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">SISO for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_SIMO_Event.html">SIMO for Ground Motion Events</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Intro.html">Introduction to MIMO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Ground Motion Events</a></li>
+<li class="toctree-l1"><a class="reference internal" href="00_Overview.html">Overview of the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
+<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">Introduction to SISO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for a Ground Motion Event</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">SISO for Event History</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Introduction to MIMO</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO for a Ground Motion Event</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Event History</a></li>
 </ul>
 </div>
 </nav></div>
@@ -385,8 +386,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="SISO-for-Ground-Motion-Events">
-<h1>SISO for Ground Motion Events<a class="headerlink" href="#SISO-for-Ground-Motion-Events" title="Permalink to this heading">#</a></h1>
+  <section id="SISO-for-Event-History">
+<h1>SISO for Event History<a class="headerlink" href="#SISO-for-Event-History" title="Link to this heading">#</a></h1>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -400,7 +401,7 @@ document.write(`
 </div>
 </div>
 <section id="Upload-a-Dataset-and-Identify-Spectral-Quantities">
-<h2>Upload a Dataset and Identify Spectral Quantities<a class="headerlink" href="#Upload-a-Dataset-and-Identify-Spectral-Quantities" title="Permalink to this heading">#</a></h2>
+<h2>Upload a Dataset and Identify Spectral Quantities<a class="headerlink" href="#Upload-a-Dataset-and-Identify-Spectral-Quantities" title="Link to this heading">#</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -415,7 +416,7 @@ document.write(`
 </div>
 </div>
 <section id="Method-Inputs">
-<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Permalink to this heading">#</a></h3>
+<h3>Method Inputs<a class="headerlink" href="#Method-Inputs" title="Link to this heading">#</a></h3>
 <p>See <code class="docutils literal notranslate"><span class="pre">`01_SISO_Intro</span></code> &lt;./01_SISO_Intro.ipynb&gt;`__ for parameter definitions</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
@@ -438,7 +439,7 @@ document.write(`
 </div>
 </section>
 <section id="Perform-System-Identification">
-<h3>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Permalink to this heading">#</a></h3>
+<h3>Perform System Identification<a class="headerlink" href="#Perform-System-Identification" title="Link to this heading">#</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
@@ -528,15 +529,15 @@ document.write(`
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">SISO for Ground Motion Events</p>
+        <p class="prev-next-title">SISO for a Ground Motion Event</p>
       </div>
     </a>
     <a class="right-next"
-       href="04_SIMO_Event.html"
+       href="04_MIMO_Intro.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">SIMO for Ground Motion Events</p>
+        <p class="prev-next-title">Introduction to MIMO</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -595,7 +596,7 @@ document.write(`
       
         <div class="footer-item">
   <p class="sphinx-version">
-    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.1.2.
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 7.2.6.
     <br/>
   </p>
 </div>
