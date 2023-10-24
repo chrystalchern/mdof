@@ -5,7 +5,6 @@ __pycache__/
 assets/
 dist
 notebooks/PEERNGARecords_Unscaled/
-notebooks/uploads/
 studies/
 tests/
 src/ssid/
