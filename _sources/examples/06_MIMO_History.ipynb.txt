@@ -5,7 +5,7 @@
    "id": "e10b64c2",
    "metadata": {},
    "source": [
-    "# MIMO for Ground Motion Events"
+    "# MIMO for Event History"
    ]
   },
   {
