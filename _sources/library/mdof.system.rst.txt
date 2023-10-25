@@ -1,7 +1,0 @@
-mdof.system module
-==================
-
-.. automodule:: mdof.system
-   :members:
-   :undoc-members:
-   :show-inheritance:
