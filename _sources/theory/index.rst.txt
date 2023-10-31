@@ -7,6 +7,7 @@ Theory
    statespace.rst
    era.rst
    okid.rst
+   srim.rst
 
 .. State Space Model of Structural Dynamics
 .. ----------------------------------------

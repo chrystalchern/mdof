@@ -98,7 +98,7 @@ The shifted Hankel matrix, :math:`\mathbf{H'}` (one time step ahead of
    =
    \mathbf{\mathcal{O}A\mathcal{C}}
 
-By taking the dominant terms of the singular value decomposition (SVD)
+By taking the dominant terms of the singular value decomposition 
 of :math:`\mathbf{H}`, and transforming the relationship between
 :math:`\mathbf{H} = \mathbf{\mathcal{OC}}` and
 :math:`\mathbf{H'} = \mathbf{\mathcal{O}A\mathcal{C}}`, a reduced-order
