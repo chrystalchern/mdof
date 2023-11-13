@@ -90,7 +90,7 @@ $$
 \end{bmatrix}
 $$ -->
 
-Next, we horizontally stack $N$ successive timepoints of these column vectors in a matrix, to get the matrix equation
+Finally, we horizontally stack $N$ successive timepoints of these column vectors in a matrix, to get the matrix equation
 
 $$
 \boxed{\mathbf{Y}_{p}(k) = \mathcal{O}_{p}\mathbf{X}(k) + \mathcal{T}_{p}\mathbf{U}_{p}(k)} ~,
