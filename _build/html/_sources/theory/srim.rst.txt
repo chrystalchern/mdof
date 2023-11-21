@@ -106,7 +106,7 @@ column vector and express this vector as :math:`\mathbf{y}_{p}(k)`:
    \end{bmatrix}
    $$ -->
 
-Next, we horizontally stack :math:`N` successive timepoints of these
+Finally, we horizontally stack :math:`N` successive timepoints of these
 column vectors in a matrix, to get the matrix equation
 
 .. math::

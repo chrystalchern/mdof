@@ -340,6 +340,7 @@ document.write(`
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modes.html">Modal Properties from State Space Realization</a></li>
 <li class="toctree-l1"><a class="reference internal" href="era.html">Eigensystem Realization Algorithm (ERA)</a></li>
 <li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">System Realization by Information Matrix (SRIM)</a></li>
@@ -485,7 +486,7 @@ column vector and express this vector as <span class="math notranslate nohighlig
 \vdots \\
 \mathbf{u}(k+p-1)
 \end{bmatrix}
-$$ --><p>Next, we horizontally stack <span class="math notranslate nohighlight">\(N\)</span> successive timepoints of these
+$$ --><p>Finally, we horizontally stack <span class="math notranslate nohighlight">\(N\)</span> successive timepoints of these
 column vectors in a matrix, to get the matrix equation</p>
 <div class="math notranslate nohighlight">
 \[\boxed{\mathbf{Y}_{p}(k) = \mathcal{O}_{p}\mathbf{X}(k) + \mathcal{T}_{p}\mathbf{U}_{p}(k)} ~,\]</div>
