@@ -55,7 +55,7 @@ def response_transfer(inputs, outputs, step, **options):
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
     """
-    pseudo = options.get("pseduo", False)
+    pseudo = options.get("pseudo", False)
     decimation = options.get("decimation", None)
 
     if decimation is not None:
