@@ -1,0 +1,3 @@
+\contentsline {section}{Power Spectral Density}{1}{section*.2}%
+\contentsline {subsection}{Norm of Fourier Transform}{1}{section*.3}%
+\contentsline {subsection}{Fourier Transform of Autocorrelation}{1}{section*.4}%

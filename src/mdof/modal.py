@@ -1,6 +1,6 @@
 """
 This module implements functions that extract modal information
-from a state space realization.
+from a state space realization or transfer function.
 """
 import numpy as np
 import scipy.linalg as sl
