@@ -238,6 +238,7 @@ def parse_srim(argi, config, channels, method=None):
             "period":  1/mode["freq"],
             "frequency": mode["freq"],
             "damping":   mode["damp"],
+            "shape":     np.real(mode["modeshape"]),
             "emac":      mode["energy_condensed_emaco"],
             "mpc":       mode["mpc"],
         }
