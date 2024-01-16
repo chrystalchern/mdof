@@ -38,6 +38,8 @@ help:
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
 %: Makefile
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
+	sed -i 's/\\bm{/\\boldsymbol{/g' $(BUILDDIR)/html/theory/srim.html
+
 APIDOC = python3 tools/doc.py
 APIDIR = docs/user/
 

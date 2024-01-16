@@ -1,3 +1,4 @@
 *.ipynb linguist-documentation
 *.tex   linguist-documentation
 *.html  linguist-documentation
+*.css   linguist-documentation

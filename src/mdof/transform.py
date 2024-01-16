@@ -7,13 +7,10 @@ def power_transfer(inputs, outputs, step, **options):
     """
     Power spectrum transfer function from input and output data.
 
-    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
-                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
-    :type inputs:       array
+    :param inputs:      input time history.
+    :type inputs:       1D array
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
-                        :math:`nt` = number of timesteps
-    :type outputs:      array
+    :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
     :param decimation:  decimation factor. default: 1
@@ -38,13 +35,10 @@ def response_transfer(inputs, outputs, step, **options):
     """
     Response spectrum transfer function from input and output data.
     
-    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
-                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
-    :type inputs:       array
+    :param inputs:      input time history.
+    :type inputs:       1D array
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
-                        :math:`nt` = number of timesteps
-    :type outputs:      array
+    :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
     :param pseudo:      if True, uses pseudo accelerations. default: False
@@ -55,7 +49,7 @@ def response_transfer(inputs, outputs, step, **options):
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
     """
-    pseudo = options.get("pseduo", False)
+    pseudo = options.get("pseudo", False)
     decimation = options.get("decimation", None)
 
     if decimation is not None:
@@ -84,13 +78,10 @@ def fourier_transfer(inputs, outputs, step, **options):
     """
     Fourier spectrum transfer function from input and output data.
 
-    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
-                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
-    :type inputs:       array
+    :param inputs:      input time history.
+    :type inputs:       1D array
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
-                        :math:`nt` = number of timesteps
-    :type outputs:      array
+    :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
     :param decimation:  decimation factor. default: 1
@@ -113,7 +104,7 @@ def fourier_transfer(inputs, outputs, step, **options):
 
 def power_spectrum(series, step, period_band=None, **options):
     """
-    Power spectral density of a signal, as a function of period.
+    Power spectrum of a signal, as a function of period (i.e., periodogram).
 
     :param series:      time series.
     :type series:       1D array
