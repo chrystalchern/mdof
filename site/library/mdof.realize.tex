@@ -1,0 +1,305 @@
+\protect\hyperlink{main-content}{Skip to main content}
+
+\hypertarget{pst-scroll-pixel-helper}{}
+
+\emph{} Back to top
+
+\emph{} {Ctrl+K}
+
+{}
+
+\href{../index.html}{}
+
+mdof
+
+Site Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{Reference}
+\item
+  \href{../theory/index.html}{Theory}
+\item
+  \href{../examples/index.html}{Examples}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/BRACE2/mdof}{{\emph{}} {GitHub}}
+\end{itemize}
+
+{}
+
+Site Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{Reference}
+\item
+  \href{../theory/index.html}{Theory}
+\item
+  \href{../examples/index.html}{Examples}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/BRACE2/mdof}{{\emph{}} {GitHub}}
+\end{itemize}
+
+Section Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{mdof modules and top-level functions}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{mdof.markov.html}{mdof.markov module}
+\item
+  \protect\hyperlink{}{mdof.realize module}
+\item
+  \href{mdof.modal.html}{mdof.modal module}
+\item
+  \href{mdof.transform.html}{mdof.transform module}
+\end{itemize}
+
+\hypertarget{rtd-footer-container}{}
+
+\hypertarget{main-content}{}
+\begin{itemize}
+\tightlist
+\item
+  \href{../index.html}{\emph{}}
+\item
+  \href{index.html}{Reference}
+\item
+  mdof.realize module
+\end{itemize}
+
+\hypertarget{searchbox}{}
+
+\hypertarget{module-mdof.realize}{}
+\protect\hypertarget{mdof-realize-module}{}{}
+
+\hypertarget{mdof.realize-module}{%
+\section{\texorpdfstring{mdof.realize
+module\protect\hyperlink{module-mdof.realize}{\#}}{mdof.realize module\#}}\label{mdof.realize-module}}
+
+\begin{description}
+\item[{ {{mdof.realize.}}{{era}}{(}\emph{{{Y}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.realize.era}{\#}}]
+System realization from Markov parameters (discrete impulse response
+data). Ho-Kalman / Eigensystem Realization Algorithm (ERA)
+\protect\hyperlink{id3}{{{[}}1{{]}}}
+\protect\hyperlink{id4}{{{[}}2{{]}}}.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{Y} (\emph{array}) -- Markov parameters. dimensions:
+  {\textbackslash{}((p,q,nt)\textbackslash{})}, where
+  {\textbackslash{}(p\textbackslash{})} = number of outputs,
+  {\textbackslash{}(q\textbackslash{})} = number of inputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of Markov parameters.
+\item
+  \textbf{horizon} (\emph{int,} \emph{optional}) -- number of block rows
+  in Hankel matrix = order of observability matrix. default:
+  {\textbackslash{}(min(150, (nt-1)/2)\textbackslash{})}
+\item
+  \textbf{nc} (\emph{int,} \emph{optional}) -- number of block columns
+  in Hankel matrix = order of controllability matrix. default:
+  {\textbackslash{}(min(150, max(nt-1-\textbackslash{})}
+  \texttt{horizon}{\textbackslash{}(, (nt-1)/2))\textbackslash{})}
+\item
+  \textbf{order} (\emph{int,} \emph{optional}) -- model order. default:
+  {\textbackslash{}(min(20,\textbackslash{})}
+  \texttt{horizon}{\textbackslash{}(/2)\textbackslash{})}
+\end{itemize}
+\item[Returns{:}]
+realization in the form of state space coefficients \texttt{(A,B,C,D)}
+\item[Return type{:}]
+tuple of arrays
+\end{description}
+
+\hypertarget{references}{}
+\hypertarget{references}{%
+\subsection{\texorpdfstring{References\protect\hyperlink{references}{\#}}{References\#}}\label{references}}
+
+{{{[}}\protect\hyperlink{id1}{1}{{]}}}
+
+Ho, Β. L., \& Kálmán, R. E. (1966). Effective construction of linear
+state-variable models from input/output functions: Die Konstruktion von
+linearen Modeilen in der Darstellung durch Zustandsvariable aus den
+Beziehungen für Ein-und Ausgangsgrößen. at-Automatisierungstechnik,
+14(1-12), 545-548. (\url{https://doi.org/10.1524/auto.1966.14.112.545})
+
+{{{[}}\protect\hyperlink{id2}{2}{{]}}}
+
+Juang, J. N., \& Pappa, R. S. (1985). An eigensystem realization
+algorithm for modal parameter identification and model reduction.
+Journal of guidance, control, and dynamics, 8(5), 620-627.
+(\url{https://doi.org/10.2514/3.20031})
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.realize.}}{{era\_dc}}{(}\emph{{{Y}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.realize.era_dc}{\#}}]
+System realization from Markov parameters (discrete impulse response
+data). Eigensystem Realization Algorithm with Data Correlations (ERA/DC)
+\protect\hyperlink{id7}{{{[}}3{{]}}}.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{Y} (\emph{array}) -- Markov parameters. dimensions:
+  {\textbackslash{}((p,q,nt)\textbackslash{})}, where
+  {\textbackslash{}(p\textbackslash{})} = number of outputs,
+  {\textbackslash{}(q\textbackslash{})} = number of inputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of Markov parameters.
+\item
+  \textbf{horizon} (\emph{int,} \emph{optional}) -- number of block rows
+  in Hankel matrix = order of observability matrix. default:
+  {\textbackslash{}(min(150, (nt-1)/2)\textbackslash{})}
+\item
+  \textbf{nc} (\emph{int,} \emph{optional}) -- number of block columns
+  in Hankel matrix = order of controllability matrix. default:
+  {\textbackslash{}(min(150, max(nt-1-\textbackslash{})}
+  \texttt{horizon}{\textbackslash{}(, (nt-1)/2))\textbackslash{})}
+\item
+  \textbf{order} (\emph{int,} \emph{optional}) -- model order. default:
+  {\textbackslash{}(min(20,\textbackslash{})}
+  \texttt{horizon}{\textbackslash{}(/2)\textbackslash{})}
+\item
+  \textbf{a} (\emph{int,} \emph{optional}) --
+  {\textbackslash{}((\textbackslash{}alpha)\textbackslash{})} number of
+  block rows in Hankel of correlation matrix. default: 0
+\item
+  \textbf{b} (\emph{int,} \emph{optional}) --
+  {\textbackslash{}((\textbackslash{}beta)\textbackslash{})} number of
+  block columns in Hankel of correlation matrix. default: 0
+\item
+  \textbf{l} (\emph{int,} \emph{optional}) -- initial lag for data
+  correlations. default: 0
+\item
+  \textbf{g} (\emph{int,} \emph{optional}) -- lags (gap) between
+  correlation matrices. default: 1
+\end{itemize}
+\item[Returns{:}]
+realization in the form of state space coefficients \texttt{(A,B,C,D)}
+\item[Return type{:}]
+tuple of arrays
+\end{description}
+
+\hypertarget{id6}{}
+\hypertarget{references-1}{%
+\subsection{\texorpdfstring{References\protect\hyperlink{id6}{\#}}{References\#}}\label{references-1}}
+
+{{{[}}\protect\hyperlink{id5}{3}{{]}}}
+
+Juang, J. N., Cooper, J. E., \& Wright, J. R. (1987). An eigensystem
+realization algorithm using data correlations (ERA/DC) for modal
+parameter identification.
+(\url{https://ntrs.nasa.gov/citations/19870035963})
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.realize.}}{{srim}}{(}\emph{{{inputs}}},
+\emph{{{outputs}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.realize.srim}{\#}}]
+System realization from input and output data, with output error
+minimization method. System Realization Using Information Matrix (SRIM)
+\protect\hyperlink{id10}{{{[}}4{{]}}}.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{inputs} (\emph{array}) -- input time history. dimensions:
+  {\textbackslash{}((q,nt)\textbackslash{})}, where
+  {\textbackslash{}(q\textbackslash{})} = number of inputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{outputs} (\emph{array}) -- output response history.
+  dimensions: {\textbackslash{}((p,nt)\textbackslash{})}, where
+  {\textbackslash{}(p\textbackslash{})} = number of outputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{horizon} (\emph{int,} \emph{optional}) -- number of steps used
+  for identification (prediction horizon). default:
+  {\textbackslash{}(min(300, nt)\textbackslash{})}
+\item
+  \textbf{order} (\emph{int,} \emph{optional}) -- model order. default:
+  {\textbackslash{}(min(20,\textbackslash{})}
+  \texttt{horizon}{\textbackslash{}(/2)\textbackslash{})}
+\item
+  \textbf{full} (\emph{bool,} \emph{optional}) -- if True, full SVD.
+  default: True
+\item
+  \textbf{find} (\emph{string,} \emph{optional}) -- ``ABCD'' or ``AC''.
+  default: ``ABCD''
+\item
+  \textbf{threads} (\emph{int,} \emph{optional}) -- number of threads
+  used during the output error minimization method. default: 6
+\item
+  \textbf{chunk} (\emph{int,} \emph{optional}) -- chunk size in output
+  error minimization method. default: 200
+\end{itemize}
+\item[Returns{:}]
+realization in the form of state space coefficients \texttt{(A,B,C,D)}
+\item[Return type{:}]
+tuple of arrays
+\end{description}
+
+\hypertarget{id9}{}
+\hypertarget{references-2}{%
+\subsection{\texorpdfstring{References\protect\hyperlink{id9}{\#}}{References\#}}\label{references-2}}
+
+{{{[}}\protect\hyperlink{id8}{4}{{]}}}
+
+Juang, J. N. (1997). System realization using information matrix.
+Journal of Guidance, Control, and Dynamics, 20(3), 492-500.
+(\url{https://doi.org/10.2514/2.4068})
+\end{description}
+
+\href{mdof.markov.html}{\emph{}}
+
+previous
+
+mdof.markov module
+
+\href{mdof.modal.html}{}
+
+next
+
+mdof.modal module
+
+\emph{}
+
+\emph{} On this page
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{mdof.realize.era}{\texttt{era()}}
+\item
+  \protect\hyperlink{mdof.realize.era_dc}{\texttt{era\_dc()}}
+\item
+  \protect\hyperlink{mdof.realize.srim}{\texttt{srim()}}
+\end{itemize}
+
+© Copyright 2023, Chrystal Chern.\\
+
+Created using \href{https://www.sphinx-doc.org/}{Sphinx} 7.1.2.\\
+
+Built with the
+\href{https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html}{PyData
+Sphinx Theme} 0.14.1.

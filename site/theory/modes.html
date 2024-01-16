@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mdof.transform module &#8212; mdof</title>
+    <title>Modal Properties from State Space Realization &#8212; mdof</title>
   
   
   
@@ -59,12 +59,14 @@
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'library/mdof.transform';</script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/modes';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Theory" href="../theory/index.html" />
-    <link rel="prev" title="mdof.modal module" href="mdof.modal.html" />
+    <link rel="next" title="Eigensystem Realization Algorithm (ERA)" href="era.html" />
+    <link rel="prev" title="State Space Model of Structural Dynamics" href="statespace.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -155,15 +157,15 @@
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="index.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         Reference
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../theory/index.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
                         Theory
                       </a>
                     </li>
@@ -272,15 +274,15 @@ document.write(`
   </p>
   <ul class="bd-navbar-elements navbar-nav">
     
-                    <li class="nav-item current active">
-                      <a class="nav-link nav-internal" href="index.html">
+                    <li class="nav-item">
+                      <a class="nav-link nav-internal" href="../library/index.html">
                         Reference
                       </a>
                     </li>
                 
 
-                    <li class="nav-item">
-                      <a class="nav-link nav-internal" href="../theory/index.html">
+                    <li class="nav-item current active">
+                      <a class="nav-link nav-internal" href="index.html">
                         Theory
                       </a>
                     </li>
@@ -336,14 +338,12 @@ document.write(`
         <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="index.html">mdof modules and top-level functions</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdof.realize.html">mdof.realize module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">mdof.transform module</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Modal Properties from State Space Realization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="era.html">Eigensystem Realization Algorithm (ERA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="srim.html">System Realization by Information Matrix (SRIM)</a></li>
 </ul>
 </div>
 </nav></div>
@@ -382,9 +382,9 @@ document.write(`
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Reference</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Theory</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page">mdof.transfo...</li>
+    <li class="breadcrumb-item active" aria-current="page">Modal...</li>
   </ul>
 </nav>
 </div>
@@ -401,117 +401,105 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section id="module-mdof.transform">
-<span id="mdof-transform-module"></span><h1>mdof.transform module<a class="headerlink" href="#module-mdof.transform" title="Permalink to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.power_transfer">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">power_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.power_transfer" title="Permalink to this definition">#</a></dt>
-<dd><p>Power spectrum transfer function from input and output data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>1D array</em>) – input time history.</p></li>
-<li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+  <section id="modal-properties-from-state-space-realization">
+<h1>Modal Properties from State Space Realization<a class="headerlink" href="#modal-properties-from-state-space-realization" title="Permalink to this heading">#</a></h1>
+<p>Structural system dynamics are in continuous time. With the time-domain
+system identification methods in the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package such as OKID-ERA
+and SRIM, a structural system’s discrete-time state space realization is
+obtained from measured data. The following process recovers the
+structure’s modal properties (i.e., natural frequencies, modal damping
+ratios, and mode shapes) from the discrete state space realization
+coefficients, <span class="math notranslate nohighlight">\(\mathbf{A}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{C}\)</span>.</p>
+<section id="eigendecompositions-of-mathbf-a-c-and-mathbf-a">
+<h2>Eigendecompositions of <span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}\)</span><a class="headerlink" href="#eigendecompositions-of-mathbf-a-c-and-mathbf-a" title="Permalink to this heading">#</a></h2>
+<p>The relationship between the eigendecompositions of
+<span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span>, the continuous-time state transition matrix, and
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, the discrete-time state transition matrix, is shown
+below.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{A}_{c} &amp;= \Phi\Lambda\Phi^{-1} \\
+\mathbf{A} &amp;= \Psi\Gamma\Psi^{-1} \\
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\mathbf{A} = e^{\mathbf{A}_{c}\Delta t} = e^{\Phi\Lambda\Phi^{-1}\Delta t} = \Phi e^{\Lambda\Delta t}\Phi^{-1}
+\end{aligned}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Psi = \Phi, \quad \Gamma = e^{\Lambda\Delta t} \\
+\end{aligned}\end{split}\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\Psi =
+\begin{bmatrix}
+\psi_{1} &amp; \psi_{2} &amp; \cdots &amp; \psi_{r}
+\end{bmatrix}, \quad{}
+\Phi =
+\begin{bmatrix}
+\phi_{1} &amp; \phi_{2} &amp; \cdots &amp; \phi_{r}
+\end{bmatrix}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\Gamma =
+\begin{bmatrix}
+\gamma_{1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \gamma_{2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \gamma_{r}
+\end{bmatrix}, \quad
+\Lambda = \begin{bmatrix}
+\lambda_{1} &amp; 0 &amp; \cdots &amp; 0 \\
+0 &amp; \lambda_{2} &amp; \cdots &amp; 0 \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+0 &amp; 0 &amp; \cdots &amp; \lambda_{r}
+\end{bmatrix}\end{split}\]</div>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\gamma_{j}\)</span> and <span class="math notranslate nohighlight">\(\psi_{j}\)</span> are the eigenvalues and
+eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda_{j}\)</span> and <span class="math notranslate nohighlight">\(\phi_{j}\)</span> are the eigenvalues and
+eigenvectors of <span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(j \in [1,2,\dots,r]\)</span>, and <span class="math notranslate nohighlight">\(r\)</span> is the model order.</p></li>
 </ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.response_transfer">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">response_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.response_transfer" title="Permalink to this definition">#</a></dt>
-<dd><p>Response spectrum transfer function from input and output data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>1D array</em>) – input time history.</p></li>
-<li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>pseudo</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, uses pseudo accelerations. default: False</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.fourier_transfer">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_transfer" title="Permalink to this definition">#</a></dt>
-<dd><p>Fourier spectrum transfer function from input and output data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>1D array</em>) – input time history.</p></li>
-<li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.power_spectrum">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">power_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.power_spectrum" title="Permalink to this definition">#</a></dt>
-<dd><p>Power spectrum of a signal, as a function of period (i.e., periodogram).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>series</strong> (<em>1D array</em>) – time series.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays.</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.fourier_spectrum">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">series</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">period_band</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_spectrum" title="Permalink to this definition">#</a></dt>
-<dd><p>Fourier amplitude spectrum of a signal, as a function of period.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>series</strong> (<em>1D array</em>) – time series.</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays.</p>
-</dd>
-</dl>
-</dd></dl>
-
+</section>
+<section id="natural-frequencies-and-modal-damping-ratios">
+<h2>Natural Frequencies and Modal Damping Ratios<a class="headerlink" href="#natural-frequencies-and-modal-damping-ratios" title="Permalink to this heading">#</a></h2>
+<p>From the eigendecompositions of <span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span> and
+<span class="math notranslate nohighlight">\(\mathbf{A}\)</span>, we have</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+\Gamma = e^{\Lambda\Delta t}
+\implies
+\lambda_{j} = (\ln{\gamma_{j}})/\Delta t~.
+\end{aligned}\]</div>
+<p>Assuming modal damping, these eigenvalues <span class="math notranslate nohighlight">\(\lambda_{j}\)</span> contain
+the damped natural frequencies and modal damping factors:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\lambda_{j} &amp;= -\zeta_{j}\omega_{j} \pm i\left(\omega_{j}\sqrt{1-\zeta_{j}^{2}}\right), \hspace{0.5cm} i=\sqrt{-1} \\ \\
+\lambda_{j}\bar{\lambda}_{j} &amp;= \zeta_{j}^{2}\omega_{j}^{2} + \omega_{j}^{2}\left(1-\zeta_{j}^{2}\right) \\
+    &amp;= \omega_{j}^{2}\left(\zeta_{j}^{2} + 1 - \zeta_{j}^{2}\right) \\
+    &amp;= \omega_{j}^{2} \\ \\
+\omega_{j} &amp;= \sqrt{\lambda_{j}\bar{\lambda}_{j}} = | \lambda_{j} |, \\
+\zeta_{j} &amp;= -\frac{\text{Re}(\lambda_{j})}{\omega_{j}},\\
+\end{aligned}\end{split}\]</div>
+<p>where the overline symbol <span class="math notranslate nohighlight">\(~\overline{\cdot}~\)</span> indicates the
+complex conjugate, <span class="math notranslate nohighlight">\(\text{Re}(\cdot)\)</span> indicates the real part of
+the complex number, <span class="math notranslate nohighlight">\(\omega_{j}\)</span> are the modal frequencies, and
+<span class="math notranslate nohighlight">\(\zeta_{j}\)</span> are the modal damping ratios.</p>
+</section>
+<section id="mode-shapes">
+<h2>Mode Shapes<a class="headerlink" href="#mode-shapes" title="Permalink to this heading">#</a></h2>
+<p>The eigenvectors of the continuous state transition matrix
+<span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span> transform the modal coordinates into the state
+coordinates. We define the mode shapes as the transformation from modal
+coordinates to the output coordinates.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathbf{x}(t) &amp;= \mathbf{\Phi q}(t) \\
+\mathbf{y}(t) &amp;= \mathbf{Cx}(t) + \mathbf{Du}(t) \\
+\mathbf{\Phi}_{\text{modal}} &amp;= \mathbf{C\Phi}
+\end{aligned}\end{split}\]</div>
+</section>
 </section>
 
 
@@ -525,20 +513,20 @@ document.write(`
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mdof.modal.html"
+       href="statespace.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">mdof.modal module</p>
+        <p class="prev-next-title">State Space Model of Structural Dynamics</p>
       </div>
     </a>
     <a class="right-next"
-       href="../theory/index.html"
+       href="era.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Theory</p>
+        <p class="prev-next-title">Eigensystem Realization Algorithm (ERA)</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -557,11 +545,9 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_transfer"><code class="docutils literal notranslate"><span class="pre">power_transfer()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.response_transfer"><code class="docutils literal notranslate"><span class="pre">response_transfer()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_transfer"><code class="docutils literal notranslate"><span class="pre">fourier_transfer()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_spectrum"><code class="docutils literal notranslate"><span class="pre">power_spectrum()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_spectrum"><code class="docutils literal notranslate"><span class="pre">fourier_spectrum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eigendecompositions-of-mathbf-a-c-and-mathbf-a">Eigendecompositions of <span class="math notranslate nohighlight">\(\mathbf{A}_{c}\)</span> and <span class="math notranslate nohighlight">\(\mathbf{A}\)</span></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#natural-frequencies-and-modal-damping-ratios">Natural Frequencies and Modal Damping Ratios</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mode-shapes">Mode Shapes</a></li>
 </ul>
   </nav></div>
 
