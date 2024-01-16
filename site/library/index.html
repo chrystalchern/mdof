@@ -421,11 +421,6 @@ document.write(`
 <section id="module-mdof">
 <span id="top-level-functions"></span><h2>top-level functions<a class="headerlink" href="#module-mdof" title="Permalink to this heading">#</a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="mdof.impulse">
-<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">impulse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">system</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">t</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.impulse" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="mdof.sysid">
 <span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">sysid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.sysid" title="Permalink to this definition">#</a></dt>
 <dd><p>State space system realization from input and output data.</p>
@@ -471,6 +466,34 @@ dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where 
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>tuple of 1D array, ND array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.modes">
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modes" title="Permalink to this definition">#</a></dt>
+<dd><p>Modal identification using state space system realization from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are
+“okid-era” and “okid-era-dc”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>system modes, including natural frequencies, damping ratios, mode shapes,
+condition numbers, and modal validation metrics EMAC and MPC.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dictionary</p>
 </dd>
 </dl>
 </dd></dl>
@@ -523,9 +546,9 @@ dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where 
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#modules">modules</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#module-mdof">top-level functions</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.impulse"><code class="docutils literal notranslate"><span class="pre">impulse()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.sysid"><code class="docutils literal notranslate"><span class="pre">sysid()</span></code></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.eigid"><code class="docutils literal notranslate"><span class="pre">eigid()</span></code></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.modes"><code class="docutils literal notranslate"><span class="pre">modes()</span></code></a></li>
 </ul>
 </li>
 </ul>
