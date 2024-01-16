@@ -5,7 +5,7 @@
 
 <img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
 
-Fast and friendly system identification for structures. *[Learn More](https://brace2.github.io/mdof/)*
+Fast and friendly system identification for structures. *[Learn More](https://chrystalchern.github.io/mdof/)*
 
 <div style="align:center">
 
