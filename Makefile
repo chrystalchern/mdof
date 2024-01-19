@@ -9,14 +9,15 @@ NOTEBOOKS = notebooks/00_Overview.ipynb \
 			../mdof_studies/PeakPicking.ipynb \
 			../mdof_studies/PowerSpectrum.ipynb
 
-publish:
-	cp -r _build/html/* site/
-	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site origin gh-pages
 
 test:
 	cp ./notebooks/0[0-9]_* ./docs/examples
 	cp -r ./notebooks/figures/* ./docs/examples/figures
 	pytest --nbmake $(NOTEBOOKS)
+
+publish:
+	cp -r _build/html/* site/
+	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site origin gh-pages
 
 # Minimal makefile for Sphinx documentation
 #

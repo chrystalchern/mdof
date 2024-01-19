@@ -1,6 +1,6 @@
 [project]
 name = "mdof"
-version = "0.0.7"
+version = "0.0.8" 
 authors = [
   {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"}
 ]
@@ -53,8 +53,8 @@ classifiers = [
 ]
 
 [project.urls]
-repository = "http://github.com/BRACE2/mdof"
-documentation = "https://brace2.github.io/mdof"
+repository = "http://github.com/chrystalchern/mdof"
+Documentation = "https://chrystalchern.github.io/mdof"
 
 [project.scripts]
 mdof = "mdof.__main__:main"
