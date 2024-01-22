@@ -215,7 +215,7 @@ class FrequencyContent:
                 y_data = amplitudes/max(amplitudes)
             else:
                 y_data = amplitudes
-            self.fig.add_trace(go.Scatter(x=x_data,y=y_data,name=label,showlegend=True,line_color=DEFAULT_PLOTLY_COLORS[self.num_traces%len(DEFAULT_PLOTLY_COLORS)]))
+            self.fig.add_trace(go.Scatter(x=x_data,y=y_data,mode='lines',name=label,showlegend=True,line_color=DEFAULT_PLOTLY_COLORS[self.num_traces%len(DEFAULT_PLOTLY_COLORS)]))
         else:
             N = len(x_data)
             x_data_vlines = np.array([x_data,x_data,np.full(N,None)]).transpose().reshape(-1)
