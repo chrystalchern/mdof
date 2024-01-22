@@ -2,7 +2,7 @@
 .ipynb_checkpoints/
 PUBLISHING.md
 __pycache__/
-assets/
+#assets/
 dist
 notebooks/PEERNGARecords_Unscaled/
 studies/

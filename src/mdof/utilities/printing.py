@@ -1,10 +1,24 @@
 import numpy as np
 from matplotlib import pyplot as plt
 import scienceplots
+import plotly.graph_objects as go
 
 plt.style.use(["poster"])# ,"science", "notebook"])
 
 nln = "\n"
+
+DEFAULT_PLOTLY_COLORS=[
+    '#1f77b4',  # muted blue
+    '#ff7f0e',  # safety orange
+    '#2ca02c',  # cooked asparagus green
+    '#d62728',  # brick red
+    '#9467bd',  # muted purple
+    '#8c564b',  # chestnut brown
+    '#e377c2',  # raspberry yogurt pink
+    '#7f7f7f',  # middle gray
+    '#bcbd22',  # curry yellow-green
+    '#17becf'   # blue-teal
+]
 
 def print_modes(modes, Tn=None, zeta=None):
 
@@ -167,6 +181,46 @@ def plot_transfer(models, title=None, labels=None, plotly=False):
             ax.legend()#fontsize=12)
         ax.set_title(title)#, fontsize=14)
 
+class FrequencyContent:
+    def __init__(self, scale, period, xlabel, ylabel) -> None:
+        self.scale = scale
+        self.period = period
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.num_traces = 0
+        layout = go.Layout(
+            title=None,
+            xaxis=dict(
+                title=self.xlabel
+            ),
+            yaxis=dict(
+                title=self.ylabel
+            ),
+            width=400, height=300,
+            margin=dict(l=70, r=20, t=20, b=20))
+        self.fig = go.Figure(layout=layout)
+
+    def add(self, periods, amplitudes=None, label=None):
+        if self.period:
+            x_data = periods
+        else:
+            x_data = 1/periods
+        if amplitudes is not None:
+            if self.scale:
+                y_data = amplitudes/max(amplitudes)
+            else:
+                y_data = amplitudes
+            self.fig.add_trace(go.Scatter(x=x_data,y=y_data,name=label,showlegend=True,line_color=DEFAULT_PLOTLY_COLORS[self.num_traces%len(DEFAULT_PLOTLY_COLORS)]))
+        else:
+            N = len(x_data)
+            x_data_vlines = np.array([x_data,x_data,np.full(N,None)]).transpose().reshape(-1)
+            y_data_vlines = np.array([np.zeros(N),np.ones(N),np.full(N,None)]).transpose().reshape(-1)
+            self.fig.add_trace(go.Scatter(x=x_data_vlines,y=y_data_vlines,mode='lines',name=label,showlegend=True,line_dash="dash",line_color=DEFAULT_PLOTLY_COLORS[self.num_traces%len(DEFAULT_PLOTLY_COLORS)]))
+        self.num_traces += 1        
+
+    def get_figure(self):
+        return self.fig
+
 def make_hover_data(data, ln=None):
     import numpy as np
     if ln is None:
@@ -179,3 +233,20 @@ def make_hover_data(data, ln=None):
         "hovertemplate": "<br>".join(f"{k}: %{{customdata[{v}]}}" for v,k in enumerate(keys)),
         "customdata": list(items),
     }
+
+if __name__ == "__main__":
+
+    import numpy as np
+    periods = np.array([0.1,0.3,0.5,0.7])
+    amplitudes = np.array([0.1,0.2,1,0.2])
+
+    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude")
+
+    plot.add(periods, amplitudes, label="R1")
+    plot.add(periods[:2], label="SRIM")
+    plot.add(periods[2:], label="SRIM")
+    plot.add(periods, amplitudes-0.05, label="R1")
+
+
+    fig:go.Figure = plot.get_figure()
+    print(fig.to_json())
