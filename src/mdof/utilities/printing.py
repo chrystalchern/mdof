@@ -1,9 +1,12 @@
 import numpy as np
 from matplotlib import pyplot as plt
-import scienceplots
 import plotly.graph_objects as go
 
-plt.style.use(["poster"])# ,"science", "notebook"])
+try:
+    import scienceplots
+    plt.style.use(["poster"])# ,"science", "notebook"])
+except ImportError:
+    pass
 
 nln = "\n"
 
@@ -196,7 +199,7 @@ class FrequencyContent:
             yaxis=dict(
                 title=self.ylabel
             ),
-            width=400, height=300,
+            width=500, height=300,
             margin=dict(l=70, r=20, t=20, b=20))
         self.fig = go.Figure(layout=layout)
 
