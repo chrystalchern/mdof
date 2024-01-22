@@ -185,16 +185,18 @@ def plot_transfer(models, title=None, labels=None, plotly=False):
         ax.set_title(title)#, fontsize=14)
 
 class FrequencyContent:
-    def __init__(self, scale, period, xlabel, ylabel) -> None:
+    def __init__(self, scale, period, xlabel, ylabel, xlimits) -> None:
         self.scale = scale
         self.period = period
         self.xlabel = xlabel
         self.ylabel = ylabel
+        self.xlimits = xlimits
         self.num_traces = 0
         layout = go.Layout(
             title=None,
             xaxis=dict(
-                title=self.xlabel
+                title=self.xlabel,
+                range=xlimits
             ),
             yaxis=dict(
                 title=self.ylabel
@@ -243,7 +245,7 @@ if __name__ == "__main__":
     periods = np.array([0.1,0.3,0.5,0.7])
     amplitudes = np.array([0.1,0.2,1,0.2])
 
-    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude")
+    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude", xlimits=[0,0.5])
 
     plot.add(periods, amplitudes, label="R1")
     plot.add(periods[:2], label="SRIM")
