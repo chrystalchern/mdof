@@ -7,6 +7,8 @@ try:
     plt.style.use(["poster"])# ,"science", "notebook"])
 except ImportError:
     pass
+except OSError:
+    plt.style.use("notebook")
 
 nln = "\n"
 
