@@ -1,6 +1,6 @@
 [project]
 name = "mdof"
-version = "0.0.9"
+version = "0.0.11"
 authors = [
   {name="Chrystal Chern", email="52893467+chrystalchern@users.noreply.github.com"}
 ]

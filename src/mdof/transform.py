@@ -143,15 +143,23 @@ def fourier_spectrum(series, step, period_band=None, **options):
     """
     assert len(series.shape) == 1
     N = len(series)
-    frequencies = fftfreq(N,step)[1:N//2+2]
-    amplitudes = 2.0/N*np.abs(fft(series)[1:N//2+2])
+    frequencies = fftfreq(N,step)[1:N//2]
+    amplitudes = 2.0/N*np.abs(fft(series)[1:N//2])
     periods = 1/frequencies
     if period_band is not None:
         period_indices = np.logical_and(periods>period_band[0], periods<period_band[1])
         periods = periods[period_indices]
         amplitudes = amplitudes[period_indices]
+#     else:
+#         period_band_warning = '''
+# Warning: Recommend specifying a period band 
+# to omit frequencies lower than Nyquist.
+# For example, a common sampling rate is 0.01 seconds;
+# periods should then be longer than 0.02 seconds by a good margin.
+# '''
+#         import warnings
+#         warnings.warn(period_band_warning, category='UserWarning')
+
     return np.array([periods, amplitudes])
 
-def _newmark():
-    pass
  

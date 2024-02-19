@@ -7,8 +7,8 @@ We begin with discrete-time state equations that correspond to the structure's d
 
 $$
 \begin{aligned}
-\mathbf{x}(k+1) &= \mathbf{Ax}(k) + \mathbf{Bu}(k) \\
-\mathbf{y}(k) &= \mathbf{Cx}(k) + \mathbf{Du}(k)
+\mathbf{x}(k+1) &= \mathbf{A}\mathbf{x}(k) + \mathbf{B}\mathbf{u}(k) \\
+\mathbf{y}(k) &= \mathbf{C}\mathbf{x}(k) + \mathbf{D}\mathbf{u}(k)
 \end{aligned}
 $$
 
@@ -16,9 +16,9 @@ By noting the state evolution
 
 $$
 \begin{aligned}
-\mathbf{x}(k+1) &= \mathbf{Ax}(k)+\mathbf{B}\mathbf{U}_{p}(k)\\
-\mathbf{x}(k+2) &= \mathbf{A}^2\mathbf{X}(k) + \mathbf{AB}\mathbf{U}_{p}(k) + \mathbf{Bu}(k+1)\\
-\mathbf{x}(k+3) &= \mathbf{A}^{3}\mathbf{X}(k) + \mathbf{A}^{2}\mathbf{Bu}(k) + \mathbf{ABu}(k+1) + \mathbf{Bu}(k+2),
+\mathbf{x}(k+1) &= \mathbf{Ax}(k)+\mathbf{B}\mathbf{u}(k)\\
+\mathbf{x}(k+2) &= \mathbf{A}^2\mathbf{x}(k) + \mathbf{AB}\mathbf{u}(k) + \mathbf{B}\mathbf{u}(k+1)\\
+\mathbf{x}(k+3) &= \mathbf{A}^{3}\mathbf{x}(k) + \mathbf{A}^{2}\mathbf{Bu}(k) + \mathbf{A}\mathbf{B}\mathbf{u}(k+1) + \mathbf{B}\mathbf{u}(k+2),
 \end{aligned}
 $$
 
