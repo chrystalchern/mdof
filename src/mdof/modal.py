@@ -119,11 +119,13 @@ def spectrum_modes(periods, amplitudes, **options):
     :rtype:             tuple
     """
     from scipy.signal import find_peaks
-    height = options.get("height", 0.4)
-    width = options.get("width", 0.2)
-    rel_height = options.get("rel_height", 0.1)
+    # height = options.get("height", 0.4)
+    # width = options.get("width", 0.2)
+    # rel_height = options.get("rel_height", 0.1)
+    prominence = options.get("prominence", max(amplitudes)*0.3)
     
-    peaks, _ = find_peaks(amplitudes, height=height, width=width, rel_height=rel_height)
+    # peaks, _ = find_peaks(amplitudes, height=height, width=width, rel_height=rel_height, prominence=prominence)
+    peaks, _ = find_peaks(amplitudes, prominence=prominence)
     fundamental_periods = periods[peaks]
     fundamental_amplitudes = amplitudes[peaks]
     
