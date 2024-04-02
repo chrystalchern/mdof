@@ -59,6 +59,8 @@
     <script src="../_static/doctools.js?v=888ff710"></script>
     <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'library/mdof.transform';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -157,7 +159,7 @@
     
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
-                        Reference
+                        mdof
                       </a>
                     </li>
                 
@@ -274,7 +276,7 @@ document.write(`
     
                     <li class="nav-item current active">
                       <a class="nav-link nav-internal" href="index.html">
-                        Reference
+                        mdof
                       </a>
                     </li>
                 
@@ -337,7 +339,13 @@ document.write(`
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="index.html">mdof modules and top-level functions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="index.html">mdof</a></li>
+</ul>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.outid.html">mdof.outid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
@@ -382,7 +390,7 @@ document.write(`
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Reference</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">mdof</a></li>
     
     <li class="breadcrumb-item active" aria-current="page">mdof.transfo...</li>
   </ul>
@@ -403,6 +411,39 @@ document.write(`
                   
   <section id="module-mdof.transform">
 <span id="mdof-transform-module"></span><h1>mdof.transform module<a class="headerlink" href="#module-mdof.transform" title="Permalink to this heading">#</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.transform.fdd">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fdd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fdd" title="Permalink to this definition">#</a></dt>
+<dd><p>Frequency Domain Decomposition <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> from output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outputs</strong> (<em>ND array.</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(periods, amplitudes)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Brincker, R., Zhang, L., &amp; Andersen, P. (2001). Modal identification of
+output-only systems using frequency domain decomposition. Smart materials
+and structures, 10(3), 441. (<a class="reference external" href="https://doi.org/10.1088/0964-1726/10/3/303">https://doi.org/10.1088/0964-1726/10/3/303</a></p>
+</aside>
+</aside>
+</section>
+</dd></dl>
+
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.transform.power_transfer">
 <span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">power_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.power_transfer" title="Permalink to this definition">#</a></dt>
@@ -557,6 +598,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fdd"><code class="docutils literal notranslate"><span class="pre">fdd()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_transfer"><code class="docutils literal notranslate"><span class="pre">power_transfer()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.response_transfer"><code class="docutils literal notranslate"><span class="pre">response_transfer()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_transfer"><code class="docutils literal notranslate"><span class="pre">fourier_transfer()</span></code></a></li>
