@@ -10,3 +10,4 @@ tests/
 src/ssid/
 _build
 docs/theory/out/
+docs/library/generated/
