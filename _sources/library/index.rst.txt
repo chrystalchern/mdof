@@ -21,7 +21,8 @@ functions for quickly performing system identification:
    mdof.sysid
 
 
-The following modules expose :
+The following modules expose the inner building blocks for
+frequency domain and time domain analysis of vibration signals:
 
 .. toctree::
    :maxdepth: 1
