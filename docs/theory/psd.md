@@ -15,15 +15,15 @@ It is also the averaged(?) Fourier transform of the autocorrelation.
 The power spectral density, $P(f)$, of a signal $y(t)$, is
 
 $$\begin{aligned}
-P(f) &= \underset{T \rightarrow \infty}{\lim}\frac{1}{T}
-\int_{-\infty}^{\infty}{
+P(f) &= \frac{1}{T}
+\int_{-T}^{T}{
     \left| Y_{T}(f) \right|^{2}df
 }
 \end{aligned}$$
 
 Where the Fourier transform $Y_{T}(f)$ of $y_{T}(t)$ is defined as:
 $$\begin{aligned}
-Y_{T}(f) &= \mathcal{F}\left\{y_{T}(t)\right\} = \int_{-\infty}^{\infty}{
+Y_{T}(f) &= \mathcal{F}\left\{y_{T}(t)\right\} = \int_{-T}^{T}{
     e^{-i2\pi ft}y_{T}(t)dt
 }
 \end{aligned}$$

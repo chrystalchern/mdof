@@ -3,6 +3,48 @@ from scipy.fft import fft, fftfreq
 from scipy import signal
 from .numerics import decimate
 
+def fdd(outputs, step, **options):
+    """
+    Frequency Domain Decomposition [1]_ from output data.
+
+    :param outputs:     output response history.
+                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        :math:`nt` = number of timesteps
+    :type outputs:      ND array.
+    :param step:        timestep.
+    :type step:         float
+
+    :return:            (periods, amplitudes)
+    :rtype:             tuple of arrays
+    
+    References
+    ----------
+    .. [1]  Brincker, R., Zhang, L., & Andersen, P. (2001). Modal identification of
+            output-only systems using frequency domain decomposition. Smart materials
+            and structures, 10(3), 441. (https://doi.org/10.1088/0964-1726/10/3/303
+    """
+    
+    p,nt = outputs.shape
+    transform_length = (nt//2)-1
+
+    Gyy = np.zeros((p,p,transform_length))
+    U = np.zeros((p,p,transform_length))
+    S = np.zeros((p,transform_length))
+
+    frequencies = fftfreq(nt,step)[1:nt//2]     
+            
+    for i,seriesi in enumerate(outputs):
+        for j,seriesj in enumerate(outputs[i:]):
+            amplitudesi = 2.0/nt*np.abs(fft(seriesi)[1:nt//2])
+            amplitudesj = 2.0/nt*np.abs(fft(seriesj)[1:nt//2])
+            Gyy[i,j] = Gyy[j,i] = amplitudesi * amplitudesj
+
+    for i in range(transform_length):
+        U[:,:,i],S[:,i],_ = np.linalg.svd(Gyy[:,:,i])
+    
+    return frequencies, U, S
+
+
 def power_transfer(inputs, outputs, step, **options):
     """
     Power spectrum transfer function from input and output data.

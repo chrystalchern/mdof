@@ -14,6 +14,7 @@ release = '0.0.7'
 
 extensions = [
     'sphinx.ext.autodoc',
+    'sphinx.ext.autosummary',
     # 'autoapi.extension',
     'sphinx.ext.mathjax',
     'sphinx.ext.githubpages',
