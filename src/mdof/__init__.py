@@ -63,21 +63,16 @@ def outid(outputs, dt, **options):
 
     import numpy as np
     p,nt = outputs.shape
-    F = []
-    Phi = []
+    F = np.empty(p)
 
     from scipy.signal import find_peaks
     for i in range(p):
         amplitudes = S[i,:]
         prominence = options.get("prominence", max(amplitudes)*0.3)
         peaks, _ = find_peaks(amplitudes, prominence=prominence)
-        F.extend(frequencies[peaks])
-        modeshapes = U[:,i,peaks]
-        for j in range(modeshapes.shape[1]):
-            Phi.append(modeshapes[:,j])
-
-    F = np.array(F)
-    Phi = np.array(Phi)
+        F[i] = frequencies[peaks[0]]
+        if i==0:
+            Phi = U[:,:,peaks[0]]
     
     return (F,Phi)
     
