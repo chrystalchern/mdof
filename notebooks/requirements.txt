@@ -11,3 +11,5 @@ control
 sdof
 
 SciencePlots
+opensees
+osmg
