@@ -7,6 +7,7 @@ import scipy.linalg as sl
 from numpy import pi
 from mdof.validation import OutputEMAC, MPC
 
+
 def _condeig(a): # TODO: make this match matlab source code for condeig
     """
     vals, vecs, conds = condeig(A) Computes condition numbers for the
@@ -28,6 +29,7 @@ def _condeig(a): # TODO: make this match matlab source code for condeig
     c = abs(1 / np.diag(np.dot(vl, vr))) 
     return vr, lamr, c
 
+    
 def system_modes(realization, dt, **options):
     """
     Modal identification from a state space system realization.
@@ -59,24 +61,8 @@ def system_modes(realization, dt, **options):
 
     # get damping and frequencies from eigendecomp of A
     Lam = (np.log(Gam))/dt
-    # TODO: maybe clean
-    Omega = np.real((Lam*np.conj(Lam))**0.5)  # radians per second. taking the real part because numpy keeps a +0j.
-    # Omega = np.real_if_close((Lam*np.conj(Lam))**0.5) # use real_if_close
+    Omega = np.abs(Lam) # radians per second.
     freq = Omega/(2*pi) # cycles per second (Hz)
-    Omega.__str__() # helps to avoid "divide by zero" numpy warning message
-    # Lam_real = np.real(Lam)
-    # Lam_real+=1
-    # Lam_real-=1
-    # Omega_real = np.real(Omega)
-    # Omega_real+=1
-    # Omega_real-=1
-    # del Omega
-    # del Lam
-    # import gc
-    # gc.collect()
-    # print(Omega_real)
-    # print(Lam_real)
-    # damp = -Lam_real/Omega_real
     damp = -np.real(Lam)/Omega
 
     # get modeshapes from C and eigendecomp of A
@@ -88,8 +74,10 @@ def system_modes(realization, dt, **options):
     # MPC (modal phase collinearity)
     mpc = MPC(A,C,Psi=Psi)
 
-    # weed out unique roots: get indices of (1) roots that only show up once, and
-    # (2) the first of each pair.
+    # for perfect data, the modes of the state space model come in pairs.
+    # each pair's corresponding eigenvalues and eigenvectors are complex conjugates.
+    # this means that we need to weed out unique roots: 
+    # get indices of (1) roots that only show up once, and (2) the first of each pair.
     _, notroots = np.unique(freq.round(decimals=5), return_index=True)
     
     # print(notroots)
@@ -106,6 +94,7 @@ def system_modes(realization, dt, **options):
 
     return modes
 
+    
 def spectrum_modes(periods, amplitudes, **options):
     """
     Modal identification from a transfer function.
@@ -130,3 +119,4 @@ def spectrum_modes(periods, amplitudes, **options):
     fundamental_amplitudes = amplitudes[peaks]
     
     return (fundamental_periods, fundamental_amplitudes)
+    
