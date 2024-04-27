@@ -23,7 +23,7 @@ def determine_uncertainty(inputs: np.array, outputs: np.array, dt):
     # Method 1: Give hard-coded numbers.
     if noise_output >= 1 and noise_input >= 1:   # A lot of output noise AND a lot of input noise
         level_of_certainty = ...
-    elif noise_output < 1 and noise_input < 1:   # A lot of output noise AND a lot of input noise
+    elif noise_output < 1 and noise_input < 1:   # A lot of output noise but not a lot of input noise
         ...
     elif ...:
         ...
@@ -37,7 +37,7 @@ def determine_uncertainty(inputs: np.array, outputs: np.array, dt):
 
 
 if __name__ == '__main__':
-    time = np.arange(0,50,0.1)
+    time = np.array([np.arange(0,50,0.1)])
     inputs = np.exp(-time)*np.sin(np.pi*time) + np.random.normal(0,0.01,50)
     outputs = -0.172*np.exp(-0.05*time)*np.cos(3.16*time) + 0.025*np.exp(-0.05*time)*np.sin(3.16*time) + 0.172*np.exp(-time)*np.cos(np.pi*time) + 0.027*np.exp(-time)*np.sin(np.pi*time) + np.random.normal(0,0.0001,50)
     determine_uncertainty(inputs, outputs, 0.1)
