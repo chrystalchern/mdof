@@ -7,7 +7,7 @@ def quantify_noise(series, expected_series):
 
 
 def determine_uncertainty(inputs: np.array, outputs: np.array, dt):
-    # Calculations for expected input
+    # Calculations for expected input and output
     p, nt = outputs.shape
     q, nt = inputs.shape
     time = np.arange(0,nt*dt,dt)
