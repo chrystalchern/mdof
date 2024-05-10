@@ -1,0 +1,37 @@
+mdof.utilities package
+======================
+
+Submodules
+----------
+
+mdof.utilities.config module
+----------------------------
+
+.. automodule:: mdof.utilities.config
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mdof.utilities.printing module
+------------------------------
+
+.. automodule:: mdof.utilities.printing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+mdof.utilities.testing module
+-----------------------------
+
+.. automodule:: mdof.utilities.testing
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Module contents
+---------------
+
+.. automodule:: mdof.utilities
+   :members:
+   :undoc-members:
+   :show-inheritance:
