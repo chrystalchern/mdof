@@ -54,8 +54,7 @@
    "cell_type": "markdown",
    "metadata": {},
    "source": [
-    "$$a = \\frac{m_{1}}{m_{2}}$$\n",
-    "$$b = \\frac{k_{1}}{k_{2}}$$\n",
+    "$$a = \\frac{m_{1}}{m_{2}}, \\quad{} b = \\frac{k_{1}}{k_{2}}$$\n",
     "\n",
     "$$\\mathbf{M} = \\begin{bmatrix} m_{1} & 0 \\\\ 0 & m_{2} \\end{bmatrix} = m_{2}\\begin{bmatrix} a & 0 \\\\ 0 & 1 \\end{bmatrix}$$\n",
     "\n",
@@ -76,8 +75,6 @@
     "$$ \\mathbf{\\ddot{u}}  + \\mathbf{M^{-1}Ku} = \\mathbf{M^{-1}f(t)}  $$\n",
     "\n",
     "$$ \\mathbf{u} =  \\Phi \\mathbf{q}, \\hspace{1cm} \\mathbf{M^{-1}K} = \\Phi\\Lambda\\Phi^{-1}  $$\n",
-    "\n",
-    "$$ \\mathbf{\\ddot{u}}  + \\mathbf{M^{-1}Ku} = \\mathbf{M^{-1}f(t)}  $$\n",
     "\n",
     "$$ \\mathbf{\\ddot{u}}  + \\Phi\\Lambda\\Phi^{-1}\\mathbf{u} = \\mathbf{M^{-1}f(t)}  $$\n",
     "\n",
