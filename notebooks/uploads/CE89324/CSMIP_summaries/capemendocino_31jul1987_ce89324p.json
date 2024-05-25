@@ -1,0 +1,1002 @@
+{
+    "file_name": "capemendocino_31jul1987_ce89324p.zip",
+    "peak_accel": -328.629,
+    "event_date": "1987-07-31T23:56:00",
+    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+    "station_coord": "40.503N, 124.100W",
+    "record_identifier": "89324-C0161-87215.01",
+    "station_number": "89324",
+    "motions": [
+        {
+            "key": "base_of_center_bent",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "1",
+                    "component": "270",
+                    "location_name": "BASE OF CENTER BENT",
+                    "instr_period": 0.0216,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.019,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.053,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN01.V2",
+                    "station_channel": "1",
+                    "peak_displ": -0.641,
+                    "peak_veloc": 5.865,
+                    "peak_accel": 103.529,
+                    "accel": {
+                        "peak_value": 103.529,
+                        "units": "cm/sec/sec",
+                        "peak_time": 8.9,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 5.865,
+                        "units": "cm/sec",
+                        "peak_time": 8.96,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.641,
+                        "units": "cm",
+                        "peak_time": 8.88,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "2",
+                    "component": "UP",
+                    "location_name": "BASE OF CENTER BENT",
+                    "instr_period": 0.0201,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.082,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.043,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN02.V2",
+                    "station_channel": "2",
+                    "peak_displ": 0.214,
+                    "peak_veloc": -2.839,
+                    "peak_accel": -62.574,
+                    "accel": {
+                        "peak_value": -62.574,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.34,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -2.839,
+                        "units": "cm/sec",
+                        "peak_time": 5.4,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.214,
+                        "units": "cm",
+                        "peak_time": 5.32,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "3",
+                    "component": "360",
+                    "location_name": "BASE OF CENTER BENT",
+                    "instr_period": 0.0203,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.194,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.008,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN03.V2",
+                    "station_channel": "3",
+                    "peak_displ": 0.455,
+                    "peak_veloc": 4.56,
+                    "peak_accel": 98.534,
+                    "accel": {
+                        "peak_value": 98.534,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.64,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 4.56,
+                        "units": "cm/sec",
+                        "peak_time": 9.6,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.455,
+                        "units": "cm",
+                        "peak_time": 8.34,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_near_west_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "4",
+                    "component": "360",
+                    "location_name": "DECK NEAR WEST ABUTMENT",
+                    "instr_period": 0.0195,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.256,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.024,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN04.V2",
+                    "station_channel": "4",
+                    "peak_displ": -0.501,
+                    "peak_veloc": -7.838,
+                    "peak_accel": 170.192,
+                    "accel": {
+                        "peak_value": 170.192,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.32,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -7.838,
+                        "units": "cm/sec",
+                        "peak_time": 9.42,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.501,
+                        "units": "cm",
+                        "peak_time": 9.48,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "5",
+                    "component": "UP",
+                    "location_name": "DECK NEAR WEST ABUTMENT",
+                    "instr_period": 0.0207,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.01,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.034,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN05.V2",
+                    "station_channel": "5",
+                    "peak_displ": 0.178,
+                    "peak_veloc": -2.29,
+                    "peak_accel": -45.214,
+                    "accel": {
+                        "peak_value": -45.214,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.94,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -2.29,
+                        "units": "cm/sec",
+                        "peak_time": 10.28,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.178,
+                        "units": "cm",
+                        "peak_time": 8.1,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "underside_of_girder_at_center",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "7",
+                    "component": "360",
+                    "location_name": "UNDERSIDE OF GIRDER AT CENTER",
+                    "instr_period": 0.0187,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.205,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.015,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN07.V2",
+                    "station_channel": "7",
+                    "peak_displ": 0.74,
+                    "peak_veloc": 14.732,
+                    "peak_accel": -328.629,
+                    "accel": {
+                        "peak_value": -328.629,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.48,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 14.732,
+                        "units": "cm/sec",
+                        "peak_time": 5.4,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.74,
+                        "units": "cm",
+                        "peak_time": 8.32,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_center_of_east_span",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0161-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "8",
+                    "component": "UP",
+                    "location_name": "DECK CENTER OF EAST SPAN",
+                    "instr_period": 0.0204,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.641,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.045,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN08.V2",
+                    "station_channel": "8",
+                    "peak_displ": 0.419,
+                    "peak_veloc": 7.237,
+                    "peak_accel": 239.735,
+                    "accel": {
+                        "peak_value": 239.735,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.46,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 7.237,
+                        "units": "cm/sec",
+                        "peak_time": 5.52,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.419,
+                        "units": "cm",
+                        "peak_time": 5.3,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_near_east_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "1",
+                    "component": "360",
+                    "location_name": "DECK NEAR EAST ABUTMENT",
+                    "instr_period": 0.0198,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.272,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.024,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN09.V2",
+                    "station_channel": "9",
+                    "peak_displ": -0.625,
+                    "peak_veloc": 11.466,
+                    "peak_accel": 240.439,
+                    "accel": {
+                        "peak_value": 240.439,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.38,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 11.466,
+                        "units": "cm/sec",
+                        "peak_time": 5.46,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.625,
+                        "units": "cm",
+                        "peak_time": 5.38,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "2",
+                    "component": "UP",
+                    "location_name": "DECK NEAR EAST ABUTMENT",
+                    "instr_period": 0.0168,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.108,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.052,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN10.V2",
+                    "station_channel": "10",
+                    "peak_displ": 0.381,
+                    "peak_veloc": -5.189,
+                    "peak_accel": 105.818,
+                    "accel": {
+                        "peak_value": 105.818,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.52,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -5.189,
+                        "units": "cm/sec",
+                        "peak_time": 5.46,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.381,
+                        "units": "cm",
+                        "peak_time": 5.36,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "3",
+                    "component": "270",
+                    "location_name": "DECK NEAR EAST ABUTMENT",
+                    "instr_period": 0.0189,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.265,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.079,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN11.V2",
+                    "station_channel": "11",
+                    "peak_displ": -0.837,
+                    "peak_veloc": 11.575,
+                    "peak_accel": -205.002,
+                    "accel": {
+                        "peak_value": -205.002,
+                        "units": "cm/sec/sec",
+                        "peak_time": 9.12,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 11.575,
+                        "units": "cm/sec",
+                        "peak_time": 9.06,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.837,
+                        "units": "cm",
+                        "peak_time": 8.96,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "free_field",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "4",
+                    "component": "270",
+                    "location_name": "FREE FIELD",
+                    "instr_period": 0.02,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.234,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.072,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN12.V2",
+                    "station_channel": "12",
+                    "peak_displ": -0.728,
+                    "peak_veloc": 8.249,
+                    "peak_accel": -138.027,
+                    "accel": {
+                        "peak_value": -138.027,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.5,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 8.249,
+                        "units": "cm/sec",
+                        "peak_time": 9.04,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.728,
+                        "units": "cm",
+                        "peak_time": 8.96,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "5",
+                    "component": "UP",
+                    "location_name": "FREE FIELD",
+                    "instr_period": 0.0197,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.085,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.034,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN13.V2",
+                    "station_channel": "13",
+                    "peak_displ": -0.186,
+                    "peak_veloc": 2.021,
+                    "peak_accel": 40.7,
+                    "accel": {
+                        "peak_value": 40.7,
+                        "units": "cm/sec/sec",
+                        "peak_time": 7.7,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 2.021,
+                        "units": "cm/sec",
+                        "peak_time": 6.02,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.186,
+                        "units": "cm",
+                        "peak_time": 7.7,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "6",
+                    "component": "360",
+                    "location_name": "FREE FIELD",
+                    "instr_period": 0.0197,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.179,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.003,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN14.V2",
+                    "station_channel": "14",
+                    "peak_displ": 0.48,
+                    "peak_veloc": -4.376,
+                    "peak_accel": 89.36,
+                    "accel": {
+                        "peak_value": 89.36,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.32,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -4.376,
+                        "units": "cm/sec",
+                        "peak_time": 8.52,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.48,
+                        "units": "cm",
+                        "peak_time": 8.42,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "on_ground_near_east_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "7",
+                    "component": "270",
+                    "location_name": "ON GROUND NEAR EAST ABUTMENT",
+                    "instr_period": 0.0195,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.173,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.055,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN15.V2",
+                    "station_channel": "15",
+                    "peak_displ": -0.832,
+                    "peak_veloc": 10.727,
+                    "peak_accel": 165.731,
+                    "accel": {
+                        "peak_value": 165.731,
+                        "units": "cm/sec/sec",
+                        "peak_time": 9.0,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 10.727,
+                        "units": "cm/sec",
+                        "peak_time": 9.06,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.832,
+                        "units": "cm",
+                        "peak_time": 8.96,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "8",
+                    "component": "UP",
+                    "location_name": "ON GROUND NEAR EAST ABUTMENT",
+                    "instr_period": 0.02,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.101,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.056,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN16.V2",
+                    "station_channel": "16",
+                    "peak_displ": -0.223,
+                    "peak_veloc": 2.409,
+                    "peak_accel": -48.803,
+                    "accel": {
+                        "peak_value": -48.803,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.22,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 2.409,
+                        "units": "cm/sec",
+                        "peak_time": 5.88,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.223,
+                        "units": "cm",
+                        "peak_time": 5.76,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "9",
+                    "component": "360",
+                    "location_name": "ON GROUND NEAR EAST ABUTMENT",
+                    "instr_period": 0.0196,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.278,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.008,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN17.V2",
+                    "station_channel": "17",
+                    "peak_displ": 0.563,
+                    "peak_veloc": -8.246,
+                    "peak_accel": 229.718,
+                    "accel": {
+                        "peak_value": 229.718,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.38,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -8.246,
+                        "units": "cm/sec",
+                        "peak_time": 9.48,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.563,
+                        "units": "cm",
+                        "peak_time": 4.64,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "on_ground_near_west_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "10",
+                    "component": "270",
+                    "location_name": "ON GROUND NEAR WEST ABUTMENT",
+                    "instr_period": 0.0195,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.154,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.076,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN18.V2",
+                    "station_channel": "18",
+                    "peak_displ": -0.724,
+                    "peak_veloc": 10.379,
+                    "peak_accel": -192.077,
+                    "accel": {
+                        "peak_value": -192.077,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.26,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 10.379,
+                        "units": "cm/sec",
+                        "peak_time": 9.04,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.724,
+                        "units": "cm",
+                        "peak_time": 8.94,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "11",
+                    "component": "UP",
+                    "location_name": "ON GROUND NEAR WEST ABUTMENT",
+                    "instr_period": 0.0188,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.017,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.039,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN19.V2",
+                    "station_channel": "19",
+                    "peak_displ": 0.212,
+                    "peak_veloc": -2.265,
+                    "peak_accel": 98.662,
+                    "accel": {
+                        "peak_value": 98.662,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.1,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -2.265,
+                        "units": "cm/sec",
+                        "peak_time": 5.62,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.212,
+                        "units": "cm",
+                        "peak_time": 8.12,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-C0138-87215.01",
+                    "date": "1987-07-31T23:56:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.100W",
+                    "station_name": "b RIO DELL 101 PAINTER ST OVERPASS",
+                    "channel": "12",
+                    "component": "360",
+                    "location_name": "ON GROUND NEAR WEST ABUTMENT",
+                    "instr_period": 0.019,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.142,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.011,
+                    "init_displ.units": "cm",
+                    "file_name": "CHAN20.V2",
+                    "station_channel": "20",
+                    "peak_displ": 0.457,
+                    "peak_veloc": 6.144,
+                    "peak_accel": 144.191,
+                    "accel": {
+                        "peak_value": 144.191,
+                        "units": "cm/sec/sec",
+                        "peak_time": 5.34,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 6.144,
+                        "units": "cm/sec",
+                        "peak_time": 5.4,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.457,
+                        "units": "cm",
+                        "peak_time": 4.6,
+                        "shape": 1100,
+                        "time_step": 0.02,
+                        "data": []
+                    }
+                }
+            ]
+        }
+    ]
+}
+
