@@ -40,10 +40,10 @@ A,B,C,D = sysid(input_motion, output_motion)
 <table align="center">
 <tr>
   <td>
-  <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="200px" alt="historical mode shape documentation">
+  <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="225px" alt="historical mode shape documentation">
   </td>
   <td>
-  <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="600px" alt="historical spectral density documentation">
+  <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="650px" alt="historical spectral density documentation">
   </td>
 </tr>
 </table>
@@ -66,7 +66,7 @@ Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect
     <a href="https://peer.berkeley.edu">
     Pacific Earthquake Engineering Research Center (PEER)
     <img src="https://raw.githubusercontent.com/claudioperez/sdof/master/docs/assets/peer-black-300.png"
-         alt="PEER Logo" height="200px"/>
+         alt="PEER Logo" height="150px"/>
     </a>
   </td>
 
@@ -74,7 +74,7 @@ Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect
     <a href="https://dot.ca.gov/">
     California Department of Transportation (Caltrans)
     <img src="https://raw.githubusercontent.com/claudioperez/sdof/master/docs/assets/Caltrans.svg.png"
-         alt="Caltrans Logo" height="200px"/>
+         alt="Caltrans Logo" height="150px"/>
     </a>
   </td>
 
@@ -82,7 +82,7 @@ Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect
     <a href="https://peer.berkeley.edu">
     Bridge Rapid Assessment Center for Extreme Events (BRACE2)
     <img src="https://raw.githubusercontent.com/claudioperez/sdof/master/docs/assets/brace2_logo-new3_ungrouped.svg"
-         alt="BRACE2 Logo" height="200"/>
+         alt="BRACE2 Logo" height="150px"/>
     </a>
   </td>
  
