@@ -35,6 +35,10 @@ State space system identification:
 A,B,C,D = sysid(input_motion, output_motion)
 ```
 
+**Create beautiful visuals for historical modal property documentation** with integration of the `osmg` package.
+
+<img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="250px" alt="historical mode shape documentation">
+<img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="250px" alt="historical spectral density documentation">
 
 ## Getting Started
 
