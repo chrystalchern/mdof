@@ -3,7 +3,7 @@
 <hr>
 <br>
 
-<img align="left" src="https://raw.githubusercontent.com/BRACE2/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
+<img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
 
 Fast and friendly system identification for structures. *[Learn More](https://chrystalchern.github.io/mdof/)*
 
@@ -38,7 +38,7 @@ A,B,C,D = sysid(input_motion, output_motion)
 **Create beautiful visuals for historical modal property documentation** with integration of the `osmg` package.
 
 <img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="250px" alt="historical mode shape documentation">
-<img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="250px" alt="historical spectral density documentation">
+<img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="750px" alt="historical spectral density documentation">
 
 ## Getting Started
 
