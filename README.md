@@ -35,10 +35,21 @@ State space system identification:
 A,B,C,D = sysid(input_motion, output_motion)
 ```
 
-**Create beautiful visuals for historical modal property documentation** with integration of the `osmg` package.
+**Create beautiful visuals for historical modal property documentation** with integration of the [`osmg`](https://github.com/ioannis-vm/OpenSees_Model_Generator) and [`opensees`](https://pypi.org/project/opensees/) packages.
 
-<img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="200px" alt="historical mode shape documentation">
-<img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="600px" alt="historical spectral density documentation">
+<table align="center">
+<tr>
+  <td>
+  <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="200px" alt="historical mode shape documentation">
+  </td>
+  <td>
+  <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="600px" alt="historical spectral density documentation">
+  </td>
+</tr>
+</table>
+
+
+
 
 ## Getting Started
 
@@ -75,5 +86,5 @@ Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect
     </a>
   </td>
  
- </tr>
+</tr>
 </table>
