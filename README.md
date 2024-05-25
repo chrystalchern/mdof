@@ -37,8 +37,8 @@ A,B,C,D = sysid(input_motion, output_motion)
 
 **Create beautiful visuals for historical modal property documentation** with integration of the `osmg` package.
 
-<img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="250px" alt="historical mode shape documentation">
-<img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="750px" alt="historical spectral density documentation">
+<img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_modes_core.png" width="200px" alt="historical mode shape documentation">
+<img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/gallery/LA_FDD_02.png" width="700px" alt="historical spectral density documentation">
 
 ## Getting Started
 
