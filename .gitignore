@@ -2,11 +2,8 @@
 .ipynb_checkpoints/
 PUBLISHING.md
 __pycache__/
-#assets/
 dist
 notebooks/PEERNGARecords_Unscaled/
-studies/
-tests/
 src/ssid/
 _build
 docs/theory/out/
