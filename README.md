@@ -79,29 +79,41 @@ Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect
     </a>
   </td>
 
-</tr>
+  <td>
+    <a href="https://www.nsfgrfp.org/">
+    National Science Foundation (NSF) Graduate Research Fellowship Program (GRFP)
+    </a>
+  </td>
 
+</tr>
 
 <tr>
 
   <td align="center">
     <a href="https://peer.berkeley.edu">
-    <img src="https://raw.githubusercontent.com/claudioperez/sdof/master/docs/assets/peer-black-300.png"
-         alt="PEER Logo" height="150px"/>
+    <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/assets/PEER_logo_old.svg"
+         alt="PEER Logo" height="120px"/>
     </a>
   </td>
 
   <td align="center">
     <a href="https://dot.ca.gov/">
     <img src="https://raw.githubusercontent.com/claudioperez/sdof/master/docs/assets/Caltrans.svg.png"
-         alt="Caltrans Logo" height="150px"/>
+         alt="Caltrans Logo" height="120px"/>
     </a>
   </td>
 
   <td align="center">
     <a href="https://peer.berkeley.edu">
     <img src="https://raw.githubusercontent.com/claudioperez/sdof/master/docs/assets/brace2_logo-new3_ungrouped.svg"
-         alt="BRACE2 Logo" height="150px"/>
+         alt="BRACE2 Logo" height="120px"/>
+    </a>
+  </td>
+
+  <td align="center">
+    <a href="https://www.nsfgrfp.org/">
+    <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/nsf_logo.jpg"
+         alt="NSF Logo" height="120px"/>
     </a>
   </td>
  
