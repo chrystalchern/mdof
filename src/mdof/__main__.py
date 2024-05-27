@@ -265,7 +265,7 @@ def parse_outid(argi, *args, **options):
         if arg == "--dt":
             dt = float(next(argi))
         elif outputs is None:
-            output_file = str(argi)
+            output_file = str(arg)
             if output_file == "-":
                 outputs = np.loadtxt(sys.stdin)
             else:
