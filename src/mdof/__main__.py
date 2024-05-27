@@ -259,7 +259,7 @@ def parse_srim(argi, config, channels, method=None):
     print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
     return config
 
-def parse_outid(argi):
+def parse_outid(argi, *args, **options):
     outputs = None
     for arg in argi:
         if arg == "--dt":
