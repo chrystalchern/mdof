@@ -14,7 +14,7 @@ def fdd(outputs, step, **options):
     :param step:        timestep.
     :type step:         float
 
-    :return:            (periods, amplitudes)
+    :return:            (frequencies, ```U```, ```S```)
     :rtype:             tuple of arrays
     
     References
@@ -24,6 +24,8 @@ def fdd(outputs, step, **options):
             and structures, 10(3), 441. (https://doi.org/10.1088/0964-1726/10/3/303
     """
     
+    if len(outputs.shape) == 1:
+        outputs = outputs[None,:]
     p,nt = outputs.shape
     transform_length = (nt//2)-1
 
