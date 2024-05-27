@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib
 from matplotlib import pyplot as plt
 import plotly.graph_objects as go
 
@@ -18,14 +19,21 @@ DEFAULT_PLOTLY_COLORS=[
     '#2ca02c',  # cooked asparagus green
     '#d62728',  # brick red
     '#9467bd',  # muted purple
-    '#8c564b',  # chestnut brown
+    # '#8c564b',  # chestnut brown
     '#e377c2',  # raspberry yogurt pink
     '#7f7f7f',  # middle gray
     '#bcbd22',  # curry yellow-green
     '#17becf'   # blue-teal
 ]
 
+from itertools import cycle
+citer = cycle(DEFAULT_PLOTLY_COLORS)
+
 def print_modes(modes, Tn=None, zeta=None):
+
+    if len(modes) == 0:
+        print("No valid identified modes.")
+        return
 
     header = "       T(s)        \N{Greek Small Letter Zeta}        EMACO      MPC       EMACO*MPC"
 
@@ -51,99 +59,103 @@ def print_modes(modes, Tn=None, zeta=None):
     print("Mean Period(s):", np.mean([1/v["freq"] for v in modes.values()]))
     print("Standard Dev(s):", np.std([1/v["freq"] for v in modes.values()]))
 
+
 def plot_models(models, Tn, zeta):
-    fig, ax = plt.subplots(2, 3, constrained_layout=True, sharex=True, figsize=(13,6.5))
+    # fig, ax = plt.subplots(2, 3, constrained_layout=True, sharex=True, figsize=(13,6.5))
+    fig, ax = plt.subplots(2, 2, constrained_layout=True, sharex=True, figsize=(9,5))
 
     period = [models[method]["period"][0] for method in models]
-    ax[0,0].bar(["true"]+list(models), [Tn]+period)
-    ax[0,0].set_title("Periods")# , fontsize=14)
-    ax[0,0].set_ylabel("Period (s)")# , fontsize=13)
-
     period_errors = [100*(p-Tn)/Tn for p in period]
-    ax[1,0].bar(models.keys(), period_errors, color=None, edgecolor="k", linewidth=0.5)
-    ax[1,0].set_title("Period Errors")# , fontsize=14)
-    ax[1,0].set_ylabel("Percent Error (%)")# , fontsize=13)
-    ax[1,0].set_xlabel("Method")# , fontsize=13)
-
     damp = [models[method]["damping"][0] for method in models]
-    ax[0,1].bar(["true"]+list(models), [zeta]+damp)
-    ax[0,1].set_title("Damping")# , fontsize=14)
-    ax[0,1].set_ylabel("Damping Ratio")# , fontsize=13)
-
     damping_errors = [100*(d-zeta)/zeta for d in damp]
-    ax[1,1].bar(models.keys(), damping_errors, color=None, edgecolor="k", linewidth=0.5)
-    ax[1,1].set_title("Damping Errors")# , fontsize=14)
-    ax[1,1].set_ylabel("Percent Error (%)")# , fontsize=13)
-    ax[1,1].set_xlabel("Method")# , fontsize=13)
 
-    ax[0,2].axis('off')
+    ax[0,0].bar(["true"]+[method.upper() for method in models.keys()], [Tn]+period)
+    ax[0,0].set_title("Natural Period", fontsize=16)
+    ax[0,0].set_ylabel("Period (s)", fontsize=14)
 
-    times_list = [models[method]["time"] for method in models]
-    ax[1,2].bar(models.keys(), times_list, color=None, edgecolor="k", linewidth=0.5)
-    ax[1,2].set_title("Runtime")# , fontsize=14)
-    ax[1,2].set_ylabel("time (s)")# , fontsize=13)
-    ax[1,2].set_xlabel("Method")# , fontsize=13)
+    ax[1,0].bar([method.upper() for method in models.keys()], period_errors, color=None, edgecolor="k", linewidth=0.5)
+    ax[1,0].set_title("Period Errors", fontsize=16)
+    ax[1,0].set_ylabel(r"Percent Error (\%)", fontsize=14)
+    ax[1,0].set_xlabel("Method", fontsize=14)
+    ax[1,0].set_xticklabels(["true"]+[method.upper() for method in models.keys()], rotation = 30)
 
-    for axi in fig.axes:
-        axi.tick_params(axis='x', rotation=45)#, labelsize=12)
-        # axi.tick_params(axis='y', labelsize=12)
+    ax[0,1].bar(["true"]+[method.upper() for method in models.keys()], [zeta]+damp)
+    ax[0,1].set_title("Damping", fontsize=16)
+    ax[0,1].set_ylabel("Damping Ratio", fontsize=14)
 
-    for i,error in zip([0,1,2],[period_errors,damping_errors,times_list]):
-        rects = ax[1,i].patches
-        for rect, label in zip(rects, error):
-            label = f"{label: <5.3}"
-            height = rect.get_height()
-            ax[1,i].text(
-                rect.get_x() + rect.get_width() / 2, height, label, ha="center", va="bottom"
-            )
+    ax[1,1].bar([method.upper() for method in models.keys()], damping_errors, color=None, edgecolor="k", linewidth=0.5)
+    ax[1,1].set_title("Damping Errors", fontsize=16)
+    ax[1,1].set_ylabel(r"Percent Error (\%)", fontsize=14)
+    ax[1,1].set_xlabel("Method", fontsize=14)
+    ax[1,1].set_xticklabels(["true"]+[method.upper() for method in models.keys()], rotation = 30)
+
+    # ax[0,2].axis('off')
+
+    # times_list = [models[method]["time"] for method in models]
+    # ax[1,2].bar(models.keys(), times_list, color=None, edgecolor="k", linewidth=0.5)
+    # ax[1,2].set_title("Runtime")# , fontsize=14)
+    # ax[1,2].set_ylabel("time (s)")# , fontsize=13)
+    # ax[1,2].set_xlabel("Method")# , fontsize=13)
+
+
+    # # for i,error in zip([0,1,2],[period_errors,damping_errors,times_list]):
+    # for i,error in enumerate([period_errors,damping_errors]):
+    #     rects = ax[1,i].patches
+    #     for rect, label in zip(rects, error):
+    #         label = f"{label: <5.3}"
+    #         height = rect.get_height()
+    #         ax[1,i].text(
+    #             rect.get_x() + rect.get_width() / 2, height, label, ha="center", va="bottom"
+    #         )
     
-    fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=16)
+    # fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=17)
 
-def plot_io(inputs, outputs, t, title=None):
-    fig, ax = plt.subplots(1,2,figsize=(8,3),constrained_layout=True)
-    # fig, ax = plt.subplots(1,2,figsize=(8,3))
-    color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
+def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitles=(None,None)):
+    fig, ax = plt.subplots(1,2,figsize=(10,3),constrained_layout=True,sharey=(ylabels[0]==ylabels[1]))
     if len(inputs.shape) > 1:
         for i in range(inputs.shape[0]):
             ax[0].plot(t,inputs[i,:])
     else:
         ax[0].plot(t,inputs)
-    ax[0].set_xlabel("time (s)")# , fontsize=13)
-    ax[0].set_ylabel("inputs")# , fontsize=13)
+    ax[0].set_xlabel("time (s)", fontsize=15)
+    ax[0].set_ylabel(ylabels[0], fontsize=15)
+    ax[0].set_title(axtitles[0], fontsize=15)
     if len(outputs.shape) > 1:
         for i in range(outputs.shape[0]):
-            ax[1].plot(t,outputs[i,:], color=color_cycle[0], alpha=0.5)
+            ax[1].plot(t,outputs[i,:], alpha=0.5)
     else:
         ax[1].plot(t,outputs)
-    ax[1].set_xlabel("time (s)")# , fontsize=13)
-    ax[1].set_ylabel("outputs")# , fontsize=13)
-    fig.suptitle(title, fontsize=16)
+    ax[1].set_xlabel("time (s)", fontsize=15)
+    ax[1].set_ylabel(ylabels[1], fontsize=15)
+    ax[1].set_title(axtitles[1], fontsize=15)
+    fig.suptitle(title, fontsize=17)
 
-def plot_pred(ytrue, models, t, title=None):
-    color_cycle = plt.rcParams['axes.prop_cycle'].by_key()['color']
-    fig, ax = plt.subplots(figsize=(8,4))
+def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
+    linestyles = ['dashed', 'dashdot', 'dotted']
+    colors = ['blue', 'orange', 'green']
+    fig, ax = plt.subplots(figsize=(6,3))
     if len(ytrue.shape) > 1:
         for i in range(ytrue.shape[0]):
-            ax.plot(t,ytrue[i,:],label=["true" if i==0 else None][0],color=color_cycle[0],alpha=0.5)
+            ax.plot(t,ytrue[i,:],label="true" if i==0 else None,color='black')
     else:
-        ax.plot(t,ytrue,label="true")
+        ax.plot(t,ytrue,label="true",color='black')
     if type(models) is np.ndarray:
         if len(models.shape) > 1:
             for i in range(models.shape[0]):
-                ax.plot(t,models[i,:],"--",label=["prediction" if i==0 else None][0],color=color_cycle[1],alpha=0.5)
+                ax.plot(t,models[i,:],label="prediction" if i==0 else None,color=colors[i],linestyle=linestyles[i%len(linestyles)],linewidth=2,alpha=0.5)
         else:
             ax.plot(t,models,"--",label=f"prediction")
     else:
-        for method in models:
+        for k,method in enumerate(models):
             if len(models[method]["ypred"].shape) > 1:
                 for i in range(models[method]["ypred"].shape[0]):
-                    ax.plot(t,models[method]["ypred"][i,:],"--",label=method)
+                    ax.plot(t,models[method]["ypred"][i,:],label=method.upper(),color=colors[k],linestyle=linestyles[k%len(linestyles)],linewidth=2,alpha=0.5)
             else:
-                ax.plot(t,models[method]["ypred"],"--",label=method)
-    ax.set_xlabel("time (s)")# , fontsize=13)
-    ax.set_ylabel("outputs")# , fontsize=13)
-    fig.legend(fontsize=12, frameon=True, framealpha=1)    
-    ax.set_title(title) #, fontsize=14)
+                ax.plot(t,models[method]["ypred"],label=method.upper(),color=colors[k],linestyle=linestyles[k%len(linestyles)],linewidth=2,alpha=0.5)
+    ax.set_xlabel("time (s)", fontsize=14)
+    ax.set_ylabel(ylabel, fontsize=14)
+    fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
+    fig.suptitle(title, fontsize=14)
 
 def plot_transfer(models, title=None, labels=None, plotly=False):
     if plotly:
@@ -257,3 +269,110 @@ if __name__ == "__main__":
 
     fig:go.Figure = plot.get_figure()
     print(fig.to_json())
+
+def plot_fdd(outputs, dt, true_periods=None):
+    from mdof import transform, modal
+    ndof = outputs.shape[0]
+    fdd_freq,U,S = transform.fdd(outputs=outputs, step=dt)
+    identified_periods = np.empty(ndof)
+
+    from scipy.signal import find_peaks
+    _,ax = plt.subplots(figsize=(7,3))
+    for j in range(ndof):
+        amplitudes = S[j,:]
+        amplitudes = amplitudes/max(amplitudes)
+        peaks, _ = find_peaks(amplitudes, prominence=0.3)        
+        _, fundamental_amps = modal.spectrum_modes(fdd_freq, amplitudes)
+        if true_periods is not None:
+            ax.axvline(periods[j], color="k", label="original periods" if j==0 else None)
+        ax.plot(1/fdd_freq, amplitudes)
+        identified_periods[j] = 1/(fdd_freq[peaks[0]])
+        if j==0:
+            identified_modeshapes = U[:,:,peaks[0]]
+        ax.scatter(identified_periods[j], fundamental_amps[0], label=f"identified period {j+1}")
+    if true_periods is not None:
+        ax.set_xlim([0, np.max(periods)*2])
+    else:
+        ax.set_xlim([0, np.max(identified_periods)*2])
+    ax.set_xlabel("Period (s)")
+    ax.set_ylabel("Amplitude")
+    ax.legend(fontsize=12, frameon=True, framealpha=1) 
+
+    return identified_periods, identified_modeshapes
+
+
+def plot_spectra(spectra:list, **options) -> matplotlib.figure.Figure:
+    fig = plt.figure(figsize=(13,13))
+    ax=fig.add_subplot(projection='3d')
+
+    for i, file in enumerate(files):
+        try:
+            event = quakeio.read(file, exclusions=["*filter*"])
+            dateplain = event['event_date'].split("T")[0]
+            date = np.datetime64(dateplain)
+            print(date)
+            inputs, dt = extract_channels(event, data_conf.inputs)
+            outputs, dt = extract_channels(event, data_conf.outputs)
+        except Exception as e:
+            print(e)
+            continue
+        
+        # FREQUENCY DOMAIN DECOMPOSITION (OUTPUT ONLY)
+        frequencies,U,S = transform.fdd(outputs=outputs, step=dt)     # Full frequency spectrum
+        periods = 1/frequencies
+        period_mask = (periods>=conf.period_band[0]) & (periods<=conf.period_band[1])
+        periods = periods[period_mask]
+        n_periods = len(periods)  # Number of periods, x axis of spectrum.  Varies per record.    
+        # For plot
+        spec_coords = np.empty((N_OUTPUTS,3,n_periods))
+        n_fund = 1
+        fund_per_coords = np.empty((N_OUTPUTS,3,n_fund))
+        for j in range(N_OUTPUTS):
+            amplitudes = S[j,:]
+            amplitudes = amplitudes/max(amplitudes)
+            amplitudes = amplitudes[period_mask]
+            spec_coords[j] = [[date]*n_periods, periods, amplitudes]               # All spectra from FDD.  One spectrum, shape (2,n_periods), for each output.
+            peaks, _ = find_peaks(amplitudes, prominence=max(amplitudes)*0.01)
+            fund_per_coords[j] = [[date]*n_fund, periods[peaks[:n_fund]], amplitudes[peaks[:n_fund]]]   # All peak periods from FDD.  Two peaks, shape (2,n_fund), for each output.
+            if j == 0:
+                fdd_pers[i] = periods[peaks[0]]                                    # Only the first mode period, shape (1)
+                fdd_shapes[i] = U[:,:,peaks[0]][0]                                 # Only the first mode shape, shape (N_OUTPUTS,1)
+
+
+        # POWER TRANSFER (INPUT-OUTPUT)
+        periods, amplitudes = transform.power_transfer(inputs=inputs[-1], outputs=outputs[-1], step=dt, period_band=conf.period_band)
+        amplitudes = amplitudes/max(amplitudes)
+        pow_pers, pow_amps = modal.spectrum_modes(periods, amplitudes)
+        # For plot
+        pow_coords = np.array([[[date], [pow_pers[0]], [pow_amps[0]]]])
+
+        plot_conf = Config()
+        plot_conf.color = colors[i%len(colors)]
+        # fig = plot_3d_spectrum(fig=fig, labels=[f"{dateplain} FDD spectrum", f"{dateplain} FDD", f"{dateplain} Transfer function"], traces=[spec_coords, fund_per_coords, pow_coords], **plot_conf)
+        fig = plot_3d_spectrum(fig=fig, labels=[f"{dateplain}", None, None], traces=[spec_coords, fund_per_coords, pow_coords], **plot_conf)
+
+        if write_period_summary:
+            if dateplain in period_summary_table.keys():
+                dateplain = dateplain+'b'
+            period_summary_table[dateplain] = {}
+            shape_summary_table[dateplain] = {}
+            period_summary_table[dateplain], shape_summary_table[dateplain], damping_summary_table[dateplain] = event_mode_summary(inputs=inputs, outputs=outputs, dt=dt, ss_methods=['srim','okid-era'], tf_methods=('FSTF','RSTF'), **conf)
+            period_summary_table[dateplain]['FDD'] = np.round(fdd_pers[i],3)
+            shape_summary_table[dateplain]['FDD'] = np.round(np.abs(fdd_shapes[i]),3).tolist()
+            period_summary_table[dateplain]['PSTF'] = np.round(pow_pers[0],3)
+
+    # fig.update_layout(scene = dict(
+    #     # xaxis=dict(range=[date-100, date+100], autorange=False),
+    #     yaxis=dict(range=[min(periods),max(periods)], autorange=False),
+    #     zaxis=dict(range=[min(amplitudes),max(amplitudes)], autorange=False),
+    # ))
+    # fig.write_html(f"./out/spectra.html")
+    # ax.legend(fontsize=10, bbox_to_anchor=(1.6, 0.1, 1.7, 1.5), loc='lower left', ncols=1, mode="expand", borderaxespad=0.)
+    ax.set_ylim(conf.period_band)
+    ax.view_init(elev=30, azim=-20, roll=0)
+    ax.set_box_aspect((3,6,1), zoom=0.8)
+    ax.set_xlabel("Date", labelpad=30)
+    ax.set_ylabel("Period (s)", labelpad=30)
+    ax.set_zlabel("Normalized spectral amplitude", labelpad=10)
+    # set_size(15,15)
+    fig.savefig(f"./out/spectra")

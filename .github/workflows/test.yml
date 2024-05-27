@@ -1,5 +1,5 @@
 name: run-tests
-run-name: Run tests on latest push from ${{ github.actor }}
+run-name: Run tests on latest push
 on: [push]
 jobs:
   test:
