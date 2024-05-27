@@ -27,7 +27,9 @@ def outid(outputs, dt, **options):
     """
 
     frequencies,U,S = transform.fdd(outputs=outputs, step=dt)
-
+        
+    if len(outputs.shape) == 1:
+        outputs = outputs[None,:]
     p,nt = outputs.shape
     P = np.empty(p)
 
@@ -71,9 +73,9 @@ def modes(inputs, outputs, dt, **options):
     modes = modal.system_modes(realization, dt)
     P = [1/mode['freq'] for mode in modes.values()]
     Phi = np.array([mode['modeshape'] for mode in modes.values()])
-    nmodes, p = Phi.shape
-    if nmodes == p:
-        Phi = Phi/np.linalg.norm(Phi,axis=0)
+    # nmodes, p = Phi.shape
+    # if nmodes == p:
+    #     Phi = Phi/np.linalg.norm(Phi,axis=0)
 
     return (P,Phi)
 
