@@ -15,7 +15,7 @@ test:
 	cp -r ./notebooks/figures/* ./docs/examples/figures
 	pytest --nbmake $(NOTEBOOKS)
 
-publish:
+publish: test
 	cp -r _build/html/* site/
 	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site origin gh-pages
 
