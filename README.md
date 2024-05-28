@@ -15,7 +15,6 @@ Fast and friendly system identification for structures. *[Learn More](https://ch
 </div>
 
 <hr>
-<br>
 
 **The `mdof` system id package** allows structural engineers to solve **inverse eigenanalysis** and related problems -- from structural vibrations, the goal is to identify the system properties.
 
