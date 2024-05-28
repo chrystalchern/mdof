@@ -25,9 +25,8 @@ DEFAULT_PLOTLY_COLORS=[
     '#bcbd22',  # curry yellow-green
     '#17becf'   # blue-teal
 ]
-
 from itertools import cycle
-citer = cycle(DEFAULT_PLOTLY_COLORS)
+color_iter = cycle(DEFAULT_PLOTLY_COLORS)
 
 def print_modes(modes, Tn=None, zeta=None):
 
@@ -97,8 +96,7 @@ def plot_models(models, Tn, zeta):
     # ax[1,2].set_ylabel("time (s)")# , fontsize=13)
     # ax[1,2].set_xlabel("Method")# , fontsize=13)
 
-
-    # # for i,error in zip([0,1,2],[period_errors,damping_errors,times_list]):
+    # # for i,error in enumerate([period_errors,damping_errors,times_list]):
     # for i,error in enumerate([period_errors,damping_errors]):
     #     rects = ax[1,i].patches
     #     for rect, label in zip(rects, error):
@@ -114,7 +112,7 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
     fig, ax = plt.subplots(1,2,figsize=(10,3),constrained_layout=True,sharey=(ylabels[0]==ylabels[1]))
     if len(inputs.shape) > 1:
         for i in range(inputs.shape[0]):
-            ax[0].plot(t,inputs[i,:])
+            ax[0].plot(t,inputs[i,:],label=f"input {i+1}")
     else:
         ax[0].plot(t,inputs)
     ax[0].set_xlabel("time (s)", fontsize=15)
@@ -122,7 +120,8 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
     ax[0].set_title(axtitles[0], fontsize=15)
     if len(outputs.shape) > 1:
         for i in range(outputs.shape[0]):
-            ax[1].plot(t,outputs[i,:], alpha=0.5)
+            ax[1].plot(t,outputs[i,:],alpha=0.5,label=f"output {i+1}")
+        ax[1].legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(1,0,0.5,0.8), loc='upper left')
     else:
         ax[1].plot(t,outputs)
     ax[1].set_xlabel("time (s)", fontsize=15)
@@ -132,26 +131,29 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
 
 def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
     linestyles = ['dashed', 'dashdot', 'dotted']
-    colors = ['blue', 'orange', 'green']
+    colors = ['blue', 'orange', 'green', 'magenta']
+
     fig, ax = plt.subplots(figsize=(6,3))
     if len(ytrue.shape) > 1:
         for i in range(ytrue.shape[0]):
-            ax.plot(t,ytrue[i,:],label="true" if i==0 else None,color='black')
+            ax.plot(t,ytrue[i,:],label=f"true, DOF {i+1}",color='black',linestyle=linestyles[i%len(linestyles)])
     else:
         ax.plot(t,ytrue,label="true",color='black')
     if type(models) is np.ndarray:
         if len(models.shape) > 1:
             for i in range(models.shape[0]):
-                ax.plot(t,models[i,:],label="prediction" if i==0 else None,color=colors[i],linestyle=linestyles[i%len(linestyles)],linewidth=2,alpha=0.5)
+                ax.plot(t,models[i,:],label=f"prediction, DOF {i+1}" if models.shape[0]>1 else "predicition",linestyle=linestyles[i%len(linestyles)],linewidth=2,color=colors[i%len(colors)],alpha=0.5)
         else:
             ax.plot(t,models,"--",label=f"prediction")
     else:
         for k,method in enumerate(models):
             if len(models[method]["ypred"].shape) > 1:
                 for i in range(models[method]["ypred"].shape[0]):
-                    ax.plot(t,models[method]["ypred"][i,:],label=method.upper(),color=colors[k],linestyle=linestyles[k%len(linestyles)],linewidth=2,alpha=0.5)
+                    ax.plot(t,models[method]["ypred"][i,:],
+                            linestyle=linestyles[i%len(linestyles)],linewidth=2,color=colors[k],alpha=0.5,
+                            label=f"{method.upper()}, DOF {i+1}" if models[method]["ypred"].shape[0]>1 else f"{method.upper()}")
             else:
-                ax.plot(t,models[method]["ypred"],label=method.upper(),color=colors[k],linestyle=linestyles[k%len(linestyles)],linewidth=2,alpha=0.5)
+                ax.plot(t,models[method]["ypred"],linestyle=linestyles[k%len(linestyles)],linewidth=2,color=colors[k],alpha=0.5,label=method.upper())
     ax.set_xlabel("time (s)", fontsize=14)
     ax.set_ylabel(ylabel, fontsize=14)
     fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
@@ -301,78 +303,142 @@ def plot_fdd(outputs, dt, true_periods=None):
     return identified_periods, identified_modeshapes
 
 
-def plot_spectra(spectra:list, **options) -> matplotlib.figure.Figure:
-    fig = plt.figure(figsize=(13,13))
-    ax=fig.add_subplot(projection='3d')
+# def modal_profile(files, **options):
+#     """
+#     For multiple events (records), determine and plot the modal profile, including spectra and mode shapes.
+#     """
+#     for file in files:
+#         continue
+#     return
 
-    for i, file in enumerate(files):
-        try:
-            event = quakeio.read(file, exclusions=["*filter*"])
-            dateplain = event['event_date'].split("T")[0]
-            date = np.datetime64(dateplain)
-            print(date)
-            inputs, dt = extract_channels(event, data_conf.inputs)
-            outputs, dt = extract_channels(event, data_conf.outputs)
-        except Exception as e:
-            print(e)
-            continue
+# def event_summary(inputs, outputs, dt, methods=['fdd'], metrics=['period'], tf_in=1, tf_out=1, **options):
+#     """
+#     For a single event (record), summarize the system identification metrics returned by each specified method.
+    
+#     :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
+#                         :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+#     :type inputs:       array
+#     :param outputs:     output response history.
+#                         dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+#                         :math:`nt` = number of timesteps
+#     :type outputs:      array
+#     :param dt:          number of steps used for identification (prediction horizon).
+#                         default: :math:`min(300, nt)`
+#     :type horizon:      float
+
+#     :return:            a dictionary for each metric
+#     :rtype:             tuple of arrays
+#     """
+
+#     if 'period' in metrics:
+#         period_summary = {}
+#     if 'shape' in metrics:
+#         shape_summary = {}
+#     if 'damping' in metrics:
+#         damping_summary = {}
+#     if 'spectra' in metrics:
+#         spectra_summary = {}
+
+#     for method in methods:
+#         if method in ['srim', 'okid-era', 'okid-era-dc']:
+#             try:
+#                 realization = system(method=method, inputs=inputs, outputs=outputs, **options)
+#             except Exception as e:
+#                 print(e)
+#                 continue
+#             ss_modes = modal.system_modes(realization,dt,method=method)
+#             ss_periods = [1/value["freq"] for value in ss_modes.values() if value["energy_condensed_emaco"]>0.5 and value["mpc"]>0.5]
+#             fund_period = np.max(ss_periods)
+#             fund_shape = [value["modeshape"] for value in ss_modes.values() if 1/value["freq"]==fund_period][0]
+#             fund_damping = [value["damp"] for value in ss_modes.values() if 1/value["freq"]==fund_period][0]
+#             period_summary[method] = np.round(fund_period,3)
+#             damping_summary[method] = np.round(fund_damping,3)
+#             shape_summary[method] = np.round(np.abs(fund_shape),3).tolist()
+
+#     if 'FSTF' in tf_methods:
+#         periods, amplitudes = transform.fourier_transfer(inputs=inputs[tf_in], outputs=outputs[tf_out], step=dt, period_band=period_band)
+#         amplitudes = amplitudes/max(amplitudes)
+#         period_summary['FSTF'] = np.round(modal.spectrum_modes(periods, amplitudes, prominence=0.1)[0][0],3)
+
+#     if 'RSTF' in tf_methods:
+#         periods, amplitudes = transform.response_transfer(inputs=inputs[tf_in], outputs=outputs[tf_out], step=dt, periods=periods, damping=damping, threads=8)
+#         amplitudes = amplitudes/max(amplitudes)
+#         period_summary['RSTF'] = np.round(modal.spectrum_modes(periods, amplitudes, prominence=0.1)[0][0],3) if len(modal.spectrum_modes(periods, amplitudes)[0]) > 0 else np.nan
+    
+#     return period_summary, shape_summary, damping_summary
+
+# def plot_spectra(spectra:list, **options) -> matplotlib.figure.Figure:
+#     fig = plt.figure(figsize=(13,13))
+#     ax=fig.add_subplot(projection='3d')
+
+#     for i, file in enumerate(files):
+#         try:
+#             event = quakeio.read(file, exclusions=["*filter*"])
+#             dateplain = event['event_date'].split("T")[0]
+#             date = np.datetime64(dateplain)
+#             print(date)
+#             inputs, dt = extract_channels(event, data_conf.inputs)
+#             outputs, dt = extract_channels(event, data_conf.outputs)
+#         except Exception as e:
+#             print(e)
+#             continue
         
-        # FREQUENCY DOMAIN DECOMPOSITION (OUTPUT ONLY)
-        frequencies,U,S = transform.fdd(outputs=outputs, step=dt)     # Full frequency spectrum
-        periods = 1/frequencies
-        period_mask = (periods>=conf.period_band[0]) & (periods<=conf.period_band[1])
-        periods = periods[period_mask]
-        n_periods = len(periods)  # Number of periods, x axis of spectrum.  Varies per record.    
-        # For plot
-        spec_coords = np.empty((N_OUTPUTS,3,n_periods))
-        n_fund = 1
-        fund_per_coords = np.empty((N_OUTPUTS,3,n_fund))
-        for j in range(N_OUTPUTS):
-            amplitudes = S[j,:]
-            amplitudes = amplitudes/max(amplitudes)
-            amplitudes = amplitudes[period_mask]
-            spec_coords[j] = [[date]*n_periods, periods, amplitudes]               # All spectra from FDD.  One spectrum, shape (2,n_periods), for each output.
-            peaks, _ = find_peaks(amplitudes, prominence=max(amplitudes)*0.01)
-            fund_per_coords[j] = [[date]*n_fund, periods[peaks[:n_fund]], amplitudes[peaks[:n_fund]]]   # All peak periods from FDD.  Two peaks, shape (2,n_fund), for each output.
-            if j == 0:
-                fdd_pers[i] = periods[peaks[0]]                                    # Only the first mode period, shape (1)
-                fdd_shapes[i] = U[:,:,peaks[0]][0]                                 # Only the first mode shape, shape (N_OUTPUTS,1)
+#         # FREQUENCY DOMAIN DECOMPOSITION (OUTPUT ONLY)
+#         frequencies,U,S = transform.fdd(outputs=outputs, step=dt)     # Full frequency spectrum
+#         periods = 1/frequencies
+#         period_mask = (periods>=conf.period_band[0]) & (periods<=conf.period_band[1])
+#         periods = periods[period_mask]
+#         n_periods = len(periods)  # Number of periods, x axis of spectrum.  Varies per record.    
+#         # For plot
+#         spec_coords = np.empty((N_OUTPUTS,3,n_periods))
+#         n_fund = 1
+#         fund_per_coords = np.empty((N_OUTPUTS,3,n_fund))
+#         for j in range(N_OUTPUTS):
+#             amplitudes = S[j,:]
+#             amplitudes = amplitudes/max(amplitudes)
+#             amplitudes = amplitudes[period_mask]
+#             spec_coords[j] = [[date]*n_periods, periods, amplitudes]               # All spectra from FDD.  One spectrum, shape (2,n_periods), for each output.
+#             peaks, _ = find_peaks(amplitudes, prominence=max(amplitudes)*0.01)
+#             fund_per_coords[j] = [[date]*n_fund, periods[peaks[:n_fund]], amplitudes[peaks[:n_fund]]]   # All peak periods from FDD.  Two peaks, shape (2,n_fund), for each output.
+#             if j == 0:
+#                 fdd_pers[i] = periods[peaks[0]]                                    # Only the first mode period, shape (1)
+#                 fdd_shapes[i] = U[:,:,peaks[0]][0]                                 # Only the first mode shape, shape (N_OUTPUTS,1)
 
 
-        # POWER TRANSFER (INPUT-OUTPUT)
-        periods, amplitudes = transform.power_transfer(inputs=inputs[-1], outputs=outputs[-1], step=dt, period_band=conf.period_band)
-        amplitudes = amplitudes/max(amplitudes)
-        pow_pers, pow_amps = modal.spectrum_modes(periods, amplitudes)
-        # For plot
-        pow_coords = np.array([[[date], [pow_pers[0]], [pow_amps[0]]]])
+#         # POWER TRANSFER (INPUT-OUTPUT)
+#         periods, amplitudes = transform.power_transfer(inputs=inputs[-1], outputs=outputs[-1], step=dt, period_band=conf.period_band)
+#         amplitudes = amplitudes/max(amplitudes)
+#         pow_pers, pow_amps = modal.spectrum_modes(periods, amplitudes)
+#         # For plot
+#         pow_coords = np.array([[[date], [pow_pers[0]], [pow_amps[0]]]])
 
-        plot_conf = Config()
-        plot_conf.color = colors[i%len(colors)]
-        # fig = plot_3d_spectrum(fig=fig, labels=[f"{dateplain} FDD spectrum", f"{dateplain} FDD", f"{dateplain} Transfer function"], traces=[spec_coords, fund_per_coords, pow_coords], **plot_conf)
-        fig = plot_3d_spectrum(fig=fig, labels=[f"{dateplain}", None, None], traces=[spec_coords, fund_per_coords, pow_coords], **plot_conf)
+#         plot_conf = Config()
+#         plot_conf.color = colors[i%len(colors)]
+#         # fig = plot_3d_spectrum(fig=fig, labels=[f"{dateplain} FDD spectrum", f"{dateplain} FDD", f"{dateplain} Transfer function"], traces=[spec_coords, fund_per_coords, pow_coords], **plot_conf)
+#         fig = plot_3d_spectrum(fig=fig, labels=[f"{dateplain}", None, None], traces=[spec_coords, fund_per_coords, pow_coords], **plot_conf)
 
-        if write_period_summary:
-            if dateplain in period_summary_table.keys():
-                dateplain = dateplain+'b'
-            period_summary_table[dateplain] = {}
-            shape_summary_table[dateplain] = {}
-            period_summary_table[dateplain], shape_summary_table[dateplain], damping_summary_table[dateplain] = event_mode_summary(inputs=inputs, outputs=outputs, dt=dt, ss_methods=['srim','okid-era'], tf_methods=('FSTF','RSTF'), **conf)
-            period_summary_table[dateplain]['FDD'] = np.round(fdd_pers[i],3)
-            shape_summary_table[dateplain]['FDD'] = np.round(np.abs(fdd_shapes[i]),3).tolist()
-            period_summary_table[dateplain]['PSTF'] = np.round(pow_pers[0],3)
+#         if write_period_summary:
+#             if dateplain in period_summary_table.keys():
+#                 dateplain = dateplain+'b'
+#             period_summary_table[dateplain] = {}
+#             shape_summary_table[dateplain] = {}
+#             period_summary_table[dateplain], shape_summary_table[dateplain], damping_summary_table[dateplain] = event_mode_summary(inputs=inputs, outputs=outputs, dt=dt, ss_methods=['srim','okid-era'], tf_methods=('FSTF','RSTF'), **conf)
+#             period_summary_table[dateplain]['FDD'] = np.round(fdd_pers[i],3)
+#             shape_summary_table[dateplain]['FDD'] = np.round(np.abs(fdd_shapes[i]),3).tolist()
+#             period_summary_table[dateplain]['PSTF'] = np.round(pow_pers[0],3)
 
-    # fig.update_layout(scene = dict(
-    #     # xaxis=dict(range=[date-100, date+100], autorange=False),
-    #     yaxis=dict(range=[min(periods),max(periods)], autorange=False),
-    #     zaxis=dict(range=[min(amplitudes),max(amplitudes)], autorange=False),
-    # ))
-    # fig.write_html(f"./out/spectra.html")
-    # ax.legend(fontsize=10, bbox_to_anchor=(1.6, 0.1, 1.7, 1.5), loc='lower left', ncols=1, mode="expand", borderaxespad=0.)
-    ax.set_ylim(conf.period_band)
-    ax.view_init(elev=30, azim=-20, roll=0)
-    ax.set_box_aspect((3,6,1), zoom=0.8)
-    ax.set_xlabel("Date", labelpad=30)
-    ax.set_ylabel("Period (s)", labelpad=30)
-    ax.set_zlabel("Normalized spectral amplitude", labelpad=10)
-    # set_size(15,15)
-    fig.savefig(f"./out/spectra")
+#     # fig.update_layout(scene = dict(
+#     #     # xaxis=dict(range=[date-100, date+100], autorange=False),
+#     #     yaxis=dict(range=[min(periods),max(periods)], autorange=False),
+#     #     zaxis=dict(range=[min(amplitudes),max(amplitudes)], autorange=False),
+#     # ))
+#     # fig.write_html(f"./out/spectra.html")
+#     # ax.legend(fontsize=10, bbox_to_anchor=(1.6, 0.1, 1.7, 1.5), loc='lower left', ncols=1, mode="expand", borderaxespad=0.)
+#     ax.set_ylim(conf.period_band)
+#     ax.view_init(elev=30, azim=-20, roll=0)
+#     ax.set_box_aspect((3,6,1), zoom=0.8)
+#     ax.set_xlabel("Date", labelpad=30)
+#     ax.set_ylabel("Period (s)", labelpad=30)
+#     ax.set_zlabel("Normalized spectral amplitude", labelpad=10)
+#     # set_size(15,15)
+#     fig.savefig(f"./out/spectra")
