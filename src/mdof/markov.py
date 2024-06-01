@@ -18,6 +18,8 @@ def okid(inputs,outputs,**options):
     :type outputs:  array
     :param m:       number of Markov parameters to compute. default: :math:`min(300, nt)`
     :type m:        int, optional
+    :param rcond:   cut-off ratio for small singular values in pseudoinverse computation. default: `1e-15`
+    :type m:        float, optional
 
     :return: the Markov parameters, with dimensions :math:`(p,q,m+1)`
     :rtype: array
@@ -57,7 +59,7 @@ def okid(inputs,outputs,**options):
     V = np.delete(V, slice(q,q+p), axis=0)        # Remove rows q+1 to q+p (TODO: see if it's necessary to remove rows, or if solving for Ybar can include these)
 
     # Solve for observer Markov parameters Ybar
-    Ybar = outputs @ np.linalg.pinv(V,rcond=10e-3)  # DIM: (p)x(q+m(q+p))
+    Ybar = outputs @ np.linalg.pinv(V,rcond=options.get('rcond',1e-15))  # DIM: (p)x(q+m(q+p))
     assert Ybar.shape == (p,q+m*(q+p))
     
     # Isolate system Markov parameters

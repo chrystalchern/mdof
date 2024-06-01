@@ -2,12 +2,11 @@
 .ipynb_checkpoints/
 PUBLISHING.md
 __pycache__/
-#assets/
 dist
 notebooks/PEERNGARecords_Unscaled/
-studies/
-tests/
+notebooks/figures/figures.pptx
 src/ssid/
 _build
 docs/theory/out/
 docs/library/generated/
+docs/examples/
