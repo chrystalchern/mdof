@@ -28,6 +28,7 @@ DEFAULT_PLOTLY_COLORS=[
 from itertools import cycle
 color_iter = cycle(DEFAULT_PLOTLY_COLORS)
 
+
 def print_modes(modes, Tn=None, zeta=None):
 
     if len(modes) == 0:
@@ -108,6 +109,7 @@ def plot_models(models, Tn, zeta):
     
     # fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=17)
 
+
 def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitles=(None,None)):
     fig, ax = plt.subplots(1,2,figsize=(10,3),constrained_layout=True,sharey=(ylabels[0]==ylabels[1]))
     if len(inputs.shape) > 1:
@@ -128,6 +130,7 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
     ax[1].set_ylabel(ylabels[1], fontsize=15)
     ax[1].set_title(axtitles[1], fontsize=15)
     fig.suptitle(title, fontsize=17)
+
 
 def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
     linestyles = ['dashed', 'dashdot', 'dotted']
@@ -158,6 +161,7 @@ def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
     ax.set_ylabel(ylabel, fontsize=14)
     fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
     fig.suptitle(title, fontsize=14)
+
 
 def plot_transfer(models, title=None, labels=None, plotly=False):
     if plotly:
@@ -200,24 +204,25 @@ def plot_transfer(models, title=None, labels=None, plotly=False):
             ax.legend()#fontsize=12)
         ax.set_title(title)#, fontsize=14)
 
+
 class FrequencyContent:
-    def __init__(self, scale, period, xlabel, ylabel, xlimits) -> None:
+    def __init__(self, scale, period, xlabel, ylabel, **options) -> None:
         self.scale = scale
         self.period = period
         self.xlabel = xlabel
         self.ylabel = ylabel
-        self.xlimits = xlimits
+        self.xlimits = options.get('xlimits', (0.1,3))
         self.num_traces = 0
         layout = go.Layout(
             title=None,
             xaxis=dict(
                 title=self.xlabel,
-                range=xlimits
+                range=self.xlimits
             ),
             yaxis=dict(
                 title=self.ylabel
             ),
-            width=500, height=300,
+            width=700, height=300,
             margin=dict(l=70, r=20, t=20, b=20))
         self.fig = go.Figure(layout=layout)
 
@@ -242,6 +247,7 @@ class FrequencyContent:
     def get_figure(self):
         return self.fig
 
+
 def make_hover_data(data, ln=None):
     import numpy as np
     if ln is None:
@@ -255,22 +261,6 @@ def make_hover_data(data, ln=None):
         "customdata": list(items),
     }
 
-if __name__ == "__main__":
-
-    import numpy as np
-    periods = np.array([0.1,0.3,0.5,0.7])
-    amplitudes = np.array([0.1,0.2,1,0.2])
-
-    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude", xlimits=[0,0.5])
-
-    plot.add(periods, amplitudes, label="R1")
-    plot.add(periods[:2], label="SRIM")
-    plot.add(periods[2:], label="SRIM")
-    plot.add(periods, amplitudes-0.05, label="R1")
-
-
-    fig:go.Figure = plot.get_figure()
-    print(fig.to_json())
 
 def plot_fdd(outputs, dt, true_periods=None):
     from mdof import transform, modal
@@ -310,6 +300,7 @@ def plot_fdd(outputs, dt, true_periods=None):
 #     for file in files:
 #         continue
 #     return
+
 
 # def event_summary(inputs, outputs, dt, methods=['fdd'], metrics=['period'], tf_in=1, tf_out=1, **options):
 #     """
@@ -366,6 +357,7 @@ def plot_fdd(outputs, dt, true_periods=None):
 #         period_summary['RSTF'] = np.round(modal.spectrum_modes(periods, amplitudes, prominence=0.1)[0][0],3) if len(modal.spectrum_modes(periods, amplitudes)[0]) > 0 else np.nan
     
 #     return period_summary, shape_summary, damping_summary
+
 
 # def plot_spectra(spectra:list, **options) -> matplotlib.figure.Figure:
 #     fig = plt.figure(figsize=(13,13))
@@ -442,3 +434,20 @@ def plot_fdd(outputs, dt, true_periods=None):
 #     ax.set_zlabel("Normalized spectral amplitude", labelpad=10)
 #     # set_size(15,15)
 #     fig.savefig(f"./out/spectra")
+
+
+if __name__ == "__main__":
+
+    import numpy as np
+    periods = np.array([0.1,0.3,0.5,0.7])
+    amplitudes = np.array([0.1,0.2,1,0.2])
+
+    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude")
+
+    plot.add(periods, amplitudes, label="R1")
+    plot.add(periods[:2], label="SRIM")
+    plot.add(periods[2:], label="SRIM")
+    plot.add(periods, amplitudes-0.05, label="R1")
+
+    fig:go.Figure = plot.get_figure()
+    print(fig.to_json())
