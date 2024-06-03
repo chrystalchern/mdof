@@ -194,6 +194,18 @@ $$
 \mathbf{C} = \mathcal{O}_{p}(0)
 $$
 
+## Output Error Minimization
+
+$$
+\Phi = \begin{bmatrix}
+\mathbf{C} & \mathcal{U}_{p}(0) & \mathbf{0}_{p\times r} \\
+\mathbf{CA} & \mathcal{U}_{p}(1) & \mathbf{C}\mathcal{U}_{r}(0) \\
+\mathbf{CA^{2}} & \mathcal{U}_{p}(2) & \mathbf{CA}\mathcal{U}_{r}(0) + \mathbf{C}\mathcal{U}_{r}(1) \\
+\vdots & \vdots & \vdots \\
+\mathbf{CA}^{ns-1} & \mathcal{U}_{p}(ns-1) & \sum_{k=0}^{ns-2}\mathbf{CA}^{ns-k-2}\mathcal{U}_{r}(k)
+\end{bmatrix} \in \mathbb{R}^{(ns*p) \times (pr+pq+rq)}
+$$
+
 
 
 ## Appendix: Manipulation of discrete-time system matrix equation into correlation matrix relationships
