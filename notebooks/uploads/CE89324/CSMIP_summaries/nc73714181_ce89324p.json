@@ -1,0 +1,852 @@
+{
+    "file_name": "nc73714181_ce89324p.zip",
+    "peak_accel": 54.457,
+    "event_date": "2022-04-04T15:16:00",
+    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+    "station_coord": "40.503N, 124.101W",
+    "record_identifier": "89324-VAA6D-22094.03",
+    "station_number": "89324",
+    "motions": [
+        {
+            "key": "middle_bent_column_at_grnd_level",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "1",
+                    "component": "Long",
+                    "location_name": "Middle Bent Column at Grnd Level",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan001.v2",
+                    "station_channel": "1",
+                    "peak_displ": -0.061,
+                    "peak_veloc": 0.616,
+                    "peak_accel": 18.71,
+                    "accel": {
+                        "peak_value": 18.71,
+                        "units": "cm/sec/sec",
+                        "peak_time": 29.94,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 0.616,
+                        "units": "cm/sec",
+                        "peak_time": 30.04,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.061,
+                        "units": "cm",
+                        "peak_time": 29.94,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "2",
+                    "component": "Up",
+                    "location_name": "Middle Bent Column at Grnd Level",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan002.v2",
+                    "station_channel": "2",
+                    "peak_displ": 0.011,
+                    "peak_veloc": 0.231,
+                    "peak_accel": -8.217,
+                    "accel": {
+                        "peak_value": -8.217,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.23,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 0.231,
+                        "units": "cm/sec",
+                        "peak_time": 30.18,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.011,
+                        "units": "cm",
+                        "peak_time": 30.48,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "3",
+                    "component": "Tran",
+                    "location_name": "Middle Bent Column at Grnd Level",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan003.v2",
+                    "station_channel": "3",
+                    "peak_displ": 0.026,
+                    "peak_veloc": -0.46,
+                    "peak_accel": -16.196,
+                    "accel": {
+                        "peak_value": -16.196,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.36,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -0.46,
+                        "units": "cm/sec",
+                        "peak_time": 30.42,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.026,
+                        "units": "cm",
+                        "peak_time": 30.36,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_near_west_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "4",
+                    "component": "Tran",
+                    "location_name": "Deck Near West Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan004.v2",
+                    "station_channel": "4",
+                    "peak_displ": 0.044,
+                    "peak_veloc": -0.979,
+                    "peak_accel": -24.966,
+                    "accel": {
+                        "peak_value": -24.966,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.38,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -0.979,
+                        "units": "cm/sec",
+                        "peak_time": 30.43,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.044,
+                        "units": "cm",
+                        "peak_time": 30.38,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_middle_of_west_span",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "6",
+                    "component": "Up",
+                    "location_name": "Deck Middle of West Span",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan006.v2",
+                    "station_channel": "6",
+                    "peak_displ": 0.078,
+                    "peak_veloc": -2.121,
+                    "peak_accel": 54.457,
+                    "accel": {
+                        "peak_value": 54.457,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.35,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -2.121,
+                        "units": "cm/sec",
+                        "peak_time": 30.3,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.078,
+                        "units": "cm",
+                        "peak_time": 30.24,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "middle_bent_top_of_column",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "7",
+                    "component": "Tran",
+                    "location_name": "Middle Bent Top of Column",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan007.v2",
+                    "station_channel": "7",
+                    "peak_displ": 0.083,
+                    "peak_veloc": 1.728,
+                    "peak_accel": -40.988,
+                    "accel": {
+                        "peak_value": -40.988,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.35,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 1.728,
+                        "units": "cm/sec",
+                        "peak_time": 30.29,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.083,
+                        "units": "cm",
+                        "peak_time": 30.35,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_middle_of_east_span",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "8",
+                    "component": "Up",
+                    "location_name": "Deck Middle of East Span",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan008.v2",
+                    "station_channel": "8",
+                    "peak_displ": -0.053,
+                    "peak_veloc": -1.599,
+                    "peak_accel": 54.113,
+                    "accel": {
+                        "peak_value": 54.113,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.61,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -1.599,
+                        "units": "cm/sec",
+                        "peak_time": 30.57,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.053,
+                        "units": "cm",
+                        "peak_time": 30.61,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "deck_near_east_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "9",
+                    "component": "Tran",
+                    "location_name": "Deck Near East Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan009.v2",
+                    "station_channel": "9",
+                    "peak_displ": 0.063,
+                    "peak_veloc": 1.541,
+                    "peak_accel": 38.808,
+                    "accel": {
+                        "peak_value": 38.808,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.22,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 1.541,
+                        "units": "cm/sec",
+                        "peak_time": 30.27,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.063,
+                        "units": "cm",
+                        "peak_time": 30.34,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "10",
+                    "component": "Up",
+                    "location_name": "Deck Near East Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan010.v2",
+                    "station_channel": "10",
+                    "peak_displ": -0.017,
+                    "peak_veloc": -0.433,
+                    "peak_accel": -14.123,
+                    "accel": {
+                        "peak_value": -14.123,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.23,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -0.433,
+                        "units": "cm/sec",
+                        "peak_time": 30.57,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.017,
+                        "units": "cm",
+                        "peak_time": 30.88,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "11",
+                    "component": "Long",
+                    "location_name": "Deck Near East Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan011.v2",
+                    "station_channel": "11",
+                    "peak_displ": -0.081,
+                    "peak_veloc": 1.319,
+                    "peak_accel": 30.328,
+                    "accel": {
+                        "peak_value": 30.328,
+                        "units": "cm/sec/sec",
+                        "peak_time": 29.99,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 1.319,
+                        "units": "cm/sec",
+                        "peak_time": 30.04,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.081,
+                        "units": "cm",
+                        "peak_time": 29.98,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "on_ground_near_east_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "12",
+                    "component": "Long",
+                    "location_name": "On Ground Near East Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": -0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan015.v2",
+                    "station_channel": "15",
+                    "peak_displ": -0.08,
+                    "peak_veloc": 1.044,
+                    "peak_accel": 32.124,
+                    "accel": {
+                        "peak_value": 32.124,
+                        "units": "cm/sec/sec",
+                        "peak_time": 29.98,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 1.044,
+                        "units": "cm/sec",
+                        "peak_time": 30.07,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.08,
+                        "units": "cm",
+                        "peak_time": 29.98,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "13",
+                    "component": "Up",
+                    "location_name": "On Ground Near East Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan016.v2",
+                    "station_channel": "16",
+                    "peak_displ": -0.011,
+                    "peak_veloc": 0.197,
+                    "peak_accel": 6.737,
+                    "accel": {
+                        "peak_value": 6.737,
+                        "units": "cm/sec/sec",
+                        "peak_time": 26.02,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 0.197,
+                        "units": "cm/sec",
+                        "peak_time": 31.81,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.011,
+                        "units": "cm",
+                        "peak_time": 26.02,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "14",
+                    "component": "Tran",
+                    "location_name": "On Ground Near East Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan017.v2",
+                    "station_channel": "17",
+                    "peak_displ": -0.04,
+                    "peak_veloc": 1.008,
+                    "peak_accel": -27.338,
+                    "accel": {
+                        "peak_value": -27.338,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.09,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 1.008,
+                        "units": "cm/sec",
+                        "peak_time": 30.26,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.04,
+                        "units": "cm",
+                        "peak_time": 30.2,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        },
+        {
+            "key": "on_ground_near_west_abutment",
+            "components": [
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "15",
+                    "component": "Long",
+                    "location_name": "On Ground Near West Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": -0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan018.v2",
+                    "station_channel": "18",
+                    "peak_displ": -0.074,
+                    "peak_veloc": 1.043,
+                    "peak_accel": -26.102,
+                    "accel": {
+                        "peak_value": -26.102,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.13,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": 1.043,
+                        "units": "cm/sec",
+                        "peak_time": 30.03,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.074,
+                        "units": "cm",
+                        "peak_time": 29.96,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "16",
+                    "component": "Up",
+                    "location_name": "On Ground Near West Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan019.v2",
+                    "station_channel": "19",
+                    "peak_displ": 0.011,
+                    "peak_veloc": -0.19,
+                    "peak_accel": 6.871,
+                    "accel": {
+                        "peak_value": 6.871,
+                        "units": "cm/sec/sec",
+                        "peak_time": 26.0,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -0.19,
+                        "units": "cm/sec",
+                        "peak_time": 31.47,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": 0.011,
+                        "units": "cm",
+                        "peak_time": 31.17,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                },
+                {
+                    "filters": [
+                        {
+                            "filter_type": "bandpass"
+                        }
+                    ],
+                    "record_identifier": "89324-VAA6D-22094.03",
+                    "date": "2022-04-04T15:16:00",
+                    "station.no": "89324",
+                    "station.coord": "40.503N, 124.101W",
+                    "station_name": "b Rio Dell Hwy 101 Painter St Overpas",
+                    "channel": "17",
+                    "component": "Tran",
+                    "location_name": "On Ground Near West Abutment",
+                    "instr_period": 0.0008,
+                    "instr_period.units": "sec",
+                    "init_veloc": 0.0,
+                    "init_veloc.units": "cm/sec",
+                    "init_displ": 0.0,
+                    "init_displ.units": "",
+                    "file_name": "chan020.v2",
+                    "station_channel": "20",
+                    "peak_displ": -0.035,
+                    "peak_veloc": -0.78,
+                    "peak_accel": 26.487,
+                    "accel": {
+                        "peak_value": 26.487,
+                        "units": "cm/sec/sec",
+                        "peak_time": 30.14,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "veloc": {
+                        "peak_value": -0.78,
+                        "units": "cm/sec",
+                        "peak_time": 30.11,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    },
+                    "displ": {
+                        "peak_value": -0.035,
+                        "units": "cm",
+                        "peak_time": 30.15,
+                        "shape": 7070,
+                        "time_step": 0.01,
+                        "data": []
+                    }
+                }
+            ]
+        }
+    ]
+}
+
