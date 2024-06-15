@@ -28,7 +28,8 @@ DEFAULT_PLOTLY_COLORS=[
 from itertools import cycle
 color_iter = cycle(DEFAULT_PLOTLY_COLORS)
 
-def print_modes(modes, Tn=None, zeta=None):
+
+def print_modes(modes, Tn=None, zeta=None, sigfigs=4):
 
     if len(modes) == 0:
         print("No valid identified modes.")
@@ -49,11 +50,11 @@ def print_modes(modes, Tn=None, zeta=None):
         z = mode["damp"]
         emaco = mode["energy_condensed_emaco"]
         mpc = mode["mpc"]
-        row = f"      {1/f: <9.4}  {z: <9.4}  {emaco: <9.4}  {mpc: <9.4}  {emaco*mpc: <9.4}"
+        row = f"      {1/f: <9.{sigfigs}}  {z: <9.{sigfigs}}  {emaco: <9.{sigfigs}}  {mpc: <9.{sigfigs}}  {emaco*mpc: <9.{sigfigs}}"
         if Tn is not None:
-            row += f"    {100*(1/f-Tn)/(Tn): <9.4}"
+            row += f"    {100*(1/f-Tn)/(Tn): <9.{sigfigs}}"
         if zeta is not None:
-            row += f"    {100*(z-zeta)/zeta: <9.4}"
+            row += f"    {100*(z-zeta)/zeta: <9.{sigfigs}}"
         print(row)
     print("Mean Period(s):", np.mean([1/v["freq"] for v in modes.values()]))
     print("Standard Dev(s):", np.std([1/v["freq"] for v in modes.values()]))
@@ -108,8 +109,11 @@ def plot_models(models, Tn, zeta):
     
     # fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=17)
 
-def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitles=(None,None)):
-    fig, ax = plt.subplots(1,2,figsize=(10,3),constrained_layout=True,sharey=(ylabels[0]==ylabels[1]))
+
+def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitles=(None,None), **options):
+    fig, ax = options.get('figax',
+                          plt.subplots(1,2,figsize=options.get('figsize',(10,3)),constrained_layout=True,sharey=options.get('sharey',(ylabels[0]==ylabels[1])))
+    )
     if len(inputs.shape) > 1:
         for i in range(inputs.shape[0]):
             ax[0].plot(t,inputs[i,:],label=f"input {i+1}")
@@ -128,12 +132,14 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
     ax[1].set_ylabel(ylabels[1], fontsize=15)
     ax[1].set_title(axtitles[1], fontsize=15)
     fig.suptitle(title, fontsize=17)
+    return fig
 
-def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
+
+def plot_pred(ytrue, models, t, title=None, ylabel="outputs", **options):
     linestyles = ['dashed', 'dashdot', 'dotted']
     colors = ['blue', 'orange', 'green', 'magenta']
 
-    fig, ax = plt.subplots(figsize=(6,3))
+    fig, ax = options.get('figax',plt.subplots(figsize=options.get('figsize',(6,3))))
     if len(ytrue.shape) > 1:
         for i in range(ytrue.shape[0]):
             ax.plot(t,ytrue[i,:],label=f"true, DOF {i+1}",color='black',linestyle=linestyles[i%len(linestyles)])
@@ -142,9 +148,10 @@ def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
     if type(models) is np.ndarray:
         if len(models.shape) > 1:
             for i in range(models.shape[0]):
-                ax.plot(t,models[i,:],label=f"prediction, DOF {i+1}" if models.shape[0]>1 else "predicition",linestyle=linestyles[i%len(linestyles)],linewidth=2,color=colors[i%len(colors)],alpha=0.5)
+                ax.plot(t,models[i,:],label=f"prediction, DOF {i+1}" if models.shape[0]>1 else f"{options.get('single_label','prediction')}",
+                        linestyle=linestyles[i%len(linestyles)],linewidth=2,color=options.get('single_color',colors[i%len(colors)]),alpha=0.5)
         else:
-            ax.plot(t,models,"--",label=f"prediction")
+            ax.plot(t,models,"--",color=options.get('single_color',None),label=f"{options.get('single_label','prediction')}")
     else:
         for k,method in enumerate(models):
             if len(models[method]["ypred"].shape) > 1:
@@ -158,8 +165,10 @@ def plot_pred(ytrue, models, t, title=None, ylabel="outputs"):
     ax.set_ylabel(ylabel, fontsize=14)
     fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
     fig.suptitle(title, fontsize=14)
+    return fig
 
-def plot_transfer(models, title=None, labels=None, plotly=False):
+
+def plot_transfer(models, title=None, labels=None, plotly=False, **options):
     if plotly:
         import plotly.graph_objects as go
         layout = go.Layout(
@@ -168,7 +177,7 @@ def plot_transfer(models, title=None, labels=None, plotly=False):
                 title="Period (s)"
             ),
             yaxis=dict(
-                title="Amplitude"
+                title=options.get('ylabel', "Amplitude")
             ),
             width=600, height=300,
             margin=dict(l=70, r=20, t=20, b=20))
@@ -176,7 +185,7 @@ def plot_transfer(models, title=None, labels=None, plotly=False):
         if type(models) is np.ndarray:
             if len(models.shape) > 2:
                 for i in range(models.shape[0]):
-                    fig.add_trace(go.Scatter(x=models[i,0],y=models[i,1]/max(models[i,1]),name=labels[i]))
+                    fig.add_trace(go.Scatter(x=models[i,0],y=models[i,1]/max(models[i,1]),name=labels[i] if labels is not None else None))
             else:
                 fig.add_trace(go.Scatter(x=models[0],y=models[1]/max(models[1]),name=labels))
         else:
@@ -184,40 +193,43 @@ def plot_transfer(models, title=None, labels=None, plotly=False):
                 fig.add_trace(go.Scatter(x=models[method][0],y=models[method][1]/max(models[method][1]),name=method))
         fig.show(renderer="notebook_connected")
     else:
-        fig, ax = plt.subplots(figsize=(6,3))
+        linestyles = ['-','--',':']
+        fig, ax = plt.subplots(figsize=options.get('figsize',(6,3)))
         if type(models) is np.ndarray:
             if len(models.shape) > 2:
                 for i in range(models.shape[0]):
-                    ax.plot(models[i,0],models[i,1]/max(models[i,1]),label=labels[i])
+                    ax.plot(models[i,0],models[i,1]/max(models[i,1]),linestyle=linestyles[i],label=labels[i] if labels is not None else None)
             else:
                 ax.plot(models[0],models[1]/max(models[1]),label=labels)
         else:
-            for method in models:
-                ax.plot(models[method][0],models[method][1]/max(models[method][1]),label=method)
-        ax.set_xlabel("Period (s)")
-        ax.set_ylabel("Amplitude")
-        if labels is not None:
-            ax.legend()#fontsize=12)
-        ax.set_title(title)#, fontsize=14)
+            for i,method in enumerate(models):
+                ax.plot(models[method][0],models[method][1]/max(models[method][1]),linestyle=linestyles[i],label=method)
+        ax.set_xlabel("Period (s)",fontsize=14)
+        ax.set_ylabel(options.get('ylabel', "Amplitude"),fontsize=14)
+        if (labels is not None) or (not type(models) is np.ndarray):
+            ax.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(1,0,0.5,0.8), loc='upper left')
+        ax.set_title(title)
+        return fig
+
 
 class FrequencyContent:
-    def __init__(self, scale, period, xlabel, ylabel, xlimits) -> None:
+    def __init__(self, scale, period, xlabel, ylabel, **options) -> None:
         self.scale = scale
         self.period = period
         self.xlabel = xlabel
         self.ylabel = ylabel
-        self.xlimits = xlimits
+        self.xlimits = options.get('xlimits', (0.1,3))
         self.num_traces = 0
         layout = go.Layout(
             title=None,
             xaxis=dict(
                 title=self.xlabel,
-                range=xlimits
+                range=self.xlimits
             ),
             yaxis=dict(
                 title=self.ylabel
             ),
-            width=500, height=300,
+            width=700, height=300,
             margin=dict(l=70, r=20, t=20, b=20))
         self.fig = go.Figure(layout=layout)
 
@@ -242,6 +254,7 @@ class FrequencyContent:
     def get_figure(self):
         return self.fig
 
+
 def make_hover_data(data, ln=None):
     import numpy as np
     if ln is None:
@@ -255,22 +268,6 @@ def make_hover_data(data, ln=None):
         "customdata": list(items),
     }
 
-if __name__ == "__main__":
-
-    import numpy as np
-    periods = np.array([0.1,0.3,0.5,0.7])
-    amplitudes = np.array([0.1,0.2,1,0.2])
-
-    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude", xlimits=[0,0.5])
-
-    plot.add(periods, amplitudes, label="R1")
-    plot.add(periods[:2], label="SRIM")
-    plot.add(periods[2:], label="SRIM")
-    plot.add(periods, amplitudes-0.05, label="R1")
-
-
-    fig:go.Figure = plot.get_figure()
-    print(fig.to_json())
 
 def plot_fdd(outputs, dt, true_periods=None):
     from mdof import transform, modal
@@ -310,6 +307,7 @@ def plot_fdd(outputs, dt, true_periods=None):
 #     for file in files:
 #         continue
 #     return
+
 
 # def event_summary(inputs, outputs, dt, methods=['fdd'], metrics=['period'], tf_in=1, tf_out=1, **options):
 #     """
@@ -366,6 +364,7 @@ def plot_fdd(outputs, dt, true_periods=None):
 #         period_summary['RSTF'] = np.round(modal.spectrum_modes(periods, amplitudes, prominence=0.1)[0][0],3) if len(modal.spectrum_modes(periods, amplitudes)[0]) > 0 else np.nan
     
 #     return period_summary, shape_summary, damping_summary
+
 
 # def plot_spectra(spectra:list, **options) -> matplotlib.figure.Figure:
 #     fig = plt.figure(figsize=(13,13))
@@ -442,3 +441,20 @@ def plot_fdd(outputs, dt, true_periods=None):
 #     ax.set_zlabel("Normalized spectral amplitude", labelpad=10)
 #     # set_size(15,15)
 #     fig.savefig(f"./out/spectra")
+
+
+if __name__ == "__main__":
+
+    import numpy as np
+    periods = np.array([0.1,0.3,0.5,0.7])
+    amplitudes = np.array([0.1,0.2,1,0.2])
+
+    plot = FrequencyContent(scale=True, period=True, xlabel="Period (s)", ylabel="Amplitude")
+
+    plot.add(periods, amplitudes, label="R1")
+    plot.add(periods[:2], label="SRIM")
+    plot.add(periods[2:], label="SRIM")
+    plot.add(periods, amplitudes-0.05, label="R1")
+
+    fig:go.Figure = plot.get_figure()
+    print(fig.to_json())
