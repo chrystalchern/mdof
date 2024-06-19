@@ -15,9 +15,9 @@ functions for quickly performing system identification:
 .. autosummary::
    :toctree: generated/
 
-   mdof.eigid
    mdof.outid
    mdof.modes
+   mdof.eigid
    mdof.sysid
 
 
