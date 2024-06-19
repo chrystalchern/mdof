@@ -96,7 +96,6 @@ def parse_time(argi, config, channels, method=None):
     Options
     --threads <int>
     """
-    damping  = None
     for arg in argi:
         if arg == "--threads" and method == "response":
             config["threads"] = int(next(argi))
@@ -139,29 +138,36 @@ def parse_time(argi, config, channels, method=None):
     event = quakeio.read(config["event_file"], exclusions=["filter*"])
 
     try:
-        # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
-        inputs,  dt = extract_channels(event, [channels["inputs"]])
+        if len(channels["inputs"])>0:
+            # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
+            inputs,  dt = extract_channels(event, channels["inputs"])
         # outputs, dt = extract_channels(event, [channels["outputs"]], decimate=decimate)
-        outputs, dt = extract_channels(event, [channels["outputs"]])
+        outputs, dt = extract_channels(event, channels["outputs"])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
 
     import mdof.transform
     from mdof.modal import spectrum_modes
-    f = {
-        "response": mdof.transform.response_transfer,
-        "fourier":  mdof.transform.fourier_transfer,
-    }[method]
+    if method == "response":
+        spectrum = mdof.transform.response_transfer(inputs=inputs.flatten(), outputs=outputs.flatten(), step=dt, **config)
+    elif method == "fourier":
+        spectrum = mdof.transform.fourier_transfer(inputs=inputs.flatten(), outputs=outputs.flatten(), step=dt, **config)
+    elif method == "fdd":
+        spectrum = mdof.transform.fdd_spectrum(outputs=outputs.flatten(), step=dt, **config)
 
-    periods, amplitudes = spectrum_modes(
-        *f(inputs=inputs.flatten(), outputs=outputs.flatten(), step = dt, **config), prominence=None
-        )
+
+    # periods, amplitudes = spectrum_modes(*spectrum, prominence=0.3*np.max(spectrum[1]))
+    periods, amplitudes = spectrum_modes(*spectrum, prominence=None)
     
-    output = [
-            {"period": period, "amplitude": amplitude}
-            for period, amplitude, in zip(periods, amplitudes)
-    ]
+    if len(periods) > 0:
+        output = [
+                {"period": period, "amplitude": amplitude}
+                for period, amplitude, in zip(periods, amplitudes)
+        ]
+    else:
+        print(json.dumps({"error": "no prominent peaks", "data": []}))
+        return
 
     # periods, amplitudes = f(inputs=inputs.flatten(), outputs=outputs.flatten(), step = dt, **config)
 
@@ -175,7 +181,7 @@ def parse_time(argi, config, channels, method=None):
     print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
 
 
-def parse_srim(argi, config, channels, method=None):
+def parse_stsp(argi, config, channels, method=None):
     help="""
     SRIM -- System Identification with Information Matrix
 
@@ -259,7 +265,8 @@ def parse_srim(argi, config, channels, method=None):
     print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
     return config
 
-def parse_outid(argi, *args, **options):
+
+def outid_cl(argi, *args, **options):
     outputs = None
     for arg in argi:
         if arg == "--dt":
@@ -275,16 +282,17 @@ def parse_outid(argi, *args, **options):
 
     return mdof.outid(outputs, dt)
 
+
 def parse_args(args):
     outputs = []
     sub_parsers = {
-        "srim":     parse_srim,
+        "srim":     parse_stsp,
         "response": parse_time,
         "fourier":  parse_time,
-        "test": parse_srim,
-        "okid": parse_srim,
-        "okid": parse_srim,
-        "outid": parse_outid
+        "test": parse_stsp,
+        "okid-era": parse_stsp,
+        "fdd": parse_time,
+        "outid": outid_cl
     }
     method = None
     config = {}

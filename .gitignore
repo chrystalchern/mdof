@@ -4,7 +4,9 @@ PUBLISHING.md
 __pycache__/
 dist
 notebooks/PEERNGARecords_Unscaled/
+notebooks/figures/figures.pptx
 src/ssid/
 _build
 docs/theory/out/
 docs/library/generated/
+docs/examples/
