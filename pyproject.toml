@@ -25,7 +25,8 @@ dependencies = [
   "control",
   "sdof",
 # "opensees",
-  "quakeio"
+  "quakeio",
+  "ipykernel"
 ]
 
 classifiers = [
