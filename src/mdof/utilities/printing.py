@@ -128,7 +128,7 @@ def plot_io(inputs, outputs, t, title=None, xlabels=("time (s)", "time (s)"), yl
     return fig
 
 
-def plot_pred(ytrue, models, t, title=None, ylabel="outputs", **options):
+def plot_pred(ytrue, models, t, title=None, xlabel="time (s)", ylabel="outputs", makelegend=True, **options):
     linestyles = ['dashed', 'dashdot', 'dotted']
     colors = ['blue', 'orange', 'green', 'magenta']
 
@@ -154,9 +154,10 @@ def plot_pred(ytrue, models, t, title=None, ylabel="outputs", **options):
                             label=f"{method.upper()}, DOF {i+1}" if models[method]["ypred"].shape[0]>1 else f"{method.upper()}")
             else:
                 ax.plot(t,models[method]["ypred"],linestyle=linestyles[k%len(linestyles)],linewidth=2,color=colors[k],alpha=0.5,label=method.upper())
-    ax.set_xlabel("time (s)", fontsize=14)
+    ax.set_xlabel(xlabel, fontsize=14)
     ax.set_ylabel(ylabel, fontsize=14)
-    fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
+    if makelegend:
+        fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
     fig.suptitle(title, fontsize=14)
     return fig
 

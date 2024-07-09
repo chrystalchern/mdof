@@ -31,5 +31,4 @@ def decimate(series, decimation):
         return np.asarry(series)[np.arange(0,len(series),decimation)]
     
 def block_hankel(series):
-
     pass
