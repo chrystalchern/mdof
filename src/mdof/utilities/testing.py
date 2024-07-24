@@ -2,6 +2,7 @@ import mdof
 from mdof import modal
 from time import time
 from control import ss, forced_response
+import numpy as np
 
 def test_method(method, inputs, outputs, dt, t, **conf):
     time0 = time()
@@ -29,3 +30,20 @@ def mode_statistics(mode_results, key):
 
 def mode_set(mode_results, key):
     return 
+
+
+def husid(accel_series, intensity_measure='arias'):
+    if intensity_measure == 'arias':
+        intensity = np.tril(np.ones(len(accel_series)))@accel_series**2
+    cumulative_husid = intensity/intensity[-1]
+    return cumulative_husid
+
+def intensity_bounds(accel_series, lb=0.005, ub=0.995, intensity_measure='arias'):
+    cumulative_husid = husid(accel_series, intensity_measure)
+    ilb = next(x for x, val in enumerate(cumulative_husid) if val > lb)
+    iub = next(x for x, val in enumerate(cumulative_husid) if val > ub)
+    return (ilb, iub)
+
+def truncate_by_bounds(series, bounds):
+    ilb, iub = bounds
+    return series[ilb:iub]

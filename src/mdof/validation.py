@@ -101,8 +101,8 @@ def OutputEMAC(A,C,Psi=None,Gam=None,**options):
     """Output EMAC (Eqs. 3.88-3.89)"""
     if Gam is None:
         assert Psi is None
-        from mdof.modal import condeig 
-        Psi,Gam,_ = condeig(A)
+        from mdof.modal import _condeig 
+        Psi,Gam,_ = _condeig(A)
     if Observability is None:
         Observability = np.empty((no,p,n))
         Observability[0,:,:] = C
@@ -120,8 +120,8 @@ def OutputEMAC(A,C,Psi=None,Gam=None,**options):
 def MPC(A,C,Psi=None):
     """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
     if Psi is None:
-        from mdof.modal import condeig 
-        Psi,_,_ = condeig(A)
+        from mdof.modal import _condeig 
+        Psi,_,_ = _condeig(A)
     _,n = C.shape
     assert Psi.shape == (n,n)
     modes_raw = C@Psi
@@ -142,3 +142,27 @@ def MPC(A,C,Psi=None):
         lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
         mpc[i]   = ((lam[0,i]-lam[1,i])/(lam[0,i]+lam[1,i]))**2
     return mpc
+
+def filter_A(A,C, dt, **options):
+
+    from mdof.modal import _condeig 
+    Psi,Gam,cnd = _condeig(A)  # eigenvectors (Psi) & eigenvalues (Gam) of the matrix A
+
+    # energy condensed output EMAC (extended modal amplitude coherence)
+    energy_condensed_emaco = OutputEMAC(A,C,Psi=Psi,Gam=Gam,**options)
+
+    # MPC (modal phase collinearity)
+    mpc = MPC(A,C,Psi=Psi)
+
+    n,_ = A.shape
+    filtered_Psi = Psi
+    for i in range(n):
+        # if energy_condensed_emaco[i] < 0.5 and mpc[i] < 0.5:
+        if np.abs(Gam[i]) > 1:
+            # print(f"removing {i}th mode because EMACO and MPC are both less than 0.5")
+            print(f"removing {i}th mode because magnitude of eigenvalue is greater than 1")
+            Gam[i] = 0
+
+    filtered_A = Psi @ np.diag(Gam) @ np.linalg.inv(Psi)
+
+    return filtered_A

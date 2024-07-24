@@ -3,13 +3,6 @@ import matplotlib
 from matplotlib import pyplot as plt
 import plotly.graph_objects as go
 
-try:
-    import scienceplots
-    plt.style.use(["poster"])# ,"science", "notebook"])
-except ImportError:
-    pass
-except OSError:
-    plt.style.use("notebook")
 
 nln = "\n"
 
@@ -110,7 +103,7 @@ def plot_models(models, Tn, zeta):
     # fig.suptitle("Spectral Quantity Prediction with System Identification",fontsize=17)
 
 
-def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitles=(None,None), **options):
+def plot_io(inputs, outputs, t, title=None, xlabels=("time (s)", "time (s)"), ylabels=("inputs","outputs"), axtitles=(None,None), **options):
     fig, ax = options.get('figax',
                           plt.subplots(1,2,figsize=options.get('figsize',(10,3)),constrained_layout=True,sharey=options.get('sharey',(ylabels[0]==ylabels[1])))
     )
@@ -119,7 +112,7 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
             ax[0].plot(t,inputs[i,:],label=f"input {i+1}")
     else:
         ax[0].plot(t,inputs)
-    ax[0].set_xlabel("time (s)", fontsize=15)
+    ax[0].set_xlabel(xlabels[0], fontsize=15)
     ax[0].set_ylabel(ylabels[0], fontsize=15)
     ax[0].set_title(axtitles[0], fontsize=15)
     if len(outputs.shape) > 1:
@@ -128,14 +121,14 @@ def plot_io(inputs, outputs, t, title=None, ylabels=("inputs","outputs"), axtitl
         ax[1].legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(1,0,0.5,0.8), loc='upper left')
     else:
         ax[1].plot(t,outputs)
-    ax[1].set_xlabel("time (s)", fontsize=15)
+    ax[1].set_xlabel(xlabels[1], fontsize=15)
     ax[1].set_ylabel(ylabels[1], fontsize=15)
     ax[1].set_title(axtitles[1], fontsize=15)
     fig.suptitle(title, fontsize=17)
     return fig
 
 
-def plot_pred(ytrue, models, t, title=None, ylabel="outputs", **options):
+def plot_pred(ytrue, models, t, title=None, xlabel="time (s)", ylabel="outputs", makelegend=True, **options):
     linestyles = ['dashed', 'dashdot', 'dotted']
     colors = ['blue', 'orange', 'green', 'magenta']
 
@@ -161,9 +154,10 @@ def plot_pred(ytrue, models, t, title=None, ylabel="outputs", **options):
                             label=f"{method.upper()}, DOF {i+1}" if models[method]["ypred"].shape[0]>1 else f"{method.upper()}")
             else:
                 ax.plot(t,models[method]["ypred"],linestyle=linestyles[k%len(linestyles)],linewidth=2,color=colors[k],alpha=0.5,label=method.upper())
-    ax.set_xlabel("time (s)", fontsize=14)
+    ax.set_xlabel(xlabel, fontsize=14)
     ax.set_ylabel(ylabel, fontsize=14)
-    fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
+    if makelegend:
+        fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
     fig.suptitle(title, fontsize=14)
     return fig
 
