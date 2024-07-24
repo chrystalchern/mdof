@@ -280,7 +280,9 @@ def outid_cl(argi, *args, **options):
         else:
             raise ValueError("Whaddya think you're doin!!")
 
-    return mdof.outid(outputs, dt)
+    results = mdof.outid(outputs, dt)
+
+    print(results)
 
 
 def parse_args(args):
