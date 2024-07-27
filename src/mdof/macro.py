@@ -13,10 +13,10 @@ def stabilization(inputs, outputs, dt, plotly=False, **options):
                         dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
-    :param orders:      range of system orders. default: (2,100,2)
-    :type orders:       tuple (`start`, `stop`, `step`), optional
-    :param method:      system identification method. default is "srim", other options are "okid-era" and "okid-era-dc".
-    :type method:       string, optional
+    :param orders:      (optional) range of system orders. default: (2,100,2)
+    :type orders:       tuple (`start`, `stop`, `step`)
+    :param method:      (optional) system identification method. default is "srim", other options are "okid-era" and "okid-era-dc".
+    :type method:       string
 
     :return:            system realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:             tuple of arrays
@@ -47,3 +47,62 @@ def stabilization(inputs, outputs, dt, plotly=False, **options):
         ax[1].set_ylabel("Model Order")
 
     return fig
+
+
+DEFAULT_PLOTLY_COLORS=[
+    '#1f77b4',  # muted blue
+    '#ff7f0e',  # safety orange
+    '#2ca02c',  # cooked asparagus green
+    '#d62728',  # brick red
+    '#9467bd',  # muted purple
+    # '#8c564b',  # chestnut brown
+    '#e377c2',  # raspberry yogurt pink
+    '#7f7f7f',  # middle gray
+    '#bcbd22',  # curry yellow-green
+    '#17becf'   # blue-teal
+]
+from itertools import cycle
+import plotly.graph_objects as go
+
+class FrequencyContent:
+    def __init__(self, scale, period, xlabel, ylabel, **options) -> None:
+        self.scale = scale
+        self.period = period
+        self.xlabel = xlabel
+        self.ylabel = ylabel
+        self.xlimits = options.get('xlimits', (0.1,3))
+        self.colors = options.get('colors', cycle(DEFAULT_PLOTLY_COLORS))
+        self.num_traces = 0
+        layout = go.Layout(
+            title=None,
+            xaxis=dict(
+                title=self.xlabel,
+                range=self.xlimits
+            ),
+            yaxis=dict(
+                title=self.ylabel
+            ),
+            width=700, height=300,
+            margin=dict(l=70, r=20, t=20, b=20))
+        self.fig = go.Figure(layout=layout)
+
+    def add(self, periods, amplitudes=None, label=None):
+        if self.period:
+            x_data = periods
+        else:
+            x_data = 1/periods
+        if amplitudes is not None:
+            if self.scale:
+                y_data = amplitudes/max(amplitudes)
+            else:
+                y_data = amplitudes
+            self.fig.add_trace(go.Scatter(x=x_data,y=y_data,mode='lines',name=label,showlegend=True,line_color=next(self.colors)))
+        else:
+            N = len(x_data)
+            x_data_vlines = np.array([x_data,x_data,np.full(N,None)]).transpose().reshape(-1)
+            y_data_vlines = np.array([np.zeros(N),np.ones(N),np.full(N,None)]).transpose().reshape(-1)
+            self.fig.add_trace(go.Scatter(x=x_data_vlines,y=y_data_vlines,mode='lines',name=label,showlegend=True,line_dash="dash",line_color=next(self.colors)))
+        self.num_traces += 1        
+
+    def get_figure(self):
+        return self.fig

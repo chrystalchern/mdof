@@ -12,10 +12,10 @@ def system(inputs, outputs, **options):
                         dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
-    :param method:      system identification method. default is "srim", other options are "okid-era" and "okid-era-dc".
-    :type method:       string, optional
-    :param decimation:  decimation factor. default: 8
-    :type decimation:   int, optional
+    :param method:      (optional) system identification method. default is "srim", other options are "okid-era" and "okid-era-dc".
+    :type method:       string
+    :param decimation:  (optional) decimation factor. default: 8
+    :type decimation:   int
 
     :return:            system realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:             tuple of arrays

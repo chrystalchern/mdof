@@ -13,8 +13,8 @@ def power_transfer(inputs, outputs, step, **options):
     :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -36,8 +36,8 @@ def fourier_transfer(inputs, outputs, step, **options):
     :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -59,10 +59,10 @@ def response_transfer(inputs, outputs, step, **options):
     :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
-    :param pseudo:      if True, uses pseudo accelerations. default: False
-    :type pseudo:       bool, optional
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param pseudo:      (optional) if True, uses pseudo accelerations. default: False
+    :type pseudo:       bool
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -100,8 +100,8 @@ def fdd_spectrum(outputs, step, **options):
     :type outputs:      ND array.
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -178,8 +178,8 @@ def power_spectrum(series, step, period_band=None, **options):
     :type series:       1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.
@@ -200,8 +200,8 @@ def fourier_spectrum(series, step, period_band=None, **options):
     :type series:       1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.

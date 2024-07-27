@@ -206,49 +206,6 @@ def plot_transfer(models, title=None, labels=None, plotly=False, **options):
         return fig
 
 
-class FrequencyContent:
-    def __init__(self, scale, period, xlabel, ylabel, **options) -> None:
-        self.scale = scale
-        self.period = period
-        self.xlabel = xlabel
-        self.ylabel = ylabel
-        self.xlimits = options.get('xlimits', (0.1,3))
-        self.num_traces = 0
-        layout = go.Layout(
-            title=None,
-            xaxis=dict(
-                title=self.xlabel,
-                range=self.xlimits
-            ),
-            yaxis=dict(
-                title=self.ylabel
-            ),
-            width=700, height=300,
-            margin=dict(l=70, r=20, t=20, b=20))
-        self.fig = go.Figure(layout=layout)
-
-    def add(self, periods, amplitudes=None, label=None):
-        if self.period:
-            x_data = periods
-        else:
-            x_data = 1/periods
-        if amplitudes is not None:
-            if self.scale:
-                y_data = amplitudes/max(amplitudes)
-            else:
-                y_data = amplitudes
-            self.fig.add_trace(go.Scatter(x=x_data,y=y_data,mode='lines',name=label,showlegend=True,line_color=DEFAULT_PLOTLY_COLORS[self.num_traces%len(DEFAULT_PLOTLY_COLORS)]))
-        else:
-            N = len(x_data)
-            x_data_vlines = np.array([x_data,x_data,np.full(N,None)]).transpose().reshape(-1)
-            y_data_vlines = np.array([np.zeros(N),np.ones(N),np.full(N,None)]).transpose().reshape(-1)
-            self.fig.add_trace(go.Scatter(x=x_data_vlines,y=y_data_vlines,mode='lines',name=label,showlegend=True,line_dash="dash",line_color=DEFAULT_PLOTLY_COLORS[self.num_traces%len(DEFAULT_PLOTLY_COLORS)]))
-        self.num_traces += 1        
-
-    def get_figure(self):
-        return self.fig
-
-
 def make_hover_data(data, ln=None):
     import numpy as np
     if ln is None:
