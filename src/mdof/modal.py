@@ -190,9 +190,9 @@ def spectrum_modes(periods, amplitudes, n_peaks=None, sorted_by=None, **options)
     peak_indices, _ = find_peaks(amplitudes, prominence=prominence)
 
     if sorted_by=='height':
-        peaks = sorted(peak_indices, key=lambda peak: amplitudes[peak], reverse=True)
-    fundamental_periods = periods[peaks]
-    fundamental_amplitudes = amplitudes[peaks]
+        peak_indices = sorted(peak_indices, key=lambda peak: amplitudes[peak], reverse=True)
+    fundamental_periods = periods[peak_indices]
+    fundamental_amplitudes = amplitudes[peak_indices]
     
     if n_peaks is None:
         return (fundamental_periods, fundamental_amplitudes)

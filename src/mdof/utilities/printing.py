@@ -82,6 +82,9 @@ def plot_models(models, Tn, zeta):
     ax[1,1].set_xlabel("Method", fontsize=14)
     ax[1,1].set_xticklabels(["true"]+[method.upper() for method in models.keys()], rotation = 30)
 
+    for axi in ax.flatten():
+        axi.grid(visible=True, which='both', axis='y')
+
     # ax[0,2].axis('off')
 
     # times_list = [models[method]["time"] for method in models]
