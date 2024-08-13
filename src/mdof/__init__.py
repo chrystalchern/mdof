@@ -83,7 +83,8 @@ def modes(inputs, outputs, dt, **options):
 def eigid(inputs, outputs, **options):
     """
     State space system eigenvalues ``Gam`` and eigenvectors ``Psi`` identification from
-    ``input`` and ``output`` arrays.
+    ``input`` and ``output`` arrays. This is the eigendecomposition of the discrete system
+    state transition matrix, :math:`\mathbf{A}`.
 
     :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
                         :math:`q` = number of inputs, and :math:`nt` = number of timesteps
@@ -125,3 +126,26 @@ def sysid(inputs, outputs, **options):
     :rtype:             tuple of arrays
     """
     return system(inputs, outputs, **options)
+
+
+def reconstruct(realization, dt, inputs, **options):
+    """
+    Response reconstruction (predicted output array) from system realization and input array.
+
+    :param realization: realization in the form of state space coefficients ``(A,B,C,D)``
+    :type realization:  tuple of arrays
+    :param dt:          timestep corresponding to `realization`.
+    :type dt:           float
+    :param inputs:      input time history on which to predict the output response.
+                        dimensions: :math:`(q,nt)`, where
+                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :type inputs:       array
+
+    :return:            output response history.
+                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        :math:`nt` = number of timesteps
+    :rtype:             array
+    """
+    from control import ss as _ss, forced_response as _forced_response
+    out_pred = _forced_response(_ss(*realization,dt), U=inputs, squeeze=False, return_x=False).outputs
+    return out_pred

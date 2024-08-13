@@ -35,7 +35,7 @@ def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=
     Modal identification from a state space system realization.
 
     :param realization:     realization in the form of state space coefficients ``(A,B,C,D)``
-    :type realization:      tuple
+    :type realization:      tuple of arrays
     :param dt:              timestep.
     :type dt:               float
     :param n_peaks:         (optional) number of peaks to return. By default, all peaks are returned.
