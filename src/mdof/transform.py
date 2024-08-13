@@ -139,9 +139,6 @@ def fdd(outputs, step):
     
     References
     ----------
-    .. [1]  Brincker, R., Zhang, L., & Andersen, P. (2001). Modal identification of
-            output-only systems using frequency domain decomposition. Smart materials
-            and structures, 10(3), 441. (https://doi.org/10.1088/0964-1726/10/3/303
     """
     
     if len(outputs.shape) == 1:

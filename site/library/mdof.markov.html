@@ -342,9 +342,9 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="index.html">mdof</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.outid.html">mdof.outid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
@@ -424,7 +424,8 @@ Observer Kalman Identification Algorithm (OKID) <a class="footnote-reference bra
 <li><p><strong>outputs</strong> (<em>array</em>) – output response history.
 dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
 <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>m</strong> (<em>int</em><em>, </em><em>optional</em>) – number of Markov parameters to compute. default: <span class="math notranslate nohighlight">\(min(300, nt)\)</span></p></li>
+<li><p><strong>m</strong> (<em>float</em><em>, </em><em>optional</em>) – number of Markov parameters to compute. default: <span class="math notranslate nohighlight">\(min(300, nt)\)</span></p></li>
+<li><p><strong>rcond</strong> – cut-off ratio for small singular values in pseudoinverse computation. default: <cite>1e-15</cite></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

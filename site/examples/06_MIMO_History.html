@@ -66,7 +66,7 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="MIMO for a Ground Motion Event" href="05_MIMO_Event.html" />
+    <link rel="prev" title="Introduction to MIMO" href="04_MIMO_Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -344,7 +344,6 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for a Ground Motion Event</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Event History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Introduction to MIMO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO for a Ground Motion Event</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">MIMO for Event History</a></li>
 </ul>
 </div>
@@ -423,21 +422,22 @@ document.write(`
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">directory</span> <span class="o">=</span> <span class="s2">&quot;../CESMD/CE89324/&quot;</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">directory</span> <span class="o">=</span> <span class="s2">&quot;uploads/CE89324/&quot;</span>
 <span class="n">pattern</span>  <span class="o">=</span> <span class="s2">&quot;????????*.[zZ][iI][pP]&quot;</span>
 <span class="c1"># pattern = &quot;sanlorenzo_28june2021.zip&quot;</span>
 <span class="c1"># pattern = &quot;*[sb][ae][nr][lk]*&quot;</span>
 
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;../../Caltrans.Hayward/CGS_data/function_test_zips.txt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">readfile</span><span class="p">:</span>
-    <span class="n">function_tests</span> <span class="o">=</span> <span class="n">readfile</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="kn">import</span> <span class="nn">glob</span>
-<span class="n">events</span> <span class="o">=</span> <span class="p">[</span><span class="n">quakeio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">event</span><span class="p">)</span> <span class="k">for</span> <span class="n">event</span> <span class="ow">in</span> <span class="n">glob</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="s1">&#39;../CGS_data/58658*P.zip&#39;</span><span class="p">)</span> <span class="k">if</span> <span class="n">event</span><span class="p">[</span><span class="o">-</span><span class="mi">33</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">function_tests</span><span class="p">]</span>
+<span class="c1"># with open(&#39;../../Caltrans.Hayward/CGS_data/function_test_zips.txt&#39;, &#39;r&#39;) as readfile:</span>
+<span class="c1">#     function_tests = readfile.read().split(&quot;\n&quot;)</span>
+<span class="c1"># import glob</span>
+<span class="c1"># events = [quakeio.read(event) for event in glob.glob(&#39;../CGS_data/58658*P.zip&#39;) if event[-33:] not in function_tests]</span>
 
 <span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
 <span class="c1"># for file in Path(directory).glob(pattern):</span>
 <span class="c1">#     if str(file)[-33:] in function_tests:</span>
 <span class="c1">#         print(file)</span>
-<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span> <span class="k">if</span> <span class="nb">str</span><span class="p">(</span><span class="n">file</span><span class="p">)[</span><span class="o">-</span><span class="mi">33</span><span class="p">:]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">function_tests</span><span class="p">]</span>
+<span class="c1"># files = [file for file in Path(directory).glob(pattern) if str(file)[-33:] not in function_tests]</span>
+<span class="n">files</span> <span class="o">=</span> <span class="p">[</span><span class="n">file</span> <span class="k">for</span> <span class="n">file</span> <span class="ow">in</span> <span class="n">Path</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span><span class="o">.</span><span class="n">glob</span><span class="p">(</span><span class="n">pattern</span><span class="p">)]</span>
 </pre></div>
 </div>
 </div>
@@ -448,7 +448,7 @@ document.write(`
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data_conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
 
 <span class="c1"># PAINTER RIO DELL TRANSVERSE (CASE 1)</span>
-<span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Painter St Bridge Transverse Mode (In: Ch17, Out: Ch9)&quot;</span>
+<span class="n">title</span> <span class="o">=</span> <span class="s2">&quot;Painter St Bridge Transverse Mode&quot;</span>
 <span class="n">data_conf</span><span class="o">.</span><span class="n">inputs</span>  <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">17</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
 <span class="n">data_conf</span><span class="o">.</span><span class="n">outputs</span> <span class="o">=</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span><span class="mi">9</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span>
 <span class="c1"># # PAINTER RIO DELL LONGITUDINAL (CASE 2)</span>
@@ -669,48 +669,72 @@ document.write(`
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># event_names = [&quot;Berkeley&quot;, &quot;San Lorenzo&quot;]</span>
-<span class="n">event_modes</span> <span class="o">=</span> <span class="p">[]</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">event_modes</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
-<span class="n">file_axes</span> <span class="o">=</span> <span class="p">{}</span>
 
-<span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">2</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">files</span><span class="p">)),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">constrained_layout</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">axi</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">axs</span><span class="p">)</span>
+<span class="c1"># fig, axs = plt.subplots(len(files), figsize=(6,2*len(files)), sharex=True, constrained_layout=True)</span>
+<span class="c1"># axi = iter(axs)</span>
 
-<span class="n">method</span> <span class="o">=</span> <span class="s2">&quot;srim&quot;</span>
+<span class="c1"># method = &quot;srim&quot;</span>
+<span class="n">methods</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;okid-era&quot;</span><span class="p">,</span> <span class="s2">&quot;okid-era-dc&quot;</span><span class="p">,</span> <span class="s2">&quot;srim&quot;</span><span class="p">]</span>
+<span class="n">lstyles</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="s2">&quot;dotted&quot;</span><span class="p">,</span> <span class="s2">&quot;dashdot&quot;</span><span class="p">]</span>
+<span class="n">colors</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;purple&quot;</span><span class="p">,</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span> <span class="s2">&quot;black&quot;</span><span class="p">]</span>
+<span class="n">realizations</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="n">summary_table</span> <span class="o">=</span> <span class="p">{}</span>
 
+<span class="c1"># for i, file in enumerate([files[0],files[-5]]):</span>
 <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">files</span><span class="p">):</span>
-    <span class="n">ax</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">axi</span><span class="p">)</span>
-    <span class="c1"># fig, ax = plt.subplots(figsize=(10,5))</span>
+    <span class="c1"># ax = next(axi)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">event</span> <span class="o">=</span> <span class="n">quakeio</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file</span><span class="p">,</span> <span class="n">exclusions</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;*filter*&quot;</span><span class="p">])</span><span class="c1">#, &quot;*date*&quot;])</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;peak acceleration (cm/s/s):&quot;</span><span class="p">,</span> <span class="n">event</span><span class="p">[</span><span class="s2">&quot;peak_accel&quot;</span><span class="p">])</span>
+        <span class="n">peak_accel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s1">&#39;peak_accel&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">0.0010197162129779</span><span class="p">)</span>
+        <span class="n">event_date</span> <span class="o">=</span> <span class="n">event</span><span class="p">[</span><span class="s1">&#39;event_date&#39;</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;peak acceleration (cm/s/s):&quot;</span><span class="p">,</span> <span class="n">peak_accel</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;event date/time:&quot;</span><span class="p">,</span> <span class="n">event_date</span><span class="p">)</span>
         <span class="n">inputs</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">extract_channels</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">data_conf</span><span class="o">.</span><span class="n">inputs</span><span class="p">)</span>
         <span class="n">outpts</span><span class="p">,</span> <span class="n">dt</span> <span class="o">=</span> <span class="n">extract_channels</span><span class="p">(</span><span class="n">event</span><span class="p">,</span> <span class="n">data_conf</span><span class="o">.</span><span class="n">outputs</span><span class="p">)</span>
-        <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">8</span> <span class="c1"># decimation factor for state space method</span>
-        <span class="n">realization</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+        <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">8</span> <span class="c1"># decimation factor for state space methods</span>
+        <span class="n">summary_table</span><span class="p">[</span><span class="n">event_date</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;peak acc&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">((</span><span class="n">peak_accel</span><span class="p">),</span><span class="mi">3</span><span class="p">)}</span>
+        <span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="n">methods</span><span class="p">:</span>
+            <span class="n">realizations</span><span class="p">[</span><span class="n">method</span><span class="p">]</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="n">method</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">18</span><span class="p">,</span> <span class="n">chunk</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
         <span class="c1"># raise e</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;&gt;&gt;&gt;&gt;&gt; Not read: &quot;</span><span class="p">,</span> <span class="n">file</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
         <span class="k">continue</span>
-    <span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">(</span><span class="n">realization</span><span class="p">,</span><span class="n">dt</span><span class="p">,</span><span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-    <span class="n">event_modes</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+    <span class="k">for</span> <span class="n">j</span><span class="p">,</span><span class="n">method</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">methods</span><span class="p">):</span>
+        <span class="n">ss_modes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">system_modes</span><span class="p">(</span><span class="n">realizations</span><span class="p">[</span><span class="n">method</span><span class="p">],</span><span class="n">dt</span><span class="p">,</span><span class="o">**</span><span class="n">conf</span><span class="p">)</span>
+        <span class="n">ss_periods</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="o">/</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;energy_condensed_emaco&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;mpc&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="n">lstyles</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span><span class="c1"># if i==0 else None)</span>
+        <span class="c1"># event_modes.append(list(ss_modes.values()))</span>
+        <span class="n">summary_table</span><span class="p">[</span><span class="n">event_date</span><span class="p">][</span><span class="n">method</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">),</span><span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">ss_periods</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">0</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
     <span class="n">print_modes</span><span class="p">(</span><span class="n">ss_modes</span><span class="p">)</span>
     <span class="n">conf</span><span class="o">.</span><span class="n">decimation</span> <span class="o">=</span> <span class="mi">1</span> <span class="c1"># decimation factor for transfer function methods</span>
     <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">amplitudes</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;fourier&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span> <span class="c1">#, alpha = (1/(len(files)+2))*(i+1))</span>
+    <span class="n">summary_table</span><span class="p">[</span><span class="n">event_date</span><span class="p">][</span><span class="s1">&#39;FSTF&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;FSTF&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">)</span>
     <span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">response_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outpts</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="n">periods</span><span class="o">=</span><span class="n">periods</span><span class="p">,</span> <span class="n">threads</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
     <span class="n">amplitudes</span> <span class="o">=</span> <span class="n">amplitudes</span><span class="o">/</span><span class="nb">max</span><span class="p">(</span><span class="n">amplitudes</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;response spectrum&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span> <span class="c1">#, alpha = (1/(len(files)+2))*(i+1))</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">vlines</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">value</span><span class="p">[</span><span class="s2">&quot;freq&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">ss_modes</span><span class="o">.</span><span class="n">values</span><span class="p">()</span> <span class="k">if</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;energy_condensed_emaco&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span> <span class="ow">and</span> <span class="n">value</span><span class="p">[</span><span class="s2">&quot;mpc&quot;</span><span class="p">]</span><span class="o">&gt;</span><span class="mf">0.5</span><span class="p">],</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;state space (</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">)&quot;</span> <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span> <span class="k">else</span> <span class="kc">None</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="n">summary_table</span><span class="p">[</span><span class="n">event_date</span><span class="p">][</span><span class="s1">&#39;RSTF&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">prominence</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">periods</span><span class="p">,</span> <span class="n">amplitudes</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;RSTF&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">)</span>
     <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">period_band</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">event</span><span class="p">[</span><span class="s2">&quot;event_date&quot;</span><span class="p">])</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.45</span><span class="p">,</span><span class="mf">0.85</span><span class="p">))</span>
-<span class="n">event_frequencies</span> <span class="o">=</span> <span class="n">mode_statistics</span><span class="p">(</span><span class="n">event_modes</span><span class="p">,</span> <span class="s2">&quot;freq&quot;</span><span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="c1"># ax.set_title(title+&quot;\n&quot;+event[&quot;event_date&quot;])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Date/Time: </span><span class="si">{</span><span class="n">event_date</span><span class="si">}</span><span class="s2">, Peak acceleration: </span><span class="si">{</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">peak_accel</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span><span class="s2"> g&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Period (s)&quot;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Normalized Amplitude&quot;</span><span class="p">)</span>
+    <span class="c1"># if np.abs(peak_accel) &lt; 1:</span>
+    <span class="c1">#     legend_location = &quot;upper right&quot;</span>
+    <span class="c1"># else:</span>
+    <span class="c1">#     legend_location = &quot;upper center&quot;</span>
+    <span class="c1"># ax.legend(loc=legend_location, frameon=True, framealpha=0.5)</span>
+    <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">1</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">frameon</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">framealpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="c1"># fig.legend(bbox_to_anchor=(1.45,0.85))</span>
+<span class="c1"># event_frequencies = mode_statistics(event_modes, &quot;freq&quot;)</span>
+<span class="c1"># fig.suptitle(title, fontsize=16)</span>
 </pre></div>
 </div>
 </div>
@@ -719,8 +743,9 @@ document.write(`
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-../CESMD/CE89324/bayview_11oct2013_72086051_ce89324p.zip
-peak acceleration (cm/s/s): 87.954
+uploads/CE89324/bayview_11oct2013_72086051_ce89324p.zip
+peak acceleration (cm/s/s): 0.08968811979625821
+event date/time: 2013-10-11T23:05:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -728,7 +753,13 @@ peak acceleration (cm/s/s): 87.954
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2237.95it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2797.40it/s]
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/validation.py:22: RuntimeWarning: divide by zero encountered in scalar divide
+  (abs(Phi_final[j,i])/abs(Phi_final_hat[j,i])),
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/validation.py:25: RuntimeWarning: divide by zero encountered in scalar divide
+  Pij = np.angle(Phi_final[j,i]/Phi_final_hat[j,i])
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/validation.py:25: RuntimeWarning: invalid value encountered in scalar divide
+  Pij = np.angle(Phi_final[j,i]/Phi_final_hat[j,i])
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -737,17 +768,18 @@ peak acceleration (cm/s/s): 87.954
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2709     0.001132   1.0        0.8338     0.8338
       0.2527     -0.003276  1.0        0.9749     0.9749
       0.2409     -0.0003217  1.0        0.8874     0.8874
       0.2337     -0.0001491  1.0        0.8368     0.8368
       0.2282     0.03774    1.0        0.9219     0.9219
       0.2133     0.02379    1.0        0.3374     0.3374
-Mean Period(s): 0.23994997335785784
-Standard Dev(s): 0.01829979557828316
-../CESMD/CE89324/ferndaleoffshore_08dec2016_us20007z6r_ce89324p.zip
-peak acceleration (cm/s/s): -30.371
+Mean Period(s): 0.23994997335785354
+Standard Dev(s): 0.018299795578285944
+uploads/CE89324/ferndaleoffshore_08dec2016_us20007z6r_ce89324p.zip
+peak acceleration (cm/s/s): 0.0309698011043518
+event date/time: 2016-12-08T14:50:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -755,13 +787,7 @@ peak acceleration (cm/s/s): -30.371
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 686/687 [00:00&lt;00:00, 2885.01it/s]
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:137: RuntimeWarning: divide by zero encountered in scalar divide
-  nu[i]    = (s22[i]-s11[i])/(2*s12[i])
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:138: RuntimeWarning: invalid value encountered in scalar multiply
-  lam[0,i] = (s11[i]+s22[i])/2 + s12[i]*np.sqrt(nu[i]**2+1)
-/mnt/c/Users/cmp/Documents/GitHub/SystemIdentification/src/mdof/validation.py:139: RuntimeWarning: invalid value encountered in scalar multiply
-  lam[1,i] = (s11[i]+s22[i])/2 - s12[i]*np.sqrt(nu[i]**2+1)
+100%|█████████▉| 686/687 [00:00&lt;00:00, 3739.57it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -770,16 +796,17 @@ peak acceleration (cm/s/s): -30.371
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2359     0.0038     1.0        0.9453     0.9453
       0.227      0.03918    1.0        0.9725     0.9725
       0.2238     0.005151   1.0        0.9662     0.9662
       0.2093     0.009579   1.0        0.604      0.604
       0.2032     0.02393    1.0        0.9483     0.9483
-Mean Period(s): 0.21983789850293506
-Standard Dev(s): 0.011930582991559505
-../CESMD/CE89324/ferndale_28jan2015_72387946_ce89324p.zip
-peak acceleration (cm/s/s): -285.334
+Mean Period(s): 0.2198378985029327
+Standard Dev(s): 0.011930582991559777
+uploads/CE89324/ferndale_28jan2015_72387946_ce89324p.zip
+peak acceleration (cm/s/s): 0.29095970591383613
+event date/time: 2015-01-28T21:08:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -787,7 +814,7 @@ peak acceleration (cm/s/s): -285.334
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 874/875 [00:00&lt;00:00, 2546.99it/s]
+100%|█████████▉| 874/875 [00:00&lt;00:00, 2430.12it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -796,16 +823,17 @@ peak acceleration (cm/s/s): -285.334
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.3119     0.01321    1.0        0.8887     0.8887
       0.2602     -0.004556  1.0        0.7266     0.7266
       0.2555     0.04334    1.0        0.972      0.972
       0.2482     0.01867    1.0        0.878      0.878
       0.2299     0.008439   1.0        0.7712     0.7712
-Mean Period(s): 0.26113898415437486
-Standard Dev(s): 0.027387551087975463
-../CESMD/CE89324/nc73201181_ce89324p.zip
-peak acceleration (cm/s/s): 243.242
+Mean Period(s): 0.2611389841543662
+Standard Dev(s): 0.027387551087977212
+uploads/CE89324/nc73201181_ce89324p.zip
+peak acceleration (cm/s/s): 0.24803781107717035
+event date/time: 2019-06-23T03:52:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -813,7 +841,7 @@ peak acceleration (cm/s/s): 243.242
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 831/832 [00:00&lt;00:00, 2802.56it/s]
+100%|█████████▉| 831/832 [00:00&lt;00:00, 2851.74it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -822,17 +850,18 @@ peak acceleration (cm/s/s): 243.242
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.7111     0.06989    1.0        0.2373     0.2373
       0.2911     0.4793     0.0        0.2207     0.0
       0.2839     0.01621    1.0        0.9861     0.9861
       0.2669     0.008783   1.0        0.8865     0.8865
       0.2449     0.02909    1.0        0.9715     0.9715
-      0.2391     0.09027    0.9849     0.9734     0.9587
-Mean Period(s): 0.3394953575119655
-Standard Dev(s): 0.16723260983987168
-../CESMD/CE89324/nc73351710_ce89324p.zip
-peak acceleration (cm/s/s): -53.539
+      0.2391     0.09027    0.9816     0.9734     0.9555
+Mean Period(s): 0.3394953575166668
+Standard Dev(s): 0.16723260984290814
+uploads/CE89324/nc73351710_ce89324p.zip
+peak acceleration (cm/s/s): 0.05459458632662379
+event date/time: 2020-03-09T02:59:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -840,7 +869,11 @@ peak acceleration (cm/s/s): -53.539
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 868/869 [00:00&lt;00:00, 2740.65it/s]
+100%|█████████▉| 868/869 [00:00&lt;00:00, 3154.22it/s]
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/validation.py:22: RuntimeWarning: overflow encountered in scalar divide
+  (abs(Phi_final[j,i])/abs(Phi_final_hat[j,i])),
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/validation.py:25: RuntimeWarning: overflow encountered in scalar divide
+  Pij = np.angle(Phi_final[j,i]/Phi_final_hat[j,i])
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -849,17 +882,18 @@ peak acceleration (cm/s/s): -53.539
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2298     0.02758    1.0        0.9018     0.9018
       0.2293     0.01291    1.0        0.6597     0.6597
       0.2141     0.005794   1.0        0.8125     0.8125
       0.198      0.01652    1.0        0.954      0.954
       0.1856     0.007892   1.0        0.9607     0.9607
       0.1639     0.004047   1.0        0.953      0.953
-Mean Period(s): 0.20345404869738717
-Standard Dev(s): 0.023751109375293063
-../CESMD/CE89324/nc73666231_ce89324p.zip
-peak acceleration (cm/s/s): 30.272
+Mean Period(s): 0.20345404869738418
+Standard Dev(s): 0.023751109375293695
+uploads/CE89324/nc73666231_ce89324p.zip
+peak acceleration (cm/s/s): 0.03086884919926699
+event date/time: 2021-12-20T21:53:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -867,7 +901,7 @@ peak acceleration (cm/s/s): 30.272
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 631/632 [00:00&lt;00:00, 2616.91it/s]
+100%|█████████▉| 631/632 [00:00&lt;00:00, 3488.93it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -876,17 +910,18 @@ peak acceleration (cm/s/s): 30.272
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2969     0.04186    1.0        0.3244     0.3244
       0.2725     0.03001    1.0        0.8513     0.8513
       0.2432     0.02007    1.0        0.9816     0.9816
       0.2255     0.03043    1.0        0.8075     0.8075
       0.2231     0.0144     1.0        0.8528     0.8528
       0.1644     0.007564   1.0        0.9913     0.9913
-Mean Period(s): 0.23760239670892977
-Standard Dev(s): 0.041786791965444915
-../CESMD/CE89324/nc73667866_ce89324p.zip
-peak acceleration (cm/s/s): 32.846
+Mean Period(s): 0.23760239670897634
+Standard Dev(s): 0.04178679196543965
+uploads/CE89324/nc73667866_ce89324p.zip
+peak acceleration (cm/s/s): 0.0334935987314721
+event date/time: 2021-12-23T03:28:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -894,7 +929,7 @@ peak acceleration (cm/s/s): 32.846
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 647/648 [00:00&lt;00:00, 3019.03it/s]
+100%|█████████▉| 647/648 [00:00&lt;00:00, 2921.02it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -903,16 +938,17 @@ peak acceleration (cm/s/s): 32.846
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2674     0.07844    1.0        0.2192     0.2192
       0.2388     0.01897    1.0        0.08927    0.08927
       0.2295     0.06567    1.0        0.5181     0.5181
       0.2229     0.03194    1.0        0.1985     0.1985
-      0.2029     0.0984     0.004007   0.7416     0.002972
-Mean Period(s): 0.23230004145748845
-Standard Dev(s): 0.021121709869982592
-../CESMD/CE89324/nc73714181_ce89324p.zip
-peak acceleration (cm/s/s): 54.457
+      0.2029     0.0984     0.0        0.7416     0.0
+Mean Period(s): 0.23230004145681832
+Standard Dev(s): 0.021121709869499437
+uploads/CE89324/nc73714181_ce89324p.zip
+peak acceleration (cm/s/s): 0.0555306858101375
+event date/time: 2022-04-04T15:16:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -920,7 +956,7 @@ peak acceleration (cm/s/s): 54.457
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 694/695 [00:00&lt;00:00, 3319.68it/s]
+100%|█████████▉| 694/695 [00:00&lt;00:00, 3227.48it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -929,17 +965,18 @@ peak acceleration (cm/s/s): 54.457
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.3978     0.1306     0.999      0.7373     0.7366
       0.3016     0.02847    1.0        0.7979     0.7979
       0.2591     0.03579    1.0        0.7103     0.7103
       0.236      0.009554   1.0        0.8541     0.8541
       0.2        0.03356    1.0        0.4057     0.4057
       0.1853     0.004686   1.0        0.1831     0.1831
-Mean Period(s): 0.2633002998041649
-Standard Dev(s): 0.0712209453393016
-../CESMD/CE89324/nc73821036_ce89324p.zip
-peak acceleration (cm/s/s): -1356.923
+Mean Period(s): 0.26330029980424335
+Standard Dev(s): 0.07122094533951925
+uploads/CE89324/nc73821036_ce89324p.zip
+peak acceleration (cm/s/s): 1.383676382862611
+event date/time: 2022-12-20T10:34:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -947,7 +984,7 @@ peak acceleration (cm/s/s): -1356.923
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1229/1230 [00:00&lt;00:00, 2421.65it/s]
+100%|█████████▉| 1229/1230 [00:00&lt;00:00, 2031.28it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -956,17 +993,18 @@ peak acceleration (cm/s/s): -1356.923
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.4041     0.02136    1.0        0.1498     0.1498
       0.3177     0.008901   1.0        0.8627     0.8627
       0.3006     0.00409    1.0        0.9268     0.9268
       0.2818     0.019      1.0        0.9697     0.9697
       0.2801     0.007793   1.0        0.8783     0.8783
-      0.2441     0.1093     0.0004749  0.9427     0.0004477
-Mean Period(s): 0.3047263057826448
-Standard Dev(s): 0.049794929438951606
-../CESMD/CE89324/nc73821046_ce89324p.zip
-peak acceleration (cm/s/s): -139.897
+      0.2441     0.1093     0.0        0.9427     0.0
+Mean Period(s): 0.30472630578237564
+Standard Dev(s): 0.04979492943916137
+uploads/CE89324/nc73821046_ce89324p.zip
+peak acceleration (cm/s/s): 0.14265523904696928
+event date/time: 2022-12-20T10:38:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -974,7 +1012,7 @@ peak acceleration (cm/s/s): -139.897
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 662/663 [00:00&lt;00:00, 2844.54it/s]
+100%|█████████▉| 662/663 [00:00&lt;00:00, 3293.81it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -983,17 +1021,18 @@ peak acceleration (cm/s/s): -139.897
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.3001     0.04037    1.0        0.7879     0.7879
       0.2674     0.03467    1.0        0.1593     0.1593
       0.2591     0.06272    1.0        0.6758     0.6758
       0.2469     0.03627    1.0        0.8245     0.8245
       0.2256     0.03078    1.0        0.7015     0.7015
       0.1745     0.03043    1.0        0.8787     0.8787
-Mean Period(s): 0.24562036099179363
-Standard Dev(s): 0.03891069442719765
-../CESMD/CE89324/nc73821636_ce89324p.zip
-peak acceleration (cm/s/s): 50.951
+Mean Period(s): 0.24562036099206588
+Standard Dev(s): 0.03891069442725679
+uploads/CE89324/nc73821636_ce89324p.zip
+peak acceleration (cm/s/s): 0.05195556076743699
+event date/time: 2022-12-20T15:08:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1001,7 +1040,7 @@ peak acceleration (cm/s/s): 50.951
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 673/674 [00:00&lt;00:00, 3177.12it/s]
+100%|█████████▉| 673/674 [00:00&lt;00:00, 3263.65it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1010,17 +1049,18 @@ peak acceleration (cm/s/s): 50.951
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2833     0.009959   1.0        0.6816     0.6816
       0.2434     0.01689    1.0        0.8856     0.8856
       0.2357     0.0112     1.0        0.2451     0.2451
-      0.2286     0.07124    0.9998     0.5308     0.5307
+      0.2286     0.07124    0.9997     0.5308     0.5307
       0.2061     0.04924    1.0        0.9692     0.9692
       0.1684     0.03321    1.0        0.5699     0.5699
-Mean Period(s): 0.22757668980327647
-Standard Dev(s): 0.03510575192028343
-../CESMD/CE89324/nc73827571_ce89324p.zip
-peak acceleration (cm/s/s): -1012.657
+Mean Period(s): 0.22757668980306411
+Standard Dev(s): 0.035105751920271676
+uploads/CE89324/nc73827571_ce89324p.zip
+peak acceleration (cm/s/s): 1.0326227610855614
+event date/time: 2023-01-01T18:34:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1028,7 +1068,7 @@ peak acceleration (cm/s/s): -1012.657
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 914/915 [00:00&lt;00:00, 2689.89it/s]
+100%|█████████▉| 914/915 [00:00&lt;00:00, 2790.32it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1037,16 +1077,17 @@ peak acceleration (cm/s/s): -1012.657
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.6212     0.09436    1.0        0.6528     0.6528
       0.5406     0.009841   1.0        0.8737     0.8737
       0.4367     0.04506    1.0        0.2452     0.2452
       0.317      0.01029    1.0        0.4412     0.4412
-      0.2569     0.08572    0.9968     0.9454     0.9424
-Mean Period(s): 0.4344633802066828
-Standard Dev(s): 0.13524874602820816
-../CESMD/CE89324/nc73890906_ce89324p.zip
-peak acceleration (cm/s/s): 33.218
+      0.2569     0.08572    0.9981     0.9454     0.9436
+Mean Period(s): 0.43446338020788094
+Standard Dev(s): 0.135248746030292
+uploads/CE89324/nc73890906_ce89324p.zip
+peak acceleration (cm/s/s): 0.03387293316269989
+event date/time: 2023-05-21T18:44:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1054,7 +1095,7 @@ peak acceleration (cm/s/s): 33.218
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 694/695 [00:00&lt;00:00, 2891.35it/s]
+100%|█████████▉| 694/695 [00:00&lt;00:00, 3570.98it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1063,17 +1104,18 @@ peak acceleration (cm/s/s): 33.218
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2607     0.02224    1.0        0.003157   0.003157
       0.2449     0.006788   1.0        0.9932     0.9932
       0.24       -0.0008864  1.0        0.8373     0.8373
       0.2263     0.02832    1.0        0.7906     0.7906
       0.2163     0.04559    1.0        0.9555     0.9555
       0.1748     0.001106   1.0        0.2454     0.2454
-Mean Period(s): 0.22716129703326704
-Standard Dev(s): 0.027283894562143994
-../CESMD/CE89324/petrolia_05dec2016_72733405_ce89324p.zip
-peak acceleration (cm/s/s): 165.262
+Mean Period(s): 0.22716129703328078
+Standard Dev(s): 0.027283894562145704
+uploads/CE89324/nc73925281_ce89324p.zip
+peak acceleration (cm/s/s): 0.06364150856816372
+event date/time: 2023-08-17T21:07:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1081,7 +1123,7 @@ peak acceleration (cm/s/s): 165.262
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2282.88it/s]
+100%|█████████▉| 630/631 [00:00&lt;00:00, 3282.62it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1090,17 +1132,130 @@ peak acceleration (cm/s/s): 165.262
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
+      0.2699     0.0214     1.0        0.8534     0.8534
+      0.2567     0.0137     1.0        0.8951     0.8951
+      0.2341     0.01072    1.0        0.8903     0.8903
+      0.2289     0.03392    1.0        0.8739     0.8739
+      0.1989     0.04318    1.0        0.3868     0.3868
+      0.1875     0.04915    1.0        0.5938     0.5938
+Mean Period(s): 0.2293200412000863
+Standard Dev(s): 0.0291395338325928
+uploads/CE89324/nc73943821_ce89324p.zip
+peak acceleration (cm/s/s): 0.14367291582752123
+event date/time: 2023-09-30T15:26:00
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|█████████▉| 847/848 [00:00&lt;00:00, 2462.05it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Spectral quantities:
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
+      0.2995     0.167      3.421e-06  0.7725     2.643e-06
+      0.2993     0.02577    1.0        0.9075     0.9075
+      0.2771     0.0185     1.0        0.5027     0.5027
+      0.2408     0.05081    1.0        0.9846     0.9846
+      0.2406     0.01957    1.0        0.3401     0.3401
+      0.2258     0.01386    1.0        0.8403     0.8403
+Mean Period(s): 0.2638545307195747
+Standard Dev(s): 0.029487962104481222
+uploads/CE89324/nc73943846_ce89324p.zip
+peak acceleration (cm/s/s): 0.03849122789127679
+event date/time: 2023-09-30T17:16:00
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|█████████▉| 681/682 [00:00&lt;00:00, 3317.84it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Spectral quantities:
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
+      0.3023     0.01819    1.0        0.2348     0.2348
+      0.267      0.008803   1.0        0.9788     0.9788
+      0.25       0.00471    1.0        0.9933     0.9933
+      0.2456     0.02944    1.0        0.8872     0.8872
+      0.224      0.02218    1.0        0.5677     0.5677
+      0.1742     0.01788    1.0        0.773      0.773
+Mean Period(s): 0.24386981838679792
+Standard Dev(s): 0.039228056430184274
+uploads/CE89324/nc73947830_ce89324p.zip
+peak acceleration (cm/s/s): 0.0888590905151072
+event date/time: 2023-10-16T10:20:00
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|█████████▉| 817/818 [00:00&lt;00:00, 2623.80it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Spectral quantities:
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
+      0.274      0.01049    1.0        0.9654     0.9654
+      0.2532     0.01449    1.0        0.9427     0.9427
+      0.242      0.02182    1.0        0.8538     0.8538
+      0.2133     0.03244    1.0        0.95       0.95
+      0.2036     0.005486   1.0        0.5928     0.5928
+      0.1705     0.03361    1.0        0.9997     0.9997
+Mean Period(s): 0.2260988923437577
+Standard Dev(s): 0.03424197733255784
+uploads/CE89324/petrolia_05dec2016_72733405_ce89324p.zip
+peak acceleration (cm/s/s): 0.1685203407891537
+event date/time: 2016-12-05T18:32:00
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2268.43it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Spectral quantities:
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2964     0.01012    1.0        0.9602     0.9602
       0.2634     0.04313    1.0        0.8054     0.8054
       0.2474     0.0159     1.0        0.8673     0.8673
       0.2425     0.012      1.0        0.8418     0.8418
       0.2228     0.01331    1.0        0.4284     0.4284
       0.2051     0.005986   1.0        0.8064     0.8064
-Mean Period(s): 0.246280600421937
-Standard Dev(s): 0.02905011899350602
-../CESMD/CE89324/riodell_14sep2012_71842075_ce89324p.zip
-peak acceleration (cm/s/s): -219.633
+Mean Period(s): 0.24628060042194092
+Standard Dev(s): 0.029050118993510156
+uploads/CE89324/riodell_14sep2012_71842075_ce89324p.zip
+peak acceleration (cm/s/s): 0.22396333100497512
+event date/time: 2012-09-14T11:53:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1108,7 +1263,7 @@ peak acceleration (cm/s/s): -219.633
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2320.65it/s]
+100%|█████████▉| 1310/1311 [00:00&lt;00:00, 2202.84it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1117,17 +1272,18 @@ peak acceleration (cm/s/s): -219.633
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2735     0.03582    1.0        0.94       0.94
       0.2556     0.06232    1.0        0.998      0.998
       0.2391     0.005624   1.0        0.9759     0.9759
       0.2049     0.01358    1.0        0.8958     0.8958
       0.1772     0.0223     1.0        0.8821     0.8821
       0.1482     0.01812    1.0        0.3485     0.3485
-Mean Period(s): 0.21639806443332765
-Standard Dev(s): 0.044021503974172094
-../CESMD/CE89324/riodell_19oct2014_72330211_ce89324p.zip
-peak acceleration (cm/s/s): -60.641
+Mean Period(s): 0.21639806443333587
+Standard Dev(s): 0.044021503974215184
+uploads/CE89324/RioDell_14Sep2012_71842255_ce89324p.zip
+peak acceleration (cm/s/s): 0.07422310371023538
+event date/time: 2012-09-14T18:19:00
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1135,7 +1291,9 @@ peak acceleration (cm/s/s): -60.641
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 671/672 [00:00&lt;00:00, 2351.78it/s]
+100%|█████████▉| 1308/1309 [00:00&lt;00:00, 2324.76it/s]
+/tmp/ipykernel_8886/935611368.py:17: RuntimeWarning: More than 20 figures have been opened. Figures created through the pyplot interface (`matplotlib.pyplot.figure`) are retained until explicitly closed and may consume too much memory. (To control this warning, see the rcParam `figure.max_open_warning`). Consider using `matplotlib.pyplot.close()`.
+  fig, ax = plt.subplots(figsize=(8,4))
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -1144,57 +1302,440 @@ peak acceleration (cm/s/s): -60.641
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
+      0.2714     0.05105    1.0        0.9265     0.9265
+      0.251      0.01593    1.0        0.9835     0.9835
+      0.2448     0.005598   1.0        0.9567     0.9567
+      0.2336     -0.01353   1.0        0.8569     0.8569
+      0.2278     0.01632    1.0        0.9895     0.9895
+      0.2056     0.1652     0.001749   0.7744     0.001354
+Mean Period(s): 0.2390252160923849
+Standard Dev(s): 0.020402118014418713
+uploads/CE89324/riodell_19oct2014_72330211_ce89324p.zip
+peak acceleration (cm/s/s): 0.06183661087119283
+event date/time: 2014-10-19T14:23:00
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+100%|█████████▉| 671/672 [00:00&lt;00:00, 921.40it/s]
+</pre></div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Spectral quantities:
+       T(s)        ζ        EMACO      MPC       EMACO*MPC
       0.2918     0.01039    1.0        0.9987     0.9987
       0.2418     -0.006623  1.0        0.3285     0.3285
       0.2226     0.02352    1.0        0.9517     0.9517
-      0.1945     0.1566     3.285e-19  0.9412     3.092e-19
+      0.1945     0.1566     2.336e-19  0.9412     2.199e-19
       0.1651     0.006289   1.0        0.7292     0.7292
-Mean Period(s): 0.2231605195046272
-Standard Dev(s): 0.04301403503187152
-../CESMD/CE89324/RioDell_Petrolia_Processed_Data.zip
-peak acceleration (cm/s/s): 30.272
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|█████████▉| 631/632 [00:00&lt;00:00, 2284.98it/s]
+Mean Period(s): 0.22316051950726906
+Standard Dev(s): 0.043014035030129405
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-Spectral quantities:
-       T(s)        ζ        EMACO        MPC     EMACO*MPC
-      0.2969     0.04186    1.0        0.3244     0.3244
-      0.2725     0.03001    1.0        0.8513     0.8513
-      0.2432     0.02007    1.0        0.9816     0.9816
-      0.2255     0.03043    1.0        0.8075     0.8075
-      0.2231     0.0144     1.0        0.8528     0.8528
-      0.1644     0.007564   1.0        0.9913     0.9913
-Mean Period(s): 0.23760239670892977
-Standard Dev(s): 0.041786791965444915
-</pre></div></div>
+<img alt="../_images/examples_06_MIMO_History_9_43.png" src="../_images/examples_06_MIMO_History_9_43.png" />
+</div>
 </div>
 <div class="nboutput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
-</pre></div>
+<div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<div class="highlight"><pre>
-Text(0.5, 0.98, &#39;Painter St Bridge Transverse Mode (In: Ch17, Out: Ch9)&#39;)
-</pre></div></div>
+<img alt="../_images/examples_06_MIMO_History_9_44.png" src="../_images/examples_06_MIMO_History_9_44.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_45.png" src="../_images/examples_06_MIMO_History_9_45.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_46.png" src="../_images/examples_06_MIMO_History_9_46.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_47.png" src="../_images/examples_06_MIMO_History_9_47.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_48.png" src="../_images/examples_06_MIMO_History_9_48.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_49.png" src="../_images/examples_06_MIMO_History_9_49.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_50.png" src="../_images/examples_06_MIMO_History_9_50.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_51.png" src="../_images/examples_06_MIMO_History_9_51.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_52.png" src="../_images/examples_06_MIMO_History_9_52.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_53.png" src="../_images/examples_06_MIMO_History_9_53.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_54.png" src="../_images/examples_06_MIMO_History_9_54.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_55.png" src="../_images/examples_06_MIMO_History_9_55.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_56.png" src="../_images/examples_06_MIMO_History_9_56.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_57.png" src="../_images/examples_06_MIMO_History_9_57.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_58.png" src="../_images/examples_06_MIMO_History_9_58.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_59.png" src="../_images/examples_06_MIMO_History_9_59.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_60.png" src="../_images/examples_06_MIMO_History_9_60.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_61.png" src="../_images/examples_06_MIMO_History_9_61.png" />
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_06_MIMO_History_9_62.png" src="../_images/examples_06_MIMO_History_9_62.png" />
+</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_06_MIMO_History_9_36.png" src="../_images/examples_06_MIMO_History_9_36.png" />
+<img alt="../_images/examples_06_MIMO_History_9_63.png" src="../_images/examples_06_MIMO_History_9_63.png" />
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">summary_table</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>peak acc</th>
+      <th>okid-era</th>
+      <th>okid-era-dc</th>
+      <th>srim</th>
+      <th>FSTF</th>
+      <th>RSTF</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2013-10-11T23:05:00</th>
+      <td>0.090</td>
+      <td>0.259</td>
+      <td>0.115</td>
+      <td>0.271</td>
+      <td>0.400</td>
+      <td>0.259</td>
+    </tr>
+    <tr>
+      <th>2016-12-08T14:50:00</th>
+      <td>0.031</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.236</td>
+      <td>0.432</td>
+      <td>0.237</td>
+    </tr>
+    <tr>
+      <th>2015-01-28T21:08:00</th>
+      <td>0.291</td>
+      <td>0.179</td>
+      <td>0.525</td>
+      <td>0.312</td>
+      <td>0.277</td>
+      <td>0.249</td>
+    </tr>
+    <tr>
+      <th>2019-06-23T03:52:00</th>
+      <td>0.248</td>
+      <td>0.401</td>
+      <td>0.401</td>
+      <td>0.284</td>
+      <td>0.248</td>
+      <td>0.251</td>
+    </tr>
+    <tr>
+      <th>2020-03-09T02:59:00</th>
+      <td>0.055</td>
+      <td>NaN</td>
+      <td>0.242</td>
+      <td>0.230</td>
+      <td>0.233</td>
+      <td>0.237</td>
+    </tr>
+    <tr>
+      <th>2021-12-20T21:53:00</th>
+      <td>0.031</td>
+      <td>0.278</td>
+      <td>0.278</td>
+      <td>0.272</td>
+      <td>0.375</td>
+      <td>0.236</td>
+    </tr>
+    <tr>
+      <th>2021-12-23T03:28:00</th>
+      <td>0.033</td>
+      <td>0.335</td>
+      <td>0.335</td>
+      <td>0.230</td>
+      <td>0.327</td>
+      <td>0.230</td>
+    </tr>
+    <tr>
+      <th>2022-04-04T15:16:00</th>
+      <td>0.056</td>
+      <td>NaN</td>
+      <td>0.375</td>
+      <td>0.398</td>
+      <td>0.402</td>
+      <td>0.234</td>
+    </tr>
+    <tr>
+      <th>2022-12-20T10:34:00</th>
+      <td>1.384</td>
+      <td>0.806</td>
+      <td>0.350</td>
+      <td>0.318</td>
+      <td>0.498</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2022-12-20T10:38:00</th>
+      <td>0.143</td>
+      <td>NaN</td>
+      <td>0.269</td>
+      <td>0.300</td>
+      <td>0.445</td>
+      <td>0.313</td>
+    </tr>
+    <tr>
+      <th>2022-12-20T15:08:00</th>
+      <td>0.052</td>
+      <td>0.976</td>
+      <td>0.334</td>
+      <td>0.283</td>
+      <td>0.269</td>
+      <td>0.256</td>
+    </tr>
+    <tr>
+      <th>2023-01-01T18:34:00</th>
+      <td>1.033</td>
+      <td>0.960</td>
+      <td>0.502</td>
+      <td>0.621</td>
+      <td>0.455</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2023-05-21T18:44:00</th>
+      <td>0.034</td>
+      <td>0.240</td>
+      <td>0.240</td>
+      <td>0.245</td>
+      <td>0.248</td>
+      <td>0.237</td>
+    </tr>
+    <tr>
+      <th>2023-08-17T21:07:00</th>
+      <td>0.064</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.270</td>
+      <td>0.241</td>
+      <td>0.238</td>
+    </tr>
+    <tr>
+      <th>2023-09-30T15:26:00</th>
+      <td>0.144</td>
+      <td>0.368</td>
+      <td>0.368</td>
+      <td>0.299</td>
+      <td>0.170</td>
+      <td>0.250</td>
+    </tr>
+    <tr>
+      <th>2023-09-30T17:16:00</th>
+      <td>0.038</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.267</td>
+      <td>0.293</td>
+      <td>0.258</td>
+    </tr>
+    <tr>
+      <th>2023-10-16T10:20:00</th>
+      <td>0.089</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>0.274</td>
+      <td>0.257</td>
+      <td>0.251</td>
+    </tr>
+    <tr>
+      <th>2016-12-05T18:32:00</th>
+      <td>0.169</td>
+      <td>0.366</td>
+      <td>0.124</td>
+      <td>0.296</td>
+      <td>0.326</td>
+      <td>0.235</td>
+    </tr>
+    <tr>
+      <th>2012-09-14T11:53:00</th>
+      <td>0.224</td>
+      <td>0.166</td>
+      <td>0.166</td>
+      <td>0.273</td>
+      <td>0.252</td>
+      <td>0.240</td>
+    </tr>
+    <tr>
+      <th>2012-09-14T18:19:00</th>
+      <td>0.074</td>
+      <td>0.245</td>
+      <td>0.146</td>
+      <td>0.271</td>
+      <td>0.233</td>
+      <td>0.225</td>
+    </tr>
+    <tr>
+      <th>2014-10-19T14:23:00</th>
+      <td>0.062</td>
+      <td>0.175</td>
+      <td>NaN</td>
+      <td>0.292</td>
+      <td>0.248</td>
+      <td>0.241</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># from mdof.macro import stabilization</span>
+<span class="c1"># stabilization(inputs, outpts, dt=dt, orders=(2,50,2), plotly=True)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[ ]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
+</pre></div>
 </div>
 </div>
 </section>
@@ -1211,12 +1752,12 @@ Text(0.5, 0.98, &#39;Painter St Bridge Transverse Mode (In: Ch17, Out: Ch9)&#39;
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
     <a class="left-prev"
-       href="05_MIMO_Event.html"
+       href="04_MIMO_Intro.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">MIMO for a Ground Motion Event</p>
+        <p class="prev-next-title">Introduction to MIMO</p>
       </div>
     </a>
 </div>
