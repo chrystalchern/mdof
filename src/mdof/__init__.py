@@ -92,8 +92,6 @@ def eigid(inputs, outputs, **options):
                         dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
-    :param dt:          timestep.
-    :type dt:           float
     :param decimation:  decimation factor. default: 1
     :type decimation:   int, optional
 
