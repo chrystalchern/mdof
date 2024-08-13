@@ -345,7 +345,6 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for a Ground Motion Event</a></li>
 <li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Event History</a></li>
 <li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Introduction to MIMO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="05_MIMO_Event.html">MIMO for a Ground Motion Event</a></li>
 <li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Event History</a></li>
 </ul>
 </div>
@@ -446,15 +445,15 @@ document.write(`
 </tr>
 </tbody>
 </table>
-<p><img alt="sdof" src="../_images/sdof.png" /></p>
+<img alt="sdof" src="../_images/sdof.png" />
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[31]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># parameters of SDOF system</span>
 <span class="n">mass</span> <span class="o">=</span> <span class="mi">1</span>       <span class="c1"># mass</span>
 <span class="n">k</span> <span class="o">=</span> <span class="mi">30</span>         <span class="c1"># stiffness</span>
-<span class="n">zeta</span> <span class="o">=</span> <span class="mf">0.05</span>    <span class="c1"># damping ratio</span>
+<span class="n">zeta</span> <span class="o">=</span> <span class="mf">0.01</span>    <span class="c1"># damping ratio</span>
 <span class="n">omega_n</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">k</span><span class="o">/</span><span class="n">mass</span><span class="p">)</span>  <span class="c1"># natural frequency (rad/s)</span>
 <span class="n">Tn</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">/</span><span class="n">omega_n</span>  <span class="c1"># natural periods (s)</span>
 <span class="n">c</span> <span class="o">=</span> <span class="mi">2</span><span class="o">*</span><span class="n">zeta</span><span class="o">*</span><span class="n">mass</span><span class="o">*</span><span class="n">omega_n</span>    <span class="c1"># damping coefficient</span>
@@ -462,8 +461,8 @@ document.write(`
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;damping ratio: </span><span class="si">{</span><span class="n">zeta</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="c1"># forcing frequencies (rad/s)</span>
-<span class="n">omega_f</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.017</span><span class="o">*</span><span class="n">omega_n</span><span class="p">,</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">omega_n</span><span class="p">,</span> <span class="mf">0.467</span><span class="o">*</span><span class="n">omega_n</span><span class="p">,</span> <span class="mf">0.186</span><span class="o">*</span><span class="n">omega_n</span><span class="p">,</span> <span class="mf">0.2937</span><span class="o">*</span><span class="n">omega_n</span><span class="p">]</span>
-<span class="nb">print</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;forcing periods: </span><span class="si">{</span><span class="n">omega</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">omega</span> <span class="ow">in</span> <span class="n">omega_f</span><span class="p">])</span>
+<span class="n">omega_f</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.017</span><span class="o">*</span><span class="n">omega_n</span><span class="p">,</span> <span class="mf">0.14</span><span class="o">*</span><span class="n">omega_n</span><span class="p">,</span> <span class="mf">0.3</span><span class="o">*</span><span class="n">omega_n</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;forcing periods: </span><span class="si">{</span><span class="n">omega_f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -473,12 +472,12 @@ document.write(`
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 natural period: 1.1471s
-damping ratio: 0.05
-[&#39;forcing periods: 0.09311283477587824&#39;, &#39;forcing periods: 0.7668115805072326&#39;, &#39;forcing periods: 2.557864343549126&#39;, &#39;forcing periods: 1.018763956959609&#39;, &#39;forcing periods: 1.608661151392673&#39;]
+damping ratio: 0.01
+forcing periods: [0.09311283477587824, 0.7668115805072326, 1.6431676725154982]
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[32]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># forcing function (input)</span>
@@ -491,7 +490,7 @@ damping ratio: 0.05
 </div>
 </div>
 <div class="nbinput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[33]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># displacement response (analytical solution) (output)</span>
@@ -508,7 +507,7 @@ damping ratio: 0.05
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[34]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot input vs. output</span>
@@ -529,7 +528,7 @@ damping ratio: 0.05
 <section id="Transfer-Function-Methods">
 <h3>Transfer Function Methods<a class="headerlink" href="#Transfer-Function-Methods" title="Permalink to this heading">#</a></h3>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[35]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set parameters</span>
@@ -543,46 +542,23 @@ damping ratio: 0.05
 <span class="c1"># Generate a transfer function representation of the system</span>
 <span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">fourier_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
 <span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Power Transform&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">transform</span><span class="o">.</span><span class="n">power_transfer</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="n">dt</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="c1"># transfer_models[&quot;Response Spectrum&quot;] = transform.response_transfer(inputs=f, outputs=y, step=dt, pseudo=False, threads=8, periods=(*conf.period_band, 500), **conf)</span>
 
 <span class="c1"># Determing the fundamental frequency</span>
 <span class="n">fourier_periods</span><span class="p">,</span> <span class="n">fourier_amplitudes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Fourier Transform&quot;</span><span class="p">],</span><span class="n">height</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">power_periods</span><span class="p">,</span> <span class="n">power_amplitudes</span> <span class="o">=</span> <span class="n">modal</span><span class="o">.</span><span class="n">spectrum_modes</span><span class="p">(</span><span class="o">*</span><span class="n">transfer_models</span><span class="p">[</span><span class="s2">&quot;Power Transform&quot;</span><span class="p">],</span><span class="n">height</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
-<span class="c1"># response_periods, response_amplitudes = modal.spectrum_modes(*transfer_models[&quot;Response Spectrum&quot;],height=0.1)</span>
 <span class="n">plot_transfer</span><span class="p">(</span><span class="n">transfer_models</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Transfer Functions&quot;</span><span class="p">)</span>
 <span class="n">color_cycle</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;axes.prop_cycle&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">by_key</span><span class="p">()[</span><span class="s1">&#39;color&#39;</span><span class="p">]</span>
-<span class="c1"># plt.vlines([fourier_periods[0], response_periods[0]],ymin=0,ymax=1,linestyles=&#39;--&#39;,colors=color_cycle[:2])</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.9</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{fourier}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">fourier_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">power_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">+</span><span class="mf">0.05</span><span class="p">,</span><span class="mf">0.7</span><span class="p">,</span><span class="sa">r</span><span class="s2">&quot;$T_</span><span class="si">{power}</span><span class="s2">$ = &quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">power_periods</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">3</span><span class="p">)),</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
-<span class="c1"># plt.text(response_periods[0]+0.05,0.8,r&quot;$T_{response}$ = &quot;+str(np.round(response_periods[0],3)),fontsize=15)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="n">conf</span><span class="o">.</span><span class="n">period_band</span><span class="p">);</span>
-<span class="c1"># plt.gcf().set_figwidth(9)</span>
-<span class="c1"># plt.legend();</span>
 </pre></div>
 </div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">IndexError</span>                                Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[35], line 22</span>
-<span class="ansi-green-intense-fg ansi-bold">     20</span> <span style="color: rgb(95,135,135)"># plt.vlines([fourier_periods[0], response_periods[0]],ymin=0,ymax=1,linestyles=&#39;--&#39;,colors=color_cycle[:2])</span>
-<span class="ansi-green-intense-fg ansi-bold">     21</span> plt<span style="color: rgb(98,98,98)">.</span>text(fourier_periods[<span style="color: rgb(98,98,98)">0</span>]<span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">0.05</span>,<span style="color: rgb(98,98,98)">0.9</span>,<span style="color: rgb(175,0,0)">r</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">$T_</span><span class="ansi-bold" style="color: rgb(175,95,135)">{fourier}</span><span style="color: rgb(175,0,0)">$ = </span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">+</span><span style="color: rgb(0,135,0)">str</span>(np<span style="color: rgb(98,98,98)">.</span>round(fourier_periods[<span style="color: rgb(98,98,98)">0</span>],<span style="color: rgb(98,98,98)">3</span>)),fontsize<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">15</span>)
-<span class="ansi-green-fg">---&gt; 22</span> plt<span style="color: rgb(98,98,98)">.</span>text(<span class="ansi-yellow-bg">power_periods</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0</span><span class="ansi-yellow-bg">]</span><span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">0.05</span>,<span style="color: rgb(98,98,98)">0.7</span>,<span style="color: rgb(175,0,0)">r</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">$T_</span><span class="ansi-bold" style="color: rgb(175,95,135)">{power}</span><span style="color: rgb(175,0,0)">$ = </span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">+</span><span style="color: rgb(0,135,0)">str</span>(np<span style="color: rgb(98,98,98)">.</span>round(power_periods[<span style="color: rgb(98,98,98)">0</span>],<span style="color: rgb(98,98,98)">3</span>)),fontsize<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">15</span>)
-<span class="ansi-green-intense-fg ansi-bold">     23</span> <span style="color: rgb(95,135,135)"># plt.text(response_periods[0]+0.05,0.8,r&#34;$T_{response}$ = &#34;+str(np.round(response_periods[0],3)),fontsize=15)</span>
-<span class="ansi-green-intense-fg ansi-bold">     24</span> plt<span style="color: rgb(98,98,98)">.</span>xlim(conf<span style="color: rgb(98,98,98)">.</span>period_band);
-
-<span class="ansi-red-fg">IndexError</span>: index 0 is out of bounds for axis 0 with size 0
-</pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_10_1.png" src="../_images/examples_01_SISO_Intro_10_1.png" />
+<img alt="../_images/examples_01_SISO_Intro_10_0.png" src="../_images/examples_01_SISO_Intro_10_0.png" />
 </div>
 </div>
 </section>
@@ -605,7 +581,7 @@ Cell <span class="ansi-green-fg">In[35], line 22</span>
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 4700/4701 [00:00&lt;00:00, 92445.34it/s]
+100%|█████████▉| 4700/4701 [00:00&lt;00:00, 109264.20it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -615,8 +591,8 @@ Cell <span class="ansi-green-fg">In[35], line 22</span>
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.147      0.5        1.0        1.0        1.0          1.226e-10    -2.151e-11
-Mean Period(s): 1.147147441910502
+      1.147      0.01       1.0        1.0        1.0          -4.839e-13    -7.685e-12
+Mean Period(s): 1.1471474419090897
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
@@ -702,9 +678,9 @@ Standard Dev(s): 0.0
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Set parameters</span>
 <span class="n">conf</span> <span class="o">=</span> <span class="n">Config</span><span class="p">()</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">m</span>  <span class="o">=</span> <span class="mi">1500</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">horizon</span> <span class="o">=</span> <span class="mi">150</span>
-<span class="n">conf</span><span class="o">.</span><span class="n">nc</span> <span class="o">=</span> <span class="mi">150</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">m</span>  <span class="o">=</span> <span class="mi">300</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">horizon</span> <span class="o">=</span> <span class="mi">140</span>
+<span class="n">conf</span><span class="o">.</span><span class="n">nc</span> <span class="o">=</span> <span class="mi">140</span>
 <span class="n">conf</span><span class="o">.</span><span class="n">order</span>  <span class="o">=</span>   <span class="mi">2</span>
 <span class="n">conf</span><span class="o">.</span><span class="n">a</span>  <span class="o">=</span>   <span class="mi">0</span>
 <span class="n">conf</span><span class="o">.</span><span class="n">b</span>  <span class="o">=</span>   <span class="mi">0</span>
@@ -770,8 +746,8 @@ Standard Dev(s): 0.0
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.55       0.113      1.0        1.0        1.0          35.11        -77.4
-Mean Period(s): 1.5498996863569467
+      1.147      0.01015    1.0        1.0        1.0          -0.009354    1.526
+Mean Period(s): 1.1470401342265166
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
@@ -820,8 +796,8 @@ Standard Dev(s): 0.0
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.545      0.1181     1.0        1.0        1.0          34.69        -76.38
-Mean Period(s): 1.5451179159471098
+      1.147      0.009956   1.0        1.0        1.0          -0.01633     -0.4366
+Mean Period(s): 1.146960162584902
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
@@ -859,7 +835,7 @@ Standard Dev(s): 0.0
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-100%|█████████▉| 4850/4851 [00:00&lt;00:00, 78758.50it/s]
+100%|█████████▉| 4860/4861 [00:00&lt;00:00, 104888.89it/s]
 </pre></div></div>
 </div>
 <div class="nboutput docutils container">
@@ -869,8 +845,8 @@ Standard Dev(s): 0.0
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.147      0.5        1.0        1.0        1.0          5.186e-07    -4.893e-08
-Mean Period(s): 1.1471474478584494
+      1.147      0.01       1.0        1.0        1.0          -3.929e-12    1.513e-10
+Mean Period(s): 1.1471474419090502
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
@@ -893,18 +869,29 @@ Standard Dev(s): 0.0
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/utilities/printing.py:79: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax[1,0].set_xticklabels([&#34;true&#34;]+[method.upper() for method in models.keys()], rotation = 30)
+/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/utilities/printing.py:89: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
+  ax[1,1].set_xticklabels([&#34;true&#34;]+[method.upper() for method in models.keys()], rotation = 30)
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_30_0.png" src="../_images/examples_01_SISO_Intro_30_0.png" />
+<img alt="../_images/examples_01_SISO_Intro_30_1.png" src="../_images/examples_01_SISO_Intro_30_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;System ID Predicted Displacement Response&quot;</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

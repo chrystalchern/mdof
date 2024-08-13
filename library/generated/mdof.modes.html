@@ -65,7 +65,7 @@
     <link rel="icon" href="../../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="mdof.sysid" href="mdof.sysid.html" />
+    <link rel="next" title="mdof.eigid" href="mdof.eigid.html" />
     <link rel="prev" title="mdof.outid" href="mdof.outid.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -342,9 +342,9 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="../index.html">mdof</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mdof.outid.html">mdof.outid</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">mdof.modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="mdof.sysid.html">mdof.sysid</a></li>
 </ul>
 <ul class="nav bd-sidenav">
@@ -414,27 +414,27 @@ document.write(`
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.modes">
 <span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modes" title="Permalink to this definition">#</a></dt>
-<dd><p>Modal identification using state space system realization from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p>
+<dd><p>Fundamental periods <code class="docutils literal notranslate"><span class="pre">P</span></code> and modeshapes <code class="docutils literal notranslate"><span class="pre">Phi</span></code> identification from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history.
+dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where <span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps.</p></li>
 <li><p><strong>outputs</strong> (<em>array</em>) – output response history.
 dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
 <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
 <li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are
 “okid-era” and “okid-era-dc”.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>system modes, including natural frequencies, damping ratios, mode shapes,
-condition numbers, and modal validation metrics EMAC and MPC.</p>
+<dd class="field-even"><p>(<code class="docutils literal notranslate"><span class="pre">P</span></code>, <code class="docutils literal notranslate"><span class="pre">Phi</span></code>)</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>dictionary</p>
+<dd class="field-odd"><p>tuple of 1D array, ND array</p>
 </dd>
 </dl>
 </dd></dl>
@@ -461,11 +461,11 @@ condition numbers, and modal validation metrics EMAC and MPC.</p>
       </div>
     </a>
     <a class="right-next"
-       href="mdof.sysid.html"
+       href="mdof.eigid.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mdof.sysid</p>
+        <p class="prev-next-title">mdof.eigid</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>

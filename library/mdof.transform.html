@@ -342,9 +342,9 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="index.html">mdof</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.outid.html">mdof.outid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
@@ -412,39 +412,6 @@ document.write(`
   <section id="module-mdof.transform">
 <span id="mdof-transform-module"></span><h1>mdof.transform module<a class="headerlink" href="#module-mdof.transform" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.fdd">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fdd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fdd" title="Permalink to this definition">#</a></dt>
-<dd><p>Frequency Domain Decomposition <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> from output data.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>outputs</strong> (<em>ND array.</em>) – output response history.
-dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
-<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>(periods, amplitudes)</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id2" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Brincker, R., Zhang, L., &amp; Andersen, P. (2001). Modal identification of
-output-only systems using frequency domain decomposition. Smart materials
-and structures, 10(3), 441. (<a class="reference external" href="https://doi.org/10.1088/0964-1726/10/3/303">https://doi.org/10.1088/0964-1726/10/3/303</a></p>
-</aside>
-</aside>
-</section>
-</dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="mdof.transform.power_transfer">
 <span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">power_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.power_transfer" title="Permalink to this definition">#</a></dt>
 <dd><p>Power spectrum transfer function from input and output data.</p>
@@ -454,7 +421,29 @@ and structures, 10(3), 441. (<a class="reference external" href="https://doi.org
 <li><p><strong>inputs</strong> (<em>1D array</em>) – input time history.</p></li>
 <li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
 <li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(periods, amplitudes)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.transform.fourier_transfer">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_transfer" title="Permalink to this definition">#</a></dt>
+<dd><p>Fourier spectrum transfer function from input and output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>inputs</strong> (<em>1D array</em>) – input time history.</p></li>
+<li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
+<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -477,7 +466,7 @@ and structures, 10(3), 441. (<a class="reference external" href="https://doi.org
 <li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
 <li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
 <li><p><strong>pseudo</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, uses pseudo accelerations. default: False</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -490,16 +479,17 @@ and structures, 10(3), 441. (<a class="reference external" href="https://doi.org
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="mdof.transform.fourier_transfer">
-<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fourier_transfer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fourier_transfer" title="Permalink to this definition">#</a></dt>
-<dd><p>Fourier spectrum transfer function from input and output data.</p>
+<dt class="sig sig-object py" id="mdof.transform.fdd_spectrum">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fdd_spectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fdd_spectrum" title="Permalink to this definition">#</a></dt>
+<dd><p>Frequency Domain Decomposition spectrum <a href="#id6"><span class="problematic" id="id1">[1]_</span></a> from output data.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>1D array</em>) – input time history.</p></li>
-<li><p><strong>outputs</strong> (<em>1D array</em>) – output response history.</p></li>
+<li><p><strong>outputs</strong> (<em>ND array.</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
+<li><p><strong>period_band</strong> (<em>tuple</em><em>, </em><em>optional</em>) – minimum and maximum period of interest, in seconds.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -509,6 +499,50 @@ and structures, 10(3), 441. (<a class="reference external" href="https://doi.org
 <dd class="field-odd"><p>tuple of arrays</p>
 </dd>
 </dl>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Brincker, R., Zhang, L., &amp; Andersen, P. (2001). Modal identification of
+output-only systems using frequency domain decomposition. Smart materials
+and structures, 10(3), 441. (<a class="reference external" href="https://doi.org/10.1088/0964-1726/10/3/303">https://doi.org/10.1088/0964-1726/10/3/303</a></p>
+</aside>
+</aside>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="mdof.transform.fdd">
+<span class="sig-prename descclassname"><span class="pre">mdof.transform.</span></span><span class="sig-name descname"><span class="pre">fdd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">step</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.transform.fdd" title="Permalink to this definition">#</a></dt>
+<dd><p>Frequency Domain Decomposition <a href="#id7"><span class="problematic" id="id3">[1]_</span></a> from output data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>outputs</strong> (<em>ND array.</em>) – output response history.
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+<span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>step</strong> (<em>float</em>) – timestep.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>(frequencies, <code class="docutils literal notranslate"><span class="pre">`U`</span></code>, <code class="docutils literal notranslate"><span class="pre">`S`</span></code>)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>tuple of arrays</p>
+</dd>
+</dl>
+<section id="id4">
+<h2>References<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Brincker, R., Zhang, L., &amp; Andersen, P. (2001). Modal identification of
+output-only systems using frequency domain decomposition. Smart materials
+and structures, 10(3), 441. (<a class="reference external" href="https://doi.org/10.1088/0964-1726/10/3/303">https://doi.org/10.1088/0964-1726/10/3/303</a></p>
+</aside>
+</aside>
+</section>
 </dd></dl>
 
 <dl class="py function">
@@ -598,10 +632,11 @@ and structures, 10(3), 441. (<a class="reference external" href="https://doi.org
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fdd"><code class="docutils literal notranslate"><span class="pre">fdd()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_transfer"><code class="docutils literal notranslate"><span class="pre">power_transfer()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.response_transfer"><code class="docutils literal notranslate"><span class="pre">response_transfer()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_transfer"><code class="docutils literal notranslate"><span class="pre">fourier_transfer()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.response_transfer"><code class="docutils literal notranslate"><span class="pre">response_transfer()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fdd_spectrum"><code class="docutils literal notranslate"><span class="pre">fdd_spectrum()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fdd"><code class="docutils literal notranslate"><span class="pre">fdd()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.power_spectrum"><code class="docutils literal notranslate"><span class="pre">power_spectrum()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.transform.fourier_spectrum"><code class="docutils literal notranslate"><span class="pre">fourier_spectrum()</span></code></a></li>
 </ul>
