@@ -81,7 +81,7 @@ def modes(inputs, outputs, dt, **options):
 
 
 def eigid(inputs, outputs, **options):
-    """
+    r"""
     State space system eigenvalues ``Gam`` and eigenvectors ``Psi`` identification from
     ``input`` and ``output`` arrays. This is the eigendecomposition of the discrete system
     state transition matrix, :math:`\mathbf{A}`.
@@ -130,7 +130,7 @@ def sysid(inputs, outputs, **options):
 
 def reconstruct(realization, dt, inputs, **options):
     """
-    Response reconstruction (predicted output array) from system realization and input array.
+    Response reconstruction (predicted ``output``) from system realization (``A``, ``B``, ``C``, ``D``) and ``input``.
 
     :param realization: realization in the form of state space coefficients ``(A,B,C,D)``
     :type realization:  tuple of arrays

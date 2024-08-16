@@ -125,7 +125,7 @@ def fdd_spectrum(outputs, step, **options):
 
 def fdd(outputs, step):
     """
-    Frequency Domain Decomposition [1]_ from output data.
+    Frequency Domain Decomposition [2]_ from output data.
 
     :param outputs:     output response history.
                         dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
@@ -139,6 +139,9 @@ def fdd(outputs, step):
     
     References
     ----------
+    .. [2]  Brincker, R., Zhang, L., & Andersen, P. (2001). Modal identification of
+            output-only systems using frequency domain decomposition. Smart materials
+            and structures, 10(3), 441. (https://doi.org/10.1088/0964-1726/10/3/303
     """
     
     if len(outputs.shape) == 1:
