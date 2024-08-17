@@ -19,6 +19,7 @@ functions for quickly performing system identification:
    mdof.modes
    mdof.eigid
    mdof.sysid
+   mdof.reconstruct
 
 
 The following modules expose the inner building blocks for
