@@ -346,6 +346,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.reconstruct.html">mdof.reconstruct</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
@@ -434,14 +435,14 @@ System Realization Using Information Matrix (SRIM) <a class="footnote-reference 
 <li><p><strong>outputs</strong> (<em>array</em>) – output response history.
 dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
 <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>horizon</strong> (<em>int</em><em>, </em><em>optional</em>) – number of steps used for identification (prediction horizon).
+<li><p><strong>horizon</strong> (<em>int</em>) – (optional) number of steps used for identification (prediction horizon).
 default: <span class="math notranslate nohighlight">\(min(300, nt)\)</span></p></li>
-<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
-<li><p><strong>full</strong> (<em>bool</em><em>, </em><em>optional</em>) – if True, full SVD. default: True</p></li>
-<li><p><strong>find</strong> (<em>string</em><em>, </em><em>optional</em>) – “ABCD” or “AC”. default: “ABCD”</p></li>
-<li><p><strong>threads</strong> (<em>int</em><em>, </em><em>optional</em>) – number of threads used during the output error minimization method.
+<li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
+<li><p><strong>full</strong> (<em>bool</em>) – (optional) if True, full SVD. default: True</p></li>
+<li><p><strong>find</strong> (<em>string</em>) – (optional) “ABCD” or “AC”. default: “ABCD”</p></li>
+<li><p><strong>threads</strong> (<em>int</em>) – (optional) number of threads used during the output error minimization method.
 default: 6</p></li>
-<li><p><strong>chunk</strong> (<em>int</em><em>, </em><em>optional</em>) – chunk size in output error minimization method. default: 200</p></li>
+<li><p><strong>chunk</strong> (<em>int</em>) – (optional) chunk size in output error minimization method. default: 200</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -474,11 +475,11 @@ Ho-Kalman / Eigensystem Realization Algorithm (ERA) <a class="footnote-reference
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs,
 <span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of Markov parameters.</p></li>
-<li><p><strong>horizon</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block rows in Hankel matrix = order of observability matrix.
+<li><p><strong>horizon</strong> (<em>int</em>) – (optional) number of block rows in Hankel matrix = order of observability matrix.
 default: <span class="math notranslate nohighlight">\(min(150, (nt-1)/2)\)</span></p></li>
-<li><p><strong>nc</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block columns in Hankel matrix = order of controllability matrix.
+<li><p><strong>nc</strong> (<em>int</em>) – (optional) number of block columns in Hankel matrix = order of controllability matrix.
 default: <span class="math notranslate nohighlight">\(min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
-<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
+<li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -518,15 +519,15 @@ Eigensystem Realization Algorithm with Data Correlations (ERA/DC) <a class="foot
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs,
 <span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of Markov parameters.</p></li>
-<li><p><strong>horizon</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block rows in Hankel matrix = order of observability matrix.
+<li><p><strong>horizon</strong> (<em>int</em>) – (optional) number of block rows in Hankel matrix = order of observability matrix.
 default: <span class="math notranslate nohighlight">\(min(150, (nt-1)/2)\)</span></p></li>
-<li><p><strong>nc</strong> (<em>int</em><em>, </em><em>optional</em>) – number of block columns in Hankel matrix = order of controllability matrix.
+<li><p><strong>nc</strong> (<em>int</em>) – (optional) number of block columns in Hankel matrix = order of controllability matrix.
 default: <span class="math notranslate nohighlight">\(min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
-<li><p><strong>order</strong> (<em>int</em><em>, </em><em>optional</em>) – model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
-<li><p><strong>a</strong> (<em>int</em><em>, </em><em>optional</em>) – <span class="math notranslate nohighlight">\((\alpha)\)</span> number of block rows in Hankel of correlation matrix. default: 0</p></li>
-<li><p><strong>b</strong> (<em>int</em><em>, </em><em>optional</em>) – <span class="math notranslate nohighlight">\((\beta)\)</span> number of block columns in Hankel of correlation matrix. default: 0</p></li>
-<li><p><strong>l</strong> (<em>int</em><em>, </em><em>optional</em>) – initial lag for data correlations. default: 0</p></li>
-<li><p><strong>g</strong> (<em>int</em><em>, </em><em>optional</em>) – lags (gap) between correlation matrices. default: 1</p></li>
+<li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
+<li><p><strong>a</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\alpha)\)</span> number of block rows in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\beta)\)</span> number of block columns in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>l</strong> (<em>int</em>) – (optional) initial lag for data correlations. default: 0</p></li>
+<li><p><strong>g</strong> (<em>int</em>) – (optional) lags (gap) between correlation matrices. default: 1</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>

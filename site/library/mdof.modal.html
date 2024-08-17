@@ -344,6 +344,7 @@ document.write(`
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.reconstruct.html">mdof.reconstruct</a></li>
 </ul>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
@@ -413,15 +414,26 @@ document.write(`
 from a state space realization or transfer function.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.modal.system_modes">
-<span class="sig-prename descclassname"><span class="pre">mdof.modal.</span></span><span class="sig-name descname"><span class="pre">system_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modal.system_modes" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdof.modal.</span></span><span class="sig-name descname"><span class="pre">system_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">realization</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_peaks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sorted_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_descending</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_lim</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modal.system_modes" title="Permalink to this definition">#</a></dt>
 <dd><p>Modal identification from a state space system realization.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>realization</strong> (<em>tuple</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
+<li><p><strong>realization</strong> (<em>tuple</em><em> of </em><em>arrays</em>) – realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p></li>
 <li><p><strong>dt</strong> (<em>float</em>) – timestep.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 1</p></li>
-<li><p><strong>Observability</strong> (<em>array</em><em>, </em><em>optional</em>) – Observability matrix; can be reused from <a class="reference internal" href="mdof.realize.html#mdof.realize.srim" title="mdof.realize.srim"><code class="xref py py-func docutils literal notranslate"><span class="pre">mdof.realize.srim()</span></code></a>.
+<li><p><strong>n_peaks</strong> (<em>int</em>) – (optional) number of peaks to return. By default, all peaks are returned.</p></li>
+<li><p><strong>sorted_by</strong> (<em>string</em>) – (optional) characteristic by which to sort peaks.
+choose out of the following: ‘period’, ‘MPC’, ‘EMAC’, …
+sorting order is highest to lowest (descending), unless <cite>sort_descending</cite> is set to <cite>False</cite>.</p></li>
+<li><p><strong>sort_descending</strong> (<em>boolean</em>) – (optional) sort from highest to lowest
+default: <cite>True</cite></p></li>
+<li><p><strong>filter_by</strong> (<em>list</em><em> of </em><em>strings</em>) – (optional) list of characteristics by which to filter peaks.
+example: [‘MPC’, ‘EMAC’].
+choose out of the following: ‘period’, ‘MPC’, ‘EMAC’, ‘frequency’, ‘damping’, ‘condition_number’, …</p></li>
+<li><p><strong>filter_lim</strong> (<em>list</em><em> of </em><em>tuples</em><em> of </em><em>floats</em>) – (optional) list of lower and upper limits by which to filter.
+example: [(0.5,1.0), (0.5,1.0)]</p></li>
+<li><p><strong>decimation</strong> (<em>int</em>) – (optional) decimation factor. default: 1</p></li>
+<li><p><strong>Observability</strong> (<em>array</em>) – (optional) Observability matrix; can be reused from <a class="reference internal" href="mdof.realize.html#mdof.realize.srim" title="mdof.realize.srim"><code class="xref py py-func docutils literal notranslate"><span class="pre">mdof.realize.srim()</span></code></a>.
 default: None</p></li>
 </ul>
 </dd>
@@ -437,13 +449,17 @@ condition numbers, and modal validation metrics EMAC and MPC.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.modal.spectrum_modes">
-<span class="sig-prename descclassname"><span class="pre">mdof.modal.</span></span><span class="sig-name descname"><span class="pre">spectrum_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitudes</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modal.spectrum_modes" title="Permalink to this definition">#</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mdof.modal.</span></span><span class="sig-name descname"><span class="pre">spectrum_modes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">periods</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">amplitudes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_peaks</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sorted_by</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.modal.spectrum_modes" title="Permalink to this definition">#</a></dt>
 <dd><p>Modal identification from a transfer function.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>periods</strong> (<em>array</em>) – transfer function periods</p></li>
 <li><p><strong>amplitudes</strong> (<em>array</em>) – transfer function amplitudes</p></li>
+<li><p><strong>n_peaks</strong> (<em>int</em>) – (optional) number of peaks to return. By default, all peaks are returned.</p></li>
+<li><p><strong>sorted_by</strong> (<em>string</em>) – (optional) characteristic by which to sort peaks. choose out of the following: ‘height’, …
+sorting order is highest to lowest (descending).</p></li>
+<li><p><strong>prominence</strong> (<em>float</em>) – (optional) prominence of selected peaks</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
