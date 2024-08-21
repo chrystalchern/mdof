@@ -86,3 +86,18 @@ def generate_input(times, series=None, seed=None):
     else:
         input_motion = series
     return input_motion
+
+
+import json
+import numpy as np
+class json_serialize(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        if isinstance(obj, np.floating):
+            return float(obj)
+        if isinstance(obj, complex):
+            return str(obj)
+        if isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)

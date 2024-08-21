@@ -46,6 +46,10 @@ def _block_tr(nrow, nblock, ncol, a, flag: int):
     return at
 
 
+def form_IU(dimI, u):
+    pass
+
+
 def _ac2bd(u, y, a, c):
     nd, m = y.shape
     _, r = u.shape
@@ -74,8 +78,6 @@ def _ac2bd(u, y, a, c):
             z = _block_tr(1, nd, m, z, 0)
             phi = np.hstack((phi, z.T))
     z = _block_tr(1, nd, m, y, 0)
-    from scipy.io import savemat
-    savemat("out/phiz_ours.mat", {'phi_ours':phi,'z_ours':z})
     b = np.linalg.pinv(phi) @ z.T
     x0 = b[:n, 0]
     d = _block_tr(m, r, 1, b[n:n+m*r], 0)
@@ -84,7 +86,9 @@ def _ac2bd(u, y, a, c):
     return b, d, x0
 
 
-def ac2bd(inputs, outputs, r, A, C, **options):
+def ac2bd(inputs, outputs, A, C, **options):
+
+    r = options.get('r')
 
     p,N = outputs.shape
     q,_ = inputs.shape
@@ -205,20 +209,20 @@ def srim(inputs,outputs,**options):
                     dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
                     :math:`nt` = number of timesteps
     :type outputs:  array
-    :param horizon: number of steps used for identification (prediction horizon).
+    :param horizon: (optional) number of steps used for identification (prediction horizon).
                     default: :math:`min(300, nt)`
-    :type horizon:  int, optional
-    :param order:   model order. default: :math:`min(20,` ``horizon``:math:`/2)`
-    :type order:    int, optional
-    :param full:    if True, full SVD. default: True
-    :type full:     bool, optional
-    :param find:    "ABCD" or "AC". default: "ABCD"
-    :type find:     string, optional
-    :param threads: number of threads used during the output error minimization method.
+    :type horizon:  int
+    :param order:   (optional) model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :type order:    int
+    :param full:    (optional) if True, full SVD. default: True
+    :type full:     bool
+    :param find:    (optional) "ABCD" or "AC". default: "ABCD"
+    :type find:     string
+    :param threads: (optional) number of threads used during the output error minimization method.
                     default: 6
-    :type threads:  int, optional
-    :param chunk:   chunk size in output error minimization method. default: 200
-    :type chunk:    int, optional
+    :type threads:  int
+    :param chunk:   (optional) chunk size in output error minimization method. default: 200
+    :type chunk:    int
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:         tuple of arrays
@@ -252,6 +256,9 @@ def srim(inputs,outputs,**options):
     r = options.get("r", 
         options.get("order",
                     min(20, int(no/2))))
+    
+    if 'r' not in options.keys():
+        options['r'] = r
 
     full = options.get("full", True)
     find = options.get("find","ABCD")
@@ -313,7 +320,7 @@ def srim(inputs,outputs,**options):
     if use_juang_ac2bd:
         B, D, x0 = _ac2bd(inputs.T, outputs.T, A, C)
     else:
-        B, D = ac2bd(inputs, outputs, r, A, C, **options)
+        B, D = ac2bd(inputs, outputs, A, C, **options)
     return A,B,C,D
 
     
@@ -325,14 +332,14 @@ def era(Y,**options):
     :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
     :type Y:        array
-    :param horizon: number of block rows in Hankel matrix = order of observability matrix.
+    :param horizon: (optional) number of block rows in Hankel matrix = order of observability matrix.
                     default: :math:`min(150, (nt-1)/2)`
-    :type horizon:  int, optional
-    :param nc:      number of block columns in Hankel matrix = order of controllability matrix.
+    :type horizon:  int
+    :param nc:      (optional) number of block columns in Hankel matrix = order of controllability matrix.
                     default: :math:`min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
-    :type nc:       int, optional
-    :param order:   model order. default: :math:`min(20,` ``horizon``:math:`/2)`
-    :type order:    int, optional
+    :type nc:       int
+    :param order:   (optional) model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :type order:    int
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:         tuple of arrays
@@ -407,22 +414,22 @@ def era_dc(Y,**options):
     :param Y:       Markov parameters. dimensions: :math:`(p,q,nt)`, where :math:`p` = number of outputs,
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
     :type Y:        array
-    :param horizon: number of block rows in Hankel matrix = order of observability matrix.
+    :param horizon: (optional) number of block rows in Hankel matrix = order of observability matrix.
                     default: :math:`min(150, (nt-1)/2)`
-    :type horizon:  int, optional
-    :param nc:      number of block columns in Hankel matrix = order of controllability matrix.
+    :type horizon:  int
+    :param nc:      (optional) number of block columns in Hankel matrix = order of controllability matrix.
                     default: :math:`min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
-    :type nc:       int, optional
-    :param order:   model order. default: :math:`min(20,` ``horizon``:math:`/2)`
-    :type order:    int, optional
-    :param a:       :math:`(\\alpha)` number of block rows in Hankel of correlation matrix. default: 0
-    :type a:        int, optional
-    :param b:       :math:`(\\beta)` number of block columns in Hankel of correlation matrix. default: 0
-    :type b:        int, optional
-    :param l:       initial lag for data correlations. default: 0
-    :type l:        int, optional
-    :param g:       lags (gap) between correlation matrices. default: 1
-    :type g:        int, optional
+    :type nc:       int
+    :param order:   (optional) model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :type order:    int
+    :param a:       (optional) :math:`(\\alpha)` number of block rows in Hankel of correlation matrix. default: 0
+    :type a:        int
+    :param b:       (optional) :math:`(\\beta)` number of block columns in Hankel of correlation matrix. default: 0
+    :type b:        int
+    :param l:       (optional) initial lag for data correlations. default: 0
+    :type l:        int
+    :param g:       (optional) lags (gap) between correlation matrices. default: 1
+    :type g:        int
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
     :rtype:         tuple of arrays

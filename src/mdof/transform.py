@@ -13,8 +13,8 @@ def power_transfer(inputs, outputs, step, **options):
     :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -36,8 +36,8 @@ def fourier_transfer(inputs, outputs, step, **options):
     :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -59,10 +59,10 @@ def response_transfer(inputs, outputs, step, **options):
     :type outputs:      1D array
     :param step:        timestep.
     :type step:         float
-    :param pseudo:      if True, uses pseudo accelerations. default: False
-    :type pseudo:       bool, optional
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param pseudo:      (optional) if True, uses pseudo accelerations. default: False
+    :type pseudo:       bool
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -100,8 +100,8 @@ def fdd_spectrum(outputs, step, **options):
     :type outputs:      ND array.
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays
@@ -125,7 +125,7 @@ def fdd_spectrum(outputs, step, **options):
 
 def fdd(outputs, step):
     """
-    Frequency Domain Decomposition [1]_ from output data.
+    Frequency Domain Decomposition [2]_ from output data.
 
     :param outputs:     output response history.
                         dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
@@ -139,7 +139,7 @@ def fdd(outputs, step):
     
     References
     ----------
-    .. [1]  Brincker, R., Zhang, L., & Andersen, P. (2001). Modal identification of
+    .. [2]  Brincker, R., Zhang, L., & Andersen, P. (2001). Modal identification of
             output-only systems using frequency domain decomposition. Smart materials
             and structures, 10(3), 441. (https://doi.org/10.1088/0964-1726/10/3/303
     """
@@ -178,8 +178,8 @@ def power_spectrum(series, step, period_band=None, **options):
     :type series:       1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.
@@ -200,8 +200,8 @@ def fourier_spectrum(series, step, period_band=None, **options):
     :type series:       1D array
     :param step:        timestep.
     :type step:         float
-    :param period_band: minimum and maximum period of interest, in seconds.
-    :type period_band:  tuple, optional
+    :param period_band: (optional) minimum and maximum period of interest, in seconds.
+    :type period_band:  tuple
 
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.

@@ -66,8 +66,6 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="MIMO for Event History" href="06_MIMO_History.html" />
-    <link rel="prev" title="Introduction to MIMO" href="04_MIMO_Intro.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -172,7 +170,7 @@
                     </li>
                 
 
-                    <li class="nav-item current active">
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -257,7 +255,7 @@ document.write(`
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
       
-      <div class="bd-sidebar-primary bd-sidebar">
+      <div class="bd-sidebar-primary bd-sidebar hide-on-wide">
         
 
   
@@ -289,7 +287,7 @@ document.write(`
                     </li>
                 
 
-                    <li class="nav-item current active">
+                    <li class="nav-item">
                       <a class="nav-link nav-internal" href="index.html">
                         Examples
                       </a>
@@ -335,23 +333,6 @@ document.write(`
     
   </div>
   
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item"><nav class="bd-docs-nav bd-links"
-     aria-label="Section Navigation">
-  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="00_Overview.html">Overview of the <code class="docutils literal notranslate"><span class="pre">mdof</span></code> package</a></li>
-<li class="toctree-l1"><a class="reference internal" href="01_SISO_Intro.html">Introduction to SISO</a></li>
-<li class="toctree-l1"><a class="reference internal" href="02_SISO_Event.html">SISO for a Ground Motion Event</a></li>
-<li class="toctree-l1"><a class="reference internal" href="03_SISO_History.html">SISO for Event History</a></li>
-<li class="toctree-l1"><a class="reference internal" href="04_MIMO_Intro.html">Introduction to MIMO</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">MIMO for a Ground Motion Event</a></li>
-<li class="toctree-l1"><a class="reference internal" href="06_MIMO_History.html">MIMO for Event History</a></li>
-</ul>
-</div>
-</nav></div>
-    </div>
-  
   
   <div class="sidebar-primary-items__end sidebar-primary__section">
   </div>
@@ -384,9 +365,6 @@ document.write(`
         <i class="fa-solid fa-home"></i>
       </a>
     </li>
-    
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Examples</a></li>
-    
     <li class="breadcrumb-item active" aria-current="page">MIMO for a...</li>
   </ul>
 </nav>
@@ -408,7 +386,7 @@ document.write(`
 <h1>MIMO for a Ground Motion Event<a class="headerlink" href="#MIMO-for-a-Ground-Motion-Event" title="Permalink to this heading">#</a></h1>
 <section id="Chopra-Section-9.7">
 <h2>Chopra Section 9.7<a class="headerlink" href="#Chopra-Section-9.7" title="Permalink to this heading">#</a></h2>
-<p><img alt="structure_diagram" src="../_images/ex9.10.png" /></p>
+<img alt="structure_diagram" src="../_images/structure_diagram.png" />
 <section id="Partitioned-equation-of-dynamic-equilibrium-(Chopra-Eq.-9.7.1)">
 <h3>Partitioned equation of dynamic equilibrium (Chopra Eq. 9.7.1)<a class="headerlink" href="#Partitioned-equation-of-dynamic-equilibrium-(Chopra-Eq.-9.7.1)" title="Permalink to this heading">#</a></h3>
 <div class="math notranslate nohighlight">
@@ -506,7 +484,7 @@ document.write(`
 </section>
 <section id="Example-9.10">
 <h3>Example 9.10<a class="headerlink" href="#Example-9.10" title="Permalink to this heading">#</a></h3>
-<p><img alt="structure_diagram" src="../_images/ex9.10.png" /></p>
+<img alt="structure_diagram" src="../_images/ex9.10.png" />
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -664,8 +642,8 @@ freqs=array([10.4747315 ,  6.92820323])
 </div>
 <p>The fundamental frequencies of the system are <strong>10.47 rad/s</strong> and <strong>6.93 rad/s.</strong></p>
 <ul class="simple">
-<li><p>[ ] get fundamental frequencies and mode shapes from equation of motion</p></li>
-<li><p>[ ] use system identification to determine fundamental frequencies and mode shapes</p></li>
+<li><p>☐ get fundamental frequencies and mode shapes from equation of motion</p></li>
+<li><p>☐ use system identification to determine fundamental frequencies and mode shapes</p></li>
 </ul>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -1421,24 +1399,6 @@ $\displaystyle \left[\begin{matrix}\begin{cases} \frac{1 - \cos{\left(\omega_{n}
                 <footer class="prev-next-footer">
                   <!-- Previous / next buttons -->
 <div class="prev-next-area">
-    <a class="left-prev"
-       href="04_MIMO_Intro.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Introduction to MIMO</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="06_MIMO_History.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">MIMO for Event History</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               

@@ -30,19 +30,35 @@ def _condeig(a): # TODO: make this match matlab source code for condeig
     return vr, lamr, c
 
     
-def system_modes(realization, dt, **options):
+def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=True, filter_by=None, filter_lim=None, **options):
     """
     Modal identification from a state space system realization.
 
     :param realization:     realization in the form of state space coefficients ``(A,B,C,D)``
-    :type realization:      tuple
+    :type realization:      tuple of arrays
     :param dt:              timestep.
     :type dt:               float
-    :param decimation:      decimation factor. default: 1
-    :type decimation:       int, optional
-    :param Observability:   Observability matrix; can be reused from :func:`mdof.realize.srim`.
+    :param n_peaks:         (optional) number of peaks to return. By default, all peaks are returned.
+    :type n_peaks:          int
+    :param sorted_by:       (optional) characteristic by which to sort peaks.
+                            choose out of the following: 'period', 'MPC', 'EMAC', ...
+                            sorting order is highest to lowest (descending), unless `sort_descending` is set to `False`.
+    :type sorted_by:        string
+    :param sort_descending: (optional) sort from highest to lowest
+                            default: `True`
+    :type sort_descending:  boolean
+    :param filter_by:       (optional) list of characteristics by which to filter peaks.
+                            example: ['MPC', 'EMAC'].
+                            choose out of the following: 'period', 'MPC', 'EMAC', 'frequency', 'damping', 'condition_number', ...
+    :type filter_by:        list of strings
+    :param filter_lim:      (optional) list of lower and upper limits by which to filter.
+                            example: [(0.5,1.0), (0.5,1.0)]
+    :type filter_lim:       list of tuples of floats
+    :param decimation:      (optional) decimation factor. default: 1
+    :type decimation:       int
+    :param Observability:   (optional) Observability matrix; can be reused from :func:`mdof.realize.srim`.
                             default: None
-    :type Observability:    array, optional
+    :type Observability:    array
 
     :return:                system modes, including natural frequencies, damping ratios, mode shapes,
                             condition numbers, and modal validation metrics EMAC and MPC.
@@ -89,13 +105,63 @@ def system_modes(realization, dt, **options):
                 'energy_condensed_emaco': energy_condensed_emaco[i],  # energy condensed output emac
                 'mpc': mpc[i],     # MPC
                 }
-            for i in range(len(freq)) if i not in notroots # and energy_condensed_emaco[i] > 0.5 and mpc[i] > 0.5
+            for i in range(len(freq)) if i not in notroots
             }
+
+    if filter_by is not None:
+        for i,filterkey in enumerate(filter_by):
+            try:
+                lim = filter_lim[i]
+            except IndexError as e:
+                print(e)
+                print("Modes not filtered. filter_by and filter_lim must have matching lengths")
+                return modes
+
+            filterkey = filterkey.lower()
+            if filterkey=='emac':
+                filterkey = 'energy_condensed_emaco'
+            elif filterkey=='period':
+                filterkey = 'freq'
+                lim = (1/lim[1], 1/lim[0])
+            elif filterkey=='frequency':
+                filterkey = 'freq'
+            elif filterkey=='damping':
+                filterkey = 'damp'
+            elif filterkey=='condition_number':
+                filterkey = 'cnd'
+
+            try:
+                modes = {k:v
+                        for k,v in modes.items()
+                        if v[filterkey]>=lim[0] and v[filterkey]<=lim[1]}
+            except IndexError as e:
+                print(e)
+                print("Modes not filtered. filter_lim must be a list of tuples of two floats each.")
+                return modes
+            except TypeError as e:
+                print(e)
+                print("Modes not filtered. filter_lim must be a list of tuples of two floats each.")
+                return modes
+            except KeyError as e:
+                print(e)
+                print("Modes not filtered. Invalid filter_by.")
+                return modes
+
+    if sorted_by is not None:
+        sorted_by = sorted_by.lower()
+        if sorted_by=='period':
+            sorted_by = 'freq'
+            sort_descending = False
+        sorted_modes = sorted(modes.items(), key=lambda mode: mode[1][sorted_by], reverse=sort_descending)
+        modes = {k:v for k,v in sorted_modes}
+    if n_peaks is not None:
+        modes = list(modes.items())[:n_peaks]
+        modes = {k:v for k,v in modes}
 
     return modes
 
     
-def spectrum_modes(periods, amplitudes, **options):
+def spectrum_modes(periods, amplitudes, n_peaks=None, sorted_by=None, **options):
     """
     Modal identification from a transfer function.
 
@@ -103,6 +169,13 @@ def spectrum_modes(periods, amplitudes, **options):
     :type periods:      array
     :param amplitudes:  transfer function amplitudes
     :type amplitudes:   array
+    :param n_peaks:     (optional) number of peaks to return. By default, all peaks are returned.
+    :type n_peaks:      int
+    :param sorted_by:   (optional) characteristic by which to sort peaks. choose out of the following: 'height', ...
+                        sorting order is highest to lowest (descending).
+    :type sorted_by:    string
+    :param prominence:  (optional) prominence of selected peaks
+    :type prominence:   float
 
     :return:            (fundamental_periods, fundamental_amplitudes)
     :rtype:             tuple
@@ -113,10 +186,17 @@ def spectrum_modes(periods, amplitudes, **options):
     # rel_height = options.get("rel_height", 0.1)
     prominence = options.get("prominence", max(amplitudes)*0.3)
     
-    # peaks, _ = find_peaks(amplitudes, height=height, width=width, rel_height=rel_height, prominence=prominence)
-    peaks, _ = find_peaks(amplitudes, prominence=prominence)
-    fundamental_periods = periods[peaks]
-    fundamental_amplitudes = amplitudes[peaks]
+    # peak_indices, _ = find_peaks(amplitudes, height=height, width=width, rel_height=rel_height, prominence=prominence)
+    peak_indices, _ = find_peaks(amplitudes, prominence=prominence)
+
+    if sorted_by=='height':
+        peak_indices = sorted(peak_indices, key=lambda peak: amplitudes[peak], reverse=True)
+    fundamental_periods = periods[peak_indices]
+    fundamental_amplitudes = amplitudes[peak_indices]
     
-    return (fundamental_periods, fundamental_amplitudes)
+    if n_peaks is None:
+        return (fundamental_periods, fundamental_amplitudes)
+    else:
+        return (fundamental_periods[:n_peaks], fundamental_amplitudes[:n_peaks])
+    
     

@@ -16,10 +16,10 @@ def okid(inputs,outputs,**options):
                     dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
                     :math:`nt` = number of timesteps
     :type outputs:  array
-    :param m:       number of Markov parameters to compute. default: :math:`min(300, nt)`
-    :type m:        int, optional
-    :param rcond:   cut-off ratio for small singular values in pseudoinverse computation. default: `1e-15`
-    :type m:        float, optional
+    :param m:       (optional) number of Markov parameters to compute. default: :math:`min(300, nt)`
+    :type m:        int
+    :param rcond:   (optional) cut-off ratio for small singular values in pseudoinverse computation. default: `1e-15`
+    :type m:        float
 
     :return: the Markov parameters, with dimensions :math:`(p,q,m+1)`
     :rtype: array

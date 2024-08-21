@@ -63,7 +63,7 @@
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mdof.eigid" href="generated/mdof.eigid.html" />
+    <link rel="next" title="mdof.outid" href="generated/mdof.outid.html" />
     <link rel="prev" title="mdof documentation" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -336,10 +336,11 @@ document.write(`
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">mdof</a></li>
 </ul>
 <ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.outid.html">mdof.outid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
 <li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
+<li class="toctree-l1"><a class="reference internal" href="generated/mdof.reconstruct.html">mdof.reconstruct</a></li>
 </ul>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
@@ -408,17 +409,20 @@ document.write(`
 functions for quickly performing system identification:</p>
 <table class="autosummary longtable table autosummary">
 <tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/mdof.outid.html#mdof.outid" title="mdof.outid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.outid</span></code></a>(outputs, dt, **options)</p></td>
+<td><p>Fundamental periods <code class="docutils literal notranslate"><span class="pre">P</span></code> and modeshapes <code class="docutils literal notranslate"><span class="pre">Phi</span></code> identification from <code class="docutils literal notranslate"><span class="pre">output</span></code> array.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="generated/mdof.modes.html#mdof.modes" title="mdof.modes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.modes</span></code></a>(inputs, outputs, dt, **options)</p></td>
+<td><p>Fundamental periods <code class="docutils literal notranslate"><span class="pre">P</span></code> and modeshapes <code class="docutils literal notranslate"><span class="pre">Phi</span></code> identification from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="generated/mdof.eigid.html#mdof.eigid" title="mdof.eigid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.eigid</span></code></a>(inputs, outputs, **options)</p></td>
-<td><p>System eigenvalues <code class="docutils literal notranslate"><span class="pre">Gam</span></code> and eigenvectors <code class="docutils literal notranslate"><span class="pre">Psi</span></code> identification from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="generated/mdof.outid.html#mdof.outid" title="mdof.outid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.outid</span></code></a>(outputs, dt, **options)</p></td>
-<td><p>Fundamental frequencies <code class="docutils literal notranslate"><span class="pre">F</span></code> and modeshapes <code class="docutils literal notranslate"><span class="pre">Phi</span></code> identification from <code class="docutils literal notranslate"><span class="pre">output</span></code> array.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="generated/mdof.modes.html#mdof.modes" title="mdof.modes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.modes</span></code></a>(inputs, outputs, dt, **options)</p></td>
-<td><p>Modal identification using state space system realization from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p></td>
+<td><p>State space system eigenvalues <code class="docutils literal notranslate"><span class="pre">Gam</span></code> and eigenvectors <code class="docutils literal notranslate"><span class="pre">Psi</span></code> identification from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="generated/mdof.sysid.html#mdof.sysid" title="mdof.sysid"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.sysid</span></code></a>(inputs, outputs, **options)</p></td>
 <td><p>State space system realization (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>) from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="generated/mdof.reconstruct.html#mdof.reconstruct" title="mdof.reconstruct"><code class="xref py py-obj docutils literal notranslate"><span class="pre">mdof.reconstruct</span></code></a>(realization, dt, inputs, ...)</p></td>
+<td><p>Response reconstruction (predicted <code class="docutils literal notranslate"><span class="pre">output</span></code>) from system realization (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>) and <code class="docutils literal notranslate"><span class="pre">input</span></code>.</p></td>
 </tr>
 </tbody>
 </table>
@@ -454,11 +458,11 @@ frequency domain and time domain analysis of vibration signals:</p>
       </div>
     </a>
     <a class="right-next"
-       href="generated/mdof.eigid.html"
+       href="generated/mdof.outid.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mdof.eigid</p>
+        <p class="prev-next-title">mdof.outid</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
