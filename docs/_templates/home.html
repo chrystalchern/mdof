@@ -287,22 +287,6 @@
           <div class=casestudies-box-text>{{ example.description }}</div>
         </a>
         {% endfor %}
-        {% if False %}
-        <a class="casestudies-box-content casestudies-underline"
-          href="{{ pathto('examples', 1) }}/{{project}}-0002/index.html">
-          <div class=casestudies-box-title>Parallel Spectra</div><img
-            src="{{ pathto('_static/../_images', 1) }}/{{ project }}-0002.png"
-            alt="Two orbs orbiting each other. They are displacing gravity around them.">
-          <div class=casestudies-box-text>...</div>
-        </a>
-        <a class="casestudies-box-content casestudies-underline"
-           href="{{pathto('examples',1)}}/examples/{{project}}-0003/index.html">
-          <div class=casestudies-box-title>Javascript</div><img
-            src="{{ pathto('_static/../_images', 1) }}/{{ project }}-0003.png" alt="Cricket ball on green field.">
-          <div class=casestudies-box-text>
-          </div>
-        </a>
-        {% endif %}
   </section>
 
   <section class=tabs-section>
@@ -311,18 +295,9 @@
       <div class=uikit-tab-wrapper>
         <ul class="uk-flex-center uk-nav" uk-tab>
           <li class="uk-active"><a href=#>  Other libraries</a></li>
-          {% if False %}
-          <li><a href=#>Scientific Domains</a></li>
-          <li><a href=#>Data Science</a></li>
-          <li><a href=#>Machine Learning</a></li>
-          <li><a href=#>Visualization</a></li>
-          {% endif %}
         </ul>
         <ul id=tabs-content class="uk-switcher uk-margin">
           <li class=array-libraries>
-            {% if False %}
-            <p>...</p>
-            {% endif %}
             <table>
               <tr class=highlight-th>
                 <td class=bold-text></td>
@@ -336,14 +311,14 @@
                     <img class=first-column-layout
                          src="{{ pathto('_static/images', 1) }}/content_images/brace/opensees.jpg" alt="opensees"></a></td>
                 <td class=full-center-text><a href="https://pypi.org/project/opensees" />opensees</a></td>
-                <td class=left-text>Direct and idiomatic bindings to the 
-                  <a href="https://github.com/STAIRLab/OpenSeesRT">OpenSeesRT</a> finite element analysis kernel.</td>
+                <td class=left-text>Fast nonlinear finite element analysis using the
+                  <a href="https://github.com/claudioperez/OpenSeesRT">OpenSeesRT framework</a>.</td>
               </tr>
               <tr>
                 <td style=text-align:center><img class=first-column-layout
                     src="{{ pathto('_static/images', 1) }}/content_images/brace/sdof.svg" alt="sdof"></td>
                 <td class=full-center-text><a href="https://pypi.org/project/sdof" />sdof</a></td>
-                <td class=left-text>Lightning-fast integration of single degree-of-freedom systems.</td>
+                <td class=left-text>Parallel integration of single degree-of-freedom systems.</td>
               </tr>
               <tr>
                 <td style=text-align:center><img class=first-column-layout
