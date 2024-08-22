@@ -413,20 +413,10 @@ document.write(`
   <section id="module-mdof.realize">
 <span id="mdof-realize-module"></span><h1>mdof.realize module<a class="headerlink" href="#module-mdof.realize" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
-<dt class="sig sig-object py" id="mdof.realize.form_IU">
-<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">form_IU</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dimI</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">u</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.form_IU" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.realize.ac2bd">
-<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">ac2bd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">A</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">C</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.ac2bd" title="Permalink to this definition">#</a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
 <dt class="sig sig-object py" id="mdof.realize.srim">
 <span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">srim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.srim" title="Permalink to this definition">#</a></dt>
 <dd><p>System realization from input and output data, with output error minimization method.
-System Realization Using Information Matrix (SRIM) <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
+System Realization Using Information Matrix (SRIM) <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -456,7 +446,7 @@ default: 6</p></li>
 <h2>References<a class="headerlink" href="#references" title="Permalink to this heading">#</a></h2>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id2" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">4</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>Juang, J. N. (1997). System realization using information matrix. Journal
 of Guidance, Control, and Dynamics, 20(3), 492-500.
 (<a class="reference external" href="https://doi.org/10.2514/2.4068">https://doi.org/10.2514/2.4068</a>)</p>
@@ -469,7 +459,7 @@ of Guidance, Control, and Dynamics, 20(3), 492-500.
 <dt class="sig sig-object py" id="mdof.realize.era">
 <span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">era</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.era" title="Permalink to this definition">#</a></dt>
 <dd><p>System realization from Markov parameters (discrete impulse response data).
-Ho-Kalman / Eigensystem Realization Algorithm (ERA) <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id7" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>.</p>
+Ho-Kalman / Eigensystem Realization Algorithm (ERA) <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id7" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -493,14 +483,14 @@ default: <span class="math notranslate nohighlight">\(min(150, max(nt-1-\)</span
 <h2>References<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id6" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">1</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
 <p>Ho, Β. L., &amp; Kálmán, R. E. (1966). Effective construction of linear state-variable models
 from input/output functions: Die Konstruktion von linearen Modeilen in der Darstellung
 durch Zustandsvariable aus den Beziehungen für Ein-und Ausgangsgrößen. at-Automatisierungstechnik,
 14(1-12), 545-548. (<a class="reference external" href="https://doi.org/10.1524/auto.1966.14.112.545">https://doi.org/10.1524/auto.1966.14.112.545</a>)</p>
 </aside>
 <aside class="footnote brackets" id="id7" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
 <p>Juang, J. N., &amp; Pappa, R. S. (1985). An eigensystem realization algorithm for modal parameter
 identification and model reduction. Journal of guidance, control, and dynamics, 8(5), 620-627.
 (<a class="reference external" href="https://doi.org/10.2514/3.20031">https://doi.org/10.2514/3.20031</a>)</p>
@@ -513,7 +503,7 @@ identification and model reduction. Journal of guidance, control, and dynamics, 
 <dt class="sig sig-object py" id="mdof.realize.era_dc">
 <span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">era_dc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.era_dc" title="Permalink to this definition">#</a></dt>
 <dd><p>System realization from Markov parameters (discrete impulse response data).
-Eigensystem Realization Algorithm with Data Correlations (ERA/DC) <a class="footnote-reference brackets" href="#id10" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
+Eigensystem Realization Algorithm with Data Correlations (ERA/DC) <a class="footnote-reference brackets" href="#id10" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -541,7 +531,7 @@ default: <span class="math notranslate nohighlight">\(min(150, max(nt-1-\)</span
 <h2>References<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id10" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">3</a><span class="fn-bracket">]</span></span>
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">4</a><span class="fn-bracket">]</span></span>
 <p>Juang, J. N., Cooper, J. E., &amp; Wright, J. R. (1987). An eigensystem realization algorithm
 using data correlations (ERA/DC) for modal parameter identification.
 (<a class="reference external" href="https://ntrs.nasa.gov/citations/19870035963">https://ntrs.nasa.gov/citations/19870035963</a>)</p>
@@ -595,8 +585,6 @@ using data correlations (ERA/DC) for modal parameter identification.
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.form_IU"><code class="docutils literal notranslate"><span class="pre">form_IU()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.ac2bd"><code class="docutils literal notranslate"><span class="pre">ac2bd()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.srim"><code class="docutils literal notranslate"><span class="pre">srim()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era"><code class="docutils literal notranslate"><span class="pre">era()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era_dc"><code class="docutils literal notranslate"><span class="pre">era_dc()</span></code></a></li>
