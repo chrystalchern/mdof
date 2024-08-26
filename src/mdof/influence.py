@@ -49,8 +49,14 @@ def _block_tr(nrow, nblock, ncol, a, flag: int):
     return at
 
 
-def form_IU(dimI, u):
-    pass
+def _form_IU(dimI, u):
+    assert len(u.shape) == 1
+    q = u.shape[0]
+    Idd = np.eye(dimI)
+    IU = np.empty((dimI,dimI*q))
+    for i in range(q):
+        IU[:,i*dimI:(i+1)*dimI] = u[i]*Idd
+    return IU
 
 
 def _blk_3(i, CA, U):
@@ -152,30 +158,32 @@ def ac2bd(inputs, outputs, A, C, **options):
     # Second block column of Phi
     Ipp = np.eye(p)
     for i in range(N):
-        Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(Ipp,inputs[:,i])
+        # Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(Ipp,inputs[:,i])
+        Phi[i*p:(i+1)*p, r:r+p*q] = _form_IU(p,inputs[:,i])
 
     # Third block column of Phi
     Irr = np.eye(r)
-    Un = np.array([np.kron(Irr,inputs[:,i]) for i in range(N)])
+    # Un = np.array([np.kron(Irr,inputs[:,i]) for i in range(N)])
+    Un = np.array([_form_IU(r,inputs[:,i]) for i in range(N)])
     assert Un.shape == (N,r,r*q)
 
     # Execute a loop in parallel that looks something like:
     #    for i in  range(1,N):
     #        Phi[] = _blk_3(i, CA_Powers, np.flip(...))
 
-    # for i in range(1,N):
-    #     Phi[i*p:(i+1)*p, r+p*q:] = np.sum([CA_powers[j]@Un[i-j-1] for j in range(i)],0)
+    for i in range(1,N):
+        Phi[i*p:(i+1)*p, r+p*q:] = np.sum([CA_powers[j]@Un[i-j-1] for j in range(i)],0)
 
-    with multiprocessing.Pool(threads) as pool:
-        for i,res in progress_bar(
-                pool.imap_unordered(
-                    partial(_blk_3, CA=CA_powers,U=np.flip(Un,0)),
-                    range(1,N),
-                    chunk
-                ),
-                total = N
-            ):
-            Phi[i*p:(i+1)*p, r+p*q:] = res
+    # with multiprocessing.Pool(threads) as pool:
+    #     for i,res in progress_bar(
+    #             pool.imap_unordered(
+    #                 partial(_blk_3, CA=CA_powers,U=np.flip(Un,0)),
+    #                 range(1,N),
+    #                 chunk
+    #             ),
+    #             total = N
+    #         ):
+    #         Phi[i*p:(i+1)*p, r+p*q:] = res
 
     y = outputs[:,:N].flatten()
     teta = lsq_solve(Phi,y)
