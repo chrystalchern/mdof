@@ -10,3 +10,4 @@ _build
 docs/theory/out/
 docs/library/generated/
 docs/examples/
+out/
