@@ -171,8 +171,8 @@ def ac2bd(inputs, outputs, A, C, **options):
     #    for i in  range(1,N):
     #        Phi[] = _blk_3(i, CA_Powers, np.flip(...))
 
-    for i in range(1,N):
-        Phi[i*p:(i+1)*p, r+p*q:] = np.sum([CA_powers[j]@Un[i-j-1] for j in range(i)],0)
+    # for i in range(1,N):
+    #     Phi[i*p:(i+1)*p, r+p*q:] = np.sum([CA_powers[j]@Un[i-j-1] for j in range(i)],0)
 
     # with multiprocessing.Pool(threads) as pool:
     #     for i,res in progress_bar(
@@ -184,6 +184,10 @@ def ac2bd(inputs, outputs, A, C, **options):
     #             total = N
     #         ):
     #         Phi[i*p:(i+1)*p, r+p*q:] = res
+
+    for i in range(r):
+        B = np.zeros((r,1))
+        _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(A, B_pulse, C, D_pulse), u[:, j])
 
     y = outputs[:,:N].flatten()
     teta = lsq_solve(Phi,y)
