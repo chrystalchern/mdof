@@ -6,8 +6,8 @@
 
 # default imports
 from .system import system
-from .modal import system_modes, _condeig
-from .transform import fdd
+from . import transform
+from . import modal
 import numpy as np
 
 
@@ -82,7 +82,7 @@ def modes(inputs, outputs, dt, **options):
 
 def eigid(inputs, outputs, **options):
     r"""
-    State space system eigenvalues ``Gam`` and eigenvectors ``Psi`` identification from
+    State space system eigenvalues ``vals`` and eigenvectors ``vecs`` identification from
     ``input`` and ``output`` arrays. This is the eigendecomposition of the discrete system
     state transition matrix, :math:`\mathbf{A}`.
 
@@ -96,14 +96,13 @@ def eigid(inputs, outputs, **options):
     :param decimation:  decimation factor. default: 1
     :type decimation:   int, optional
 
-    :return:            (``Gam``, ``Psi``)
+    :return:            (``vals``, ``vecs``)
     :rtype:             tuple of 1D array, ND array
     """
     A,_,_,_ = sysid(inputs, outputs, **options)
     decimation = options.get("decimation", 1)
-    # eigendecomp A
-    Psi,Gam,_ = _condeig(A)  # eigenvectors (Psi) & eigenvalues (Gam) of the matrix A
-    return (Gam,Psi)
+    vals,vecs = np.linalg.eig(A)
+    return (vals,vecs)
 
 
 def sysid(inputs, outputs, **options):

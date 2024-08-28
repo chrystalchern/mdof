@@ -128,7 +128,9 @@ def _compute_Ys(y,i):
     Ypp, Yfm = Y[:(i+1)*p].copy(), Y[(i+1)*p:].copy()
     return (Yp, Yf), (Ypp, Yfm)
 
-def _compute_Os((Yp,Yf),(Ypp,Yfm)):
+def _compute_Os(Y,Ym):
+    (Yp,Yf) = Y
+    (Ypp,Yfm) = Ym
     Oi = _project_rowspace(Yf,Yp)
     Oim1 = _project_rowspace(Yfm,Ypp)
     return Oi, Oim1

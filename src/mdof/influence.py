@@ -92,41 +92,43 @@ def _form_powers(C,A,ns,p,r,pow_impl,p_max=10):
         return CA_powers
     
 
+from .simulate import simulate
 def _ac2bd(u, y, a, c):
     """
     Compute the system matrices ``B`` and ``D`` from the system matrices ``A`` and ``C``.
     """
-    nd, m = y.shape
-    _, r = u.shape
+    N, p = y.shape
+    _, q = u.shape
     n, _ = a.shape
 
     # Form observability matrix up to the data length for computing x(0)
     phi = c
     temp = c
-    for k in range(2, nd + 1):
+    for k in range(2, N + 1):
         temp = np.dot(temp, a)
         phi = np.vstack((phi, temp))
 
     # Add the input matrix associated with D matrix
-    phi = np.hstack((phi, np.zeros((nd * m, m * r))))
-    for j in range(r):
-        for i in range(m):
-            phi[i:nd*m+1:m, n+j*m+i] = u[:,j]
+    phi = np.hstack((phi, np.zeros((N * p, p * q))))
+    for j in range(q):
+        for i in range(p):
+            phi[i:N*p+1:p, n+j*p+i] = u[:,j]
 
     # Add the imaginary output matrix associated with B matrix
-    d = np.zeros((m, 1))
-    for j in range(r):
+    d = np.zeros((p, 1))
+    for j in range(q):
         for i in range(n):
             b = np.zeros((n, 1))
             b[i, 0] = 1
-            _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(a, b, c, d), u[:, j])
-            z = _block_tr(1, nd, m, z, 0)
+            # _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(a, b, c, d), u[:, j])
+            z = simulate((a, b, c, d), u[:, j][:,None].T).T
+            z = _block_tr(1, N, p, z, 0)
             phi = np.hstack((phi, z.T))
-    z = _block_tr(1, nd, m, y, 0)
+    z = _block_tr(1, N, p, y, 0)
     b = np.linalg.pinv(phi) @ z.T
     x0 = b[:n, 0]
-    d = _block_tr(m, r, 1, b[n:n+m*r], 0)
-    b = _block_tr(n, r, 1, b[n+m*r:n+m*r+n*r], 0)
+    d = _block_tr(p, q, 1, b[n:n+p*q], 0)
+    b = _block_tr(n, q, 1, b[n+p*q:n+p*q+n*q], 0)
 
     return b, d, x0
 
@@ -174,20 +176,24 @@ def ac2bd(inputs, outputs, A, C, **options):
     # for i in range(1,N):
     #     Phi[i*p:(i+1)*p, r+p*q:] = np.sum([CA_powers[j]@Un[i-j-1] for j in range(i)],0)
 
-    # with multiprocessing.Pool(threads) as pool:
-    #     for i,res in progress_bar(
-    #             pool.imap_unordered(
-    #                 partial(_blk_3, CA=CA_powers,U=np.flip(Un,0)),
-    #                 range(1,N),
-    #                 chunk
-    #             ),
-    #             total = N
-    #         ):
-    #         Phi[i*p:(i+1)*p, r+p*q:] = res
+    with multiprocessing.Pool(threads) as pool:
+        for i,res in progress_bar(
+                pool.imap_unordered(
+                    partial(_blk_3, CA=CA_powers,U=np.flip(Un,0)),
+                    range(1,N),
+                    chunk
+                ),
+                total = N
+            ):
+            Phi[i*p:(i+1)*p, r+p*q:] = res
 
-    for i in range(r):
-        B = np.zeros((r,1))
-        _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(A, B_pulse, C, D_pulse), u[:, j])
+    D_pulse = np.zeros((q, 1))
+    for j in range(q):
+        for i in range(r):
+            B_pulse = np.zeros((r,1))
+            B_pulse[i] = 1
+            _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(A, B_pulse, C, D_pulse), inputs[:, j])
+            
 
     y = outputs[:,:N].flatten()
     teta = lsq_solve(Phi,y)

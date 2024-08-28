@@ -5,30 +5,8 @@ from a state space realization or transfer function.
 import numpy as np
 import scipy.linalg as sl
 from numpy import pi
-from mdof.validation import OutputEMAC, MPC
-
-
-def _condeig(a): # TODO: make this match matlab source code for condeig
-    """
-    vals, vecs, conds = condeig(A) Computes condition numbers for the
-    eigenvalues of a matrix. The condition numbers are the reciprocals
-    of the cosines of the angles between the left and right eigenvectors.
-    Inspired by Arno Onken's Octave code for condeig.
-
-    https://github.com/macd/rogues/blob/master/rogues/utils/condeig.py
-    """
-    m, n = a.shape
-    # eigenvalues, left and right eigenvectors
-    lamr, vl, vr = sl.eig(a, left=True, right=True)
-    vl = vl.T.conj()
-    # Normalize vectors
-    for i in range(n):
-        vl[i, :] = vl[i, :] / np.sqrt(abs(vl[i, :] ** 2).sum())
-    # Condition numbers are reciprocal of the cosines (dot products) of the
-    # left eignevectors with the right eigenvectors.
-    c = abs(1 / np.diag(np.dot(vl, vr))) 
-    return vr, lamr, c
-
+from .validation import OutputEMAC, MPC
+from .numerics import _condeig
     
 def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=True, filter_by=None, filter_lim=None, **options):
     """
@@ -85,10 +63,10 @@ def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=
     modeshape = C@Psi
 
     # energy condensed output EMAC (extended modal amplitude coherence)
-    energy_condensed_emaco = OutputEMAC(A,C,Observability=Observability,Psi=Psi,Gam=Gam,**options)
+    energy_condensed_emaco = OutputEMAC(A,C,**options)
 
     # MPC (modal phase collinearity)
-    mpc = MPC(A,C,Psi=Psi)
+    mpc = MPC(A,C)
 
     # for perfect data, the modes of the state space model come in pairs.
     # each pair's corresponding eigenvalues and eigenvectors are complex conjugates.
@@ -198,5 +176,4 @@ def spectrum_modes(periods, amplitudes, n_peaks=None, sorted_by=None, **options)
         return (fundamental_periods, fundamental_amplitudes)
     else:
         return (fundamental_periods[:n_peaks], fundamental_amplitudes[:n_peaks])
-    
     

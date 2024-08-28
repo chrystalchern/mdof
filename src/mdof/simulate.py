@@ -1,36 +1,48 @@
 import numpy as np
 import scipy
+import warnings
 
-def _simulate(system, u, w=None):
-    # python version of N4SID from mattjj https://github.com/mattjj/py4sid
-    (A, B, C, D) = system
-    p,n = C.shape
-    T, _ = u.shape
-    # Initialize
-    x = np.empty((T,n))
 
-    x[0] = 0
-    for t in range(T-1):
-        x[t+1] = A.dot(x[t]) + B.dot(u[t])
-
-    y = C.dot(x.T).T + D.dot(w.T).T
-
-    return x, y
-
-def simulate(system, u, w=None, backend=None):
+def simulate(system, inputs, w=None, backend=None):
+    """
+    Simulate the response for a discrete-time system from its system
+    matrices ``(A,B,C,D)`` and an `inputs` array.
+    """
     (A, B, C, D) = system
     if backend is None:
-        return scipy.signal.dlsim(scipy.signal.dlti(A, B, C, D), u[:, j])
-    
+        return _simulate(system=(A, B, C, D), inputs=inputs, w=w)[1]
+    elif backend=='scipy':
+        return scipy.signal.dlsim(scipy.signal.dlti(A, B, C, D), inputs.T)[1].T
+    elif backend=='control':
+        return _simulate_control(realization=system, dt=1, inputs=inputs)
     else:
-        return _simulate((A, B, C, D), u, w=w)[1]
+        warnings.warn("backend not recognized.")
+        return
+    
 
+# in-house simulate
+def _simulate(system, inputs, w=None):
+    (A, B, C, D) = system
+    p,n = C.shape
+    _,T = inputs.shape
+
+    x = np.empty((n,T), dtype=complex)
+    x[:,0] = np.zeros((n,))
+    for t in range(T-1):
+        x[:,t+1] = A@(x[:,t]) + B@(inputs[:,t])
+
+    if w is None:
+        w = inputs
+    y = np.real(C@x + D@w)
+    assert y.shape == (p,T)
+
+    return x, y
 
 
 from scipy.interpolate import make_interp_spline
 from scipy.signal import lti, dlti, StateSpace
+# scipy signal dlsim
 def dlsim(system, u, t=None, x0=None):
-    # scipy signal
     """
     Simulate output of a discrete-time linear system.
 
@@ -86,6 +98,9 @@ def dlsim(system, u, t=None, x0=None):
     array([[ 0.,  0.,  0.,  1.]])
 
     """
+    # We are looking for A, B, C, D, dt
+    # ---------------------------------------------------------------------------
+
     # Convert system to dlti-StateSpace
     if isinstance(system, lti):
         raise AttributeError('dlsim can only be used with discrete-time dlti '
@@ -97,6 +112,15 @@ def dlsim(system, u, t=None, x0=None):
     is_ss_input = isinstance(system, StateSpace)
     system = system._as_ss()
 
+    A = system.A 
+    B = system.B
+    C = system.C 
+    D = system.D
+    dt = system.dt
+
+    # We have A, B, C, D, dt
+    # ---------------------------------------------------------------------------
+
     u = np.atleast_1d(u)
 
     if u.ndim == 1:
@@ -104,19 +128,19 @@ def dlsim(system, u, t=None, x0=None):
 
     if t is None:
         out_samples = len(u)
-        stoptime = (out_samples - 1) * system.dt
+        stoptime = (out_samples - 1) * dt
     else:
         stoptime = t[-1]
-        out_samples = int(np.floor(stoptime / system.dt)) + 1
+        out_samples = int(np.floor(stoptime / dt)) + 1
 
     # Pre-build output arrays
-    xout = np.zeros((out_samples, system.A.shape[0]))
-    yout = np.zeros((out_samples, system.C.shape[0]))
+    xout = np.zeros((out_samples, A.shape[0]))
+    yout = np.zeros((out_samples, C.shape[0]))
     tout = np.linspace(0.0, stoptime, num=out_samples)
 
     # Check initial condition
     if x0 is None:
-        xout[0, :] = np.zeros((system.A.shape[1],))
+        xout[0, :] = np.zeros((A.shape[1],))
     else:
         xout[0, :] = np.asarray(x0)
 
@@ -131,14 +155,11 @@ def dlsim(system, u, t=None, x0=None):
 
     # Simulate the system
     for i in range(0, out_samples - 1):
-        xout[i+1, :] = (np.dot(system.A, xout[i, :]) +
-                        np.dot(system.B, u_dt[i, :]))
-        yout[i, :] = (np.dot(system.C, xout[i, :]) +
-                      np.dot(system.D, u_dt[i, :]))
+        xout[i+1,:] = A@xout[i,:] + B@u_dt[i,:]
+        yout[i,:]   = C@xout[i,:] + D@u_dt[i,:]
 
     # Last point
-    yout[out_samples-1, :] = (np.dot(system.C, xout[out_samples-1, :]) +
-                              np.dot(system.D, u_dt[out_samples-1, :]))
+    yout[out_samples-1, :] = C@xout[out_samples-1,:] + D@u_dt[out_samples-1,:]
 
     if is_ss_input:
         return tout, yout, xout
@@ -147,7 +168,7 @@ def dlsim(system, u, t=None, x0=None):
 
 
 from control import ss, forced_response
+# control forced_response
 def _simulate_control(realization, dt, inputs):
-    # control
     out_pred = forced_response(ss(*realization,dt), U=inputs, squeeze=False, return_x=False).outputs
     return out_pred

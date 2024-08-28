@@ -1,37 +1,65 @@
+import numpy as np
+import numpy.linalg
+import scipy
+
 
 def lsq_solver(options):
-    import numpy.linalg
     return lambda *args: numpy.linalg.lstsq(*args, rcond=options.get('rcond',None))[0]
+
 
 def lin_solver():
     pass
 
+
 def svd_routine(lapack_driver="gesvd", **kwds):
-    import scipy
     # default lapack_driver="gesdd"
     def _svd(*args):
-        U,S,V = scipy.linalg.svd(*args, lapack_driver=lapack_driver, **kwds)
-        return U,S,V.T.conj()
+        U,s,Vh = scipy.linalg.svd(*args, lapack_driver=lapack_driver, **kwds)
+        return U,s,Vh.T.conj()
     return _svd
 
-def form_observability():
-    pass
 
-def form_controllability():
-    pass
-    
-def block_hankel(series):
-    pass
+def _condeig(A):
+    """
+    vals, vecs, conds = condeig(A) Computes condition numbers for the
+    eigenvalues of a matrix. The condition numbers are the reciprocals
+    of the cosines of the angles between the left and right eigenvectors.
+    Inspired by Arno Onken's Octave code for condeig.
 
-def decimate(series, decimation):
-    import numpy as np
-    if isinstance(series, np.ndarray):
-        if len(series.shape) == 1:
-            return series[np.arange(0,len(series),decimation)]
-        else:
-            return series[:,np.arange(0,series.shape[1],decimation)]
-    if isinstance(series, list):
-        return np.asarry(series)[np.arange(0,len(series),decimation)]
+    https://github.com/macd/rogues/blob/master/rogues/utils/condeig.py
+    """
+    m,n = A.shape
+    # eigenvalues, left and right eigenvectors
+    lamr, vl, vr = scipy.linalg.eig(A, left=True, right=True)
+    vl = vl.T.conj()
+    # Normalize vectors
+    for i in range(n):
+        vl[i, :] = vl[i, :] / np.sqrt(abs(vl[i, :] ** 2).sum())
+    # Condition numbers are reciprocal of the cosines (dot products) of the
+    # left eignevectors with the right eigenvectors.
+    c = abs(1 / np.diag(np.dot(vl, vr))) 
+    return vr, lamr, c
+
+from functools import lru_cache, wraps
+
+def np_cache(function):
+    @lru_cache()
+    def cached_wrapper(hashable_array):
+        array = np.array(hashable_array)
+        return function(array)
+
+    @wraps(function)
+    def wrapper(array):
+        return cached_wrapper(tuple(array))
+
+    # copy lru_cache attributes over too
+    wrapper.cache_info = cached_wrapper.cache_info
+    wrapper.cache_clear = cached_wrapper.cache_clear
+
+    return wrapper
+
+_cached_condeig = np_cache(_condeig)
+
 
 def linear_interpolate(x, y, target_x):
     sorted_indices = sorted(range(len(x)), key = lambda i: x[i])
@@ -45,5 +73,3 @@ def linear_interpolate(x, y, target_x):
     y2 = y[i2]
     target_y = y1 + (target_x-x1)*(y2-y1)/(x2-x1)    
     return target_y
-
-cm2g = 0.0010197162129779

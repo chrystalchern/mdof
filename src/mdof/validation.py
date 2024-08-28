@@ -1,6 +1,7 @@
 import numpy as np
 from numpy import pi
 
+
 def EnergyCondensedEMAC(emac,phi):
     n,p = emac.shape
     assert emac.shape == phi.shape
@@ -11,6 +12,7 @@ def EnergyCondensedEMAC(emac,phi):
         )/np.real(phi[i,:].conjugate().transpose()@phi[i,:])
         for i in range(n) 
     ])
+
 
 def EMAC_Matrix(Phi_final, Phi_final_hat):
     p,n = Phi_final.shape
@@ -30,101 +32,34 @@ def EMAC_Matrix(Phi_final, Phi_final_hat):
             emac[i,j] = Rij*Wij
     return emac
 
-
-def OutputEMAC(A,C,Psi=None,Gam=None,**options):
+from .construct import form_observability
+def OutputEMAC(A,C,**options):
     """
-    :param outlook:         number of timesteps for which to consider temporal consistency. default: 100
-    :param Psi:             eigenvectors of A, as columns of a matrix. can be reused from modal.system_modes().
-    :param Gam:             eigenvalues of A, as items of a vector. can be reused from modal.system_modes().
-    :param Observability:   Observability matrix; can be reused from :func:`mdof.realize.srim`.
+    :param outlook:         number of timesteps for which to consider temporal consistency.
+                            default: 100
     """
-    # """
-    # :param p:               number of outputs
-    # :param n:               model order (number of system variables)
-
-    # Examples
-    # --------
-    # >>> a = np.random.randn(9, 6) + 1j*np.random.randn(9, 6)
-    # >>> b = np.random.randn(2, 7, 8, 3) + 1j*np.random.randn(2, 7, 8, 3)
-
-    # Reconstruction based on full SVD, 2D case:
-
-    # >>> U, S, Vh = np.linalg.svd(a, full_matrices=True)
-    # >>> U.shape, S.shape, Vh.shape
-    # ((9, 9), (6,), (6, 6))
-    # >>> np.allclose(a, np.dot(U[:, :6] * S, Vh))
-    # True
-    # >>> smat = np.zeros((9, 6), dtype=complex)
-    # >>> smat[:6, :6] = np.diag(S)
-    # >>> np.allclose(a, np.dot(U, np.dot(smat, Vh)))
-    # True
-
-    # Reconstruction based on reduced SVD, 2D case:
-
-    # >>> U, S, Vh = np.linalg.svd(a, full_matrices=False)
-    # >>> U.shape, S.shape, Vh.shape
-    # ((9, 6), (6,), (6, 6))
-    # >>> np.allclose(a, np.dot(U * S, Vh))
-    # True
-    # >>> smat = np.diag(S)
-    # >>> np.allclose(a, np.dot(U, np.dot(smat, Vh)))
-    # True
-
-    # Reconstruction based on full SVD, 4D case:
-
-    # >>> U, S, Vh = np.linalg.svd(b, full_matrices=True)
-    # >>> U.shape, S.shape, Vh.shape
-    # ((2, 7, 8, 8), (2, 7, 3), (2, 7, 3, 3))
-    # >>> np.allclose(b, np.matmul(U[..., :3] * S[..., None, :], Vh))
-    # True
-    # >>> np.allclose(b, np.matmul(U[..., :3], S[..., None] * Vh))
-    # True
-
-    # Reconstruction based on reduced SVD, 4D case:
-
-    # >>> U, S, Vh = np.linalg.svd(b, full_matrices=False)
-    # >>> U.shape, S.shape, Vh.shape
-    # ((2, 7, 8, 3), (2, 7, 3), (2, 7, 3, 3))
-    # >>> np.allclose(b, np.matmul(U * S[..., None, :], Vh))
-    # True
-    # >>> np.allclose(b, np.matmul(U, S[..., None] * Vh))
-    # True
-    # """
     p,n = C.shape
     assert A.shape == (n,n)
     no = options.get("outlook",
          options.get("no",
          options.get("horizon",
                      100)))
-    Observability = options.get("Observability",
-                                None)
+    Observability = form_observability(A,C,no)
     """Output EMAC (Eqs. 3.88-3.89)"""
-    if Gam is None:
-        assert Psi is None
-        from mdof.modal import _condeig 
-        Psi,Gam,_ = _condeig(A)
-    if Observability is None:
-        Observability = np.empty((no,p,n))
-        Observability[0,:,:] = C
-        A_pwr = A
-        for pwr in range(1,no):
-            Observability[pwr,:,:] =  C@A_pwr
-            A_pwr = A@A_pwr
-        Observability = Observability.reshape((no*p,n))
-    Phi_final = Observability[-p:,:]@Psi                    # identified modal observability at the last timestep (last block row)
-    Phi_final_hat = C@Psi@np.diag(Gam**(no-1))              # expected modal observability at the last timestep
+    vals, vecs = np.linalg.eig(A)
+    Phi_final = Observability[-p:,:] @ vecs                  # identified modal observability at the last timestep (last block row)
+    Phi_final_hat = C @ vecs @ np.diag(vals**(no-1))         # expected modal observability at the last timestep
     assert Phi_final.shape == Phi_final_hat.shape == (p,n)
     emaco  = EMAC_Matrix(Phi_final,Phi_final_hat)
-    return EnergyCondensedEMAC(emaco,(C@Psi).T)             # DIM: nxp, nxp
+    return EnergyCondensedEMAC(emaco,(C@vecs).T)             # DIM: nxp, nxp
 
-def MPC(A,C,Psi=None):
+
+def MPC(A,C):
     """a) Modal Phase Collinearity (MPC) [Eqs. 3.85-3.87]"""
-    if Psi is None:
-        from mdof.modal import _condeig 
-        Psi,_,_ = _condeig(A)
+    _, vecs = np.linalg.eig(A)
     _,n = C.shape
-    assert Psi.shape == (n,n)
-    modes_raw = C@Psi
+    assert vecs.shape == (n,n)
+    modes_raw = C@vecs
     s11, s22, s12 = np.zeros((3,n))
     nu, mpc = np.zeros((2,n))
     lam = np.zeros((2,n))
@@ -133,7 +68,6 @@ def MPC(A,C,Psi=None):
         s11[i] = np.real(mode_i).conjugate().transpose()@np.real(mode_i)
         s22[i] = np.imag(mode_i).conjugate().transpose()@np.imag(mode_i)
         s12[i] = np.real(mode_i).conjugate().transpose()@np.imag(mode_i)
-        # print(f"{mode_i=}, {s11[i]=}, {s22[i]=}, {s12[i]=}")
         if s12[i] == 0:
             nu[i] = np.nan
         else:
@@ -143,26 +77,97 @@ def MPC(A,C,Psi=None):
         mpc[i]   = ((lam[0,i]-lam[1,i])/(lam[0,i]+lam[1,i]))**2
     return mpc
 
-def filter_A(A,C, dt, **options):
 
-    from mdof.modal import _condeig 
-    Psi,Gam,cnd = _condeig(A)  # eigenvectors (Psi) & eigenvalues (Gam) of the matrix A
+def eigenfilter(A, test, by_index=False, return_indices=False):
+    """
+    Filters away undesirable, e.g., unstable, modes of the matrix `A`.
+    1. Finds the eigenvalues `val` of `A` for which `test` evaluates to True.
+    2. Recomputes a "filtered" matrix, `filtered_A`, with those eigenvalues set to zero.
+    Test is evaluated on the eigenvalue (`test(val)`) by default (`by_index=False').
+    Test is evaluated on the index of the eigenvalue if `by_index=True`.
+    """
+    vals,vecs = np.linalg.eig(A)
 
-    # energy condensed output EMAC (extended modal amplitude coherence)
-    energy_condensed_emaco = OutputEMAC(A,C,Psi=Psi,Gam=Gam,**options)
+    indices = []
+    for i,val in enumerate(vals):
+        if test(i if by_index else val):
+            indices.append(i)
+            vals[i] = 0
 
-    # MPC (modal phase collinearity)
-    mpc = MPC(A,C,Psi=Psi)
+    filtered_A = vecs @ np.diag(vals) @ np.linalg.inv(vecs)
 
-    n,_ = A.shape
-    filtered_Psi = Psi
-    for i in range(n):
-        # if energy_condensed_emaco[i] < 0.5 and mpc[i] < 0.5:
-        if np.abs(Gam[i]) > 1:
-            # print(f"removing {i}th mode because EMACO and MPC are both less than 0.5")
-            print(f"removing {i}th mode because magnitude of eigenvalue is greater than 1")
-            Gam[i] = 0
+    if return_indices:
+        return filtered_A, indices
+    else:
+        return filtered_A
 
-    filtered_A = Psi @ np.diag(Gam) @ np.linalg.inv(Psi)
 
+import inspect
+def test_string(test):
+    test_source_string = inspect.getsource(test)
+    if "lambda" in test_source_string:
+        return "\n".join(test_source_string.split(":")[-1].split("\n")[:-1])
+    else:
+        return "\n".join(test_source_string.split("return")[-1].split("\n")[:-1])
+    
+
+def stabilize_discrete(A, verbose=False):
+    # if test is True, the mode is filtered out.
+    test = lambda v: np.abs(v) > 1
+    filtered_A, indices = eigenfilter(A, test, return_indices=True)
+    if verbose:
+        real_mode_indices = np.unique([i//2 for i in indices]).tolist()
+        print(f"""
+        removing mode indices {indices} (real mode indices {real_mode_indices})
+        because magnitude of eigenvalue is greater than 1 ({test_string(test)})
+        """)
     return filtered_A
+
+
+def stabilize_continuous(A, verbose=False):
+    # if test is True, the mode is filtered out.
+    test = lambda v: np.real(v) > 0
+    filtered_A, indices = eigenfilter(A, test, return_indices=True)
+    if verbose:
+        real_mode_indices = np.unique([i//2 for i in indices]).tolist()
+        print(f"""
+        removing mode indices {indices} (real mode indices {real_mode_indices})
+        because real part of eigenvalue is positive ({test_string(test)})
+        """)
+    return filtered_A
+
+
+def filter_consistent(A, C, verbose=False, **options):
+    # energy condensed output EMAC (extended modal amplitude coherence)
+    energy_condensed_emaco = OutputEMAC(A,C)
+    threshold = options.get('threshold',0.5)
+    # if test is True, the mode is filtered out.
+    def test(i):
+        return energy_condensed_emaco[i] < threshold
+    filtered_A, indices = eigenfilter(A, test, by_index=True, return_indices=True)
+    if verbose:
+        real_mode_indices = np.unique([i//2 for i in indices]).tolist()
+        print(f"""
+        removing mode indices {indices} (real mode indices {real_mode_indices})
+        because EMAC < {threshold} ({test_string(test)})
+        """)
+    return filtered_A
+    
+
+def filter_collinear(A, C, verbose=False, **options):
+    # MPC (modal phase collinearity)
+    mpc = MPC(A,C)
+    threshold = options.get('threshold',0.5)
+    # if test is True, the mode is filtered out.
+    def test(i):
+        return mpc[i] < threshold
+    filtered_A, indices = eigenfilter(A, test, by_index=True, return_indices=True)
+    if verbose:
+        real_mode_indices = np.unique([i//2 for i in indices]).tolist()
+        print(f"""
+        removing mode indices {indices} (real mode indices {real_mode_indices})
+        because MPC < {threshold} ({test_string(test)})
+        """)
+    return filtered_A
+
+        
