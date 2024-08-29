@@ -4,6 +4,31 @@ from time import time
 from control import ss, forced_response
 import numpy as np
 
+class Timer:
+    def __init__(self):
+        # Timer starts
+        self.start = self.last = time()
+        self.laps = []  
+
+    def lap(self, message=None):
+        if message is None:
+            message = ""
+        # The current lap-time
+        laptime = round((time() - self.last), 2)
+        self.laps.append(laptime)
+
+        # Printing the lap number,
+        # lap-time and total time
+        print(f"{self.laps[-1]:<10} {message}")
+
+
+        # Updating the previous total time
+        # and lap number
+        self.last = time()
+
+
+
+
 def test_method(method, inputs, outputs, dt, t, **conf):
     time0 = time()
     A,B,C,D = mdof.system(method=method, inputs=inputs, outputs=outputs, **conf)

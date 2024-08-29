@@ -93,44 +93,45 @@ def _form_powers(C,A,ns,p,r,pow_impl,p_max=10):
     
 
 from .simulate import simulate
-def _ac2bd(u, y, a, c):
+def _ac2bd(u, y, A, C):
     """
     Compute the system matrices ``B`` and ``D`` from the system matrices ``A`` and ``C``.
     """
     N, p = y.shape
     _, q = u.shape
-    n, _ = a.shape
+    n, _ = A.shape
 
     # Form observability matrix up to the data length for computing x(0)
-    phi = c
-    temp = c
+    Phi = C
+    temp = C
     for k in range(2, N + 1):
-        temp = np.dot(temp, a)
-        phi = np.vstack((phi, temp))
+        temp = np.dot(temp, A)
+        Phi = np.vstack((Phi, temp))
 
     # Add the input matrix associated with D matrix
-    phi = np.hstack((phi, np.zeros((N * p, p * q))))
+    Phi = np.hstack((Phi, np.zeros((N * p, p * q))))
     for j in range(q):
         for i in range(p):
-            phi[i:N*p+1:p, n+j*p+i] = u[:,j]
+            Phi[i:N*p+1:p, n+j*p+i] = u[:,j]
 
     # Add the imaginary output matrix associated with B matrix
-    d = np.zeros((p, 1))
+    null_feedthrough = np.zeros((p, 1))
     for j in range(q):
         for i in range(n):
-            b = np.zeros((n, 1))
-            b[i, 0] = 1
-            # _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(a, b, c, d), u[:, j])
-            z = simulate((a, b, c, d), u[:, j][:,None].T).T
-            z = _block_tr(1, N, p, z, 0)
-            phi = np.hstack((phi, z.T))
-    z = _block_tr(1, N, p, y, 0)
-    b = np.linalg.pinv(phi) @ z.T
-    x0 = b[:n, 0]
-    d = _block_tr(p, q, 1, b[n:n+p*q], 0)
-    b = _block_tr(n, q, 1, b[n+p*q:n+p*q+n*q], 0)
+            ei = np.zeros((n, 1))
+            ei[i,0] = 1
+            _,z,_ = scipy.signal.dlsim(scipy.signal.dlti(A,ei,C,null_feedthrough),
+                                         u[:,j])
+            # z = simulate((A,ei,C,null_feedthrough),u[:,j][:,None].T).T
+            z = _block_tr(1,N,p,z,0)
+            Phi = np.hstack((Phi,z.T))
+    ycol = _block_tr(1,N,p,y,0)
+    Theta = np.linalg.pinv(Phi) @ ycol.T
+    x0 = Theta[:n, 0]
+    D = _block_tr(p,q,1,Theta[n:n+p*q],0)
+    B = _block_tr(n,q,1,Theta[n+p*q:n+p*q+n*q],0)
 
-    return b, d, x0
+    return B,D,x0
 
 
 def ac2bd(inputs, outputs, A, C, **options):
@@ -148,7 +149,9 @@ def ac2bd(inputs, outputs, A, C, **options):
     
     lsq_solve = numerics.lsq_solver(options.get("lsq", {}))
     
+    #
     # Setting up the Phi matrix
+    #
     Phi  = np.zeros((p*N, r+p*q+r*q), dtype=complex)
 
     # First block column of Phi
@@ -158,14 +161,10 @@ def ac2bd(inputs, outputs, A, C, **options):
         Phi[df*p:(df+1)*p, :r] = CA_powers[df]
 
     # Second block column of Phi
-    Ipp = np.eye(p)
     for i in range(N):
-        # Phi[i*p:(i+1)*p, r:r+p*q] = np.kron(Ipp,inputs[:,i])
         Phi[i*p:(i+1)*p, r:r+p*q] = _form_IU(p,inputs[:,i])
 
     # Third block column of Phi
-    Irr = np.eye(r)
-    # Un = np.array([np.kron(Irr,inputs[:,i]) for i in range(N)])
     Un = np.array([_form_IU(r,inputs[:,i]) for i in range(N)])
     assert Un.shape == (N,r,r*q)
 
@@ -175,6 +174,9 @@ def ac2bd(inputs, outputs, A, C, **options):
 
     # for i in range(1,N):
     #     Phi[i*p:(i+1)*p, r+p*q:] = np.sum([CA_powers[j]@Un[i-j-1] for j in range(i)],0)
+
+    # for i in progress_bar(range(1,N), total=N-1):
+    #     Phi[i*p:(i+1)*p, r+p*q:] = sum(  CA_powers[j]@Un[i-j-1] for j in range(i)   )
 
     with multiprocessing.Pool(threads) as pool:
         for i,res in progress_bar(
@@ -187,31 +189,34 @@ def ac2bd(inputs, outputs, A, C, **options):
             ):
             Phi[i*p:(i+1)*p, r+p*q:] = res
 
-    D_pulse = np.zeros((q, 1))
-    for j in range(q):
-        for i in range(r):
-            B_pulse = np.zeros((r,1))
-            B_pulse[i] = 1
-            _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(A, B_pulse, C, D_pulse), inputs[:, j])
+    # zero_q = np.zeros((q, 1))
+    # for j in range(q):
+    #     for i in range(r):
+    #         ei_r = np.zeros((r,1))
+    #         ei_r[i] = 1
+    #         _, z, _ = scipy.signal.dlsim(scipy.signal.dlti(A, ei_r, C, zero_q), inputs[j,:])
+    #         assert z.shape == (N,p)
+    #         z = z.flatten()
+    #         Phi[:,r+p*q+j*i] = z
             
-
-    y = outputs[:,:N].flatten()
-    teta = lsq_solve(Phi,y)
+    y = outputs.T.flatten()
+    # y = outputs.flatten()
+    Theta = lsq_solve(Phi,y)
     # teta = np.linalg.pinv(Phi) @ y
 
-    x0 = teta[:r]
-    dcol = teta[r:r+p*q]
-    bcol = teta[r+p*q:r+p*q+r*q]
+    x0 = Theta[:r]
+    dcol = Theta[r:r+p*q]
+    bcol = Theta[r+p*q:r+p*q+r*q]
 
     D = np.zeros((p,q), dtype=complex)
     B = np.zeros((r,q), dtype=complex)
-    for wq in range(q):
-        D[:,wq] = dcol[wq*p:(wq+1)*p]
+    for i in range(q):
+        D[:,i] = dcol[i*p:(i+1)*p]
     if np.max(D.imag) > 1e-4:
         warnings.warn(f"matrix D imaginary part as large as {np.max(D.imag)}")
     D = D.real
-    for ww in range(q):
-        B[:,ww] = bcol[ww*r:(ww+1)*r]
+    for i in range(q):
+        B[:,i] = bcol[i*r:(i+1)*r]
     if np.max(B.imag) > 1e-4:
         warnings.warn(f"matrix B imaginary part as large as {np.max(B.imag)}")
     B = B.real

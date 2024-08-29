@@ -86,8 +86,6 @@ def srim(inputs,outputs,**options):
     Yno = np.zeros((p*no,ns))
     Uno = np.zeros((q*no,ns))
 
-    # progress_bar = lambda arg, **kwds: (i for i in arg)
-
     # Construct Y (output) & U (input) data matrices (Eqs. 3.58 & 3.60 Arici 2006)
     for i in range(no):
         Yno[i*p:(i+1)*p,:] = outputs[:,i:ns+i]
@@ -136,7 +134,7 @@ def srim(inputs,outputs,**options):
 
     return A,B,C,D
 
-    
+
 def era(Y,**options):
     """
     System realization from Markov parameters (discrete impulse response data).
