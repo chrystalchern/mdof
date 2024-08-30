@@ -416,12 +416,13 @@ document.write(`
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">mdof</span>
 <span class="kn">from</span> <span class="nn">mdof</span> <span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">transform</span>
-<span class="kn">import</span> <span class="nn">sdof</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">numpy</span> <span class="kn">import</span> <span class="n">sqrt</span>
 <span class="kn">from</span> <span class="nn">mdof.utilities.config</span> <span class="kn">import</span> <span class="n">Config</span>
-<span class="kn">from</span> <span class="nn">mdof.utilities.printing</span> <span class="kn">import</span> <span class="o">*</span>
-<span class="kn">from</span> <span class="nn">mdof.numerics</span> <span class="kn">import</span> <span class="n">decimate</span>
+<span class="kn">from</span> <span class="nn">mdof.utilities.printing</span> <span class="kn">import</span> <span class="n">plot_io</span><span class="p">,</span> <span class="n">print_modes</span><span class="p">,</span> <span class="n">plot_transfer</span><span class="p">,</span> <span class="n">plot_pred</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scienceplots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s2">&quot;science&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -581,11 +582,19 @@ damping matrix: [[ 0.04641016 -1.29282032]
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_13_0.png" src="../_images/examples_04_MIMO_Intro_13_0.png" />
+</div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_MIMO_Intro_13_0.png" src="../_images/examples_04_MIMO_Intro_13_0.png" />
+<img alt="../_images/examples_04_MIMO_Intro_13_1.png" src="../_images/examples_04_MIMO_Intro_13_1.png" />
 </div>
 </div>
 </section>
@@ -643,29 +652,21 @@ damping matrix: [[ 0.04641016 -1.29282032]
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|█████████▉| 1700/1701 [00:00&lt;00:00, 22078.57it/s]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC
-      0.9911     0.01       1.0        1.0        1.0
-      0.2656     0.02       1.0        1.0        1.0
-Mean Period(s): 0.6283185307179695
-Standard Dev(s): 0.3627598728468275
+      0.9911     0.01       0.8057     1.0        0.8057
+      0.2656     0.02       0.0        1.0        0.0
+Mean Period(s): 0.6283185307179147
+Standard Dev(s): 0.36275987284689354
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_MIMO_Intro_18_2.png" src="../_images/examples_04_MIMO_Intro_18_2.png" />
+<img alt="../_images/examples_04_MIMO_Intro_18_1.png" src="../_images/examples_04_MIMO_Intro_18_1.png" />
 </div>
 </div>
 </section>
@@ -683,11 +684,19 @@ Standard Dev(s): 0.3627598728468275
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/examples_04_MIMO_Intro_20_0.png" src="../_images/examples_04_MIMO_Intro_20_0.png" />
+</div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_MIMO_Intro_20_0.png" src="../_images/examples_04_MIMO_Intro_20_0.png" />
+<img alt="../_images/examples_04_MIMO_Intro_20_1.png" src="../_images/examples_04_MIMO_Intro_20_1.png" />
 </div>
 </div>
 </section>
