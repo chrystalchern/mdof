@@ -52,8 +52,9 @@ def ac2bd(inputs, outputs, A, C, **options):
 
     # First block column of Phi 
     CA_powers = C@stack_powers(A, n_pwr=N)
-    for i in range(N):
-        Phi[i*p:(i+1)*p, :n] = CA_powers[i]
+    # for i in range(N):
+    #     Phi[i*p:(i+1)*p, :n] = CA_powers[i]
+    Phi[:,:n] = CA_powers.reshape(N*p,n)
 
     # Second block column of Phi
     for i in range(N):

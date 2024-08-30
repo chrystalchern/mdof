@@ -5,9 +5,8 @@ NOTEBOOKS = notebooks/00_Overview.ipynb \
             notebooks/02_SISO_Event.ipynb \
             notebooks/03_SISO_History.ipynb \
             notebooks/04_MIMO_Intro.ipynb \
-	    	notebooks/06_MIMO_History.ipynb \
-			../mdof_studies/PeakPicking.ipynb \
-			../mdof_studies/PowerSpectrum.ipynb
+	    notebooks/06_MIMO_History.ipynb \
+	    ../mdof_studies/PowerSpectrum.ipynb
 
 
 test:
@@ -17,7 +16,7 @@ test:
 
 publish: test
 	cp -r _build/html/* site/
-	git.exe add site && git.exe commit -m'cc - rebuild site' && git.exe subtree push --prefix site origin gh-pages
+	git add site && git commit -m'cc - rebuild site' && git subtree push --prefix site origin gh-pages
 
 # Minimal makefile for Sphinx documentation
 #

@@ -10,7 +10,7 @@ def stack_powers(A,n_pwr, axis=None):
     A_p = np.eye(n)
     for pwr in range(0,n_pwr):
         powers_A[pwr] = A_p
-        A@A_p
+        A_p = A@A_p
     return powers_A
 
 
