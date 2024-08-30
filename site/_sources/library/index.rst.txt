@@ -15,11 +15,11 @@ functions for quickly performing system identification:
 .. autosummary::
    :toctree: generated/
 
-   mdof.outid
-   mdof.modes
-   mdof.eigid
-   mdof.sysid
-   mdof.reconstruct
+   outid
+   modes
+   eigid
+   sysid
+   reconstruct
 
 
 The following modules expose the inner building blocks for
