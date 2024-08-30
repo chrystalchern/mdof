@@ -22,7 +22,7 @@ def simulate(system, inputs, w=None, backend=None):
 
 # in-house simulate
 def _simulate(system, inputs, w=None):
-    (A, B, C, D) = system
+    (A,B,C,D) = system
     p,n = C.shape
     _,T = inputs.shape
 
@@ -36,7 +36,7 @@ def _simulate(system, inputs, w=None):
     y = np.real(C@x + D@w)
     assert y.shape == (p,T)
 
-    return (x, y)
+    return x, y
 
 
 from scipy.interpolate import make_interp_spline

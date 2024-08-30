@@ -120,7 +120,7 @@ def fdd_spectrum(outputs, step, **options):
         period_indices = np.logical_and(periods>pmin, periods<pmax)
         periods = periods[period_indices]
         amplitudes = amplitudes[period_indices]
-    return periods, amplitudes
+    return (periods, amplitudes)
 
 
 def fdd(outputs, step):
@@ -164,7 +164,7 @@ def fdd(outputs, step):
     for i in range(transform_length):
         U[:,:,i],S[:,i],_ = np.linalg.svd(Gyy[:,:,i])
 
-    return frequencies, U, S
+    return (frequencies, U, S)
 
 
 # def _power_spectrum(series, step, **options):  # equivalent to power_spectrum()

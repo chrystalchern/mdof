@@ -27,8 +27,6 @@ class Timer:
         self.last = time()
 
 
-
-
 def test_method(method, inputs, outputs, dt, t, **conf):
     time0 = time()
     A,B,C,D = mdof.system(method=method, inputs=inputs, outputs=outputs, **conf)

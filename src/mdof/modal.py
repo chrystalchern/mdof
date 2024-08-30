@@ -173,7 +173,7 @@ def spectrum_modes(periods, amplitudes, n_peaks=None, sorted_by=None, **options)
     fundamental_amplitudes = amplitudes[peak_indices]
     
     if n_peaks is None:
-        return (fundamental_periods, fundamental_amplitudes)
+        return (fundamental_periods,fundamental_amplitudes)
     else:
-        return (fundamental_periods[:n_peaks], fundamental_amplitudes[:n_peaks])
+        return (fundamental_periods[:n_peaks],fundamental_amplitudes[:n_peaks])
     

@@ -38,7 +38,7 @@ def _condeig(A):
     # Condition numbers are reciprocal of the cosines (dot products) of the
     # left eignevectors with the right eigenvectors.
     c = abs(1 / np.diag(np.dot(vl, vr))) 
-    return vr, lamr, c
+    return (vr,lamr,c)
 
 from functools import lru_cache, wraps
 

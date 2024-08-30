@@ -32,6 +32,7 @@ def EMAC_Matrix(Phi_final, Phi_final_hat):
             emac[i,j] = Rij*Wij
     return emac
 
+
 from .construct import form_observability
 def OutputEMAC(A,C,**options):
     """

@@ -12,7 +12,7 @@ import scipy
 
 
 def _form_IU(dimI, u):
-    """
+    r"""
     Broadcast the scalar elements of the vector `u` as :math:`[Iu_1, Iu_2, \cdots, Iu_q]`.
     Same as:
     q = u.shape[0]
@@ -30,7 +30,7 @@ def _form_IU(dimI, u):
 def _blk_3(i, CA, U):
     return i, np.einsum('kil,klj->ij', CA[:i,:,:], U[-i:,:,:])
 
-from .construct import stack_powers, form_observability
+from .construct import stack_powers
 from .simulate import simulate
 def ac2bd(inputs, outputs, A, C, **options):
     """
@@ -52,7 +52,6 @@ def ac2bd(inputs, outputs, A, C, **options):
 
     # First block column of Phi 
     CA_powers = C@stack_powers(A, n_pwr=N)
-    
     for i in range(N):
         Phi[i*p:(i+1)*p, :n] = CA_powers[i]
 
@@ -63,8 +62,6 @@ def ac2bd(inputs, outputs, A, C, **options):
     # Third block column of Phi
     Un = np.array([_form_IU(n,inputs[:,i]) for i in range(N)])
     assert Un.shape == (N,n,n*q)
-
-
     if False:
         threads = options.get("threads",6)
         chunk = options.get("chunk", 200)
@@ -106,8 +103,6 @@ def ac2bd(inputs, outputs, A, C, **options):
 
     dcol = Theta[n:n+p*q]
     bcol = Theta[n+p*q:n+p*q+n*q]
-
-
     D = dcol.reshape(p,q)
     B = bcol.reshape(q,n).T
     if np.max(D.imag) > 1e-4:
