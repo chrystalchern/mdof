@@ -1,11 +1,8 @@
 import numpy as np
 import warnings
 
-# inputs = input data. dimensions of inputs: q x nt, where nt = number of timesteps.
-# outputs = response data due to input data. dimensions of outputs: p x nt.
-# m = number of Markov parameters (impulse response timesteps), not including timestep zero, to solve for.
-def okid(inputs,outputs,**options):
-    """
+def okid(inputs, outputs,**options):
+    r"""
     Identify Markov parameters, or discrete impulse response data, for a given set of input and output data.
     Observer Kalman Identification Algorithm (OKID) [1]_.
 
@@ -16,7 +13,7 @@ def okid(inputs,outputs,**options):
                     dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
                     :math:`nt` = number of timesteps
     :type outputs:  array
-    :param m:       (optional) number of Markov parameters to compute. default: :math:`min(300, nt)`
+    :param m:       (optional) number of Markov parameters to compute, excluding timestep zero. default: :math:`\min(300, nt)`
     :type m:        int
     :param rcond:   (optional) cut-off ratio for small singular values in pseudoinverse computation. default: `1e-15`
     :type m:        float
@@ -44,7 +41,7 @@ def okid(inputs,outputs,**options):
     q,nt = inputs.shape
     p = outputs.shape[0]
     assert nt == outputs.shape[1]
-    
+
     m = options.get("m", None)
     if m is None:
         m = min(1000,nt)
@@ -87,7 +84,7 @@ def okid(inputs,outputs,**options):
 
 
 from scipy.signal import lti, dlti, dlsim
-def dimpulse(system, x0=None, t=None, n=None):
+def _dimpulse(system, x0=None, t=None, n=None):
     # scipy signal
     """
     Impulse response of discrete-time system.

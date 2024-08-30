@@ -275,7 +275,7 @@ def plot_fdd(outputs, dt, true_periods=None):
 #                         :math:`nt` = number of timesteps
 #     :type outputs:      array
 #     :param dt:          number of steps used for identification (prediction horizon).
-#                         default: :math:`min(300, nt)`
+#                         default: :math:`\min(300, nt)`
 #     :type horizon:      float
 
 #     :return:            a dictionary for each metric

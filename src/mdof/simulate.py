@@ -36,7 +36,7 @@ def _simulate(system, inputs, w=None):
     y = np.real(C@x + D@w)
     assert y.shape == (p,T)
 
-    return x, y
+    return (x, y)
 
 
 from scipy.interpolate import make_interp_spline

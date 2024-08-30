@@ -9,11 +9,11 @@ except:
     def progress_bar(arg, **kwds): return arg
 from . import numerics
 from .evolve import obsv2ac
-from .influence import ac2bd, _ac2bd
+from .influence import ac2bd
 
 
 def srim(inputs,outputs,**options):
-    """
+    r"""
     System realization from input and output data, with output error minimization method.
     System Realization Using Information Matrix (SRIM) [1]_.
     
@@ -25,9 +25,9 @@ def srim(inputs,outputs,**options):
                     :math:`nt` = number of timesteps
     :type outputs:  array
     :param horizon: (optional) number of steps used for identification (prediction horizon).
-                    default: :math:`min(300, nt)`
+                    default: :math:`\min(300, nt)`
     :type horizon:  int
-    :param order:   (optional) model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :param order:   (optional) model order. default: :math:`\min(20,` ``horizon``:math:`/2)`
     :type order:    int
     :param full:    (optional) if True, full SVD. default: True
     :type full:     bool
@@ -67,12 +67,10 @@ def srim(inputs,outputs,**options):
          options.get("horizon",
                      min(300, nt)))
 
-    r = options.get("r", 
+    n = options.get("n", 
+        options.get("r",
         options.get("order",
-                    min(20, int(no/2))))
-    
-    if 'r' not in options.keys():
-        options['r'] = r
+                    min(20, int(no/2)))))
 
     full = options.get("full", True)
     find = options.get("find","ABCD")
@@ -80,7 +78,7 @@ def srim(inputs,outputs,**options):
     # maximum possible number of columns in the Y and U data matrices
     ns = options.get("ns",nt-1-no+2)
 
-    assert no >= r/p + 1    # make sure prediction horizon is large enough that
+    assert no >= n/p + 1    # make sure prediction horizon is large enough that
                             # observability matrix is full rank (Juang Eq. 8)
 
     Yno = np.zeros((p*no,ns))
@@ -112,31 +110,27 @@ def srim(inputs,outputs,**options):
     else:
         un,*_ = np.linalg.svd(Rhh[:,:(no-1)*p+1],full_matrices=False) # Eq. 3.74 Arici 2006; Eq. 30 Juang
     
-    Observability = un[:,:r]                        # Eq. 3.72 Arici 2006; Eq. 27 Juang
+    Observability = un[:,:n]                        # Eq. 3.72 Arici 2006; Eq. 27 Juang
 
     # Computation of system matrices A & C
     A,C = obsv2ac(Observability, no, p, **options)
 
-    assert A.shape[0] == A.shape[1] == r
+    assert A.shape[0] == A.shape[1] == n
     assert C.shape[0] == p
-    assert C.shape[1] == r
+    assert C.shape[1] == n
 
     if "b" not in find.lower() and "d" not in find.lower():
         return (A,None,C,None)
     
     # Computation of system matrices B & D
     # Output Error Minimization
-    use_juang_ac2bd = options.get("use_juang_ac2bd", False)
-    if use_juang_ac2bd:
-        B, D, x0 = _ac2bd(inputs.T, outputs.T, A, C)
-    else:
-        B, D = ac2bd(inputs, outputs, A, C, **options)
+    B, D = ac2bd(inputs, outputs, A, C, **options)
 
-    return A,B,C,D
+    return (A,B,C,D)
 
 
 def era(Y,**options):
-    """
+    r"""
     System realization from Markov parameters (discrete impulse response data).
     Ho-Kalman / Eigensystem Realization Algorithm (ERA) [2]_ [3]_.
 
@@ -144,12 +138,12 @@ def era(Y,**options):
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
     :type Y:        array
     :param horizon: (optional) number of block rows in Hankel matrix = order of observability matrix.
-                    default: :math:`min(150, (nt-1)/2)`
+                    default: :math:`\min(150, (nt-1)/2)`
     :type horizon:  int
     :param nc:      (optional) number of block columns in Hankel matrix = order of controllability matrix.
-                    default: :math:`min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
+                    default: :math:`\min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
     :type nc:       int
-    :param order:   (optional) model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :param order:   (optional) model order. default: :math:`\min(20,` ``horizon``:math:`/2)`
     :type order:    int
 
     :return:        realization in the form of state space coefficients ``(A,B,C,D)``
@@ -174,7 +168,7 @@ def era(Y,**options):
                      None)
 
     # get D from first p x q block of impulse response
-    Dr = Y[:,:,0]  # first block of output data
+    D = Y[:,:,0]  # first block of output data
 
     # size of Hankel matrix
     if no is None:
@@ -184,9 +178,10 @@ def era(Y,**options):
     # make sure there are enough timesteps to assemble this size of Hankel matrix
     assert nt >= no+nc
 
-    r = options.get("r", 
+    n = options.get("n",
+        options.get("r", 
         options.get("order",
-                    min(20, int(no/2))))
+                    min(20, int(no/2)))))
 
     # make impulse response into Hankel matrix and shifted Hankel matrix
     H = np.zeros((p*(no), q*(nc+1)))
@@ -201,23 +196,23 @@ def era(Y,**options):
     _svd = numerics.svd_routine(**options.get("svd", {}))
 
     U,S,V = _svd(H0)
-    SigmaInvSqrt = np.diag(S[:r]**-0.5)
-    SigmaSqrt = np.diag(S[:r]**0.5)
-    Ur = U[:,:r]
-    Vr = V[:,:r]
+    SigmaInvSqrt = np.diag(S[:n]**-0.5)
+    SigmaSqrt = np.diag(S[:n]**0.5)
+    Ur = U[:,:n]
+    Vr = V[:,:n]
 
     # get A from SVD and shifted Hankel matrix
-    Ar = SigmaInvSqrt @ Ur.T.conj() @ H1 @ Vr @ SigmaInvSqrt
+    A = SigmaInvSqrt @ Ur.T.conj() @ H1 @ Vr @ SigmaInvSqrt
 
     # get B and C
-    Br = (SigmaSqrt @ Vr.T.conj())[:,:q]
-    Cr = (Ur @ SigmaSqrt)[:p,:]
+    B = (SigmaSqrt @ Vr.T.conj())[:,:q]
+    C = (Ur @ SigmaSqrt)[:p,:]
 
-    return (Ar,Br,Cr,Dr)
+    return (A,B,C,D)
 
 
 def era_dc(Y,**options):
-    """
+    r"""
     System realization from Markov parameters (discrete impulse response data).
     Eigensystem Realization Algorithm with Data Correlations (ERA/DC) [4]_.
 
@@ -226,12 +221,12 @@ def era_dc(Y,**options):
                     :math:`q` = number of inputs, and :math:`nt` = number of Markov parameters.
     :type Y:        array
     :param horizon: (optional) number of block rows in Hankel matrix = order of observability matrix.
-                    default: :math:`min(150, (nt-1)/2)`
+                    default: :math:`\min(150, (nt-1)/2)`
     :type horizon:  int
     :param nc:      (optional) number of block columns in Hankel matrix = order of controllability matrix.
-                    default: :math:`min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
+                    default: :math:`\min(150, max(nt-1-` ``horizon``:math:`, (nt-1)/2))`
     :type nc:       int
-    :param order:   (optional) model order. default: :math:`min(20,` ``horizon``:math:`/2)`
+    :param order:   (optional) model order. default: :math:`\min(20,` ``horizon``:math:`/2)`
     :type order:    int
     :param a:       (optional) :math:`(\\alpha)` number of block rows in Hankel of correlation matrix. default: 0
     :type a:        int
@@ -264,7 +259,7 @@ def era_dc(Y,**options):
     g = options.get("g", 1)
 
     # get D from first p x q block of impulse response
-    Dr = Y[:,:,0]  # first block of output data
+    D = Y[:,:,0]  # first block of output data
 
     # size of Hankel matrix
     if no is None:
@@ -274,9 +269,10 @@ def era_dc(Y,**options):
     # make sure there are enough timesteps to assemble the Hankel matrices
     assert nt >= l+(a+1+b+1)*g+no+nc
 
-    r = options.get("r", 
+    n = options.get("n",
+        options.get("r", 
         options.get("order",
-                    min(20, int(no/2))))
+                    min(20, int(no/2)))))
 
     # Hankel matrix of impulse response (Markov parameters)
     H = np.zeros((p*(no), q*(nc+l+(a+1+b+1)*g)))
@@ -305,17 +301,16 @@ def era_dc(Y,**options):
     _svd = numerics.svd_routine(**options.get("svd", {}))
 
     U,S,V = _svd(HRl)
-    SigmaInvSqrt = np.diag(S[:r]**-0.5)
-    SigmaSqrt = np.diag(S[:r]**0.5)
-    Ur = U[:,:r]
-    Vr = V[:,:r]
+    SigmaInvSqrt = np.diag(S[:n]**-0.5)
+    SigmaSqrt = np.diag(S[:n]**0.5)
+    Ur = U[:,:n]
+    Vr = V[:,:n]
 
     # get A from SVD and shifted Hankel matrix of correlation matrices
-    Ar = SigmaInvSqrt @ Ur.T.conj() @ HRl1 @ Vr @ SigmaInvSqrt
+    A = SigmaInvSqrt @ Ur.T.conj() @ HRl1 @ Vr @ SigmaInvSqrt
 
     # get B and C
-    Br = ((SigmaInvSqrt @ Ur.T.conj())[:,:dimR] @ H0)[:,:q]
-    Cr = (Ur @ SigmaSqrt)[:p,:]
+    B = ((SigmaInvSqrt @ Ur.T.conj())[:,:dimR] @ H0)[:,:q]
+    C = (Ur @ SigmaSqrt)[:p,:]
 
-    return (Ar,Br,Cr,Dr)
-    
+    return (A,B,C,D)

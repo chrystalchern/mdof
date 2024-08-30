@@ -20,7 +20,7 @@ class TimeSeries:
         inv_fourier_matrix = strangs_omega_bar**np.outer(np.arange(N),np.arange(N))
         fourier_coeffs = 2.0/N*np.abs(inv_fourier_matrix @ self.series)[1:N//2]
         fourier_freqs = np.arange(1,N/2)/N/self.dt
-        return fourier_freqs, fourier_coeffs
+        return (fourier_freqs, fourier_coeffs)
 
 def chrystals_fft(series):
     N = len(series)
