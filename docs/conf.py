@@ -7,8 +7,8 @@ project = 'mdof'
 copyright = '2023, Chrystal Chern'
 author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."
-version = '0.0.13'
-release = '0.0.13'
+version = '0.0.17'
+release = '0.0.17'
 
 # -- General configuration ---------------------------------------------------
 
@@ -57,7 +57,7 @@ html_context = {
     ],
     **globals()
 }
-html_show_sourcelink = False
+html_show_sourcelink = True
 html_theme_options = {
     "github_url": f"https://github.com/BRACE2/{project}"
 }
