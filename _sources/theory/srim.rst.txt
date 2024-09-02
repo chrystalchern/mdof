@@ -2,7 +2,7 @@ System Realization by Information Matrix (SRIM)
 ===============================================
 
 For discrete-time systems, the correlation between inputs, outputs, and
-state yield information about the system’s state evolution and response.
+state yield information about the system's state evolution and response.
 In fact, the state equations can be estimated by manipulating
 correlation matrices through the method, `System Realization by
 Information Matrix <https://doi.org/10.2514/2.4068>`__ (SRIM).
@@ -11,8 +11,8 @@ Discrete-Time System Matrix Equation
 ------------------------------------
 
 We begin with discrete-time state equations that correspond to the
-structure’s dynamics (see `Discrete LTI State-Space
-Representation <https://brace2.github.io/mdof/theory/statespace.html#discrete-lti-state-space-representation>`__).
+structure's dynamics (see `Discrete LTI State-Space
+Representation <https://chrystalchern.github.io/mdof/theory/statespace.html#discrete-lti-state-space-representation>`__).
 
 .. math::
 
