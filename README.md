@@ -55,32 +55,44 @@ Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect
 <table align="center">
 <tr>
   <td>
+    <a href="https://stairlab.berkeley.edu">
+    STAIRlab (STructural Artificial Intelligence Research Lab)
+    </a>
+  </td>
+
+  <td>
     <a href="https://peer.berkeley.edu">
-    Pacific Earthquake Engineering Research Center (PEER)
+    PEER (Pacific Earthquake Engineering Research Center)
     </a>
   </td>
 
   <td>
     <a href="https://dot.ca.gov/">
-    California Department of Transportation (Caltrans)
+    Caltrans (California Department of Transportation)
     </a>
   </td>
 
   <td>
     <a href="https://peer.berkeley.edu">
-    Bridge Rapid Assessment Center for Extreme Events (BRACE2)
+    BRACE2 (Bridge Rapid Assessment Center for Extreme Events)
     </a>
   </td>
 
   <td>
     <a href="https://www.nsfgrfp.org/">
-    National Science Foundation (NSF) Graduate Research Fellowship Program (GRFP)
+    NSF (National Science Foundation) GRFP (Graduate Research Fellowship Program)
     </a>
   </td>
 
 </tr>
 
 <tr>
+  <td align="center">
+    <a href="https://stairlab.berkeley.edu">
+    <img src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/stairlab.svg"
+         alt="PEER Logo" height="120px"/>
+    </a>
+  </td>
 
   <td align="center">
     <a href="https://peer.berkeley.edu">
