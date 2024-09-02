@@ -59,7 +59,7 @@ html_context = {
 }
 html_show_sourcelink = True
 html_theme_options = {
-    "github_url": f"https://github.com/BRACE2/{project}"
+    "github_url": f"https://github.com/chrystalchern/{project}"
 }
 
 autodoc_member_order = 'bysource'
