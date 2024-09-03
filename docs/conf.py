@@ -37,7 +37,7 @@ language = 'en'
 html_title = project
 html_theme = "pydata_sphinx_theme"
 html_static_path = ['_static']
-html_favicon = './_static/images/favicon.ico'
+html_favicon = './_static/images/stairlab_large.png'
 html_css_files = [
     "css/peer.css",
 ] + [

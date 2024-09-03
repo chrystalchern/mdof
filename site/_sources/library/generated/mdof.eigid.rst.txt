@@ -1,6 +1,0 @@
-﻿mdof.eigid
-==========
-
-.. currentmodule:: mdof
-
-.. autofunction:: eigid

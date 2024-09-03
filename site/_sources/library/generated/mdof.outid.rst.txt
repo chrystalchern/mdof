@@ -1,6 +1,0 @@
-﻿mdof.outid
-==========
-
-.. currentmodule:: mdof
-
-.. autofunction:: outid
