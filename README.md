@@ -5,7 +5,9 @@
 
 <img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
 
-Fast and friendly system identification for structures. *[Learn More](https://chrystalchern.github.io/mdof/)*
+Fast and friendly system identification for structures.
+
+[**Documentation**](https://chrystalchern.github.io/mdof/)
 
 <div style="align:center">
 
@@ -16,17 +18,32 @@ Fast and friendly system identification for structures. *[Learn More](https://ch
 
 <hr>
 
-**The `mdof` system id package** allows structural engineers to solve **inverse eigenanalysis** and related problems -- from structural vibrations, the goal is to identify the system properties.
+**The `mdof` package** solves **inverse problems**. It is tailored for the identification of system properties from structural vibrations.
 
-Inverse eigenanalysis:
+Modal identification:
 ```python
-eigvecs, eigvals = eigid(input_motion, output_motion)
+periods, modeshapes = modes(input_motion, output_motion, dt)
 ```
+
+<!-- Output-only modal identification:
+```python
+periods, modeshapes = modes(output_motion, dt)
+``` -->
 
 State space system identification:
 ```python
 A,B,C,D = sysid(input_motion, output_motion)
 ```
+
+Response reconstruction:
+```python
+output = reconstruct(realization, dt, input_motion)
+```
+<!-- 
+Inverse eigenanalysis:
+```python
+eigvecs, eigvals = eigid(input_motion, output_motion)
+``` -->
 
 **Create beautiful visuals for historical modal property documentation** with integration of the [`osmg`](https://github.com/ioannis-vm/OpenSees_Model_Generator) and [`opensees`](https://pypi.org/project/opensees/) packages.
 
@@ -45,8 +62,10 @@ A,B,C,D = sysid(input_motion, output_motion)
 
 
 ## Getting Started
-
-Click [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fchrystalchern%2Fmdof&urlpath=lab%2Ftree%2Fmdof%2Fnotebooks%2FREADME.ipynb&branch=master) (UC Berkeley users) or  [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrystalchern/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) (non-UC Berkeley users) to access and experiment with example Jupyter notebooks.
+- [**Documentation**](https://chrystalchern.github.io/mdof/)
+- Examples:
+  - [**JupyterLab on DataHub**](https://datahub.berkeley.edu/hub/user-redirect/git-pull?repo=https%3A%2F%2Fgithub.com%2Fchrystalchern%2Fmdof&urlpath=lab%2Ftree%2Fmdof%2Fnotebooks%2FREADME.ipynb&branch=master) (UC Berkeley users)
+  - [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/chrystalchern/mdof/HEAD?labpath=notebooks%2FREADME.ipynb) (non-UC Berkeley users)
 
 -------------------------------------------------
 
