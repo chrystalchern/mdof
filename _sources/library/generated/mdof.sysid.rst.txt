@@ -1,0 +1,6 @@
+﻿mdof.sysid
+==========
+
+.. currentmodule:: mdof
+
+.. autofunction:: sysid
