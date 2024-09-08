@@ -3,19 +3,24 @@
 <hr>
 <br>
 
-<img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
+<div>
 
-Fast and friendly system identification for structures.
+  <img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
 
-[**Documentation**](https://chrystalchern.github.io/mdof/)
+  Fast and friendly system identification for structures.
 
-<div style="align:center">
+  [**Documentation**](https://chrystalchern.github.io/mdof/)
 
-[![Latest PyPI version](https://img.shields.io/pypi/v/mdof?logo=pypi&style=for-the-badge)](https://pypi.python.org/pypi/mdof)
-[![Downloads per Month](https://img.shields.io/pypi/dm/mdof?style=for-the-badge)]((https://pypi.python.org/pypi/mdof))
+  <div style="align:center">
+
+  [![Latest PyPI version](https://img.shields.io/pypi/v/mdof?logo=pypi&style=for-the-badge)](https://pypi.python.org/pypi/mdof)
+  [![Downloads per Month](https://img.shields.io/pypi/dm/mdof?style=for-the-badge)]((https://pypi.python.org/pypi/mdof))
+
+  </div>
 
 </div>
 
+<br>
 <hr>
 
 **The `mdof` package** solves **inverse problems**. It is tailored for the identification of system properties from structural vibrations.
