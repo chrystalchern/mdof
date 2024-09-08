@@ -1,0 +1,9 @@
+
+mdof.sysid
+-------------------
+
+.. automodule:: mdof
+   :members: sysid
+   :undoc-members:
+   :show-inheritance:
+

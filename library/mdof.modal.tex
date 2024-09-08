@@ -1,0 +1,180 @@
+\protect\hyperlink{main-content}{Skip to main content}
+
+\hypertarget{pst-scroll-pixel-helper}{}
+
+\emph{} Back to top
+
+\emph{} {Ctrl+K}
+
+{}
+
+\href{../index.html}{}
+
+mdof
+
+Site Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{Reference}
+\item
+  \href{../theory/index.html}{Theory}
+\item
+  \href{../examples/index.html}{Examples}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/BRACE2/mdof}{{\emph{}} {GitHub}}
+\end{itemize}
+
+{}
+
+Site Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{Reference}
+\item
+  \href{../theory/index.html}{Theory}
+\item
+  \href{../examples/index.html}{Examples}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/BRACE2/mdof}{{\emph{}} {GitHub}}
+\end{itemize}
+
+Section Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{mdof modules and top-level functions}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{mdof.markov.html}{mdof.markov module}
+\item
+  \href{mdof.realize.html}{mdof.realize module}
+\item
+  \protect\hyperlink{}{mdof.modal module}
+\item
+  \href{mdof.transform.html}{mdof.transform module}
+\end{itemize}
+
+\hypertarget{rtd-footer-container}{}
+
+\hypertarget{main-content}{}
+\begin{itemize}
+\tightlist
+\item
+  \href{../index.html}{\emph{}}
+\item
+  \href{index.html}{Reference}
+\item
+  mdof.modal module
+\end{itemize}
+
+\hypertarget{searchbox}{}
+
+\hypertarget{module-mdof.modal}{}
+\protect\hypertarget{mdof-modal-module}{}{}
+
+\hypertarget{mdof.modal-module}{%
+\section{\texorpdfstring{mdof.modal
+module\protect\hyperlink{module-mdof.modal}{\#}}{mdof.modal module\#}}\label{mdof.modal-module}}
+
+This module implements functions that extract modal information from a
+state space realization.
+
+\begin{description}
+\item[{ {{mdof.modal.}}{{system\_modes}}{(}\emph{{{realization}}},
+\emph{{{dt}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.modal.system_modes}{\#}}]
+Modal identification from a state space system realization.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{realization} (\emph{tuple}) -- realization in the form of
+  state space coefficients \texttt{(A,B,C,D)}
+\item
+  \textbf{dt} (\emph{float}) -- timestep.
+\item
+  \textbf{decimation} (\emph{int,} \emph{optional}) -- decimation
+  factor. default: 1
+\item
+  \textbf{Observability} (\emph{array,} \emph{optional}) --
+  Observability matrix; can be reused from
+  \href{mdof.realize.html\#mdof.realize.srim}{\VERB|\NormalTok{mdof.realize.srim()}|}.
+  default: None
+\end{itemize}
+\item[Returns{:}]
+system modes, including natural frequencies, damping ratios, mode
+shapes, condition numbers, and modal validation metrics EMAC and MPC.
+\item[Return type{:}]
+dictionary
+\end{description}
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.modal.}}{{spectrum\_modes}}{(}\emph{{{periods}}},
+\emph{{{amplitudes}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.modal.spectrum_modes}{\#}}]
+Modal identification from a transfer function.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{periods} (\emph{array}) -- transfer function periods
+\item
+  \textbf{amplitudes} (\emph{array}) -- transfer function amplitudes
+\end{itemize}
+\item[Returns{:}]
+(fundamental\_periods, fundamental\_amplitudes)
+\item[Return type{:}]
+tuple
+\end{description}
+\end{description}
+
+\href{mdof.realize.html}{\emph{}}
+
+previous
+
+mdof.realize module
+
+\href{mdof.transform.html}{}
+
+next
+
+mdof.transform module
+
+\emph{}
+
+\emph{} On this page
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{mdof.modal.system_modes}{\texttt{system\_modes()}}
+\item
+  \protect\hyperlink{mdof.modal.spectrum_modes}{\texttt{spectrum\_modes()}}
+\end{itemize}
+
+© Copyright 2023, Chrystal Chern.\\
+
+Created using \href{https://www.sphinx-doc.org/}{Sphinx} 7.1.2.\\
+
+Built with the
+\href{https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html}{PyData
+Sphinx Theme} 0.14.1.

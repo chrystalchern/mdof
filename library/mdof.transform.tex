@@ -1,0 +1,278 @@
+\protect\hyperlink{main-content}{Skip to main content}
+
+\hypertarget{pst-scroll-pixel-helper}{}
+
+\emph{} Back to top
+
+\emph{} {Ctrl+K}
+
+{}
+
+\href{../index.html}{}
+
+mdof
+
+Site Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{Reference}
+\item
+  \href{../theory/index.html}{Theory}
+\item
+  \href{../examples/index.html}{Examples}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/BRACE2/mdof}{{\emph{}} {GitHub}}
+\end{itemize}
+
+{}
+
+Site Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{Reference}
+\item
+  \href{../theory/index.html}{Theory}
+\item
+  \href{../examples/index.html}{Examples}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{https://github.com/BRACE2/mdof}{{\emph{}} {GitHub}}
+\end{itemize}
+
+Section Navigation
+
+\begin{itemize}
+\tightlist
+\item
+  \href{index.html}{mdof modules and top-level functions}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
+\item
+  \href{mdof.markov.html}{mdof.markov module}
+\item
+  \href{mdof.realize.html}{mdof.realize module}
+\item
+  \href{mdof.modal.html}{mdof.modal module}
+\item
+  \protect\hyperlink{}{mdof.transform module}
+\end{itemize}
+
+\hypertarget{rtd-footer-container}{}
+
+\hypertarget{main-content}{}
+\begin{itemize}
+\tightlist
+\item
+  \href{../index.html}{\emph{}}
+\item
+  \href{index.html}{Reference}
+\item
+  mdof.transfo...
+\end{itemize}
+
+\hypertarget{searchbox}{}
+
+\hypertarget{module-mdof.transform}{}
+\protect\hypertarget{mdof-transform-module}{}{}
+
+\hypertarget{mdof.transform-module}{%
+\section{\texorpdfstring{mdof.transform
+module\protect\hyperlink{module-mdof.transform}{\#}}{mdof.transform module\#}}\label{mdof.transform-module}}
+
+\begin{description}
+\item[{ {{mdof.transform.}}{{power\_transfer}}{(}\emph{{{inputs}}},
+\emph{{{outputs}}}, \emph{{{step}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.transform.power_transfer}{\#}}]
+Power spectrum transfer function from input and output data.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{inputs} (\emph{array}) -- input time history. dimensions:
+  {\textbackslash{}((q,nt)\textbackslash{})}, where
+  {\textbackslash{}(q\textbackslash{})} = number of inputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{outputs} (\emph{array}) -- output response history.
+  dimensions: {\textbackslash{}((p,nt)\textbackslash{})}, where
+  {\textbackslash{}(p\textbackslash{})} = number of outputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{step} (\emph{float}) -- timestep.
+\item
+  \textbf{decimation} (\emph{int,} \emph{optional}) -- decimation
+  factor. default: 1
+\end{itemize}
+\item[Returns{:}]
+(periods, amplitudes)
+\item[Return type{:}]
+tuple of arrays
+\end{description}
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.transform.}}{{response\_transfer}}{(}\emph{{{inputs}}},
+\emph{{{outputs}}}, \emph{{{step}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.transform.response_transfer}{\#}}]
+Response spectrum transfer function from input and output data.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{inputs} (\emph{array}) -- input time history. dimensions:
+  {\textbackslash{}((q,nt)\textbackslash{})}, where
+  {\textbackslash{}(q\textbackslash{})} = number of inputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{outputs} (\emph{array}) -- output response history.
+  dimensions: {\textbackslash{}((p,nt)\textbackslash{})}, where
+  {\textbackslash{}(p\textbackslash{})} = number of outputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{step} (\emph{float}) -- timestep.
+\item
+  \textbf{pseudo} (\emph{bool,} \emph{optional}) -- if True, uses pseudo
+  accelerations. default: False
+\item
+  \textbf{decimation} (\emph{int,} \emph{optional}) -- decimation
+  factor. default: 1
+\end{itemize}
+\item[Returns{:}]
+(periods, amplitudes)
+\item[Return type{:}]
+tuple of arrays
+\end{description}
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.transform.}}{{fourier\_transfer}}{(}\emph{{{inputs}}},
+\emph{{{outputs}}}, \emph{{{step}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.transform.fourier_transfer}{\#}}]
+Fourier spectrum transfer function from input and output data.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{inputs} (\emph{array}) -- input time history. dimensions:
+  {\textbackslash{}((q,nt)\textbackslash{})}, where
+  {\textbackslash{}(q\textbackslash{})} = number of inputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{outputs} (\emph{array}) -- output response history.
+  dimensions: {\textbackslash{}((p,nt)\textbackslash{})}, where
+  {\textbackslash{}(p\textbackslash{})} = number of outputs, and
+  {\textbackslash{}(nt\textbackslash{})} = number of timesteps
+\item
+  \textbf{step} (\emph{float}) -- timestep.
+\item
+  \textbf{decimation} (\emph{int,} \emph{optional}) -- decimation
+  factor. default: 1
+\end{itemize}
+\item[Returns{:}]
+(periods, amplitudes)
+\item[Return type{:}]
+tuple of arrays
+\end{description}
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.transform.}}{{power\_spectrum}}{(}\emph{{{series}}},
+\emph{{{step}}}, \emph{{{period\_band}}{{=}}{{None}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.transform.power_spectrum}{\#}}]
+Power spectral density of a signal, as a function of period.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{series} (\emph{1D array}) -- time series.
+\item
+  \textbf{step} (\emph{float}) -- timestep.
+\item
+  \textbf{period\_band} (\emph{tuple,} \emph{optional}) -- minimum and
+  maximum period of interest, in seconds.
+\end{itemize}
+\item[Returns{:}]
+(periods, amplitudes)
+\item[Return type{:}]
+tuple of arrays.
+\end{description}
+\end{description}
+
+\begin{description}
+\item[{ {{mdof.transform.}}{{fourier\_spectrum}}{(}\emph{{{series}}},
+\emph{{{step}}}, \emph{{{period\_band}}{{=}}{{None}}},
+\emph{{{**}}{{options}}}{)}\protect\hyperlink{mdof.transform.fourier_spectrum}{\#}}]
+Fourier amplitude spectrum of a signal, as a function of period.
+
+\begin{description}
+\item[Parameters{:}]
+\begin{itemize}
+\item
+  \textbf{series} (\emph{1D array}) -- time series.
+\item
+  \textbf{step} (\emph{float}) -- timestep.
+\item
+  \textbf{period\_band} (\emph{tuple,} \emph{optional}) -- minimum and
+  maximum period of interest, in seconds.
+\end{itemize}
+\item[Returns{:}]
+(periods, amplitudes)
+\item[Return type{:}]
+tuple of arrays.
+\end{description}
+\end{description}
+
+\href{mdof.modal.html}{\emph{}}
+
+previous
+
+mdof.modal module
+
+\href{../theory/index.html}{}
+
+next
+
+Theory
+
+\emph{}
+
+\emph{} On this page
+
+\begin{itemize}
+\tightlist
+\item
+  \protect\hyperlink{mdof.transform.power_transfer}{\texttt{power\_transfer()}}
+\item
+  \protect\hyperlink{mdof.transform.response_transfer}{\texttt{response\_transfer()}}
+\item
+  \protect\hyperlink{mdof.transform.fourier_transfer}{\texttt{fourier\_transfer()}}
+\item
+  \protect\hyperlink{mdof.transform.power_spectrum}{\texttt{power\_spectrum()}}
+\item
+  \protect\hyperlink{mdof.transform.fourier_spectrum}{\texttt{fourier\_spectrum()}}
+\end{itemize}
+
+© Copyright 2023, Chrystal Chern.\\
+
+Created using \href{https://www.sphinx-doc.org/}{Sphinx} 7.1.2.\\
+
+Built with the
+\href{https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html}{PyData
+Sphinx Theme} 0.14.1.
