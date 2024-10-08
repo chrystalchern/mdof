@@ -135,7 +135,8 @@ def plot_pred(ytrue, models, t, title=None, xlabel="time (s)", ylabel="outputs",
     linestyles = ['dashed', 'dashdot', 'dotted']
     colors = ['blue', 'orange', 'green', 'magenta']
 
-    fig, ax = options.get('figax',plt.subplots(figsize=options.get('figsize',(6,3))))
+    # fig, ax = options.get('figax',plt.subplots(figsize=options.get('figsize',(6,3))))
+    fig, ax = options['figax'] if 'figax' in options.keys() else plt.subplots(figsize=options.get('figsize',(6,3)))
     if len(ytrue.shape) > 1:
         for i in range(ytrue.shape[0]):
             ax.plot(t,ytrue[i,:],label=f"true, DOF {i+1}",color='black',linestyle=linestyles[i%len(linestyles)])
