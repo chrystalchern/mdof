@@ -82,7 +82,7 @@ def ac2bd(inputs, outputs, A, C, **options):
                 ):
                 Phi[i*p:(i+1)*p, n+p*q:] = res
     else:
-        zero_q = np.zeros((q, 1))
+        zero_q = np.zeros((p, 1))
         ei = np.zeros((n,1))
         start = n+p*q
         offset = 0
