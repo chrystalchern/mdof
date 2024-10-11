@@ -112,7 +112,7 @@ def test_string(test):
         return "\n".join(test_source_string.split("return")[-1].split("\n")[:-1])
     
 
-def stabilize_discrete(A, verbose=False):
+def stabilize_discrete(A, verbose=False, list_filtered_modes=False):
     # if test is True, the mode is filtered out.
     test = lambda v: np.abs(v) > 1
     filtered_A, indices = eigenfilter(A, test, return_indices=True)
@@ -122,7 +122,10 @@ def stabilize_discrete(A, verbose=False):
         removing mode indices {indices} (real mode indices {real_mode_indices})
         because magnitude of eigenvalue is greater than 1 ({test_string(test)})
         """)
-    return filtered_A
+    if list_filtered_modes:
+        return filtered_A, real_mode_indices
+    else:
+        return filtered_A
 
 
 def stabilize_continuous(A, verbose=False):
