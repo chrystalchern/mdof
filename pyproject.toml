@@ -10,8 +10,13 @@ description="Fast and friendly system identification for structures."
 readme = "README.md"
 
 keywords = [
-    "seismic",
-    "earthquake",
+    "system identification",
+    "state space",
+    "structures",
+    "bridges",
+    "engineering",
+    "dynamics",
+    "seismic"
 ] 
 
 dependencies = [
