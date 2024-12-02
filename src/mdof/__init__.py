@@ -143,6 +143,6 @@ def predict(realization, inputs, **options):
                         :math:`nt` = number of timesteps
     :rtype:             array
     """
-    from simulate import simulate
+    from mdof.simulate import simulate
     out_pred = simulate(realization, inputs)
     return out_pred
