@@ -27,7 +27,7 @@ dependencies = [
   "plotly",
   "pandas",
   "control",
-  "sdof",
+#  "sdof",
 # "opensees",
   "quakeio",
   "ipykernel"
