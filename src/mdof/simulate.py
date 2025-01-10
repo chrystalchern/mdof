@@ -24,6 +24,14 @@ def simulate(system, inputs, w=None, backend=None):
 def _simulate(system, inputs, w=None):
     (A,B,C,D) = system
     p,n = C.shape
+    if inputs.ndim == 1:
+        inputs = inputs[None,:]
+    elif inputs.ndim != 2:
+        raise ValueError("inputs must be a 1D or 2D array.")
+    
+    if inputs.shape[0] > inputs.shape[1]:
+        warnings.warn("There are more inputs than timesteps. Recommend double-checking the shape of the input array.")
+        
     _,T = inputs.shape
 
     x = np.empty((n,T), dtype=complex)

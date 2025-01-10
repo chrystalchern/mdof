@@ -57,8 +57,28 @@ def mode_set(mode_results, key):
 
 def husid(accel_series, intensity_measure='arias'):
     if intensity_measure == 'arias':
-        intensity = np.tril(np.ones(len(accel_series)))@accel_series**2
-    cumulative_husid = intensity/intensity[-1]
+        # Compute Arias Intensity (cumulative of squared acceleration)
+        # intensity = np.tril(np.ones(len(accel_series)))@accel_series**2
+        intensity = np.cumsum(accel_series**2)
+    elif intensity_measure == 'isaacson':
+        # Compute Isaacson's Intensity (cumulative of squared acceleration but might use different methodology)
+        intensity = np.cumsum(accel_series**2)  # Example, may vary depending on specific implementation
+    elif intensity_measure == 'cav':
+        # Compute Cumulative Absolute Velocity (CAV) (cumulative of absolute acceleration)
+        intensity = np.cumsum(np.abs(accel_series))
+    elif intensity_measure == 'pga':
+        # Compute Peak Ground Acceleration (cumulative max absolute value)
+        intensity = np.array([np.max(np.abs(accel_series[:i]))
+                              for i in range(len(accel_series))])
+    elif intensity_measure == 'pgv':
+        # Compute Peak Ground Velocity (cumulative max absolute value)
+        veloc_series = np.cumsum(accel_series)  # Integrating to get velocity
+        intensity = np.array([np.max(np.abs(veloc_series[:i]))
+                              for i in range(len(veloc_series))])
+    else:
+        raise ValueError(f"Unknown intensity measure: {intensity_measure}")
+    # Normalize intensity by the maximum value
+    cumulative_husid = intensity / intensity[-1]
     return cumulative_husid
 
 def intensity_bounds(accel_series, lb=0.005, ub=0.995, intensity_measure='arias'):

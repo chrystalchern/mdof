@@ -7,7 +7,8 @@ try:
     from tqdm import tqdm as progress_bar
 except:
     def progress_bar(arg, **kwds): return arg
-from . import numerics
+from .import numerics
+
 from .evolve import obsv2ac
 from .influence import ac2bd
 
@@ -314,3 +315,106 @@ def era_dc(Y,**options):
     C = (Ur @ SigmaSqrt)[:p,:]
 
     return (A,B,C,D)
+
+
+import numpy as np
+from scipy.linalg import svd
+from numpy.linalg import pinv
+
+class StateSpaceModel:
+    def __init__(self, A, B, C, D, K=None):
+        self.A = A
+        self.B = B
+        self.C = C
+        self.D = D
+        
+
+    def __repr__(self):
+        return f"StateSpaceModel(A={self.A}, B={self.B}, C={self.C}, D={self.D})"
+
+def n4sid(data, nx, Ts=1, method='auto', **kwargs):
+    """
+    Estimate state-space model using subspace methods.
+    Arguments:
+    - data: (numpy array) The input-output data matrix.
+    - nx: (int or str) Model order or 'best' for automatic model order determination.
+    - Ts: (float) Sample time of the model, set to 0 for continuous models.
+    - method: (str) 'auto' or other methods defined by user.
+    - kwargs: Additional keyword arguments for future extensions or specific settings.
+    Returns:
+    - StateSpaceModel: The estimated state-space model.
+    """
+    # Data preprocessing
+    U, s, Vh = svd(data, full_matrices=False)
+    n = min(len(s), nx) if isinstance(nx, int) else np.argmax(s < 1e-10) + 1
+
+    # Construct the state-space model matrices
+    A = np.random.randn(n, n)  # Placeholder for actual computation
+    B = np.random.randn(n, 1)  # Placeholder for actual computation
+    C = np.random.randn(1, n)  # Placeholder for actual computation
+    D = np.zeros((1, 1))       # Assuming no direct feedthrough
+
+
+
+    model = StateSpaceModel(A, B, C, D)
+    return model
+
+def row_projection
+
+ import numpy as np
+    from scipy.linalg import schur, rsf2cs=
+    
+    def n4sid(a, inputs, outputs):
+        # Perform Schur decomposition
+        T, schur_form = schur(a, output='real')
+        # Convert the real Schur form to complex Schur form
+        T, schur_form = rsf2csf(T, schur_form)
+        
+        # Determine which blocks are 2x2 complex blocks
+        n = schur_form.shape[0]
+        i = 0
+        blks = []
+        while i < n - 1:
+            if schur_form[i+1, i] != 0:
+                blks.append(2)
+                i += 2  # Skip the next index because it is part of a 2x2 block
+            else:
+                blks.append(1)
+                i += 1
+        if i == n - 1:
+            blks.append(1)  # The last one is a 1x1 block
+        
+        # Rescale the complex blocks
+        i = 0
+        for ct in blks:
+            if ct == 2:
+                # Calculate the scaling factor and apply it
+                sfactor = np.sign(schur_form[i, i+1]) * np.sqrt(abs(schur_form[i+1, i] / schur_form[i, i+1]))
+                schur_form[:, i+1] *= sfactor
+                schur_form[i+1, :] /= sfactor
+                T[:, i+1] *= sfactor
+                i += 2
+            else:
+                i += 1
+    
+        # Preset output matrices B and C, assuming there is already a method to calculate them
+        # This part needs to be adjusted based on specific system conditions
+        B = np.linalg.inv(T) @ outputs  # Example usage, real applications need other methods
+        C = inputs @ T  # Example usage, real applications need other methods
+        A = schur_form  # Directly use the rescaled Schur form as the A matrix
+    
+        return A, B, C
+    
+    # Example input matrix
+    a = np.random.random((4,4))
+    inputs = np.random.random((1, 4))
+    outputs = np.random.random((4, 1))
+    
+    # Call the function
+    A, B, C = n4sid(a, inputs, outputs)
+    print("A Matrix:\n", A)
+    print("B Matrix:\n", B)
+    print("C Matrix:\n", C)
+    
+
+

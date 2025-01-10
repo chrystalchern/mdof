@@ -4,7 +4,7 @@
 <br>
 
 <div>
-
+ 
   <img align="left" src="https://raw.githubusercontent.com/chrystalchern/mdof/master/docs/_static/images/logos/mdof_readmefig.svg" width="250px" alt="mdof logo">
 
   Fast and friendly system identification for structures.

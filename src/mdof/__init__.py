@@ -127,14 +127,12 @@ def sysid(inputs, outputs, **options):
     return system(inputs, outputs, **options)
 
 
-def reconstruct(realization, dt, inputs, **options):
+def predict(realization, inputs, **options):
     """
-    Response reconstruction (predicted ``output``) from system realization (``A``, ``B``, ``C``, ``D``) and ``input``.
+    Prediction of ``output`` from system realization (``A``, ``B``, ``C``, ``D``) and ``inputs``.
 
     :param realization: realization in the form of state space coefficients ``(A,B,C,D)``
     :type realization:  tuple of arrays
-    :param dt:          timestep corresponding to `realization`.
-    :type dt:           float
     :param inputs:      input time history on which to predict the output response.
                         dimensions: :math:`(q,nt)`, where
                         :math:`q` = number of inputs, and :math:`nt` = number of timesteps
@@ -145,6 +143,6 @@ def reconstruct(realization, dt, inputs, **options):
                         :math:`nt` = number of timesteps
     :rtype:             array
     """
-    from control import ss as _ss, forced_response as _forced_response
-    out_pred = _forced_response(_ss(*realization,dt), U=inputs, squeeze=False, return_x=False).outputs
+    from mdof.simulate import simulate
+    out_pred = simulate(realization, inputs)
     return out_pred
