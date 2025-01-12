@@ -359,7 +359,59 @@ def n4sid(data, nx, Ts=1, method='auto', **kwargs):
     model = StateSpaceModel(A, B, C, D)
     return model
 
-def row_projection
+
+
+import numpy as np
+from scipy.linalg import qr
+
+
+def build_hankel_matrix(U, i, j):
+    """Builds a Block Hankel matrix"""
+    n = U.shape[1]
+    sqrt_j = np.sqrt(j)  # Weighting factor
+    H = np.zeros((i * n, j))
+    for row in range(i):
+        for col in range(j):
+            H[row * n:(row + 1) * n, col] = U[:, col + row] * sqrt_j
+    return H
+
+
+def compute_rq(H):
+    """Computes the RQ decomposition by performing QR decomposition on the transpose of H and returning R and Q"""
+    Q, R = qr(H.T, mode='economic')
+    return R.T, Q.T
+
+
+def row_projection(R, sub_slice, data_vector):
+    """Calculates projections based on a sub-matrix of R and a given data vector"""
+    R_sub = R[sub_slice, :]
+    R_inv = np.linalg.inv(R_sub)
+    return R_inv @ data_vector
+
+# Example data
+U = np.random.rand(3, 10)  # Input data matrix
+Y = np.random.rand(2, 10)  # Output data matrix
+i, j = 3, 7  # Dimensions for the Hankel matrix
+
+# Construct the Hankel matrix
+H = build_hankel_matrix(U, i, j)
+R, Q = compute_rq(H)
+
+# Extract sub-matrices of R
+sub_slice_i = slice(5, 6)  # For example, R[5:6, 1:4]
+sub_slice_i_plus_1 = slice(6, 7)  # For example, R[6:7, 1:5]
+
+# Construct data vectors
+data_vector_i = np.hstack((U[:, 2:4].flatten(), Y[:, 0].flatten()))
+data_vector_i_plus_1 = np.hstack((U[:, 2:4].flatten(), Y[:, 1].flatten()))
+
+# Calculate projections
+Z_i = row_projection(R, sub_slice_i, data_vector_i)
+Z_i_plus_1 = row_projection(R, sub_slice_i_plus_1, data_vector_i_plus_1)
+
+print("Z_i:", Z_i)
+print("Z_i_plus_1:", Z_i_plus_1)
+
 
  import numpy as np
     from scipy.linalg import schur, rsf2cs=
