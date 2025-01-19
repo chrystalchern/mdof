@@ -361,56 +361,88 @@ def n4sid(data, nx, Ts=1, method='auto', **kwargs):
 
 
 
-import numpy as np
+
 from scipy.linalg import qr
 
 
-def build_hankel_matrix(U, i, j):
-    """Builds a Block Hankel matrix"""
-    n = U.shape[1]
-    sqrt_j = np.sqrt(j)  # Weighting factor
-    H = np.zeros((i * n, j))
-    for row in range(i):
-        for col in range(j):
-            H[row * n:(row + 1) * n, col] = U[:, col + row] * sqrt_j
-    return H
+def construct_hankel_matrix(u, y, i, j):
+   
+    # Ensure the sequences are long enough to avoid index errors.
+    if len(u) < 2*i-1 or len(y) < 2*i-1:
+        raise ValueError("The length of input or output sequences is insufficient for matrix construction.")
+    
+    # Construct U_0|2i-1.
+    U_matrix = np.array([u[k:k+j] for k in range(2*i-1)])  # Rows are 2i-1, columns are j.
+    
+    # Construct Y_0|2i-1.
+    Y_matrix = np.array([y[k:k+j] for k in range(2*i-1)])  # Rows are 2i-1, columns are j.
+
+    # Normalize the matrix by dividing by sqrt(j).
+    H_matrix = np.vstack((U_matrix, Y_matrix)) / np.sqrt(j)
+
+    return H_matrix
+
+# Example input, replace these with actual data.
+u = np.random.rand(10)  # Example input data
+y = np.random.rand(10)  # Example output data
+i = 3  # Example value for i
+j = 2  # Example value for j
+
+H_matrix = construct_hankel_matrix(u, y, i, j)
+
+# Perform QR decomposition.
+Q, R = np.linalg.qr(H_matrix)
+
+# Define blocks of the R matrix.
+R_blocks = {
+    "R11": R[0:i, 0:i],
+    "R21": R[i:i+1, 0:i],
+    "R22": R[i:i+1, i:i+1],
+    "R31": R[i+1:2*i, 0:i],
+    "R32": R[i+1:2*i, i:i+1],
+    "R33": R[i+1:2*i, i+1:2*i],
+    "R41": R[2*i:3*i, 0:i],
+    "R42": R[2*i:3*i, i:i+1],
+    "R43": R[2*i:3*i, i+1:2*i],
+    "R44": R[2*i:3*i, 2*i:3*i],
+    "R51": R[3*i:3*i+1, 0:i],
+    "R52": R[3*i:3*i+1, i:i+1],
+    "R53": R[3*i:3*i+1, i+1:2*i],
+    "R54": R[3*i:3*i+1, 2*i:3*i],
+    "R55": R[3*i:3*i+1, 3*i:3*i+1],
+    "R61": R[3*i+1:4*i, 0:i],
+    "R62": R[3*i+1:4*i, i:i+1],
+    "R63": R[3*i+1:4*i, i+1:2*i],
+    "R64": R[3*i+1:4*i, 2*i:3*i],
+    "R65": R[3*i+1:4*i, 3*i:3*i+1],
+    "R66": R[3*i+1:4*i, 3*i+1:4*i]
+}
+
+# Define blocks of the Q matrix.
+Q_blocks = {
+    "Q1": Q[0:i, 0:j],        
+    "Q2": Q[i:i+1, 0:j],      
+    "Q3": Q[i+1:2*i, 0:j],    
+    "Q4": Q[2*i:3*i, 0:j],    
+    "Q5": Q[3*i:3*i+1, 0:j],  
+    "Q6": Q[3*i+1:4*i-1, 0:j] 
+}
+
+# Print the dimensions of each block to ensure they're correct.
+for key, block in R_blocks.items():
+    print(f"{key} Shape: {block.shape}")
+
+for key, block in Q_blocks.items():
+    print(f"{key} Shape: {block.shape}")
+
+# Print QR decomposition results.
+print("\nQ Matrix:")
+print(Q)
+
+print("\nR Matrix:")
+print(R)
 
 
-def compute_rq(H):
-    """Computes the RQ decomposition by performing QR decomposition on the transpose of H and returning R and Q"""
-    Q, R = qr(H.T, mode='economic')
-    return R.T, Q.T
-
-
-def row_projection(R, sub_slice, data_vector):
-    """Calculates projections based on a sub-matrix of R and a given data vector"""
-    R_sub = R[sub_slice, :]
-    R_inv = np.linalg.inv(R_sub)
-    return R_inv @ data_vector
-
-# Example data
-U = np.random.rand(3, 10)  # Input data matrix
-Y = np.random.rand(2, 10)  # Output data matrix
-i, j = 3, 7  # Dimensions for the Hankel matrix
-
-# Construct the Hankel matrix
-H = build_hankel_matrix(U, i, j)
-R, Q = compute_rq(H)
-
-# Extract sub-matrices of R
-sub_slice_i = slice(5, 6)  # For example, R[5:6, 1:4]
-sub_slice_i_plus_1 = slice(6, 7)  # For example, R[6:7, 1:5]
-
-# Construct data vectors
-data_vector_i = np.hstack((U[:, 2:4].flatten(), Y[:, 0].flatten()))
-data_vector_i_plus_1 = np.hstack((U[:, 2:4].flatten(), Y[:, 1].flatten()))
-
-# Calculate projections
-Z_i = row_projection(R, sub_slice_i, data_vector_i)
-Z_i_plus_1 = row_projection(R, sub_slice_i_plus_1, data_vector_i_plus_1)
-
-print("Z_i:", Z_i)
-print("Z_i_plus_1:", Z_i_plus_1)
 
 
  import numpy as np
