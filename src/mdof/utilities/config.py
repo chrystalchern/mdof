@@ -16,7 +16,7 @@ def _decimate(series, d):
     return series[np.arange(0,len(series),d)]
 
 
-def extract_channels(event, channels, decimate=1):
+def extract_channels(event, channels, decimate=1, response='accel'):
     import numpy as np
     import sys
 
@@ -24,7 +24,7 @@ def extract_channels(event, channels, decimate=1):
         return event.match("l", station_channel=f"{chan}")
 
     data = np.asarray([
-        _decimate(find(chan).accel.data, d=decimate)
+        _decimate(getattr(find(chan),response).data, d=decimate)
         for chan in channels if find(chan) is not None
     ])
 
