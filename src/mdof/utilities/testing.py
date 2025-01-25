@@ -89,4 +89,7 @@ def intensity_bounds(accel_series, lb=0.005, ub=0.995, intensity_measure='arias'
 
 def truncate_by_bounds(series, bounds):
     ilb, iub = bounds
-    return series[ilb:iub]
+    if series.ndim == 1:
+        return series[ilb:iub]
+    elif series.ndim == 2:
+        return series[:,ilb:iub]

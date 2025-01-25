@@ -52,12 +52,11 @@ class Prediction:
 
         if windowed_intensity:
             bounds = intensity_bounds(outpts[0])
-            ilb, iub = bounds
-            inputs = inputs[:,ilb:iub]
-            outpts = outpts[:,ilb:iub]
+            inputs = truncate_by_bounds(inputs, bounds)
+            outpts = truncate_by_bounds(outpts, bounds)
 
-        self._inputs = inputs 
-        self._outpts = outpts 
+        self._inputs = inputs
+        self._outpts = outpts
 
         self._times = np.linspace(0,self._dt*outpts.shape[1],outpts.shape[1])
         self._out_pred = mdof.simulate.simulate(system=realization, inputs=inputs)
