@@ -17,6 +17,7 @@ def _get_error(true, test, metric='l2_norm', normalized=True):
         Warning("The true series has incorrect dimensions for this operation (must be a 1D array or list).")
     if test.ndim != 1:
         Warning("The test series has incorrect dimensions for this operation (must be a 1D array or list).")
+    assert true.shape == test.shape, f"Shapes are different for true series ({true.shape}) and test series ({test.shape})."
     if metric == 'l2_norm':
         error = np.linalg.norm(test-true)
         if normalized:
@@ -38,6 +39,58 @@ def _get_error(true, test, metric='l2_norm', normalized=True):
 
 def _get_period_from_discrete_A_eigval(eigval, dt):
     return (2*np.pi) / np.abs( (np.log(eigval))/dt )
+
+
+class Realization:
+    def __init__(self, event, 
+                 chan_conf, 
+                 conf, 
+                 stabilize: bool = True, 
+                 windowed_intensity: bool = False,
+                 verbose: bool = False,
+                 cm: bool = True):
+                 # Assumes units of cm/s/s. Converts to g.
+                 # TODO: make unit non-specific.
+
+        if verbose:
+            units = 0.0010197162129779 if cm else 1
+            peak_accel = np.abs(event['peak_accel']*units)
+            event_date = event['event_date']
+            print("peak acceleration (g):", peak_accel)
+            print("event date/time:", event_date)
+
+        inputs, dti = extract_channels(event, chan_conf['inputs'])
+        outpts, dto = extract_channels(event, chan_conf['outputs'])
+        assert abs(dti - dto) < 1e-5, "The input timestep is different from the output timestep."
+
+        if windowed_intensity:
+            bounds = intensity_bounds(outpts[0])
+            inputs = truncate_by_bounds(inputs, bounds)
+            outpts = truncate_by_bounds(outpts, bounds)
+
+        realization = mdof.system(method='srim', inputs=inputs, outputs=outpts, **conf)
+
+        if stabilize:
+            A_stable, real_mode_indices = stabilize_discrete(A=realization[0], verbose=True, list_filtered_modes=True)
+            modes_removed = np.array([real_mode_indices,[
+                _get_period_from_discrete_A_eigval(np.linalg.eig(realization[0])[0][2*i], dt) for i in real_mode_indices
+            ]])
+            realization = (A_stable,*realization[1:])
+            self._modes_removed = modes_removed
+        else:
+            self._modes_removed = None
+        
+        self._stabilized = stabilize
+        self._inputs = inputs 
+        self._outpts = outpts 
+        self._realization = realization
+        self._dt = dti
+        self._chan_conf = chan_conf
+        self._windowed_intensity = windowed_intensity
+
+    def predict(self, event):
+        return Prediction(self._realization, event, self._chan_conf, self._windowed_intensity)
+
 
 
 class Prediction:
@@ -104,53 +157,4 @@ class Prediction:
         ic: index of channel 
         """
         return _get_error(true=self.true(ic), test=self.test(ic), metric=metric)
-
-
-class Realization:
-    def __init__(self, event, 
-                 chan_conf, 
-                 conf, 
-                 stabilize: bool=True, 
-                 windowed_intensity: bool = False,
-                 verbose: bool = False):
-
-        if verbose:
-            _cm2g = 0.0010197162129779
-            peak_accel = np.abs(event['peak_accel']*_cm2g)
-            event_date = event['event_date']
-            print("peak acceleration (cm/s/s):", peak_accel)
-            print("event date/time:", event_date)
-
-        inputs, dt = extract_channels(event, chan_conf['inputs'])
-        outpts, dt = extract_channels(event, chan_conf['outputs'])
-
-        if windowed_intensity:
-            bounds = intensity_bounds(outpts[0])
-            ilb, iub = bounds
-            inputs = inputs[:,ilb:iub]
-            outpts = outpts[:,ilb:iub]
-
-        realization = mdof.system(method='srim', inputs=inputs, outputs=outpts, **conf)
-
-        if stabilize:
-            A_stable, real_mode_indices = stabilize_discrete(A=realization[0], verbose=True, list_filtered_modes=True)
-            modes_removed = np.array([real_mode_indices,[
-                _get_period_from_discrete_A_eigval(np.linalg.eig(realization[0])[0][2*i], dt) for i in real_mode_indices
-            ]])
-            realization = (A_stable,*realization[1:])
-            self._modes_removed = modes_removed
-
-        else:
-            self._modes_removed = None
-        
-        self._stabilized = stabilize
-        self._inputs = inputs 
-        self._outpts = outpts 
-        self._realization = realization
-        self._dt = dt 
-        self._chan_conf = chan_conf
-        self._windowed_intensity = windowed_intensity
-
-    def predict(self, event):
-        return Prediction(self._realization, event, self._chan_conf, self._windowed_intensity)
-
+    
