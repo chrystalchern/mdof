@@ -73,7 +73,7 @@ class Realization:
         if stabilize:
             A_stable, real_mode_indices = stabilize_discrete(A=realization[0], verbose=True, list_filtered_modes=True)
             modes_removed = np.array([real_mode_indices,[
-                _get_period_from_discrete_A_eigval(np.linalg.eig(realization[0])[0][2*i], dt) for i in real_mode_indices
+                _get_period_from_discrete_A_eigval(np.linalg.eig(realization[0])[0][2*i], dti) for i in real_mode_indices
             ]])
             realization = (A_stable,*realization[1:])
             self._modes_removed = modes_removed
