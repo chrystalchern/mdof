@@ -1,6 +1,6 @@
 import numpy as np
-import matplotlib
-from matplotlib import pyplot as plt
+import matplotlib.pyplot as plt
+import matplotlib.ticker as ticker
 import plotly.graph_objects as go
 
 
@@ -135,6 +135,8 @@ def plot_pred(ytrue, models, t, title=None, xlabel="time (s)", ylabel="outputs",
     linestyles = ['dashed', 'dashdot', 'dotted']
     colors = ['blue', 'orange', 'green', 'magenta']
     true_first = options['true_first'] if 'true_first' in options.keys() else False
+    true_label = options.get('true_label','true')
+    model_label = options.get('model_label','prediction')
 
     # fig, ax = options.get('figax',plt.subplots(figsize=options.get('figsize',(6,3))))
     fig, ax = options['figax'] if 'figax' in options.keys() else plt.subplots(figsize=options.get('figsize',(6,3)))
@@ -143,14 +145,14 @@ def plot_pred(ytrue, models, t, title=None, xlabel="time (s)", ylabel="outputs",
             for i in range(ytrue.shape[0]):
                 ax.plot(t,ytrue[i,:],label=f"true, DOF {i+1}",color='black',alpha=0.5,linestyle=linestyles[i%len(linestyles)])
         else:
-            ax.plot(t,ytrue,label="true",color='black',alpha=0.5)
+            ax.plot(t,ytrue,label=true_label,color='black',alpha=0.5)
     if type(models) is np.ndarray:
         if len(models.shape) > 1:
             for i in range(models.shape[0]):
-                ax.plot(t,models[i,:],label=f"prediction, DOF {i+1}" if models.shape[0]>1 else f"{options.get('single_label','prediction')}",
+                ax.plot(t,models[i,:],label=f"{model_label}, DOF {i+1}" if models.shape[0]>1 else f"{options.get('single_label',model_label)}",
                         linestyle=linestyles[i%len(linestyles)],linewidth=2,color=options.get('single_color',colors[i%len(colors)]),alpha=0.5)
         else:
-            ax.plot(t,models,"--",color=options.get('single_color',None),label=f"{options.get('single_label','prediction')}")
+            ax.plot(t,models,"--",color=options.get('single_color',None),label=f"{options.get('single_label',model_label)}")
     else:
         for k,method in enumerate(models):
             if len(models[method]["ypred"].shape) > 1:
@@ -165,9 +167,29 @@ def plot_pred(ytrue, models, t, title=None, xlabel="time (s)", ylabel="outputs",
             for i in range(ytrue.shape[0]):
                 ax.plot(t,ytrue[i,:],label=f"true, DOF {i+1}",color='black',alpha=0.5,linestyle=linestyles[i%len(linestyles)])
         else:
-            ax.plot(t,ytrue,label="true",color='black',alpha=0.5)
+            ax.plot(t,ytrue,label=true_label,color='black',alpha=0.5)
     ax.set_xlabel(xlabel, fontsize=14)
     ax.set_ylabel(ylabel, fontsize=14)
+    min_y = options.get('min_y',None)
+    max_y = options.get('max_y',None)
+    ax.set_ylim((min_y,max_y))
+    ax.xaxis.set_major_locator(ticker.MaxNLocator(integer=True))
+    if min_y is not None and max_y is not None:
+        if np.max([abs(min_y),max_y]) < 0.05:
+            base = 0.02
+        elif np.max([abs(min_y),max_y]) < 0.1:
+            base = 0.05
+        elif np.max([abs(min_y),max_y]) < 0.5:
+            base = 0.2
+        elif np.max([abs(min_y),max_y]) < 2.0:
+            base = 0.5
+        else:
+            base = 1.0
+        ax.yaxis.set_major_locator(ticker.MultipleLocator(base=base))
+    ax.yaxis.minorticks_off()
+    # ax.yaxis.set_major_formatter(ticker.FormatStrFormatter('%.2f'))
+    ax.xaxis.set_tick_params(labelsize=12)
+    ax.yaxis.set_tick_params(labelsize=12)
     if makelegend:
         fig.legend(fontsize=12, frameon=True, framealpha=0.4, bbox_to_anchor=(0.9,0,0.5,0.8), loc='upper left')    
     fig.suptitle(title, fontsize=14)

@@ -125,7 +125,7 @@ class Prediction:
         if align:
             max_lag, outpts, out_pred, times = align_signals(signal1=outpts, signal2=out_pred, times=times)
 
-        if verbose:
+        if False:
             print(f"Signals aligned by cross-correlation with a lag of up to {max_lag} timesteps.")
 
         self._times = times
