@@ -442,63 +442,29 @@ print(Q)
 print("\nR Matrix:")
 print(R)
 
+#%%
+from mdof.utilities import n4sid_utils
+def n4sid(inputs, outputs, **options):
+    inputs, outputs = n4sid_utils.preprocess_data(u, y)
+    i = options.get("i", 3)
+    j = options.get("j", 26) 
+    m = inputs.shape[0]  
+    l = outputs.shape[0]
 
+    U_hankel = n4sid_utils.construct_hankel(inputs, j, 0, 2*i-1)
+    Y_hankel = n4sid_utils.construct_hankel(outputs, j, 0, 2*i-1)
+    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 5)
 
+    Q, R = np.linalg.qr(stacked_hankel.T)
+    RT, QT = R.T, Q.T
+    RT_blocks, QT_blocks = n4sid_utils.partition_R_matrix(RT, QT, i, j, m, l)
+    new_matrix_R5614, new_matrix_RT1414 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks, i, l, m)
+    Li1, Li2, Li3, Li_11, Li_12, Li_13 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
+    Gamma_i, U1, Sigma1 = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m)
+    A, B, C, D = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, R_blocks, i, l, m)
 
- import numpy as np
-    from scipy.linalg import schur, rsf2cs=
+    n4sid_utils.get_dominant_coords()
     
-    def n4sid(a, inputs, outputs):
-        # Perform Schur decomposition
-        T, schur_form = schur(a, output='real')
-        # Convert the real Schur form to complex Schur form
-        T, schur_form = rsf2csf(T, schur_form)
-        
-        # Determine which blocks are 2x2 complex blocks
-        n = schur_form.shape[0]
-        i = 0
-        blks = []
-        while i < n - 1:
-            if schur_form[i+1, i] != 0:
-                blks.append(2)
-                i += 2  # Skip the next index because it is part of a 2x2 block
-            else:
-                blks.append(1)
-                i += 1
-        if i == n - 1:
-            blks.append(1)  # The last one is a 1x1 block
-        
-        # Rescale the complex blocks
-        i = 0
-        for ct in blks:
-            if ct == 2:
-                # Calculate the scaling factor and apply it
-                sfactor = np.sign(schur_form[i, i+1]) * np.sqrt(abs(schur_form[i+1, i] / schur_form[i, i+1]))
-                schur_form[:, i+1] *= sfactor
-                schur_form[i+1, :] /= sfactor
-                T[:, i+1] *= sfactor
-                i += 2
-            else:
-                i += 1
-    
-        # Preset output matrices B and C, assuming there is already a method to calculate them
-        # This part needs to be adjusted based on specific system conditions
-        B = np.linalg.inv(T) @ outputs  # Example usage, real applications need other methods
-        C = inputs @ T  # Example usage, real applications need other methods
-        A = schur_form  # Directly use the rescaled Schur form as the A matrix
-    
-        return A, B, C
-    
-    # Example input matrix
-    a = np.random.random((4,4))
-    inputs = np.random.random((1, 4))
-    outputs = np.random.random((4, 1))
-    
-    # Call the function
-    A, B, C = n4sid(a, inputs, outputs)
-    print("A Matrix:\n", A)
-    print("B Matrix:\n", B)
-    print("C Matrix:\n", C)
-    
+    return A,B,C,D
 
-
+# %%
