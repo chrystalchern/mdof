@@ -316,155 +316,140 @@ def era_dc(Y,**options):
 
     return (A,B,C,D)
 
+# Can delete anything after this line
+ 
 
-import numpy as np
-from scipy.linalg import svd
-from numpy.linalg import pinv
-
-class StateSpaceModel:
-    def __init__(self, A, B, C, D, K=None):
-        self.A = A
-        self.B = B
-        self.C = C
-        self.D = D
-        
-
-    def __repr__(self):
-        return f"StateSpaceModel(A={self.A}, B={self.B}, C={self.C}, D={self.D})"
-
-def n4sid(data, nx, Ts=1, method='auto', **kwargs):
-    """
-    Estimate state-space model using subspace methods.
-    Arguments:
-    - data: (numpy array) The input-output data matrix.
-    - nx: (int or str) Model order or 'best' for automatic model order determination.
-    - Ts: (float) Sample time of the model, set to 0 for continuous models.
-    - method: (str) 'auto' or other methods defined by user.
-    - kwargs: Additional keyword arguments for future extensions or specific settings.
-    Returns:
-    - StateSpaceModel: The estimated state-space model.
-    """
-    # Data preprocessing
-    U, s, Vh = svd(data, full_matrices=False)
-    n = min(len(s), nx) if isinstance(nx, int) else np.argmax(s < 1e-10) + 1
-
-    # Construct the state-space model matrices
-    A = np.random.randn(n, n)  # Placeholder for actual computation
-    B = np.random.randn(n, 1)  # Placeholder for actual computation
-    C = np.random.randn(1, n)  # Placeholder for actual computation
-    D = np.zeros((1, 1))       # Assuming no direct feedthrough
-
-
-
-    model = StateSpaceModel(A, B, C, D)
-    return model
-
-
-
-
-from scipy.linalg import qr
-
-
-def construct_hankel_matrix(u, y, i, j):
-   
-    # Ensure the sequences are long enough to avoid index errors.
-    if len(u) < 2*i-1 or len(y) < 2*i-1:
-        raise ValueError("The length of input or output sequences is insufficient for matrix construction.")
-    
-    # Construct U_0|2i-1.
-    U_matrix = np.array([u[k:k+j] for k in range(2*i-1)])  # Rows are 2i-1, columns are j.
-    
-    # Construct Y_0|2i-1.
-    Y_matrix = np.array([y[k:k+j] for k in range(2*i-1)])  # Rows are 2i-1, columns are j.
-
-    # Normalize the matrix by dividing by sqrt(j).
-    H_matrix = np.vstack((U_matrix, Y_matrix)) / np.sqrt(j)
-
-    return H_matrix
-
-# Example input, replace these with actual data.
-u = np.random.rand(10)  # Example input data
-y = np.random.rand(10)  # Example output data
-i = 3  # Example value for i
-j = 2  # Example value for j
-
-H_matrix = construct_hankel_matrix(u, y, i, j)
-
-# Perform QR decomposition.
-Q, R = np.linalg.qr(H_matrix)
-
-# Define blocks of the R matrix.
-R_blocks = {
-    "R11": R[0:i, 0:i],
-    "R21": R[i:i+1, 0:i],
-    "R22": R[i:i+1, i:i+1],
-    "R31": R[i+1:2*i, 0:i],
-    "R32": R[i+1:2*i, i:i+1],
-    "R33": R[i+1:2*i, i+1:2*i],
-    "R41": R[2*i:3*i, 0:i],
-    "R42": R[2*i:3*i, i:i+1],
-    "R43": R[2*i:3*i, i+1:2*i],
-    "R44": R[2*i:3*i, 2*i:3*i],
-    "R51": R[3*i:3*i+1, 0:i],
-    "R52": R[3*i:3*i+1, i:i+1],
-    "R53": R[3*i:3*i+1, i+1:2*i],
-    "R54": R[3*i:3*i+1, 2*i:3*i],
-    "R55": R[3*i:3*i+1, 3*i:3*i+1],
-    "R61": R[3*i+1:4*i, 0:i],
-    "R62": R[3*i+1:4*i, i:i+1],
-    "R63": R[3*i+1:4*i, i+1:2*i],
-    "R64": R[3*i+1:4*i, 2*i:3*i],
-    "R65": R[3*i+1:4*i, 3*i:3*i+1],
-    "R66": R[3*i+1:4*i, 3*i+1:4*i]
-}
-
-# Define blocks of the Q matrix.
-Q_blocks = {
-    "Q1": Q[0:i, 0:j],        
-    "Q2": Q[i:i+1, 0:j],      
-    "Q3": Q[i+1:2*i, 0:j],    
-    "Q4": Q[2*i:3*i, 0:j],    
-    "Q5": Q[3*i:3*i+1, 0:j],  
-    "Q6": Q[3*i+1:4*i-1, 0:j] 
-}
-
-# Print the dimensions of each block to ensure they're correct.
-for key, block in R_blocks.items():
-    print(f"{key} Shape: {block.shape}")
-
-for key, block in Q_blocks.items():
-    print(f"{key} Shape: {block.shape}")
-
-# Print QR decomposition results.
-print("\nQ Matrix:")
-print(Q)
-
-print("\nR Matrix:")
-print(R)
-
-#%%
 from mdof.utilities import n4sid_utils
+'''
+The code implements the N4SID (Subspace Identification) algorithm to identify a state-space model of a linear time-invariant system based on the input data (inputs) and output data (outputs). The main process is as follows:
+
+1. Construct the Hankel Matrix  
+   The input and output data are organized into a Hankel matrix suitable for subspace identification using the functions construct_Hankel and stacked_Hankel.
+2. QR Decomposition and Partitioning  
+   The Hankel matrix is decomposed using QR decomposition. The resulting matrix is then partitioned into several sub-blocks according to specified row and column sizes, which will be used for subsequent projection matrix and subspace calculations.
+3. Projection Matrix Calculation
+   By multiplying the partitioned blocks (using np.dot), a series of intermediate results (such as Li1, Li2, etc.) are obtained. These results are further combined using np.hstack and np.vstack to construct a new matrix used for extracting the system's observable subspace.
+4. Singular Value Decomposition (SVD) and Order Selection
+   An SVD is performed on a key matrix, result_matrix_2. The function choose_k_gap is used to determine the system order k based on the gap between singular values. Then, the matrices U and Sigma are partitioned into their principal and secondary parts, which are used to compute the subspace matrix Gamma_i, among others.
+5. Least-Squares Solution for the System Matrices
+   Further combinations of the truncated U and Sigma matrices are used to construct and solve a set of linear equations, ultimately obtaining the state-space matrices A, B, C, and D.
+6. Estimation of Noise Covariance Matrices (Qs, Ss, Rs) 
+   The residual matrix, ρ₂ (rho_2), is computed, and based on this residual, the noise covariance matrices Qs, Ss, and Rs are estimated.
+7. Simulation and Visualization
+   The identified system (A, B, C, D) is used with the input data in the simulate function to obtain the predicted output, output_prediction. Then, Matplotlib is used to plot both the actual output and the predicted output for comparison. To correct a sign inversion issue, the predicted output is multiplied by -1 (i.e., -output_prediction.T) before plotting.
+
+Through these steps, the function ultimately returns the four system matrices (A, B, C, D).
+'''
 def n4sid(inputs, outputs, **options):
-    inputs, outputs = n4sid_utils.preprocess_data(u, y)
-    i = options.get("i", 3)
-    j = options.get("j", 26) 
+    verbose=options.get('verbose',False)
+    i = options.get("i", None)
+    j = options.get("j", None) 
     m = inputs.shape[0]  
     l = outputs.shape[0]
-
-    U_hankel = n4sid_utils.construct_hankel(inputs, j, 0, 2*i-1)
-    Y_hankel = n4sid_utils.construct_hankel(outputs, j, 0, 2*i-1)
-    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 5)
-
-    Q, R = np.linalg.qr(stacked_hankel.T)
-    RT, QT = R.T, Q.T
-    RT_blocks, QT_blocks = n4sid_utils.partition_R_matrix(RT, QT, i, j, m, l)
-    new_matrix_R5614, new_matrix_RT1414 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks, i, l, m)
-    Li1, Li2, Li3, Li_11, Li_12, Li_13 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
-    Gamma_i, U1, Sigma1 = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m)
-    A, B, C, D = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, R_blocks, i, l, m)
-
-    n4sid_utils.get_dominant_coords()
     
-    return A,B,C,D
+    U = n4sid_utils.construct_Hankel(inputs, j, 0, 2 * i - 1)
+    Y = n4sid_utils.construct_Hankel(outputs, j, 0, 2 * i - 1)
+    
+    #STEP_1 computer hankel matrix
+    hankel_matrix = n4sid_utils.stacked_Hankel(inputs, outputs, j, 0, 2*i-1)
+    #STEP2_Performing QR decomposition and partitioning the R matrix
+    Q, R = np.linalg.qr(hankel_matrix.T)
+    RT, QT = R.T, Q.T
+    RT_row_sizes = [3*i, 3, 3*(i-1), i, 1, i-1] 
+    RT_col_sizes = [3*i, 3, 3*(i-1), i, 1, i-1] 
+    QT_row_sizes = [3*i, 3, 3*(i-1), i, 1, i-1]  
+    QT_col_sizes = [j]  
+    RT_blocks = n4sid_utils.slice_matrix(RT, RT_row_sizes, RT_col_sizes)
+    QT_blocks = n4sid_utils.slice_matrix(QT, QT_row_sizes, QT_col_sizes)
+    R_row_sizes = [3*i, 3, 3*(i-1), i, 1, i-1] 
+    R_col_sizes = [3*i, 3, 3*(i-1), i, 1, i-1] 
+    R_blocks = n4sid_utils.slice_matrix(R, R_row_sizes, R_col_sizes)
+    #STEP_3 Calculating the projection
+    R5614 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(4, 6), col_range=(0, 4))
+    RT1414 = n4sid_utils.extract_and_combine_blocks(R_blocks, row_range=(0, 4), col_range=(0, 4))
+    result_matrix = np.dot(R5614, RT1414)
 
-# %%
+    l_i = l * i 
+    m_i = m * i 
+    Li1 = result_matrix[:l_i, :m_i] 
+    Li2 = result_matrix[:l_i, m_i:2*m_i]  
+    Li3 = result_matrix[:l_i, 2*m_i:]
+    R6615 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(5, 6), col_range=(0, 5))
+    RT1515 = n4sid_utils.extract_and_combine_blocks(R_blocks, row_range=(0, 5), col_range=(0, 5))
+    result_matrix_1 = np.dot(R6615, RT1515)
+    l_i = l * i 
+    m_i = m * i 
+    Li_11 = result_matrix_1[:l*(i-1), :m*(i+1)] 
+    Li_12 = result_matrix_1[:l*(i-1), m*(i+1):2*m_i]  
+    Li_13 = result_matrix_1[:l*(i-1), 2*m_i:]
+    #STEP4_Determine gamma and n through the SVD
+    Zero_Matrix_1 = np.zeros((l_i, m_i))
+    Combined_Matrix = np.hstack((Li1, Zero_Matrix_1, Li3))
+    R1414 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(0, 4), col_range=(0, 4))
+    R5514 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(4, 5), col_range=(0, 4))
+    result_matrix_2 = np.dot(Combined_Matrix, R1414)
+    U, Sigma, VT = np.linalg.svd(result_matrix_2, full_matrices=False)
+    k = n4sid_utils.choose_k_gap(Sigma, threshold_ratio=10)
+    print(k)
+    U1 = U[:, :k]
+    U2 = U[:, k:]
+    Sigma1 = np.diag(Sigma[:k])
+    Sigma2 = np.diag(Sigma[k:])
+    Sigma1_half = np.sqrt(Sigma1) 
+    Gamma_i = np.dot(U1, Sigma1_half)
+    Gamma_i_pinv = np.linalg.pinv(Gamma_i)
+    Gamma_i_minus_1 = Gamma_i[:-l, :]
+    Gamma_i_minus_1_pinv = np.linalg.pinv(Gamma_i_minus_1)
+    #Step_5 Construct all the matrices required for the least squares method.
+    U1_truncated = U1[:-l, :]
+    U1_truncated_pinv = np.linalg.pinv(U1_truncated)
+    U1_transposed = U1.T
+    Sigma1_neg_half = np.diag(1 / np.sqrt(np.diag(Sigma1)))
+    R1514 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(0, 5), col_range=(0, 4))
+    R5514 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(4, 5), col_range=(0, 4))
+    R2214 = n4sid_utils.extract_and_combine_blocks(RT_blocks, row_range=(1, 2), col_range=(0, 4))
+    Zero_Matrix_2 = np.zeros((l*(i-1), m*(i-1)))
+    Combined_Matrix_2 = np.hstack((Li_11, Zero_Matrix_2, Li_13))
+    intermediate_result_1 = np.dot(np.dot(np.dot(Sigma1_neg_half, U1_truncated_pinv), Combined_Matrix_2), R1514)
+    final_matrix_3 = np.vstack((intermediate_result_1, R5514))
+    intermediate_result_2 = np.dot(np.dot(np.dot(Sigma1_neg_half, U1_transposed), Combined_Matrix), R1414)
+    final_matrix_4 = np.vstack((intermediate_result_2, R2214))
+    #Step_6 Solve for the ABCD matrix.
+    AAA = final_matrix_4
+    BBB = final_matrix_3
+    AAA_pinv = np.linalg.pinv(AAA)
+    script_L = np.dot(BBB, AAA_pinv) 
+    script_L11 = script_L[:k, :k]    
+    script_L12 = script_L[:k, k:k+m]   
+    script_L21 = script_L[k:k+l, :k]     
+    script_L22 = script_L[k:k+l, k:k+m] 
+    A = script_L11
+    B = script_L12
+    C = script_L21
+    D = script_L22
+    #Step_7 Solve for the QsSsRs matrix.
+    rho_2 = BBB - np.dot(script_L, AAA)
+    rho1_2 = rho_2[:k, :]
+    rho2_2 = rho_2[k:, :]
+    rho1_2_transposed = rho1_2.T
+    rho2_2_transposed = rho2_2.T
+
+    Qs = (1/j) * np.dot(rho1_2, rho1_2_transposed)
+    Ss = (1/j) * np.dot(rho1_2, rho2_2_transposed)
+    Rs = (1/j) * np.dot(rho2_2, rho2_2_transposed)
+
+    system = (A, B, C, D)
+    
+    from mdof.simulate import simulate
+    output_prediction = simulate(system, inputs)
+    import matplotlib.pyplot as plt
+    plt.plot(outputs.T)
+    print(outputs)
+    plt.show()
+    plt.plot(-output_prediction.T)
+    plt.show()
+
+    if verbose:
+        print("Hankel matrix:", hankel_matrix)
+
+    return A, B, C, D
