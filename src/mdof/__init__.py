@@ -28,9 +28,7 @@ def outid(outputs, dt, **options):
 
     frequencies,U,S = transform.fdd(outputs=outputs, step=dt)
         
-    if len(outputs.shape) == 1:
-        outputs = outputs[None,:]
-    p,nt = outputs.shape
+    p,n_spectrum_pts = S.shape
     P = np.empty(p)
 
     from scipy.signal import find_peaks

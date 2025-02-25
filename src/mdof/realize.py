@@ -442,7 +442,7 @@ print(Q)
 print("\nR Matrix:")
 print(R)
 
-#%%
+
 from mdof.utilities import n4sid_utils
 def n4sid(inputs, outputs, **options):
     inputs, outputs = n4sid_utils.preprocess_data(u, y)
@@ -467,4 +467,4 @@ def n4sid(inputs, outputs, **options):
     
     return A,B,C,D
 
-# %%
+
