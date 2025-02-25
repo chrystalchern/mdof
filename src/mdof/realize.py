@@ -316,3 +316,155 @@ def era_dc(Y,**options):
 
     return (A,B,C,D)
 
+
+import numpy as np
+from scipy.linalg import svd
+from numpy.linalg import pinv
+
+class StateSpaceModel:
+    def __init__(self, A, B, C, D, K=None):
+        self.A = A
+        self.B = B
+        self.C = C
+        self.D = D
+        
+
+    def __repr__(self):
+        return f"StateSpaceModel(A={self.A}, B={self.B}, C={self.C}, D={self.D})"
+
+def n4sid(data, nx, Ts=1, method='auto', **kwargs):
+    """
+    Estimate state-space model using subspace methods.
+    Arguments:
+    - data: (numpy array) The input-output data matrix.
+    - nx: (int or str) Model order or 'best' for automatic model order determination.
+    - Ts: (float) Sample time of the model, set to 0 for continuous models.
+    - method: (str) 'auto' or other methods defined by user.
+    - kwargs: Additional keyword arguments for future extensions or specific settings.
+    Returns:
+    - StateSpaceModel: The estimated state-space model.
+    """
+    # Data preprocessing
+    U, s, Vh = svd(data, full_matrices=False)
+    n = min(len(s), nx) if isinstance(nx, int) else np.argmax(s < 1e-10) + 1
+
+    # Construct the state-space model matrices
+    A = np.random.randn(n, n)  # Placeholder for actual computation
+    B = np.random.randn(n, 1)  # Placeholder for actual computation
+    C = np.random.randn(1, n)  # Placeholder for actual computation
+    D = np.zeros((1, 1))       # Assuming no direct feedthrough
+
+
+
+    model = StateSpaceModel(A, B, C, D)
+    return model
+
+
+
+
+from scipy.linalg import qr
+
+
+def construct_hankel_matrix(u, y, i, j):
+   
+    # Ensure the sequences are long enough to avoid index errors.
+    if len(u) < 2*i-1 or len(y) < 2*i-1:
+        raise ValueError("The length of input or output sequences is insufficient for matrix construction.")
+    
+    # Construct U_0|2i-1.
+    U_matrix = np.array([u[k:k+j] for k in range(2*i-1)])  # Rows are 2i-1, columns are j.
+    
+    # Construct Y_0|2i-1.
+    Y_matrix = np.array([y[k:k+j] for k in range(2*i-1)])  # Rows are 2i-1, columns are j.
+
+    # Normalize the matrix by dividing by sqrt(j).
+    H_matrix = np.vstack((U_matrix, Y_matrix)) / np.sqrt(j)
+
+    return H_matrix
+
+# Example input, replace these with actual data.
+u = np.random.rand(10)  # Example input data
+y = np.random.rand(10)  # Example output data
+i = 3  # Example value for i
+j = 2  # Example value for j
+
+H_matrix = construct_hankel_matrix(u, y, i, j)
+
+# Perform QR decomposition.
+Q, R = np.linalg.qr(H_matrix)
+
+# Define blocks of the R matrix.
+R_blocks = {
+    "R11": R[0:i, 0:i],
+    "R21": R[i:i+1, 0:i],
+    "R22": R[i:i+1, i:i+1],
+    "R31": R[i+1:2*i, 0:i],
+    "R32": R[i+1:2*i, i:i+1],
+    "R33": R[i+1:2*i, i+1:2*i],
+    "R41": R[2*i:3*i, 0:i],
+    "R42": R[2*i:3*i, i:i+1],
+    "R43": R[2*i:3*i, i+1:2*i],
+    "R44": R[2*i:3*i, 2*i:3*i],
+    "R51": R[3*i:3*i+1, 0:i],
+    "R52": R[3*i:3*i+1, i:i+1],
+    "R53": R[3*i:3*i+1, i+1:2*i],
+    "R54": R[3*i:3*i+1, 2*i:3*i],
+    "R55": R[3*i:3*i+1, 3*i:3*i+1],
+    "R61": R[3*i+1:4*i, 0:i],
+    "R62": R[3*i+1:4*i, i:i+1],
+    "R63": R[3*i+1:4*i, i+1:2*i],
+    "R64": R[3*i+1:4*i, 2*i:3*i],
+    "R65": R[3*i+1:4*i, 3*i:3*i+1],
+    "R66": R[3*i+1:4*i, 3*i+1:4*i]
+}
+
+# Define blocks of the Q matrix.
+Q_blocks = {
+    "Q1": Q[0:i, 0:j],        
+    "Q2": Q[i:i+1, 0:j],      
+    "Q3": Q[i+1:2*i, 0:j],    
+    "Q4": Q[2*i:3*i, 0:j],    
+    "Q5": Q[3*i:3*i+1, 0:j],  
+    "Q6": Q[3*i+1:4*i-1, 0:j] 
+}
+
+# Print the dimensions of each block to ensure they're correct.
+for key, block in R_blocks.items():
+    print(f"{key} Shape: {block.shape}")
+
+for key, block in Q_blocks.items():
+    print(f"{key} Shape: {block.shape}")
+
+# Print QR decomposition results.
+print("\nQ Matrix:")
+print(Q)
+
+print("\nR Matrix:")
+print(R)
+
+
+from mdof.utilities import n4sid_utils
+def n4sid(inputs, outputs, **options):
+    inputs, outputs = n4sid_utils.preprocess_data(u, y)
+    i = options.get("i", 3)
+    j = options.get("j", 26) 
+    m = inputs.shape[0]  
+    l = outputs.shape[0]
+
+    U_hankel = n4sid_utils.construct_hankel(inputs, j, 0, 2*i-1)
+    Y_hankel = n4sid_utils.construct_hankel(outputs, j, 0, 2*i-1)
+    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 5)
+
+    Q, R = np.linalg.qr(stacked_hankel.T)
+    RT, QT = R.T, Q.T
+    RT_blocks, QT_blocks = n4sid_utils.partition_R_matrix(RT, QT, i, j, m, l)
+    new_matrix_R5614, new_matrix_RT1414 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks, i, l, m)
+    Li1, Li2, Li3, Li_11, Li_12, Li_13 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
+    Gamma_i, U1, Sigma1 = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m)
+    A, B, C, D = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, R_blocks, i, l, m)
+
+    n4sid_utils.get_dominant_coords()
+    
+    return A,B,C,D
+
+
