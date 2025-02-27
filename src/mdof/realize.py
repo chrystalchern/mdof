@@ -325,7 +325,7 @@ def n4sid(inputs, outputs, **options):
     m = inputs.shape[0]  
     l = outputs.shape[0]
 
-    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 5)
+    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
     Q, R = np.linalg.qr(stacked_hankel.T)
     RT, QT = R.T, Q.T
