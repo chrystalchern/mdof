@@ -319,24 +319,27 @@ def era_dc(Y,**options):
 
 from mdof.utilities import n4sid_utils
 def n4sid(inputs, outputs, **options):
-    inputs, outputs = n4sid_utils.preprocess_data(u, y)
-    i = options.get("i", 3)
-    j = options.get("j", 26) 
+   
+    i = options.get("i", None)
+    j = options.get("j", None) 
     m = inputs.shape[0]  
     l = outputs.shape[0]
 
-    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 5)
+    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
     Q, R = np.linalg.qr(stacked_hankel.T)
     RT, QT = R.T, Q.T
-    RT_blocks, QT_blocks = n4sid_utils.partition_R_matrix(RT, QT, i, j, m, l)
-    new_matrix_R5614, new_matrix_RT1414 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks, i, l, m)
-    Li1, _, Li3, _, _, _ = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
-    _, U1, Sigma1 = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m)
-    A, B, C, D = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, R_blocks, i, l, m)
-
-    n4sid_utils.get_dominant_coords()
+    RT_blocks, _ = n4sid_utils.partition_R_matrix(RT, QT, i, j, m, l)
+    R_blocks = n4sid_utils.partition_R1_matrix(R, i, j, m, l)
+    new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks)
+    Li1, _, Li3 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
+    Li_11, _, Li_13 = n4sid_utils.compute_Li_1_matrices(new_matrix_R6615, new_matrix_RT1515, i, l, m)
+    _, U1, Sigma1, k = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3)
     
-    return A,B,C,D
+    A, B, C, D, Qs, Ss, Rs = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11, Li_13, k, j)
+
+    
+    
+    return A,B,C,D, Qs, Ss, Rs
 
 
