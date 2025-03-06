@@ -120,15 +120,9 @@ def compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11
     
     Zero_Matrix_1 = np.zeros((l*i, m*i))
     Combined_Matrix = np.hstack((Li1, Zero_Matrix_1, Li3))
-    if verbose:
-        # TODO: add description of combined matrix in terms of its functionality and/or equation number
-        print(f"Combined matrix: {Combined_Matrix}")
     
     Zero_Matrix_2 = np.zeros((l*(i-1), m*(i-1)))
     Combined_Matrix_2 = np.hstack((Li_11, Zero_Matrix_2, Li_13))
-    if verbose:
-        # TODO: add description of combined matrix 2 in terms of its functionality and/or equation number
-        print(f"Combined matrix 2: {Combined_Matrix_2}")
     
     final_matrix_3 = np.vstack((Sigma1_neg_half @ U1_truncated_pinv @ Combined_Matrix_2 @ new_matrix_R1514, new_matrix_R5514))
     final_matrix_4 = np.vstack((Sigma1_neg_half @ U1.T @ Combined_Matrix @ new_matrix_R1414, new_matrix_R2214))
