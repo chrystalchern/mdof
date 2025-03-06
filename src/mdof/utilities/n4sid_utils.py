@@ -100,7 +100,7 @@ def compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3):
 
     return Gamma_i, U1, Sigma1, k
 
-def compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11, Li_13, k, j, verbose=False):
+def compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11, Li_13, k, j, verbose=False, stochastic_terms=True):
     Sigma1_neg_half = np.diag(1 / np.sqrt(np.diag(Sigma1)))
     
     U1_truncated = U1[:-l, :]
@@ -120,11 +120,15 @@ def compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11
     
     Zero_Matrix_1 = np.zeros((l*i, m*i))
     Combined_Matrix = np.hstack((Li1, Zero_Matrix_1, Li3))
-    print(Combined_Matrix)
+    if verbose:
+        # TODO: add description of combined matrix in terms of its functionality and/or equation number
+        print(f"Combined matrix: {Combined_Matrix}")
     
     Zero_Matrix_2 = np.zeros((l*(i-1), m*(i-1)))
     Combined_Matrix_2 = np.hstack((Li_11, Zero_Matrix_2, Li_13))
-    print(Combined_Matrix_2)
+    if verbose:
+        # TODO: add description of combined matrix 2 in terms of its functionality and/or equation number
+        print(f"Combined matrix 2: {Combined_Matrix_2}")
     
     final_matrix_3 = np.vstack((Sigma1_neg_half @ U1_truncated_pinv @ Combined_Matrix_2 @ new_matrix_R1514, new_matrix_R5514))
     final_matrix_4 = np.vstack((Sigma1_neg_half @ U1.T @ Combined_Matrix @ new_matrix_R1414, new_matrix_R2214))
@@ -138,7 +142,7 @@ def compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11
     
     Qs, Ss, Rs = None, None, None
 
-    if verbose:
+    if stochastic_terms:
         rho_2 = final_matrix_3 - np.dot(script_L, final_matrix_4)
 
         rho1_2 = rho_2[:k, :]
