@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>mdof.realize module &#8212; mdof</title>
+    <title>System Realization by Information Matrix (SRIM) &#8212; mdof</title>
   
   
   
@@ -64,12 +64,12 @@
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
     <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'library/mdof.realize';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'theory/srim';</script>
     <link rel="icon" href="../_static/favicon.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="mdof.modal module" href="mdof.modal.html" />
-    <link rel="prev" title="mdof.markov module" href="mdof.markov.html" />
+    <link rel="next" title="Examples" href="../examples/index.html" />
+    <link rel="prev" title="Observer Kalman Filter Identification (OKID)" href="okid.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="0.0.17" />
@@ -148,15 +148,15 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../library/index.html">
     mdof
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../theory/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
     Theory
   </a>
 </li>
@@ -257,15 +257,15 @@
 <nav>
   <ul class="bd-navbar-elements navbar-nav">
     
-<li class="nav-item current active">
-  <a class="nav-link nav-internal" href="index.html">
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../library/index.html">
     mdof
   </a>
 </li>
 
 
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="../theory/index.html">
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
     Theory
   </a>
 </li>
@@ -320,21 +320,12 @@
 <nav class="bd-docs-nav bd-links"
      aria-label="Section Navigation">
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
-  <div class="bd-toc-item navbar-nav"><ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="index.html">mdof</a></li>
-</ul>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.outid.html">mdof.outid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.modes.html">mdof.modes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.eigid.html">mdof.eigid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.sysid.html">mdof.sysid</a></li>
-<li class="toctree-l1"><a class="reference internal" href="generated/mdof.predict.html">mdof.predict</a></li>
-</ul>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="mdof.markov.html">mdof.markov module</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">mdof.realize module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdof.modal.html">mdof.modal module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="mdof.transform.html">mdof.transform module</a></li>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="statespace.html">State Space Model of Structural Dynamics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="modes.html">Modal Properties from State Space Realization</a></li>
+<li class="toctree-l1"><a class="reference internal" href="era.html">Eigensystem Realization Algorithm (ERA)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="okid.html">Observer Kalman Filter Identification (OKID)</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">System Realization by Information Matrix (SRIM)</a></li>
 </ul>
 </div>
 </nav></div>
@@ -376,9 +367,9 @@
       </a>
     </li>
     
-    <li class="breadcrumb-item"><a href="index.html" class="nav-link">mdof</a></li>
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">Theory</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">mdof.realize module</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">System Realization by Information Matrix (SRIM)</span></li>
   </ul>
 </nav>
 </div>
@@ -395,141 +386,280 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="module-mdof.realize">
-<span id="mdof-realize-module"></span><h1>mdof.realize module<a class="headerlink" href="#module-mdof.realize" title="Link to this heading">#</a></h1>
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.realize.srim">
-<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">srim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.srim" title="Link to this definition">#</a></dt>
-<dd><p>System realization from input and output data, with output error minimization method.
-System Realization Using Information Matrix (SRIM) <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of time samples</p></li>
-<li><p><strong>outputs</strong> (<em>array</em>) – output response history.
-dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
-<span class="math notranslate nohighlight">\(nt\)</span> = number of time samples</p></li>
-<li><p><strong>horizon</strong> (<em>int</em>) – (optional) number of samples used for identification (prediction horizon).
-default: <span class="math notranslate nohighlight">\(\min(300, nt)\)</span></p></li>
-<li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(\min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
-<li><p><strong>full</strong> (<em>bool</em>) – (optional) if True, full SVD. default: True</p></li>
-<li><p><strong>find</strong> (<em>string</em>) – (optional) “ABCD” or “AC”. default: “ABCD”</p></li>
-<li><p><strong>threads</strong> (<em>int</em>) – (optional) number of threads used during the output error minimization method.
-default: 6</p></li>
-<li><p><strong>chunk</strong> (<em>int</em>) – (optional) chunk size in output error minimization method. default: 200</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-<section id="references">
-<h2>References<a class="headerlink" href="#references" title="Link to this heading">#</a></h2>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id2" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
-<p>Juang, J. N. (1997). System realization using information matrix. Journal
-of Guidance, Control, and Dynamics, 20(3), 492-500.
-(<a class="reference external" href="https://doi.org/10.2514/2.4068">https://doi.org/10.2514/2.4068</a>)</p>
-</aside>
-</aside>
+  <section id="system-realization-by-information-matrix-srim">
+<h1>System Realization by Information Matrix (SRIM)<a class="headerlink" href="#system-realization-by-information-matrix-srim" title="Link to this heading">#</a></h1>
+<p>For discrete-time systems, the correlation between inputs, outputs, and
+state yield information about the system’s state evolution and response.
+In fact, the state equations can be estimated by manipulating
+correlation matrices through the method, <a class="reference external" href="https://doi.org/10.2514/2.4068">System Realization by
+Information Matrix</a> (SRIM).</p>
+<section id="discrete-time-system-matrix-equation">
+<h2>Discrete-Time System Matrix Equation<a class="headerlink" href="#discrete-time-system-matrix-equation" title="Link to this heading">#</a></h2>
+<p>We begin with discrete-time state equations that correspond to the
+structure’s dynamics (see <a class="reference external" href="https://chrystalchern.github.io/mdof/theory/statespace.html#discrete-lti-state-space-representation">Discrete LTI State-Space
+Representation</a>).</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{x}(k+1) &amp;= \bm{Ax}(k) + \bm{Bu}(k) \\
+\bm{y}(k) &amp;= \bm{Cx}(k) + \bm{Du}(k)
+\end{aligned}\end{split}\]</div>
+<p>By noting the state evolution</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{x}(k+1) &amp;= \bm{Ax}(k)+\bm{B}\bm{U}_{p}(k)\\
+\bm{x}(k+2) &amp;= \bm{A}^2\bm{X}(k) + \bm{AB}\bm{U}_{p}(k) + \bm{Bu}(k+1)\\
+\bm{x}(k+3) &amp;= \bm{A}^{3}\bm{X}(k) + \bm{A}^{2}\bm{Bu}(k) + \bm{ABu}(k+1) + \bm{Bu}(k+2),
+\end{aligned}\end{split}\]</div>
+<p>we can generalize the response for the timepoint <span class="math notranslate nohighlight">\(k+p-1\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{x}(k+p) &amp;= \bm{A}^{p}\bm{x}(k) + \sum_{i=1}^{p}\bm{A}^{p-i}\bm{Bu}(k+i-1)
+\\
+\bm{x}(k+p-1) &amp;= \bm{A}^{p-1}\bm{x}(k) + \sum_{i=1}^{p-1}\bm{A}^{p-i-1}\bm{Bu}(k+i-1)
+\\
+\bm{y}(k+p-1) &amp;= \bm{CA}^{p-1}\bm{x}(k) + \sum_{i=1}^{p-1}\bm{CA}^{p-i-1}\bm{Bu}(k+i-1)+\bm{Du}(k+p-1)~.
+\end{aligned}\end{split}\]</div>
+<p>Then, we can vertically stack <span class="math notranslate nohighlight">\(p\)</span> successive time-points into a
+column vector and express this vector as <span class="math notranslate nohighlight">\(\bm{y}_{p}(k)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{y}_{p}(k) &amp;= \mathcal{O}_{p}\bm{x}(k) + \mathcal{T}_{p}\bm{u}_{p}(k) \\
+\begin{bmatrix}
+\bm{y}(k) \\
+\bm{y}(k+1) \\
+\vdots \\
+\bm{y}(k+p-1)
+\end{bmatrix}
+=&amp;
+\begin{bmatrix}
+\bm{C} \\
+\bm{CA} \\
+\bm{CA}^{2} \\
+\vdots \\
+\bm{CA}^{p-1}
+\end{bmatrix}
+\bm{x}(k)
+~+ \\
+&amp;
+\begin{bmatrix}
+\bm{D} \\
+\bm{CB} &amp; \bm{D} \\
+\bm{CAB} &amp; \bm{CB} &amp; \bm{D} \\
+\vdots &amp; \vdots &amp; \vdots &amp; \ddots \\
+\bm{CA}^{p-2}\bm{B} &amp; \bm{CA}^{p-3}\bm{B} &amp; \bm{CA}^{p-4}\bm{B} &amp; \cdots &amp; \bm{D}
+\end{bmatrix}
+\begin{bmatrix}
+\bm{u}(k) \\
+\bm{u}(k+1) \\
+\vdots \\
+\bm{u}(k+p-1)
+\end{bmatrix}~.
+\end{aligned}\end{split}\]</div>
+<!-- $$
+\bm{y}_{p}(k) =
+\begin{bmatrix}
+\bm{y}(k) \\
+\bm{y}(k+1) \\
+\vdots \\
+\bm{y}(k+p-1)
+\end{bmatrix}
+, \quad
+\bm{u}_{p}(k) =
+\begin{bmatrix}
+\bm{u}(k) \\
+\bm{u}(k+1) \\
+\vdots \\
+\bm{u}(k+p-1)
+\end{bmatrix}
+$$ --><p>Finally, we horizontally stack <span class="math notranslate nohighlight">\(N\)</span> successive timepoints of these
+column vectors in a matrix, to get the matrix equation</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\bm{Y}_{p}(k) = \mathcal{O}_{p}\bm{X}(k) + \mathcal{T}_{p}\bm{U}_{p}(k)} ~,\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{Y}_{p}(k) &amp;= \begin{bmatrix} \bm{y}_{p}(k) &amp; \bm{y}_{p}(k+1) &amp; \cdots &amp; \bm{y}_{p}(k+N-1) \end{bmatrix} \\
+&amp;= \begin{bmatrix}
+\bm{y}(k)     &amp; \bm{y}(k+1) &amp; \cdots &amp; \bm{y}(k+N-1)\\
+\bm{y}(k+1)   &amp; \bm{y}(k+2) &amp; \cdots &amp; \bm{y}(k+N)  \\
+\vdots            &amp; \vdots          &amp; \ddots &amp; \vdots \\
+\bm{y}(k+p-1) &amp; \bm{y}(k+p) &amp; \cdots &amp; \bm{y}(k+N+p-2)
+\end{bmatrix}
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\bm{X}(k) = \begin{bmatrix} \bm{x}(k) &amp; \bm{x}(k+1) &amp; \cdots &amp; \bm{x}(k+N-1) \end{bmatrix}\]</div>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{U}_{p}(k) &amp;= \begin{bmatrix} \bm{u}_{p}(k) &amp; \bm{u}_{p}(k+1) &amp; \cdots &amp; \bm{u}_{p}(k+N-1) \end{bmatrix} \\
+&amp;= \begin{bmatrix}
+\bm{u}(k)     &amp; \bm{u}(k+1) &amp; \cdots &amp; \bm{u}(k+N-1)\\
+\bm{u}(k+1)   &amp; \bm{u}(k+2) &amp; \cdots &amp; \bm{u}(k+N)  \\
+\vdots            &amp; \vdots          &amp; \ddots &amp; \vdots \\
+\bm{u}(k+p-1) &amp; \bm{u}(k+p) &amp; \cdots &amp; \bm{u}(k+N+p-2)
+\end{bmatrix}~.
+\end{aligned}\end{split}\]</div>
 </section>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.realize.era">
-<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">era</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.era" title="Link to this definition">#</a></dt>
-<dd><p>System realization from Markov parameters (discrete impulse response data).
-Ho-Kalman / Eigensystem Realization Algorithm (ERA) <a class="footnote-reference brackets" href="#id6" id="id3" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> <a class="footnote-reference brackets" href="#id7" id="id4" role="doc-noteref"><span class="fn-bracket">[</span>3<span class="fn-bracket">]</span></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs,
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of Markov parameters.</p></li>
-<li><p><strong>horizon</strong> (<em>int</em>) – (optional) number of block rows in Hankel matrix = order of observability matrix.
-default: <span class="math notranslate nohighlight">\(\min(150, (nt-1)/2)\)</span></p></li>
-<li><p><strong>nc</strong> (<em>int</em>) – (optional) number of block columns in Hankel matrix = order of controllability matrix.
-default: <span class="math notranslate nohighlight">\(\min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
-<li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(\min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-<section id="id5">
-<h2>References<a class="headerlink" href="#id5" title="Link to this heading">#</a></h2>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id6" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">2</a><span class="fn-bracket">]</span></span>
-<p>Ho, Β. L., &amp; Kálmán, R. E. (1966). Effective construction of linear state-variable models
-from input/output functions: Die Konstruktion von linearen Modeilen in der Darstellung
-durch Zustandsvariable aus den Beziehungen für Ein-und Ausgangsgrößen. at-Automatisierungstechnik,
-14(1-12), 545-548. (<a class="reference external" href="https://doi.org/10.1524/auto.1966.14.112.545">https://doi.org/10.1524/auto.1966.14.112.545</a>)</p>
-</aside>
-<aside class="footnote brackets" id="id7" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">3</a><span class="fn-bracket">]</span></span>
-<p>Juang, J. N., &amp; Pappa, R. S. (1985). An eigensystem realization algorithm for modal parameter
-identification and model reduction. Journal of guidance, control, and dynamics, 8(5), 620-627.
-(<a class="reference external" href="https://doi.org/10.2514/3.20031">https://doi.org/10.2514/3.20031</a>)</p>
-</aside>
-</aside>
+<section id="observability-matrix-from-information-matrix">
+<h2>Observability Matrix from Information Matrix<a class="headerlink" href="#observability-matrix-from-information-matrix" title="Link to this heading">#</a></h2>
+<p>By post-multiplying the matrix equation by
+<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{U}_{p}^{T}(k)\)</span>,
+<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{Y}_{p}^{T}(k)\)</span> or
+<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{X}_{p}^{T}(k)\)</span>, we obtain relationships
+between correlation matrices <span class="math notranslate nohighlight">\(\bm{R}_{yy}\)</span>,
+<span class="math notranslate nohighlight">\(\bm{R}_{yu}\)</span>, <span class="math notranslate nohighlight">\(\bm{R}_{uu}\)</span>, and
+<span class="math notranslate nohighlight">\(\bm{R}_{xx}\)</span> (See
+<a class="reference internal" href="#appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships"><span class="std std-ref">Appendix</span></a>).</p>
+<div class="math notranslate nohighlight">
+\[\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} = \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T} ~,\]</div>
+<p>where</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{R}_{yy} &amp;= \frac{1}{N}\bm{Y}_{p}(k)\bm{Y}_{p}^{T}(k), \quad{}
+\bm{R}_{yu} = \frac{1}{N}\bm{Y}_{p}(k)\bm{U}_{p}^{T}(k) \\
+\bm{R}_{uu} &amp;= \frac{1}{N}\bm{U}_{p}(k)\bm{U}_{p}^{T}(k) , \quad{}
+\bm{R}_{xx} = \frac{1}{N}\bm{X}(k)\bm{X}^{T}(k) ~.
+\end{aligned}\end{split}\]</div>
+<p>The left side of the equation is found from input and output
+measurements, and is called the <em>information matrix</em> of the data. Its
+singular value decomposition is computed to yield the <em>observability
+matrix</em> <span class="math notranslate nohighlight">\(\mathcal{O}_{p}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} = \bm{U} \Sigma \bm{U}^{T} = \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T} ~.\]</div>
 </section>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.realize.era_dc">
-<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">era_dc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Y</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.era_dc" title="Link to this definition">#</a></dt>
-<dd><p>System realization from Markov parameters (discrete impulse response data).
-Eigensystem Realization Algorithm with Data Correlations (ERA/DC) <a class="footnote-reference brackets" href="#id10" id="id8" role="doc-noteref"><span class="fn-bracket">[</span>4<span class="fn-bracket">]</span></a>.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Y</strong> (<em>array</em>) – Markov parameters. dimensions: <span class="math notranslate nohighlight">\((p,q,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs,
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of Markov parameters.</p></li>
-<li><p><strong>horizon</strong> (<em>int</em>) – (optional) number of block rows in Hankel matrix = order of observability matrix.
-default: <span class="math notranslate nohighlight">\(\min(150, (nt-1)/2)\)</span></p></li>
-<li><p><strong>nc</strong> (<em>int</em>) – (optional) number of block columns in Hankel matrix = order of controllability matrix.
-default: <span class="math notranslate nohighlight">\(\min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
-<li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(\min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
-<li><p><strong>a</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\\alpha)\)</span> number of block rows in Hankel of correlation matrix. default: 0</p></li>
-<li><p><strong>b</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\\beta)\)</span> number of block columns in Hankel of correlation matrix. default: 0</p></li>
-<li><p><strong>l</strong> (<em>int</em>) – (optional) initial lag for data correlations. default: 0</p></li>
-<li><p><strong>g</strong> (<em>int</em>) – (optional) lags (gap) between correlation matrices. default: 1</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>realization in the form of state space coefficients <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code></p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
-</dd>
-</dl>
-<section id="id9">
-<h2>References<a class="headerlink" href="#id9" title="Link to this heading">#</a></h2>
-<aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id10" role="doc-footnote">
-<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id8">4</a><span class="fn-bracket">]</span></span>
-<p>Juang, J. N., Cooper, J. E., &amp; Wright, J. R. (1987). An eigensystem realization algorithm
-using data correlations (ERA/DC) for modal parameter identification.
-(<a class="reference external" href="https://ntrs.nasa.gov/citations/19870035963">https://ntrs.nasa.gov/citations/19870035963</a>)</p>
-</aside>
-</aside>
+<section id="state-equation-matrices-from-observability-matrix">
+<h2>State Equation Matrices from Observability Matrix<a class="headerlink" href="#state-equation-matrices-from-observability-matrix" title="Link to this heading">#</a></h2>
+<p>Now, the state equation matrices <span class="math notranslate nohighlight">\(\bm{A}\)</span> and
+<span class="math notranslate nohighlight">\(\bm{C}\)</span> can be obtained from the observability matrix
+<span class="math notranslate nohighlight">\(\mathcal{O}_p\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\mathcal{O}_{p}
+=
+\begin{bmatrix}
+\bm{C} \\
+\bm{CA} \\
+\bm{CA}^{2} \\
+\vdots \\
+\bm{CA}^{p-1}
+\end{bmatrix}
+, \quad{}
+\mathcal{O}_{p}(:-1)
+=
+\begin{bmatrix}
+\bm{C} \\
+\bm{CA} \\
+\bm{CA}^{2} \\
+\vdots \\
+\bm{CA}^{p-2}
+\end{bmatrix}
+, \quad{}
+\mathcal{O}_{p}(1:)
+=
+\begin{bmatrix}
+\bm{CA} \\
+\bm{CA}^{2} \\
+\bm{CA}^{3} \\
+\vdots \\
+\bm{CA}^{p-1}
+\end{bmatrix}
+\end{aligned}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\bm{A} = \mathcal{O}_{p}(:-1)^{+}\mathcal{O}_{p}(1:)\]</div>
+<div class="math notranslate nohighlight">
+\[\bm{C} = \mathcal{O}_{p}(0)\]</div>
 </section>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="mdof.realize.n4sid">
-<span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">n4sid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.n4sid" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
-
+<section id="appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships">
+<h2>Appendix: Manipulation of discrete-time system matrix equation into correlation matrix relationships<a class="headerlink" href="#appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships" title="Link to this heading">#</a></h2>
+<p>In (<a class="reference external" href="https://doi.org/10.2514/2.4068">Juang 1997</a>), the discrete-time
+system matrix equation is manipulated into a form describing the
+relationship between correlation matrices <span class="math notranslate nohighlight">\(\bm{R}_{yy}\)</span>,
+<span class="math notranslate nohighlight">\(\bm{R}_{yu}\)</span>, <span class="math notranslate nohighlight">\(\bm{R}_{uu}\)</span>, and
+<span class="math notranslate nohighlight">\(\bm{R}_{xx}\)</span>.</p>
+<p>Post-multiplying the <a class="reference internal" href="#discrete-time-system-matrix-equation"><span class="std std-ref">discrete-time system matrix
+equation</span></a> by
+<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{U}_{p}^{T}(k)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{1}{N}\bm{Y}_{p}(k)\bm{U}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\bm{X}(k)\bm{U}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\bm{U}_{p}(k)\bm{U}_{p}^{T}(k)
+\\
+\bm{R}_{yu} &amp;= \mathcal{O}_{p}\bm{R}_{xu} + \mathcal{T}_{p}\bm{R}_{uu}
+\\
+\mathcal{T}_{p} &amp;= \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}
+\end{aligned}\end{split}\]</div>
+<p>Post-multiplying by <span class="math notranslate nohighlight">\(\frac{1}{N}\bm{Y}_{p}^{T}(k)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{1}{N}\bm{Y}_{p}(k)\bm{Y}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\bm{X}(k)\bm{Y}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\bm{U}_{p}(k)\bm{Y}_{p}^{T}(k)
+\\
+\bm{R}_{yy} &amp;= \mathcal{O}_{p}\bm{R}_{yx}^{T} + \mathcal{T}_{p}\bm{R}_{yu}^{T}
+\\
+\bm{R}_{yy} &amp;= \mathcal{O}_{p}\bm{R}_{yx}^{T} + \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\end{aligned}\end{split}\]</div>
+<p>Post-multiplying by <span class="math notranslate nohighlight">\(\frac{1}{N}\bm{X}_{p}^{T}(k)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\frac{1}{N}\bm{Y}_{p}(k)\bm{X}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\bm{X}(k)\bm{X}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\bm{U}_{p}(k)\bm{X}_{p}^{T}(k)
+\\
+\bm{R}_{yx} &amp;= \mathcal{O}_{p}\bm{R}_{xx} + \mathcal{T}_{p}\bm{R}_{xu}^{T}
+\\
+\bm{R}_{yx} &amp;= \mathcal{O}_{p}\bm{R}_{xx} + \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{xu}^{T}
+\end{aligned}\end{split}\]</div>
+<p>Substituting the equation for <span class="math notranslate nohighlight">\(\bm{R}_{yx}\)</span> into the equation
+for <span class="math notranslate nohighlight">\(\bm{R}_{yy}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{R}_{yy} =&amp; ~\mathcal{O}_{p}
+\left(\mathcal{O}_{p}\bm{R}_{xx} + \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{xu}^{T}\right)^{T}
+\\
+&amp;+
+\left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\\
+=&amp; ~\mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}
+ + \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \left( \bm{R}_{yu}^{T} - \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T} \right)
+\\
+&amp;+
+\left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\\
+=&amp; ~\mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}
+ + \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1}  \bm{R}_{yu}^{T} - \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T}
+\\
+&amp;+
+ \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} - \mathcal{O}_{p}\bm{R}_{xu} \bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\\
+=&amp; ~\mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}
+ - \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T} +
+ \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\end{aligned}\end{split}\]</div>
+<p>Moving all of the terms that can be composed with measured data to the
+left side:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+&amp;= \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T} - \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T} \\
+&amp;= \mathcal{O}_{p}\left( \bm{R}_{xx} - \bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T} \right) \mathcal{O}_{p}^{T}
+\end{aligned}\end{split}\]</div>
+<p>We make the assumption that all current and future input data is
+uncorrelated with the current state, which means that the average of the
+products <span class="math notranslate nohighlight">\(\bm{x}(k)\bm{u}(k+i), ~~ i \in [0,1,2,\dots]\)</span> is
+zero. This gives:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\bm{R}_{xu} &amp;=
+\frac{1}{N}
+\begin{bmatrix}
+\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j) \\
+\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j+1) \\
+\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j+2) \\
+\vdots \\
+\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j+p-1)
+\end{bmatrix}^{T} \\
+&amp;=
+\bm{0}
+\end{aligned}\end{split}\]</div>
+<p>in order to yield:</p>
+<div class="math notranslate nohighlight">
+\[\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} = \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}~.\]</div>
+</section>
 </section>
 
 
@@ -543,20 +673,20 @@ using data correlations (ERA/DC) for modal parameter identification.
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="mdof.markov.html"
+       href="okid.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">mdof.markov module</p>
+        <p class="prev-next-title">Observer Kalman Filter Identification (OKID)</p>
       </div>
     </a>
     <a class="right-next"
-       href="mdof.modal.html"
+       href="../examples/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">mdof.modal module</p>
+        <p class="prev-next-title">Examples</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -579,10 +709,10 @@ using data correlations (ERA/DC) for modal parameter identification.
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.srim"><code class="docutils literal notranslate"><span class="pre">srim()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era"><code class="docutils literal notranslate"><span class="pre">era()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era_dc"><code class="docutils literal notranslate"><span class="pre">era_dc()</span></code></a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.n4sid"><code class="docutils literal notranslate"><span class="pre">n4sid()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrete-time-system-matrix-equation">Discrete-Time System Matrix Equation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#observability-matrix-from-information-matrix">Observability Matrix from Information Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#state-equation-matrices-from-observability-matrix">State Equation Matrices from Observability Matrix</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships">Appendix: Manipulation of discrete-time system matrix equation into correlation matrix relationships</a></li>
 </ul>
   </nav></div>
 
@@ -590,7 +720,7 @@ using data correlations (ERA/DC) for modal parameter identification.
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../_sources/library/mdof.realize.rst.txt"
+      <li><a href="../_sources/theory/srim.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

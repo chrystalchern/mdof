@@ -1,0 +1,6 @@
+﻿mdof.predict
+============
+
+.. currentmodule:: mdof
+
+.. autofunction:: predict
