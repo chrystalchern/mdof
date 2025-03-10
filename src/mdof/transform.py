@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.fft import fft, fftfreq
 from scipy import signal
-from sdof import spectrum
+from sdof import spectrum as response_spectrum
 
 ## Transfer functions    
 def power_transfer(inputs, outputs, step, **options):
@@ -73,8 +73,8 @@ def response_transfer(inputs, outputs, step, **options):
         pmin, pmax = options['period_band']
         options['periods'] = np.linspace(pmin, pmax, 200)
 
-    Din,  _,  Ain = spectrum(inputs,  step, **options)
-    Dout, _, Aout = spectrum(outputs, step, **options)
+    Din,  _,  Ain = response_spectrum(inputs,  step, **options)
+    Dout, _, Aout = response_spectrum(outputs, step, **options)
     periods = Din[0]
 
     if pseudo:
