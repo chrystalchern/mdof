@@ -73,16 +73,16 @@ def response_transfer(inputs, outputs, step, **options):
         pmin, pmax = options['period_band']
         options['periods'] = np.linspace(pmin, pmax, 200)
 
-    Din,  _,  Ain = response_spectrum(inputs,  step, **options)
-    Dout, _, Aout = response_spectrum(outputs, step, **options)
-    periods = Din[0]
+    SDin,  _, SAin = response_spectrum(inputs,  step, **options)
+    SDout, _, SAout = response_spectrum(outputs, step, **options)
+    periods = SDin[0]
 
     if pseudo:
-        input_spectrum = Din[1,:]*(2*np.pi/periods)**2
-        output_spectrum = Dout[1,:]*(2*np.pi/periods)**2
+        input_spectrum  = SDin[1,:]*(2*np.pi/periods)**2
+        output_spectrum = SDout[1,:]*(2*np.pi/periods)**2
     else:
-        input_spectrum = Ain[1]
-        output_spectrum = Aout[1]
+        input_spectrum  = SAin[1]
+        output_spectrum = SAout[1]
 
     return (periods, output_spectrum/input_spectrum)
     
