@@ -154,8 +154,6 @@ def parse_freq(argi, config, channels, method=None):
     elif method == "fdd":
         spectrum = mdof.transform.fdd_spectrum(outputs=outputs.flatten(), step=dt, **config)
 
-
-    # periods, amplitudes = spectrum_modes(*spectrum, prominence=0.3*np.max(spectrum[1]))
     periods, amplitudes = spectrum_modes(*spectrum, prominence=None)
     
     if len(periods) > 0:
