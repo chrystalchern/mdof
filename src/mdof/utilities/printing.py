@@ -284,6 +284,16 @@ def plot_fdd(outputs, dt, true_periods=None):
 
     return identified_periods, identified_modeshapes
 
+def plotly_windowed_transfer(inputs, outputs, dt, method='fourier', normalize=True):
+    _,_,_,time = create_time_vector(inputs.shape[1],dt)
+    time_grid, period_grid, amplitude_grid = moving_window_transfer(time,
+                                                                    inputs,
+                                                                    outputs,
+                                                                    method=method,
+                                                                    normalize=normalize)
+    fig = plot_moving_window(time_grid, period_grid, amplitude_grid, plotly=True)
+    return fig
+
 
 if __name__ == "__main__":
 
