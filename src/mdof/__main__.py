@@ -85,7 +85,7 @@ def extract_channels(event, channels, permissive=True):
 
 
 
-def parse_time(argi, config, channels, method=None):
+def parse_freq(argi, config, channels, method=None):
     help = f"""\
     mdof {method} <event>
 
@@ -289,11 +289,11 @@ def parse_args(args):
     outputs = []
     sub_parsers = {
         "srim":     parse_stsp,
-        "response": parse_time,
-        "fourier":  parse_time,
+        "response": parse_freq,
+        "fourier":  parse_freq,
         "test": parse_stsp,
         "okid-era": parse_stsp,
-        "fdd": parse_time,
+        "fdd": parse_freq,
         "outid": outid_cl
     }
     method = None
