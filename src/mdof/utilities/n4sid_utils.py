@@ -28,7 +28,7 @@ def slice_matrix(matrix, row_sizes, col_sizes):
             row_start += row_size
         return blocks
 
-
+'''
 def partition_R_matrix(RT, QT, i, j, m, l):
     RT_row_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
     RT_col_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
@@ -46,6 +46,15 @@ def partition_R1_matrix(R, i, j, m, l):
     R_blocks = slice_matrix(R, R_row_sizes, R_col_sizes)
     
     return R_blocks
+'''
+
+def partition_R_matrices(R, RT, i, j, m, l):
+    row_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
+    col_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)]
+    RT_blocks = slice_matrix(RT, row_sizes, col_sizes)
+    R_blocks = slice_matrix(R, row_sizes, col_sizes)
+
+    return R_blocks, RT_blocks
 
 def compute_projection_matrices(RT_blocks,R_blocks):
     R5614 = [[RT_blocks[i_idx][j_idx] for j_idx in range(4)] for i_idx in range(4, 6)]

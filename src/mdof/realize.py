@@ -328,14 +328,15 @@ def n4sid(inputs, outputs, **options):
     stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
     Q, R = np.linalg.qr(stacked_hankel.T)
-    RT, QT = R.T, Q.T
-    RT_blocks, _ = n4sid_utils.partition_R_matrix(RT, QT, i, j, m, l)
-    R_blocks = n4sid_utils.partition_R1_matrix(R, i, j, m, l)
+    RT, _ = R.T, Q.T
+    R_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R, RT, i, j, m, l)
     new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks)
     Li1, _, Li3 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
     Li_11, _, Li_13 = n4sid_utils.compute_Li_1_matrices(new_matrix_R6615, new_matrix_RT1515, i, l, m)
     _, U1, Sigma1, k = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3)
-    
+    verbose = options.get("verbose", True)
+    if verbose:
+        print("Selected system order (k):", k)
     A, B, C, D, Qs, Ss, Rs = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11, Li_13, k, j)
 
     
