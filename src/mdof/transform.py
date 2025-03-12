@@ -1,7 +1,7 @@
 import numpy as np
 from scipy.fft import fft, fftfreq
 from scipy import signal
-from sdof import spectrum as response_spectrum
+import sdof
 
 ## Transfer functions    
 def power_transfer(inputs, outputs, step, **options):
@@ -45,9 +45,9 @@ def fourier_transfer(inputs, outputs, step, **options):
     """
 
     assert len(inputs) == len(outputs)
-    input_transform = fourier_spectrum(inputs, step, **options)
-    output_transform = fourier_spectrum(outputs, step, **options)
-    return (input_transform[0], output_transform[1]/input_transform[1])
+    input_spectrum = fourier_spectrum(inputs, step, **options)
+    output_spectrum = fourier_spectrum(outputs, step, **options)
+    return (input_spectrum[0], output_spectrum[1]/input_spectrum[1])
 
 
 def response_transfer(inputs, outputs, step, **options):
@@ -73,8 +73,8 @@ def response_transfer(inputs, outputs, step, **options):
         pmin, pmax = options['period_band']
         options['periods'] = np.linspace(pmin, pmax, 200)
 
-    SDin,  _, SAin = response_spectrum(inputs,  step, **options)
-    SDout, _, SAout = response_spectrum(outputs, step, **options)
+    SDin,  _, SAin = sdof.spectrum(inputs,  step, **options)
+    SDout, _, SAout = sdof.spectrum(outputs, step, **options)
     periods = SDin[0]
 
     if pseudo:
@@ -204,7 +204,8 @@ def fourier_spectrum(series, step, period_band=None, **options):
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.
     """
-    assert len(series.shape) == 1
+    if series.ndim != 1:
+        raise ValueError("series must be a 1D array.")
     N = len(series)
     frequencies = fftfreq(N,step)[1:N//2]
     amplitudes = 2.0/N*np.abs(fft(series)[1:N//2])
@@ -225,4 +226,22 @@ def fourier_spectrum(series, step, period_band=None, **options):
 
     return np.array([periods, amplitudes])
 
- 
+
+def response_spectrum(series, step, period_band=None, **options):
+    """
+    Wrapper for `sdof.spectrum` with same signature as `mdof.transform` methods.
+    """
+    n_transform_pts = options.get('n_transform_pts',200)
+    if period_band is None:
+        if 'period_band' in options.keys():
+            pmin, pmax = options['period_band']
+            options['periods'] = np.linspace(pmin,pmax,n_transform_pts)
+        else:
+            npts = len(series)
+            options['periods'] = np.linspace(2*step,step*npts,n_transform_pts)
+    if 'damping' not in options.keys():
+        options['damping'] = 0.02
+    Sd, _Sv, Sa = sdof.spectrum(series,step,**options)
+    periods = Sd[0]
+    amplitudes = Sa[1]
+    return np.array([periods, amplitudes])
