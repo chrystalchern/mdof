@@ -9,7 +9,7 @@ author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."
 version = '0.0.17'
 release = '0.0.17'
-html_baseurl = "https://mdof.chrystalchern.com"
+html_baseurl = "https://mdof.chrystalchern.com/"
 sitemap_url_scheme = "{link}"
 sitemap_excludes = [
   "https://mdof.chrystalchern.com/index.html"
