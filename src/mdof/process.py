@@ -85,8 +85,24 @@ def plot_moving_window(time_grid, period_grid, amplitude_grid, period_range=(0,1
     or similar function that provides grid-shaped frequency
     response spectra at each time window of a time series.
     """
+    x = time_grid.T[0]
+    y = period_grid[0]
+    z = amplitude_grid.T
     if plotly:
-        return NotImplementedError('plotly output is not yet implemented.')
+        fig = go.Figure(data=go.Heatmap(
+            z = z,
+            x = x,
+            y = y,
+            zsmooth = 'best',
+            colorscale = 'viridis',
+            coloraxis = 'coloraxis'
+        ))
+        fig.update_layout(
+            xaxis_title = "time (s)",
+            yaxis_title = "Period (s)",
+            yaxis_range=period_range)
+        fig.update_coloraxes(
+            showscale = False)
     else:
         if 'figax' in options.keys():
             fig,ax = options['figax']
@@ -201,6 +217,10 @@ def moving_window_transfer(time, inputs, outputs, interval=10, overlap=1, period
             periods, amplitudes = transfer(wi[0],wo[0],dt,**options)
         elif method == 'fdd':
             periods, amplitudes = transfer(wo,dt,**options)
+        if method != 'response':
+            # periods are in reverse order for fourier and fdd
+            periods = periods[::-1]
+            amplitudes = amplitudes[::-1]
         period_grid[i] = periods
         if normalize:
             amplitudes = amplitudes/np.max(amplitudes)
