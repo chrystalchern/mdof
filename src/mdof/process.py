@@ -99,7 +99,6 @@ def plot_moving_window(time_grid, period_grid, amplitude_grid, period_range=(0,1
     return fig
 
 import mdof.transform
-import sdof
 def moving_window_spectrum(time, signal, interval=10, overlap=1, method='fourier', **options):
     """
     Obtain grid data for plotting a colormesh or heatmap of the
