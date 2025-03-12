@@ -139,10 +139,8 @@ def parse_freq(argi, config, channels, method=None):
 
     try:
         if len(channels["inputs"])>0:
-            # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
-            inputs,  dt = extract_channels(event, channels["inputs"])
-        # outputs, dt = extract_channels(event, [channels["outputs"]], decimate=decimate)
-        outputs, dt = extract_channels(event, channels["outputs"])
+            inputs,  dt = extract_channels(event, channels['inputs'])
+        outputs, dt = extract_channels(event, channels['outputs'])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -168,15 +166,6 @@ def parse_freq(argi, config, channels, method=None):
     else:
         print(json.dumps({"error": "no prominent peaks", "data": []}))
         return
-
-    # periods, amplitudes = f(inputs=inputs.flatten(), outputs=outputs.flatten(), step = dt, **config)
-
-    # peak_periods, peak_amplitudes = spectrum_modes(periods, amplitudes, prominence=0.2*max(amplitudes))
-
-    # output = [
-    #         {"peak period": peak_period, "peak amplitude": peak_amplitude}
-    #         for peak_period, peak_amplitude, in zip(peak_periods, peak_amplitudes)
-    # ].append({"periods": periods, "amplitudes": amplitudes})
 
     print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
 
