@@ -319,17 +319,23 @@ def era_dc(Y,**options):
 
 from mdof.utilities import n4sid_utils
 def n4sid(inputs, outputs, **options):
+    """
+    Numerical Algorithms for Subspace State Space System Identification
+    """
    
     i = options.get("i", None)
     j = options.get("j", None) 
     m = inputs.shape[0]  
     l = outputs.shape[0]
 
+    if options.get('simple', False):
+        return # TODO: replace this with the Deterministic Algorithm 1
+
+
     stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
     Q, R = np.linalg.qr(stacked_hankel.T)
-    RT, _ = R.T, Q.T
-    R_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R, RT, i, j, m, l)
+    R_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R, R.T, i, j, m, l)
     new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks)
     Li1, _, Li3 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
     Li_11, _, Li_13 = n4sid_utils.compute_Li_1_matrices(new_matrix_R6615, new_matrix_RT1515, i, l, m)
@@ -342,5 +348,4 @@ def n4sid(inputs, outputs, **options):
     
     
     return A,B,C,D, Qs, Ss, Rs
-
 
