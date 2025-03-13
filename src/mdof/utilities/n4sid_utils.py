@@ -60,6 +60,7 @@ def compute_projection_matrices(RT_blocks,R_blocks):
     R5614 = [[RT_blocks[i_idx][j_idx] for j_idx in range(4)] for i_idx in range(4, 6)]
     new_matrix_R5614 = np.block(R5614)
 
+    # TODO: recompute this part with inverse of R
     RT1414 = [[R_blocks[i_idx][j_idx] for j_idx in range(4)] for i_idx in range(4)]
     new_matrix_RT1414 = np.block(RT1414)
 
