@@ -2,6 +2,29 @@ import numpy as np
 import numpy.linalg
 import scipy
 
+def solve_psd(A,b,overwrite_b=False,return_chol=False):
+    from scipy.linalg.lapack import dposv
+    if return_chol:
+        L, x, _ = dposv(A,b,lower=1,overwrite_b=overwrite_b)
+        return np.tril(L), x
+    else:
+        return dposv(A,b,overwrite_b=overwrite_b)[1]
+
+def thin_svd(A,k, random=False):
+    # http://web.stanford.edu/group/mmds/slides2010/Martinsson.pdf
+    if random:
+        n = A.shape[1]
+        Omega = randn(n,k)
+        Y = A.dot(Omega)
+        Q, R = np.linalg.qr(Y)
+        B = Q.T.dot(A)
+        Uhat, Sigma, V = np.linalg.svd(B)
+        U = Q.dot(Uhat)
+        return U, Sigma, V.T
+
+    U, s, VT = np.linalg.svd(A)
+    return U[:,:k], s[:k], VT[:k]
+
 
 def lsq_solver(options):
     return lambda *args: numpy.linalg.lstsq(*args, rcond=options.get('rcond',None))[0]
@@ -37,7 +60,7 @@ def _condeig(A):
         vl[i, :] = vl[i, :] / np.sqrt(abs(vl[i, :] ** 2).sum())
     # Condition numbers are reciprocal of the cosines (dot products) of the
     # left eignevectors with the right eigenvectors.
-    c = abs(1 / np.diag(np.dot(vl, vr))) 
+    c = abs(1 / np.diag(np.dot(vl, vr)))
     return (vr,lamr,c)
 
 from functools import lru_cache, wraps
@@ -71,5 +94,5 @@ def linear_interpolate(x, y, target_x):
     x2 = x[i2]
     y1 = y[i1]
     y2 = y[i2]
-    target_y = y1 + (target_x-x1)*(y2-y1)/(x2-x1)    
+    target_y = y1 + (target_x-x1)*(y2-y1)/(x2-x1)
     return target_y

@@ -8,7 +8,9 @@ import matplotlib.pyplot as plt
 import sys, time, functools, inspect, types
 
 from numpy.random import randn
-from numpy.lib.stride_tricks import as_strided as ast
+from numpy.lib.stride_tricks import as_strided
+
+from mdof.numerics import thin_svd, solve_psd
 
 ##############################
 #  numerical linear algebra  #
@@ -23,39 +25,19 @@ def _AR_striding(data,nlags):
         data = np.reshape(data,(-1,1))
 
     sz = data.dtype.itemsize
-    return ast(
+    return as_strided(
             data,
             shape=(data.shape[0]-nlags,data.shape[1]*(nlags+1)),
             strides=(data.shape[1]*sz,sz))
 
-def _project_rowspace(A,B):
-    return A.dot(B.T.dot(np.linalg.solve(B.dot(B.T),B)))
 
-def _project_rowspace_slow(A,B):
-    return A.dot(B.T.dot(solve_psd(B.dot(B.T),B)))
 
-def solve_psd(A,b,overwrite_b=False,return_chol=False):
-    from scipy.linalg.lapack import dposv
-    if return_chol:
-        L, x, _ = dposv(A,b,lower=1,overwrite_b=overwrite_b)
-        return np.tril(L), x
+def _project_rowspace(A,B, slow=False):
+    if slow:
+        return A.dot(B.T.dot(solve_psd(B.dot(B.T),B)))
     else:
-        return dposv(A,b,overwrite_b=overwrite_b)[1]
+        return A.dot(B.T.dot(np.linalg.solve(B.dot(B.T),B)))
 
-# http://web.stanford.edu/group/mmds/slides2010/Martinsson.pdf
-def thin_svd_randomized(A,k):
-    n = A.shape[1]
-    Omega = randn(n,k)
-    Y = A.dot(Omega)
-    Q, R = np.linalg.qr(Y)
-    B = Q.T.dot(A)
-    Uhat, Sigma, V = np.linalg.svd(B)
-    U = Q.dot(Uhat)
-    return U, Sigma, V.T
-
-def thin_svd(A,k):
-    U, s, VT = np.linalg.svd(A)
-    return U[:,:k], s[:k], VT[:k]
 
 
 def normalize(a):
@@ -105,17 +87,6 @@ def print_enter_exit(func):
 
     return wrapped
 
-# python abuse! see these:
-# http://stackoverflow.com/a/1095621
-# http://stackoverflow.com/a/8951874
-def attach_print_enter_exit():
-    frame = inspect.stack()[1]
-    module = inspect.getmodule(frame[0])
-    for k,v in vars(module).items():
-        if isinstance(v, types.FunctionType) and inspect.getmodule(v) == module:
-            vars(module)[k] = print_enter_exit(v)
-
-
 
 ####################
 #  Alg 3 in Ch. 3  #
@@ -137,7 +108,7 @@ def _compute_Os(Y,Ym):
 
 
 def _compute_gammas(Oi,nhat,p):
-    U,s,VT = thin_svd_randomized(Oi,nhat)
+    U,s,VT = thin_svd(Oi,nhat, random=True)
     Gamma_i = U.dot(np.diag(np.sqrt(s)))
     Gamma_im1 = Gamma_i[:-p]
     return Gamma_i, Gamma_im1
@@ -146,6 +117,7 @@ def _compute_Xs(Gamma_i,Gamma_im1,Oi,Oim1):
     Xihat = solve_psd(Gamma_i.T.dot(Gamma_i), Gamma_i.T.dot(Oi))
     Xip1hat = solve_psd(Gamma_im1.T.dot(Gamma_im1), Gamma_im1.T.dot(Oim1))
     return Xihat, Xip1hat
+
 
 def system_parameters_from_states(Xihat, Xip1hat, Yii, nhat):
     ACT = np.linalg.lstsq(Xihat.T, np.vstack((Xip1hat, Yii)).T)[0]
@@ -222,7 +194,7 @@ def viz_rank(Oi,k=None):
     if k is None:
         U, s, VT = np.linalg.svd(Oi)
     else:
-        U, s, VT = thin_svd_randomized(Oi,k)
+        U, s, VT = thin_svd(Oi,k, random=True)
 
     plt.figure()
     plt.stem(np.arange(s.shape[0]),s)
@@ -234,12 +206,9 @@ def viz_rank2(y,i,k=None):
     if k is None:
         _, s, _ = np.linalg.svd(np.cov(Y)[:l,l:])
     else:
-        _, s, _ = thin_svd_randomized(np.cov(Y)[:l,l:],k)
+        _, s, _ = thin_svd(np.cov(Y)[:l,l:],k, random=True)
 
     plt.figure()
     plt.stem(np.arange(s.shape[0]),s)
 
-# python abuse!
-from util import attach_print_enter_exit
-attach_print_enter_exit()
 
