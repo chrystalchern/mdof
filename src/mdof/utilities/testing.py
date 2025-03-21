@@ -89,4 +89,62 @@ def intensity_bounds(accel_series, lb=0.005, ub=0.995, intensity_measure='arias'
 
 def truncate_by_bounds(series, bounds):
     ilb, iub = bounds
-    return series[ilb:iub]
+    if series.ndim == 1:
+        return series[ilb:iub]
+    elif series.ndim == 2:
+        return series[:,ilb:iub]
+
+from scipy.signal import correlate, correlation_lags
+import matplotlib.pyplot as plt
+
+def align_signals(signal1, signal2, times=None, verbose=False):
+
+    assert signal1.shape == signal2.shape, "Please give two signals of equal shape."
+    signal1 = np.atleast_2d(signal1)
+    signal2 = np.atleast_2d(signal2)
+    npts = signal1.shape[1]
+
+    max_lag = 0
+    s1_aligned = []
+    s2_aligned = []
+
+    for s1,s2 in zip(signal1,signal2):
+        # Compute the cross-correlation between signal1 and signal2
+        correlation = correlate(s1, s2, mode='full')
+        
+        # Get the lags corresponding to the cross-correlation
+        lags = correlation_lags(len(s1), len(s2), mode='full')
+
+        if verbose:
+            _,ax=plt.subplots()
+            ax.scatter(lags,correlation)
+            ax.set_xlabel("lag")
+            ax.set_ylabel("correlation")
+            plt.show()
+        
+        # Find the lag corresponding to the maximum correlation
+        lag = lags[np.argmax(correlation)]
+        
+        # Trim the signals
+        if lag > 0:
+            s1_aligned.append(s1[lag:])
+            s2_aligned.append(s2[:len(s1[lag:])])
+        elif lag < 0:
+            s2_aligned.append(s2[-lag:])
+            s1_aligned.append(s1[:len(s2[-lag:])])
+        else:
+            s1_aligned.append(s1)
+            s2_aligned.append(s2)
+
+        max_lag = max(abs(lag), max_lag)
+
+    new_npts = npts-max_lag
+    signal1_aligned = np.array([s[:new_npts] for s in s1_aligned])
+    signal2_aligned = np.array([s[:new_npts] for s in s2_aligned])
+
+    if times is None:
+        times = np.arange(0,new_npts,1)
+    else:
+        times = times[:new_npts]
+    
+    return max_lag, signal1_aligned, signal2_aligned, times

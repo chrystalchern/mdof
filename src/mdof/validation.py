@@ -116,8 +116,8 @@ def stabilize_discrete(A, verbose=False, list_filtered_modes=False):
     # if test is True, the mode is filtered out.
     test = lambda v: np.abs(v) > 1
     filtered_A, indices = eigenfilter(A, test, return_indices=True)
+    real_mode_indices = np.unique([i//2 for i in indices]).tolist()
     if verbose:
-        real_mode_indices = np.unique([i//2 for i in indices]).tolist()
         print(f"""
         removing mode indices {indices} (real mode indices {real_mode_indices})
         because magnitude of eigenvalue is greater than 1 ({test_string(test)})

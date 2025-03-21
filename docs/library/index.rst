@@ -19,7 +19,7 @@ functions for quickly performing system identification:
    modes
    eigid
    sysid
-   reconstruct
+   predict
 
 
 The following modules expose the inner building blocks for

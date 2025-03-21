@@ -9,8 +9,11 @@ src/ssid/
 _build
 docs/theory/out/
 docs/library/generated/
-docs/examples/
+docs/examples/*.ipynb
+docs/examples/figures
 out/
 **/.DS_store
 
 myenv/
+*.gdoc
+*.MOV

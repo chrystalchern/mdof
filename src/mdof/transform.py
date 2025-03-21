@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.fft import fft, fftfreq
 from scipy import signal
+import sdof
 
 ## Transfer functions    
 def power_transfer(inputs, outputs, step, **options):
@@ -44,9 +45,9 @@ def fourier_transfer(inputs, outputs, step, **options):
     """
 
     assert len(inputs) == len(outputs)
-    input_transform = fourier_spectrum(inputs, step, **options)
-    output_transform = fourier_spectrum(outputs, step, **options)
-    return (input_transform[0], output_transform[1]/input_transform[1])
+    input_spectrum = fourier_spectrum(inputs, step, **options)
+    output_spectrum = fourier_spectrum(outputs, step, **options)
+    return (input_spectrum[0], output_spectrum[1]/input_spectrum[1])
 
 
 def response_transfer(inputs, outputs, step, **options):
@@ -72,20 +73,17 @@ def response_transfer(inputs, outputs, step, **options):
         pmin, pmax = options['period_band']
         options['periods'] = np.linspace(pmin, pmax, 200)
 
-    from sdof import spectrum
-    Din,  _,  Ain = spectrum(inputs,  step, **options)
-    Dout, _, Aout = spectrum(outputs, step, **options)
-    periods = Din[0]
+    SDin,  _, SAin = sdof.spectrum(inputs,  step, **options)
+    SDout, _, SAout = sdof.spectrum(outputs, step, **options)
+    periods = SDin[0]
 
     if pseudo:
-        input_spectrum = Din[1,:]*(2*np.pi/periods)**2
+        input_spectrum  = SDin[1,:]*(2*np.pi/periods)**2
+        output_spectrum = SDout[1,:]*(2*np.pi/periods)**2
     else:
-        input_spectrum = Ain[1]
+        input_spectrum  = SAin[1]
+        output_spectrum = SAout[1]
 
-    if pseudo:
-        output_spectrum = Dout[1,:]*(2*np.pi/periods)**2
-    else:
-        output_spectrum = Aout[1]
     return (periods, output_spectrum/input_spectrum)
     
 
@@ -206,7 +204,8 @@ def fourier_spectrum(series, step, period_band=None, **options):
     :return:            (periods, amplitudes)
     :rtype:             tuple of arrays.
     """
-    assert len(series.shape) == 1
+    if series.ndim != 1:
+        raise ValueError("series must be a 1D array.")
     N = len(series)
     frequencies = fftfreq(N,step)[1:N//2]
     amplitudes = 2.0/N*np.abs(fft(series)[1:N//2])
@@ -227,4 +226,22 @@ def fourier_spectrum(series, step, period_band=None, **options):
 
     return np.array([periods, amplitudes])
 
- 
+
+def response_spectrum(series, step, period_band=None, **options):
+    """
+    Wrapper for `sdof.spectrum` with same signature as `mdof.transform` methods.
+    """
+    n_transform_pts = options.get('n_transform_pts',200)
+    if period_band is None:
+        if 'period_band' in options.keys():
+            pmin, pmax = options['period_band']
+            options['periods'] = np.linspace(pmin,pmax,n_transform_pts)
+        else:
+            npts = len(series)
+            options['periods'] = np.linspace(2*step,step*npts,n_transform_pts)
+    if 'damping' not in options.keys():
+        options['damping'] = 0.02
+    Sd, _Sv, Sa = sdof.spectrum(series,step,**options)
+    periods = Sd[0]
+    amplitudes = Sa[1]
+    return np.array([periods, amplitudes])

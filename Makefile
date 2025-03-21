@@ -9,8 +9,7 @@ NOTEBOOKS = notebooks/00_Overview.ipynb \
             notebooks/02_SISO_Event.ipynb \
             notebooks/03_SISO_History.ipynb \
             notebooks/04_MIMO_Intro.ipynb \
-	    notebooks/06_MIMO_History.ipynb \
-	    ../mdof_studies/PowerSpectrum.ipynb
+	    	notebooks/06_MIMO_History.ipynb \
 
 
 # Put this first so that "make" without argument is like "make help".
@@ -22,23 +21,23 @@ test:
 	pytest --nbmake $(NOTEBOOKS)
 
 publish: test
+	mkdir -p site/
 	cp -r _build/html/* site/
+	touch site/.nojekyll
 	git add site && git commit -m'cc - rebuild site'
 	git subtree push --prefix site origin gh-pages
 	make speak
 
 speak:
-	echo -ne '\007'
-	sleep 2
-	echo -ne '\007'
-	sleep 2
-	echo -ne '\007'
+	Say -v Whisper "dunzo, website is published"
 
 html: Makefile
+	mkdir -p ./docs/examples
+	mkdir -p ./docs/examples/figures
 	cp ./notebooks/0[0-9]_* ./docs/examples
 	cp -r ./notebooks/figures/* ./docs/examples/figures
 	@$(SPHINXBUILD) -M $@ "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS) $(O)
-	sed -i 's/\\bm{/\\boldsymbol{/g' $(BUILDDIR)/html/theory/srim.html
+	sed -i .bak 's/\\bm{/\\boldsymbol{/g' $(BUILDDIR)/html/theory/srim.html
 	
 
 .PHONY: help Makefile

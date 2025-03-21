@@ -85,7 +85,7 @@ def extract_channels(event, channels, permissive=True):
 
 
 
-def parse_time(argi, config, channels, method=None):
+def parse_freq(argi, config, channels, method=None):
     help = f"""\
     mdof {method} <event>
 
@@ -139,10 +139,8 @@ def parse_time(argi, config, channels, method=None):
 
     try:
         if len(channels["inputs"])>0:
-            # inputs,  dt = extract_channels(event, [channels["inputs"]], decimate=decimate)
-            inputs,  dt = extract_channels(event, channels["inputs"])
-        # outputs, dt = extract_channels(event, [channels["outputs"]], decimate=decimate)
-        outputs, dt = extract_channels(event, channels["outputs"])
+            inputs,  dt = extract_channels(event, channels['inputs'])
+        outputs, dt = extract_channels(event, channels['outputs'])
     except Exception as e:
         print(json.dumps({"error": str(e), "data": []}))
         return
@@ -156,8 +154,6 @@ def parse_time(argi, config, channels, method=None):
     elif method == "fdd":
         spectrum = mdof.transform.fdd_spectrum(outputs=outputs.flatten(), step=dt, **config)
 
-
-    # periods, amplitudes = spectrum_modes(*spectrum, prominence=0.3*np.max(spectrum[1]))
     periods, amplitudes = spectrum_modes(*spectrum, prominence=None)
     
     if len(periods) > 0:
@@ -168,15 +164,6 @@ def parse_time(argi, config, channels, method=None):
     else:
         print(json.dumps({"error": "no prominent peaks", "data": []}))
         return
-
-    # periods, amplitudes = f(inputs=inputs.flatten(), outputs=outputs.flatten(), step = dt, **config)
-
-    # peak_periods, peak_amplitudes = spectrum_modes(periods, amplitudes, prominence=0.2*max(amplitudes))
-
-    # output = [
-    #         {"peak period": peak_period, "peak amplitude": peak_amplitude}
-    #         for peak_period, peak_amplitude, in zip(peak_periods, peak_amplitudes)
-    # ].append({"periods": periods, "amplitudes": amplitudes})
 
     print(json.dumps({"data": output}, cls=JSON_Encoder, indent=4))
 
@@ -289,11 +276,11 @@ def parse_args(args):
     outputs = []
     sub_parsers = {
         "srim":     parse_stsp,
-        "response": parse_time,
-        "fourier":  parse_time,
+        "response": parse_freq,
+        "fourier":  parse_freq,
         "test": parse_stsp,
         "okid-era": parse_stsp,
-        "fdd": parse_time,
+        "fdd": parse_freq,
         "outid": outid_cl
     }
     method = None

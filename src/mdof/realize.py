@@ -19,13 +19,13 @@ def srim(inputs,outputs,**options):
     System Realization Using Information Matrix (SRIM) [1]_.
     
     :param inputs:  input time history. dimensions: :math:`(q,nt)`, where
-                    :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+                    :math:`q` = number of inputs, and :math:`nt` = number of time samples
     :type inputs:   array
     :param outputs: output response history.
                     dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
-                    :math:`nt` = number of timesteps
+                    :math:`nt` = number of time samples
     :type outputs:  array
-    :param horizon: (optional) number of steps used for identification (prediction horizon).
+    :param horizon: (optional) number of samples used for identification (prediction horizon).
                     default: :math:`\min(300, nt)`
     :type horizon:  int
     :param order:   (optional) model order. default: :math:`\min(20,` ``horizon``:math:`/2)`
@@ -56,9 +56,9 @@ def srim(inputs,outputs,**options):
         outputs = outputs[None,:]
 
     if inputs.shape[0] > inputs.shape[1]:
-        warnings.warn("input data has more channels (dim 1) than timesteps (dim 2)")
+        warnings.warn("input data has more channels (dim 1) than time samples (dim 2)")
     if outputs.shape[0] > outputs.shape[1]:
-        warnings.warn("output data has more channels (dim 1) than timesteps (dim 2)")
+        warnings.warn("output data has more channels (dim 1) than time samples (dim 2)")
 
     q,nt = inputs.shape
     p = outputs.shape[0]
@@ -160,7 +160,7 @@ def era(Y,**options):
             identification and model reduction. Journal of guidance, control, and dynamics, 8(5), 620-627.
             (https://doi.org/10.2514/3.20031)
     """
-    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
+    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of time samples
 
     no = options.get("no",
          options.get("horizon",
@@ -176,7 +176,7 @@ def era(Y,**options):
         no = min(150, int((nt-1)/2))
     if nc is None:
         nc = min(150, max(nt-1-no, int((nt-1)/2)))
-    # make sure there are enough timesteps to assemble this size of Hankel matrix
+    # make sure there are enough time samples to assemble this size of Hankel matrix
     assert nt >= no+nc
 
     n = options.get("n",
@@ -247,7 +247,7 @@ def era_dc(Y,**options):
             using data correlations (ERA/DC) for modal parameter identification.
             (https://ntrs.nasa.gov/citations/19870035963)    
     """
-    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of timesteps
+    p,q,nt = Y.shape # p = number of outputs, q = number of inputs, nt = number of time samples
 
     no = options.get("no",
          options.get("horizon",
@@ -267,7 +267,7 @@ def era_dc(Y,**options):
         no = min(150, int((nt-1)/2))
     if nc is None:
         nc = min(150, max(nt-1-no, int((nt-1)/2)))
-    # make sure there are enough timesteps to assemble the Hankel matrices
+    # make sure there are enough time samples to assemble the Hankel matrices
     assert nt >= l+(a+1+b+1)*g+no+nc
 
     n = options.get("n",
@@ -317,104 +317,35 @@ def era_dc(Y,**options):
     return (A,B,C,D)
 
 
-import numpy as np
-from scipy.linalg import svd
-from numpy.linalg import pinv
-
-class StateSpaceModel:
-    def __init__(self, A, B, C, D, K=None):
-        self.A = A
-        self.B = B
-        self.C = C
-        self.D = D
-        
-
-    def __repr__(self):
-        return f"StateSpaceModel(A={self.A}, B={self.B}, C={self.C}, D={self.D})"
-
-def n4sid(data, nx, Ts=1, method='auto', **kwargs):
+from mdof.utilities import n4sid_utils
+def n4sid(inputs, outputs, **options):
     """
-    Estimate state-space model using subspace methods.
-    Arguments:
-    - data: (numpy array) The input-output data matrix.
-    - nx: (int or str) Model order or 'best' for automatic model order determination.
-    - Ts: (float) Sample time of the model, set to 0 for continuous models.
-    - method: (str) 'auto' or other methods defined by user.
-    - kwargs: Additional keyword arguments for future extensions or specific settings.
-    Returns:
-    - StateSpaceModel: The estimated state-space model.
+    Numerical Algorithms for Subspace State Space System Identification
     """
-    # Data preprocessing
-    U, s, Vh = svd(data, full_matrices=False)
-    n = min(len(s), nx) if isinstance(nx, int) else np.argmax(s < 1e-10) + 1
+   
+    i = options.get("i", None)
+    j = options.get("j", None) 
+    m = inputs.shape[0]  
+    l = outputs.shape[0]
 
-    # Construct the state-space model matrices
-    A = np.random.randn(n, n)  # Placeholder for actual computation
-    B = np.random.randn(n, 1)  # Placeholder for actual computation
-    C = np.random.randn(1, n)  # Placeholder for actual computation
-    D = np.zeros((1, 1))       # Assuming no direct feedthrough
-
+    if options.get('simple', False):
+        return # TODO: replace this with the Deterministic Algorithm 1
 
 
-    model = StateSpaceModel(A, B, C, D)
-    return model
+    stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
-def row_projection
+    Q, R = np.linalg.qr(stacked_hankel.T)
+    R_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R, R.T, i, j, m, l)
+    new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks)
+    Li1, _, Li3 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
+    Li_11, _, Li_13 = n4sid_utils.compute_Li_1_matrices(new_matrix_R6615, new_matrix_RT1515, i, l, m)
+    _, U1, Sigma1, k = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3)
+    verbose = options.get("verbose", True)
+    if verbose:
+        print("Selected system order (k):", k)
+    A, B, C, D, Qs, Ss, Rs = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11, Li_13, k, j)
 
- import numpy as np
-    from scipy.linalg import schur, rsf2cs=
     
-    def n4sid(a, inputs, outputs):
-        # Perform Schur decomposition
-        T, schur_form = schur(a, output='real')
-        # Convert the real Schur form to complex Schur form
-        T, schur_form = rsf2csf(T, schur_form)
-        
-        # Determine which blocks are 2x2 complex blocks
-        n = schur_form.shape[0]
-        i = 0
-        blks = []
-        while i < n - 1:
-            if schur_form[i+1, i] != 0:
-                blks.append(2)
-                i += 2  # Skip the next index because it is part of a 2x2 block
-            else:
-                blks.append(1)
-                i += 1
-        if i == n - 1:
-            blks.append(1)  # The last one is a 1x1 block
-        
-        # Rescale the complex blocks
-        i = 0
-        for ct in blks:
-            if ct == 2:
-                # Calculate the scaling factor and apply it
-                sfactor = np.sign(schur_form[i, i+1]) * np.sqrt(abs(schur_form[i+1, i] / schur_form[i, i+1]))
-                schur_form[:, i+1] *= sfactor
-                schur_form[i+1, :] /= sfactor
-                T[:, i+1] *= sfactor
-                i += 2
-            else:
-                i += 1
     
-        # Preset output matrices B and C, assuming there is already a method to calculate them
-        # This part needs to be adjusted based on specific system conditions
-        B = np.linalg.inv(T) @ outputs  # Example usage, real applications need other methods
-        C = inputs @ T  # Example usage, real applications need other methods
-        A = schur_form  # Directly use the rescaled Schur form as the A matrix
-    
-        return A, B, C
-    
-    # Example input matrix
-    a = np.random.random((4,4))
-    inputs = np.random.random((1, 4))
-    outputs = np.random.random((4, 1))
-    
-    # Call the function
-    A, B, C = n4sid(a, inputs, outputs)
-    print("A Matrix:\n", A)
-    print("B Matrix:\n", B)
-    print("C Matrix:\n", C)
-    
-
+    return A,B,C,D, Qs, Ss, Rs
 

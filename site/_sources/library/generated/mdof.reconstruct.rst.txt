@@ -1,6 +1,0 @@
-﻿mdof.reconstruct
-================
-
-.. currentmodule:: mdof
-
-.. autofunction:: reconstruct
