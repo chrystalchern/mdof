@@ -79,13 +79,13 @@ def compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3):
     result_matrix_2 = np.dot(Combined_Matrix, new_matrix_R1414)
     U, Sigma, VT = np.linalg.svd(result_matrix_2, full_matrices=False)
     
-    
+    '''
     k = int(np.sum(Sigma > threshold*np.max(Sigma)))
     '''
     energy = np.cumsum(Sigma**2) / np.sum(Sigma**2)  
     energy_threshold = 0.99  
     k = np.searchsorted(energy, energy_threshold)
-    '''
+    
     U1 = U[:, :k]
     Sigma1 = np.diag(Sigma[:k]) 
     Sigma1_half = np.sqrt(Sigma1)

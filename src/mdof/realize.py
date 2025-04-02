@@ -335,7 +335,7 @@ def n4sid(inputs, outputs, **options):
     stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
     _, R = np.linalg.qr(stacked_hankel.T)
-    R_inv = np.linalg.inv(R)  
+    R_inv = np.linalg.inv(R.T)  
     RT = R.T                  
     R_inv_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R_inv, RT, i, j, m, l)
     new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_inv_blocks)
