@@ -28,46 +28,25 @@ def slice_matrix(matrix, row_sizes, col_sizes):
             row_start += row_size
         return blocks
 
-'''
-def partition_R_matrix(RT, QT, i, j, m, l):
-    RT_row_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
-    RT_col_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
-    QT_row_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)]  
-    QT_col_sizes = [j]  
 
-    RT_blocks = slice_matrix(RT, RT_row_sizes, RT_col_sizes)
-    QT_blocks = slice_matrix(QT, QT_row_sizes, QT_col_sizes)
-    
-    return RT_blocks, QT_blocks
-
-def partition_R1_matrix(R, i, j, m, l):
-    R_row_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
-    R_col_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
-    R_blocks = slice_matrix(R, R_row_sizes, R_col_sizes)
-    
-    return R_blocks
-'''
-
-def partition_R_matrices(R, RT, i, j, m, l):
+def partition_R_matrices(R_inv, RT, i, j, m, l):
     row_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)] 
     col_sizes = [m*i, m, m*(i-1), l*i, l, l*(i-1)]
     RT_blocks = slice_matrix(RT, row_sizes, col_sizes)
-    R_blocks = slice_matrix(R, row_sizes, col_sizes)
+    R_inv_blocks = slice_matrix(R_inv, row_sizes, col_sizes)
+    return R_inv_blocks, RT_blocks
 
-    return R_blocks, RT_blocks
-
-def compute_projection_matrices(RT_blocks,R_blocks):
+def compute_projection_matrices(RT_blocks,R_inv_blocks):
     R5614 = [[RT_blocks[i_idx][j_idx] for j_idx in range(4)] for i_idx in range(4, 6)]
     new_matrix_R5614 = np.block(R5614)
 
-    # TODO: recompute this part with inverse of R
-    RT1414 = [[R_blocks[i_idx][j_idx] for j_idx in range(4)] for i_idx in range(4)]
+    RT1414 = [[R_inv_blocks[i_idx][j_idx] for j_idx in range(4)] for i_idx in range(4)]
     new_matrix_RT1414 = np.block(RT1414)
 
     R6615 = [[RT_blocks[i_idx][j_idx] for j_idx in range(5)] for i_idx in range(5,6)]
     new_matrix_R6615 = np.block(R6615)
 
-    RT1515 = [[R_blocks[i_idx][j_idx] for j_idx in range(5)] for i_idx in range(5)]
+    RT1515 = [[R_inv_blocks[i_idx][j_idx] for j_idx in range(5)] for i_idx in range(5)]
     new_matrix_RT1515 = np.block(RT1515)
 
     return new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515
@@ -100,8 +79,12 @@ def compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3):
     result_matrix_2 = np.dot(Combined_Matrix, new_matrix_R1414)
     U, Sigma, VT = np.linalg.svd(result_matrix_2, full_matrices=False)
     
-    
-    k = int(np.sum(Sigma > threshold))
+    '''
+    k = int(np.sum(Sigma > threshold*np.max(Sigma)))
+    '''
+    energy = np.cumsum(Sigma**2) / np.sum(Sigma**2)  
+    energy_threshold = 0.99  
+    k = np.searchsorted(energy, energy_threshold)
     
     U1 = U[:, :k]
     Sigma1 = np.diag(Sigma[:k]) 
