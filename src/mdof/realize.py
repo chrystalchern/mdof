@@ -334,9 +334,11 @@ def n4sid(inputs, outputs, **options):
 
     stacked_hankel = n4sid_utils.stacked_hankel(inputs, outputs, j, 0, 2*i-1)
 
-    Q, R = np.linalg.qr(stacked_hankel.T)
-    R_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R, R.T, i, j, m, l)
-    new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_blocks)
+    _, R = np.linalg.qr(stacked_hankel.T)
+    R_inv = np.linalg.inv(R.T)  
+    RT = R.T                  
+    R_inv_blocks, RT_blocks = n4sid_utils.partition_R_matrices(R_inv, RT, i, j, m, l)
+    new_matrix_R5614, new_matrix_RT1414, new_matrix_R6615, new_matrix_RT1515 = n4sid_utils.compute_projection_matrices(RT_blocks, R_inv_blocks)
     Li1, _, Li3 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
     Li_11, _, Li_13 = n4sid_utils.compute_Li_1_matrices(new_matrix_R6615, new_matrix_RT1515, i, l, m)
     _, U1, Sigma1, k = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3)
