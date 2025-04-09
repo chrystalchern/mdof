@@ -351,3 +351,96 @@ def n4sid(inputs, outputs, **options):
     
     return A,B,C,D, Qs, Ss, Rs
 
+
+
+def deterministic(inputs, outputs, i, j, m, l):
+    #Step 1 
+    def construct_Hankel(data, j, start, finish):
+        dim_data, nps = data.shape
+        Hankel = np.empty(((finish - start + 1) * dim_data, j))
+        for k in range(start, finish + 1):
+            Hankel[k * dim_data:(k + 1) * dim_data, :] = data[:, start + k:start + j + k]
+        return Hankel
+    # Build the Hankel matrices for both input and output data.
+    U_big = construct_Hankel(inputs, j, 0, 2 * i - 1) 
+    Y_big = construct_Hankel(outputs, j, 0, 2 * i - 1) 
+
+    
+    # Partition the Hankel matrices into "past" (p) and "future" (f) blocks.
+    U_p = U_big[0 : i*m, :]  
+    U_f = U_big[i*m : 2*i*m, :] 
+    Y_p = Y_big[0 : i*l, :]
+    Y_f = Y_big[i*l : 2*i*l, :]   
+    # Combine the past input and output data into one matrix.
+    W_p = np.vstack([U_p, Y_p]) 
+    # Construct additional shifted blocks needed for the oblique projection:
+    U_p_plus = U_big[0 : (i+1)*m, :] # Past inputs with an extra block row at the bottom of the same Hankel matrix
+    U_f_minus = U_big[(i-1)*m : 2*(i-1)*m, :] # Future inputs with the first block row removed of the same Hankel matrix
+    U_p_minus = U_big[0 : (i-1)*m, :] # Past inputs excluding the last block row of the same Hankel matrix
+    U_f_plus = U_big[(i+1)*m : 2*(i+1)*m, :] # Future inputs with an extra block row at the bottom of the same Hankel matrix
+
+    Y_p_plus = Y_big[0 : (i+1)*l, :]
+    Y_f_minus = Y_big[(i-1)*l : 2*(i-1)*l, :]
+    Y_f_plus = Y_big[(i+1)*l : 2*(i+1)*l, :]
+    Y_p_minus = Y_big[0 : (i-1)*l, :]
+
+    W_p_plus = np.vstack([U_p_plus, Y_p_plus])
+    W_p_minus = np.vstack([U_p_minus, Y_p_minus])
+
+
+    #Step 2 Calculate the oblique projections
+    def oblique_projection_rows(A, B, C):
+        # Compute intermediate products.
+        CCt = C @ C.T  # (r, r)
+        CBt = C @ B.T  # (r, q)
+        BCt = B @ C.T  # (q, r)
+        BBt = B @ B.T  # (q, q)
+        M_top = np.hstack([CCt, CBt])  # (r, r+q)
+        M_bot = np.hstack([BCt, BBt])  # (q, r+q)
+        M = np.vstack([M_top, M_bot])  # ((r+q), (r+q))
+        # Compute the pseudoinverse of M.
+        M_dag = np.linalg.pinv(M)     
+        ACt = A @ C.T   # shape (p, r)
+        ABt = A @ B.T   # shape (p, q)
+        top_block = np.hstack([ACt, ABt])   # (p, r+q)
+        prod_block = top_block @ M_dag
+        prod_block_Cpart = prod_block[:, :C.shape[0]]  # (p, r)
+        P = prod_block_Cpart @ C
+        return P
+    # Compute the oblique projection for the future output block.
+    O_i = oblique_projection_rows(Y_f, U_f, W_p)
+    # Compute a shifted oblique projection for the "minus" block.
+    O_i_minus = oblique_projection_rows(Y_f_minus, U_f_minus, W_p_plus)
+
+
+
+    # Calculate the SVD of the weighted oblique projection
+    W1 = np.eye(O_i.shape[0])  # W1 Chosen as the identity matrix.
+    W2 = np.eye(O_i.shape[1])  # W2 Chosen as the identity matrix.
+    U, S, Vt = np.linalg.svd(W1 @ O_i @ W2, full_matrices=False)
+
+    # 3. Determine the order by inspecting the singular values in S and partition the SVD accordingly to obtain Up and Si
+    rank_n = np.sum(S > 1e-6*max(S))  
+    S1 = np.diag(S[:rank_n]) 
+    U1 = U[:, :rank_n] 
+    V1 = Vt[:rank_n, :]
+
+    # Compute the extended observability matrix.
+    Gamma_i = np.linalg.inv(W1) @ U1 @ np.sqrt(S1)
+    Gamma_i_pinv = np.linalg.pinv(Gamma_i)
+    Gamma_i_minus = Gamma_i_minus = Gamma_i[:-l, :]
+    Gamma_i_minus_pinv = np.linalg.pinv(Gamma_i_minus)
+    X_f_d = Gamma_i_pinv @ O_i
+    X_f_d_next = Gamma_i_minus_pinv @ O_i_minus
+
+    # Solve the set of linear equations for A, B, C and D
+    i_th_block_U = U_big[(i-1)*m : i*m, :]
+    i_th_block_Y = Y_big[(i-1)*l : i*l, :]
+    M_left = np.vstack((X_f_d_next, i_th_block_Y))
+    M_right = np.vstack((X_f_d, i_th_block_U))
+    sys_matrix = M_left @ np.linalg.pinv(M_right)
+    A, B = sys_matrix[:rank_n, :rank_n], sys_matrix[:rank_n, rank_n:]
+    C, D = sys_matrix[rank_n:, :rank_n], sys_matrix[rank_n:, rank_n:]
+    
+    return A, B, C, D
+
