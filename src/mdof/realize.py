@@ -354,11 +354,13 @@ def n4sid(inputs, outputs, **options):
 
 
 
-def deterministic(inputs, outputs, i, j, m, l):
+def deterministic(inputs, outputs, i, j):
     # Naiqi Guo
     '''
     Van Overschee's Deterministic Algorithm for State Space System Identification
     '''
+    m = inputs.shape[0]
+    l = outputs.shape[0]
     #Step 1 
     def construct_Hankel(data, j, start, finish):
         dim_data, nps = data.shape
