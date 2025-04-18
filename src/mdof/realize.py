@@ -318,14 +318,12 @@ def era_dc(Y,**options):
 
 
 from mdof.utilities import n4sid_utils
-def n4sid(inputs, outputs, **options):
+def n4sid(inputs, outputs, i, j, **options):
     # Naiqi Guo
     """
     Numerical Algorithms for Subspace State Space System Identification
     """
-   
-    i = options.get("i", None)
-    j = options.get("j", None) 
+
     m = inputs.shape[0]  
     l = outputs.shape[0]
 
@@ -343,7 +341,7 @@ def n4sid(inputs, outputs, **options):
     Li1, _, Li3 = n4sid_utils.compute_Li_matrices(new_matrix_R5614, new_matrix_RT1414, i, l, m)
     Li_11, _, Li_13 = n4sid_utils.compute_Li_1_matrices(new_matrix_R6615, new_matrix_RT1515, i, l, m)
     _, U1, Sigma1, k = n4sid_utils.compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3)
-    verbose = options.get("verbose", True)
+    verbose = options.get("verbose", False)
     if verbose:
         print("Selected system order (k):", k)
     A, B, C, D, Qs, Ss, Rs = n4sid_utils.compute_state_space_matrices(U1, Sigma1, RT_blocks, i, l, m, Li1, Li3, Li_11, Li_13, k, j)
