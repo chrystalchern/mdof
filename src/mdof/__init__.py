@@ -68,6 +68,13 @@ def modes(inputs, outputs, dt, **options):
     """
 
     realization = system(inputs, outputs, **options)
+
+    # Stabilize the model if desired
+    if options.get("stabilize", False):
+        from mdof.validation import stabilize_discrete
+        A_stable = stabilize_discrete(A=realization[0])
+        realization = (A_stable,*realization[1:])
+
     modes = modal.system_modes(realization, dt)
     P = [1/mode['freq'] for mode in modes.values()]
     Phi = np.array([mode['modeshape'] for mode in modes.values()])
