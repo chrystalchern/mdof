@@ -319,6 +319,7 @@ def era_dc(Y,**options):
 
 from mdof.utilities import n4sid_utils
 def n4sid(inputs, outputs, **options):
+    # Naiqi Guo
     """
     Numerical Algorithms for Subspace State Space System Identification
     """
@@ -355,6 +356,11 @@ def n4sid(inputs, outputs, **options):
 
 def deterministic(inputs, outputs, i, j):
     m = inputs.shape[0]  
+    # Naiqi Guo
+    '''
+    Van Overschee's Deterministic Algorithm for State Space System Identification
+    '''
+    m = inputs.shape[0]
     l = outputs.shape[0]
     #Step 1 
     def construct_Hankel(data, j, start, finish):
@@ -421,6 +427,8 @@ def deterministic(inputs, outputs, i, j):
     W2 = W_p.T @ np.linalg.pinv(W_p @ W_p.T) @ W_p
 
     #W2 = np.eye(O_i.shape[1])  # W2 Chosen as the identity matrix.
+    #W1 = np.eye(O_i.shape[0])  # W1 Chosen as the identity matrix. # TODO: confirm method of choosing W1
+    #W2 = np.eye(O_i.shape[1])  # W2 Chosen as the identity matrix. # TODO: confirm method of choosing W2
     U, S, Vt = np.linalg.svd(W1 @ O_i @ W2, full_matrices=False)
 
     # 3. Determine the order by inspecting the singular values in S and partition the SVD accordingly to obtain Up and Si

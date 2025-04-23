@@ -84,7 +84,7 @@ def compute_gamma_and_svd(Li1, Li3, i, l, m, RT_blocks, threshold=1e-3):
     '''
     energy = np.cumsum(Sigma**2) / np.sum(Sigma**2)  
     energy_threshold = 0.99  
-    k = np.searchsorted(energy, energy_threshold)
+    k = np.searchsorted(energy, energy_threshold) + 1
     
     U1 = U[:, :k]
     Sigma1 = np.diag(Sigma[:k]) 
