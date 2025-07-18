@@ -26,7 +26,8 @@ def system(inputs, outputs, **options):
     if method not in {
         "srim",
         "okid-era",
-        "okid-era-dc"
+        "okid-era-dc",
+        "n4sid"
     }: raise ValueError(f"Unknown method {method}")
 
     if decimation is not None:
@@ -43,5 +44,8 @@ def system(inputs, outputs, **options):
     
     if method == "srim":
         realization = realize.srim(inputs, outputs, **options)
+
+    if method == "n4sid":
+        realization = realize.n4sid(inputs, outputs, **options)
 
     return realization
