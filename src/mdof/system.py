@@ -45,7 +45,7 @@ def system(inputs, outputs, **options):
     if method == "srim":
         realization = realize.srim(inputs, outputs, **options)
 
-    if method == "n4sid":
-        realization = realize.n4sid(inputs, outputs, **options)
+    if method == "deterministic":
+        realization = realize.deterministic(inputs, outputs, **options)
 
     return realization
