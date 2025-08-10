@@ -27,7 +27,7 @@ def system(inputs, outputs, **options):
         "srim",
         "okid-era",
         "okid-era-dc",
-        "n4sid"
+        "deterministic"
     }: raise ValueError(f"Unknown method {method}")
 
     if decimation is not None:
