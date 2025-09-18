@@ -401,265 +401,265 @@ structure’s dynamics (see <a class="reference external" href="https://chrystal
 Representation</a>).</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{x}(k+1) &amp;= \bm{Ax}(k) + \bm{Bu}(k) \\
-\bm{y}(k) &amp;= \bm{Cx}(k) + \bm{Du}(k)
+\boldsymbol{x}(k+1) &amp;= \boldsymbol{Ax}(k) + \boldsymbol{Bu}(k) \\
+\boldsymbol{y}(k) &amp;= \boldsymbol{Cx}(k) + \boldsymbol{Du}(k)
 \end{aligned}\end{split}\]</div>
 <p>By noting the state evolution</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{x}(k+1) &amp;= \bm{Ax}(k)+\bm{B}\bm{U}_{p}(k)\\
-\bm{x}(k+2) &amp;= \bm{A}^2\bm{X}(k) + \bm{AB}\bm{U}_{p}(k) + \bm{Bu}(k+1)\\
-\bm{x}(k+3) &amp;= \bm{A}^{3}\bm{X}(k) + \bm{A}^{2}\bm{Bu}(k) + \bm{ABu}(k+1) + \bm{Bu}(k+2),
+\boldsymbol{x}(k+1) &amp;= \boldsymbol{Ax}(k)+\boldsymbol{B}\boldsymbol{U}_{p}(k)\\
+\boldsymbol{x}(k+2) &amp;= \boldsymbol{A}^2\boldsymbol{X}(k) + \boldsymbol{AB}\boldsymbol{U}_{p}(k) + \boldsymbol{Bu}(k+1)\\
+\boldsymbol{x}(k+3) &amp;= \boldsymbol{A}^{3}\boldsymbol{X}(k) + \boldsymbol{A}^{2}\boldsymbol{Bu}(k) + \boldsymbol{ABu}(k+1) + \boldsymbol{Bu}(k+2),
 \end{aligned}\end{split}\]</div>
 <p>we can generalize the response for the timepoint <span class="math notranslate nohighlight">\(k+p-1\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{x}(k+p) &amp;= \bm{A}^{p}\bm{x}(k) + \sum_{i=1}^{p}\bm{A}^{p-i}\bm{Bu}(k+i-1)
+\boldsymbol{x}(k+p) &amp;= \boldsymbol{A}^{p}\boldsymbol{x}(k) + \sum_{i=1}^{p}\boldsymbol{A}^{p-i}\boldsymbol{Bu}(k+i-1)
 \\
-\bm{x}(k+p-1) &amp;= \bm{A}^{p-1}\bm{x}(k) + \sum_{i=1}^{p-1}\bm{A}^{p-i-1}\bm{Bu}(k+i-1)
+\boldsymbol{x}(k+p-1) &amp;= \boldsymbol{A}^{p-1}\boldsymbol{x}(k) + \sum_{i=1}^{p-1}\boldsymbol{A}^{p-i-1}\boldsymbol{Bu}(k+i-1)
 \\
-\bm{y}(k+p-1) &amp;= \bm{CA}^{p-1}\bm{x}(k) + \sum_{i=1}^{p-1}\bm{CA}^{p-i-1}\bm{Bu}(k+i-1)+\bm{Du}(k+p-1)~.
+\boldsymbol{y}(k+p-1) &amp;= \boldsymbol{CA}^{p-1}\boldsymbol{x}(k) + \sum_{i=1}^{p-1}\boldsymbol{CA}^{p-i-1}\boldsymbol{Bu}(k+i-1)+\boldsymbol{Du}(k+p-1)~.
 \end{aligned}\end{split}\]</div>
 <p>Then, we can vertically stack <span class="math notranslate nohighlight">\(p\)</span> successive time-points into a
-column vector and express this vector as <span class="math notranslate nohighlight">\(\bm{y}_{p}(k)\)</span>:</p>
+column vector and express this vector as <span class="math notranslate nohighlight">\(\boldsymbol{y}_{p}(k)\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{y}_{p}(k) &amp;= \mathcal{O}_{p}\bm{x}(k) + \mathcal{T}_{p}\bm{u}_{p}(k) \\
+\boldsymbol{y}_{p}(k) &amp;= \mathcal{O}_{p}\boldsymbol{x}(k) + \mathcal{T}_{p}\boldsymbol{u}_{p}(k) \\
 \begin{bmatrix}
-\bm{y}(k) \\
-\bm{y}(k+1) \\
+\boldsymbol{y}(k) \\
+\boldsymbol{y}(k+1) \\
 \vdots \\
-\bm{y}(k+p-1)
+\boldsymbol{y}(k+p-1)
 \end{bmatrix}
 =&amp;
 \begin{bmatrix}
-\bm{C} \\
-\bm{CA} \\
-\bm{CA}^{2} \\
+\boldsymbol{C} \\
+\boldsymbol{CA} \\
+\boldsymbol{CA}^{2} \\
 \vdots \\
-\bm{CA}^{p-1}
+\boldsymbol{CA}^{p-1}
 \end{bmatrix}
-\bm{x}(k)
+\boldsymbol{x}(k)
 ~+ \\
 &amp;
 \begin{bmatrix}
-\bm{D} \\
-\bm{CB} &amp; \bm{D} \\
-\bm{CAB} &amp; \bm{CB} &amp; \bm{D} \\
+\boldsymbol{D} \\
+\boldsymbol{CB} &amp; \boldsymbol{D} \\
+\boldsymbol{CAB} &amp; \boldsymbol{CB} &amp; \boldsymbol{D} \\
 \vdots &amp; \vdots &amp; \vdots &amp; \ddots \\
-\bm{CA}^{p-2}\bm{B} &amp; \bm{CA}^{p-3}\bm{B} &amp; \bm{CA}^{p-4}\bm{B} &amp; \cdots &amp; \bm{D}
+\boldsymbol{CA}^{p-2}\boldsymbol{B} &amp; \boldsymbol{CA}^{p-3}\boldsymbol{B} &amp; \boldsymbol{CA}^{p-4}\boldsymbol{B} &amp; \cdots &amp; \boldsymbol{D}
 \end{bmatrix}
 \begin{bmatrix}
-\bm{u}(k) \\
-\bm{u}(k+1) \\
+\boldsymbol{u}(k) \\
+\boldsymbol{u}(k+1) \\
 \vdots \\
-\bm{u}(k+p-1)
+\boldsymbol{u}(k+p-1)
 \end{bmatrix}~.
 \end{aligned}\end{split}\]</div>
 <!-- $$
-\bm{y}_{p}(k) =
+\boldsymbol{y}_{p}(k) =
 \begin{bmatrix}
-\bm{y}(k) \\
-\bm{y}(k+1) \\
+\boldsymbol{y}(k) \\
+\boldsymbol{y}(k+1) \\
 \vdots \\
-\bm{y}(k+p-1)
+\boldsymbol{y}(k+p-1)
 \end{bmatrix}
 , \quad
-\bm{u}_{p}(k) =
+\boldsymbol{u}_{p}(k) =
 \begin{bmatrix}
-\bm{u}(k) \\
-\bm{u}(k+1) \\
+\boldsymbol{u}(k) \\
+\boldsymbol{u}(k+1) \\
 \vdots \\
-\bm{u}(k+p-1)
+\boldsymbol{u}(k+p-1)
 \end{bmatrix}
 $$ --><p>Finally, we horizontally stack <span class="math notranslate nohighlight">\(N\)</span> successive timepoints of these
 column vectors in a matrix, to get the matrix equation</p>
 <div class="math notranslate nohighlight">
-\[\boxed{\bm{Y}_{p}(k) = \mathcal{O}_{p}\bm{X}(k) + \mathcal{T}_{p}\bm{U}_{p}(k)} ~,\]</div>
+\[\boxed{\boldsymbol{Y}_{p}(k) = \mathcal{O}_{p}\boldsymbol{X}(k) + \mathcal{T}_{p}\boldsymbol{U}_{p}(k)} ~,\]</div>
 <p>where</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{Y}_{p}(k) &amp;= \begin{bmatrix} \bm{y}_{p}(k) &amp; \bm{y}_{p}(k+1) &amp; \cdots &amp; \bm{y}_{p}(k+N-1) \end{bmatrix} \\
+\boldsymbol{Y}_{p}(k) &amp;= \begin{bmatrix} \boldsymbol{y}_{p}(k) &amp; \boldsymbol{y}_{p}(k+1) &amp; \cdots &amp; \boldsymbol{y}_{p}(k+N-1) \end{bmatrix} \\
 &amp;= \begin{bmatrix}
-\bm{y}(k)     &amp; \bm{y}(k+1) &amp; \cdots &amp; \bm{y}(k+N-1)\\
-\bm{y}(k+1)   &amp; \bm{y}(k+2) &amp; \cdots &amp; \bm{y}(k+N)  \\
+\boldsymbol{y}(k)     &amp; \boldsymbol{y}(k+1) &amp; \cdots &amp; \boldsymbol{y}(k+N-1)\\
+\boldsymbol{y}(k+1)   &amp; \boldsymbol{y}(k+2) &amp; \cdots &amp; \boldsymbol{y}(k+N)  \\
 \vdots            &amp; \vdots          &amp; \ddots &amp; \vdots \\
-\bm{y}(k+p-1) &amp; \bm{y}(k+p) &amp; \cdots &amp; \bm{y}(k+N+p-2)
+\boldsymbol{y}(k+p-1) &amp; \boldsymbol{y}(k+p) &amp; \cdots &amp; \boldsymbol{y}(k+N+p-2)
 \end{bmatrix}
 \end{aligned}\end{split}\]</div>
 <div class="math notranslate nohighlight">
-\[\bm{X}(k) = \begin{bmatrix} \bm{x}(k) &amp; \bm{x}(k+1) &amp; \cdots &amp; \bm{x}(k+N-1) \end{bmatrix}\]</div>
+\[\boldsymbol{X}(k) = \begin{bmatrix} \boldsymbol{x}(k) &amp; \boldsymbol{x}(k+1) &amp; \cdots &amp; \boldsymbol{x}(k+N-1) \end{bmatrix}\]</div>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{U}_{p}(k) &amp;= \begin{bmatrix} \bm{u}_{p}(k) &amp; \bm{u}_{p}(k+1) &amp; \cdots &amp; \bm{u}_{p}(k+N-1) \end{bmatrix} \\
+\boldsymbol{U}_{p}(k) &amp;= \begin{bmatrix} \boldsymbol{u}_{p}(k) &amp; \boldsymbol{u}_{p}(k+1) &amp; \cdots &amp; \boldsymbol{u}_{p}(k+N-1) \end{bmatrix} \\
 &amp;= \begin{bmatrix}
-\bm{u}(k)     &amp; \bm{u}(k+1) &amp; \cdots &amp; \bm{u}(k+N-1)\\
-\bm{u}(k+1)   &amp; \bm{u}(k+2) &amp; \cdots &amp; \bm{u}(k+N)  \\
+\boldsymbol{u}(k)     &amp; \boldsymbol{u}(k+1) &amp; \cdots &amp; \boldsymbol{u}(k+N-1)\\
+\boldsymbol{u}(k+1)   &amp; \boldsymbol{u}(k+2) &amp; \cdots &amp; \boldsymbol{u}(k+N)  \\
 \vdots            &amp; \vdots          &amp; \ddots &amp; \vdots \\
-\bm{u}(k+p-1) &amp; \bm{u}(k+p) &amp; \cdots &amp; \bm{u}(k+N+p-2)
+\boldsymbol{u}(k+p-1) &amp; \boldsymbol{u}(k+p) &amp; \cdots &amp; \boldsymbol{u}(k+N+p-2)
 \end{bmatrix}~.
 \end{aligned}\end{split}\]</div>
 </section>
 <section id="observability-matrix-from-information-matrix">
 <h2>Observability Matrix from Information Matrix<a class="headerlink" href="#observability-matrix-from-information-matrix" title="Link to this heading">#</a></h2>
 <p>By post-multiplying the matrix equation by
-<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{U}_{p}^{T}(k)\)</span>,
-<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{Y}_{p}^{T}(k)\)</span> or
-<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{X}_{p}^{T}(k)\)</span>, we obtain relationships
-between correlation matrices <span class="math notranslate nohighlight">\(\bm{R}_{yy}\)</span>,
-<span class="math notranslate nohighlight">\(\bm{R}_{yu}\)</span>, <span class="math notranslate nohighlight">\(\bm{R}_{uu}\)</span>, and
-<span class="math notranslate nohighlight">\(\bm{R}_{xx}\)</span> (See
+<span class="math notranslate nohighlight">\(\frac{1}{N}\boldsymbol{U}_{p}^{T}(k)\)</span>,
+<span class="math notranslate nohighlight">\(\frac{1}{N}\boldsymbol{Y}_{p}^{T}(k)\)</span> or
+<span class="math notranslate nohighlight">\(\frac{1}{N}\boldsymbol{X}_{p}^{T}(k)\)</span>, we obtain relationships
+between correlation matrices <span class="math notranslate nohighlight">\(\boldsymbol{R}_{yy}\)</span>,
+<span class="math notranslate nohighlight">\(\boldsymbol{R}_{yu}\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{R}_{uu}\)</span>, and
+<span class="math notranslate nohighlight">\(\boldsymbol{R}_{xx}\)</span> (See
 <a class="reference internal" href="#appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships"><span class="std std-ref">Appendix</span></a>).</p>
 <div class="math notranslate nohighlight">
-\[\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} = \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T} ~,\]</div>
+\[\boldsymbol{R}_{yy} - \boldsymbol{R}_{yu}\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T} = \mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T} ~,\]</div>
 <p>where</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{R}_{yy} &amp;= \frac{1}{N}\bm{Y}_{p}(k)\bm{Y}_{p}^{T}(k), \quad{}
-\bm{R}_{yu} = \frac{1}{N}\bm{Y}_{p}(k)\bm{U}_{p}^{T}(k) \\
-\bm{R}_{uu} &amp;= \frac{1}{N}\bm{U}_{p}(k)\bm{U}_{p}^{T}(k) , \quad{}
-\bm{R}_{xx} = \frac{1}{N}\bm{X}(k)\bm{X}^{T}(k) ~.
+\boldsymbol{R}_{yy} &amp;= \frac{1}{N}\boldsymbol{Y}_{p}(k)\boldsymbol{Y}_{p}^{T}(k), \quad{}
+\boldsymbol{R}_{yu} = \frac{1}{N}\boldsymbol{Y}_{p}(k)\boldsymbol{U}_{p}^{T}(k) \\
+\boldsymbol{R}_{uu} &amp;= \frac{1}{N}\boldsymbol{U}_{p}(k)\boldsymbol{U}_{p}^{T}(k) , \quad{}
+\boldsymbol{R}_{xx} = \frac{1}{N}\boldsymbol{X}(k)\boldsymbol{X}^{T}(k) ~.
 \end{aligned}\end{split}\]</div>
 <p>The left side of the equation is found from input and output
 measurements, and is called the <em>information matrix</em> of the data. Its
 singular value decomposition is computed to yield the <em>observability
 matrix</em> <span class="math notranslate nohighlight">\(\mathcal{O}_{p}\)</span>.</p>
 <div class="math notranslate nohighlight">
-\[\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} = \bm{U} \Sigma \bm{U}^{T} = \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T} ~.\]</div>
+\[\boldsymbol{R}_{yy} - \boldsymbol{R}_{yu}\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T} = \boldsymbol{U} \Sigma \boldsymbol{U}^{T} = \mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T} ~.\]</div>
 </section>
 <section id="state-equation-matrices-from-observability-matrix">
 <h2>State Equation Matrices from Observability Matrix<a class="headerlink" href="#state-equation-matrices-from-observability-matrix" title="Link to this heading">#</a></h2>
-<p>Now, the state equation matrices <span class="math notranslate nohighlight">\(\bm{A}\)</span> and
-<span class="math notranslate nohighlight">\(\bm{C}\)</span> can be obtained from the observability matrix
+<p>Now, the state equation matrices <span class="math notranslate nohighlight">\(\boldsymbol{A}\)</span> and
+<span class="math notranslate nohighlight">\(\boldsymbol{C}\)</span> can be obtained from the observability matrix
 <span class="math notranslate nohighlight">\(\mathcal{O}_p\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
 \mathcal{O}_{p}
 =
 \begin{bmatrix}
-\bm{C} \\
-\bm{CA} \\
-\bm{CA}^{2} \\
+\boldsymbol{C} \\
+\boldsymbol{CA} \\
+\boldsymbol{CA}^{2} \\
 \vdots \\
-\bm{CA}^{p-1}
+\boldsymbol{CA}^{p-1}
 \end{bmatrix}
 , \quad{}
 \mathcal{O}_{p}(:-1)
 =
 \begin{bmatrix}
-\bm{C} \\
-\bm{CA} \\
-\bm{CA}^{2} \\
+\boldsymbol{C} \\
+\boldsymbol{CA} \\
+\boldsymbol{CA}^{2} \\
 \vdots \\
-\bm{CA}^{p-2}
+\boldsymbol{CA}^{p-2}
 \end{bmatrix}
 , \quad{}
 \mathcal{O}_{p}(1:)
 =
 \begin{bmatrix}
-\bm{CA} \\
-\bm{CA}^{2} \\
-\bm{CA}^{3} \\
+\boldsymbol{CA} \\
+\boldsymbol{CA}^{2} \\
+\boldsymbol{CA}^{3} \\
 \vdots \\
-\bm{CA}^{p-1}
+\boldsymbol{CA}^{p-1}
 \end{bmatrix}
 \end{aligned}\end{split}\]</div>
 <div class="math notranslate nohighlight">
-\[\bm{A} = \mathcal{O}_{p}(:-1)^{+}\mathcal{O}_{p}(1:)\]</div>
+\[\boldsymbol{A} = \mathcal{O}_{p}(:-1)^{+}\mathcal{O}_{p}(1:)\]</div>
 <div class="math notranslate nohighlight">
-\[\bm{C} = \mathcal{O}_{p}(0)\]</div>
+\[\boldsymbol{C} = \mathcal{O}_{p}(0)\]</div>
 </section>
 <section id="appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships">
 <h2>Appendix: Manipulation of discrete-time system matrix equation into correlation matrix relationships<a class="headerlink" href="#appendix-manipulation-of-discrete-time-system-matrix-equation-into-correlation-matrix-relationships" title="Link to this heading">#</a></h2>
 <p>In (<a class="reference external" href="https://doi.org/10.2514/2.4068">Juang 1997</a>), the discrete-time
 system matrix equation is manipulated into a form describing the
-relationship between correlation matrices <span class="math notranslate nohighlight">\(\bm{R}_{yy}\)</span>,
-<span class="math notranslate nohighlight">\(\bm{R}_{yu}\)</span>, <span class="math notranslate nohighlight">\(\bm{R}_{uu}\)</span>, and
-<span class="math notranslate nohighlight">\(\bm{R}_{xx}\)</span>.</p>
+relationship between correlation matrices <span class="math notranslate nohighlight">\(\boldsymbol{R}_{yy}\)</span>,
+<span class="math notranslate nohighlight">\(\boldsymbol{R}_{yu}\)</span>, <span class="math notranslate nohighlight">\(\boldsymbol{R}_{uu}\)</span>, and
+<span class="math notranslate nohighlight">\(\boldsymbol{R}_{xx}\)</span>.</p>
 <p>Post-multiplying the <a class="reference internal" href="#discrete-time-system-matrix-equation"><span class="std std-ref">discrete-time system matrix
 equation</span></a> by
-<span class="math notranslate nohighlight">\(\frac{1}{N}\bm{U}_{p}^{T}(k)\)</span>:</p>
+<span class="math notranslate nohighlight">\(\frac{1}{N}\boldsymbol{U}_{p}^{T}(k)\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{1}{N}\bm{Y}_{p}(k)\bm{U}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\bm{X}(k)\bm{U}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\bm{U}_{p}(k)\bm{U}_{p}^{T}(k)
+\frac{1}{N}\boldsymbol{Y}_{p}(k)\boldsymbol{U}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\boldsymbol{X}(k)\boldsymbol{U}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\boldsymbol{U}_{p}(k)\boldsymbol{U}_{p}^{T}(k)
 \\
-\bm{R}_{yu} &amp;= \mathcal{O}_{p}\bm{R}_{xu} + \mathcal{T}_{p}\bm{R}_{uu}
+\boldsymbol{R}_{yu} &amp;= \mathcal{O}_{p}\boldsymbol{R}_{xu} + \mathcal{T}_{p}\boldsymbol{R}_{uu}
 \\
-\mathcal{T}_{p} &amp;= \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}
+\mathcal{T}_{p} &amp;= \left( \boldsymbol{R}_{yu} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \right)\boldsymbol{R}_{uu}^{-1}
 \end{aligned}\end{split}\]</div>
-<p>Post-multiplying by <span class="math notranslate nohighlight">\(\frac{1}{N}\bm{Y}_{p}^{T}(k)\)</span>:</p>
+<p>Post-multiplying by <span class="math notranslate nohighlight">\(\frac{1}{N}\boldsymbol{Y}_{p}^{T}(k)\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{1}{N}\bm{Y}_{p}(k)\bm{Y}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\bm{X}(k)\bm{Y}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\bm{U}_{p}(k)\bm{Y}_{p}^{T}(k)
+\frac{1}{N}\boldsymbol{Y}_{p}(k)\boldsymbol{Y}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\boldsymbol{X}(k)\boldsymbol{Y}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\boldsymbol{U}_{p}(k)\boldsymbol{Y}_{p}^{T}(k)
 \\
-\bm{R}_{yy} &amp;= \mathcal{O}_{p}\bm{R}_{yx}^{T} + \mathcal{T}_{p}\bm{R}_{yu}^{T}
+\boldsymbol{R}_{yy} &amp;= \mathcal{O}_{p}\boldsymbol{R}_{yx}^{T} + \mathcal{T}_{p}\boldsymbol{R}_{yu}^{T}
 \\
-\bm{R}_{yy} &amp;= \mathcal{O}_{p}\bm{R}_{yx}^{T} + \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\boldsymbol{R}_{yy} &amp;= \mathcal{O}_{p}\boldsymbol{R}_{yx}^{T} + \left( \boldsymbol{R}_{yu} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \right)\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T}
 \end{aligned}\end{split}\]</div>
-<p>Post-multiplying by <span class="math notranslate nohighlight">\(\frac{1}{N}\bm{X}_{p}^{T}(k)\)</span>:</p>
+<p>Post-multiplying by <span class="math notranslate nohighlight">\(\frac{1}{N}\boldsymbol{X}_{p}^{T}(k)\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\frac{1}{N}\bm{Y}_{p}(k)\bm{X}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\bm{X}(k)\bm{X}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\bm{U}_{p}(k)\bm{X}_{p}^{T}(k)
+\frac{1}{N}\boldsymbol{Y}_{p}(k)\boldsymbol{X}_{p}^{T}(k) &amp;= \mathcal{O}_{p}\frac{1}{N}\boldsymbol{X}(k)\boldsymbol{X}_{p}^{T}(k) + \mathcal{T}_{p}\frac{1}{N}\boldsymbol{U}_{p}(k)\boldsymbol{X}_{p}^{T}(k)
 \\
-\bm{R}_{yx} &amp;= \mathcal{O}_{p}\bm{R}_{xx} + \mathcal{T}_{p}\bm{R}_{xu}^{T}
+\boldsymbol{R}_{yx} &amp;= \mathcal{O}_{p}\boldsymbol{R}_{xx} + \mathcal{T}_{p}\boldsymbol{R}_{xu}^{T}
 \\
-\bm{R}_{yx} &amp;= \mathcal{O}_{p}\bm{R}_{xx} + \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{xu}^{T}
+\boldsymbol{R}_{yx} &amp;= \mathcal{O}_{p}\boldsymbol{R}_{xx} + \left( \boldsymbol{R}_{yu} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \right)\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{xu}^{T}
 \end{aligned}\end{split}\]</div>
-<p>Substituting the equation for <span class="math notranslate nohighlight">\(\bm{R}_{yx}\)</span> into the equation
-for <span class="math notranslate nohighlight">\(\bm{R}_{yy}\)</span>:</p>
+<p>Substituting the equation for <span class="math notranslate nohighlight">\(\boldsymbol{R}_{yx}\)</span> into the equation
+for <span class="math notranslate nohighlight">\(\boldsymbol{R}_{yy}\)</span>:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{R}_{yy} =&amp; ~\mathcal{O}_{p}
-\left(\mathcal{O}_{p}\bm{R}_{xx} + \left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{xu}^{T}\right)^{T}
+\boldsymbol{R}_{yy} =&amp; ~\mathcal{O}_{p}
+\left(\mathcal{O}_{p}\boldsymbol{R}_{xx} + \left( \boldsymbol{R}_{yu} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \right)\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{xu}^{T}\right)^{T}
 \\
 &amp;+
-\left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\left( \boldsymbol{R}_{yu} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \right)\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T}
 \\
-=&amp; ~\mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}
- + \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \left( \bm{R}_{yu}^{T} - \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T} \right)
-\\
-&amp;+
-\left( \bm{R}_{yu} - \mathcal{O}_{p}\bm{R}_{xu} \right)\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
-\\
-=&amp; ~\mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}
- + \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1}  \bm{R}_{yu}^{T} - \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T}
+=&amp; ~\mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T}
+ + \mathcal{O}_{p}\boldsymbol{R}_{xu}\boldsymbol{R}_{uu}^{-1} \left( \boldsymbol{R}_{yu}^{T} - \boldsymbol{R}_{xu}^{T}\mathcal{O}_{p}^{T} \right)
 \\
 &amp;+
- \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} - \mathcal{O}_{p}\bm{R}_{xu} \bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+\left( \boldsymbol{R}_{yu} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \right)\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T}
 \\
-=&amp; ~\mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}
- - \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T} +
- \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
+=&amp; ~\mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T}
+ + \mathcal{O}_{p}\boldsymbol{R}_{xu}\boldsymbol{R}_{uu}^{-1}  \boldsymbol{R}_{yu}^{T} - \mathcal{O}_{p}\boldsymbol{R}_{xu}\boldsymbol{R}_{uu}^{-1} \boldsymbol{R}_{xu}^{T}\mathcal{O}_{p}^{T}
+\\
+&amp;+
+ \boldsymbol{R}_{yu}\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T} - \mathcal{O}_{p}\boldsymbol{R}_{xu} \boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T}
+\\
+=&amp; ~\mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T}
+ - \mathcal{O}_{p}\boldsymbol{R}_{xu}\boldsymbol{R}_{uu}^{-1} \boldsymbol{R}_{xu}^{T}\mathcal{O}_{p}^{T} +
+ \boldsymbol{R}_{yu}\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T}
 \end{aligned}\end{split}\]</div>
 <p>Moving all of the terms that can be composed with measured data to the
 left side:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T}
-&amp;= \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T} - \mathcal{O}_{p}\bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T}\mathcal{O}_{p}^{T} \\
-&amp;= \mathcal{O}_{p}\left( \bm{R}_{xx} - \bm{R}_{xu}\bm{R}_{uu}^{-1} \bm{R}_{xu}^{T} \right) \mathcal{O}_{p}^{T}
+\boldsymbol{R}_{yy} - \boldsymbol{R}_{yu}\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T}
+&amp;= \mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T} - \mathcal{O}_{p}\boldsymbol{R}_{xu}\boldsymbol{R}_{uu}^{-1} \boldsymbol{R}_{xu}^{T}\mathcal{O}_{p}^{T} \\
+&amp;= \mathcal{O}_{p}\left( \boldsymbol{R}_{xx} - \boldsymbol{R}_{xu}\boldsymbol{R}_{uu}^{-1} \boldsymbol{R}_{xu}^{T} \right) \mathcal{O}_{p}^{T}
 \end{aligned}\end{split}\]</div>
 <p>We make the assumption that all current and future input data is
 uncorrelated with the current state, which means that the average of the
-products <span class="math notranslate nohighlight">\(\bm{x}(k)\bm{u}(k+i), ~~ i \in [0,1,2,\dots]\)</span> is
+products <span class="math notranslate nohighlight">\(\boldsymbol{x}(k)\boldsymbol{u}(k+i), ~~ i \in [0,1,2,\dots]\)</span> is
 zero. This gives:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
-\bm{R}_{xu} &amp;=
+\boldsymbol{R}_{xu} &amp;=
 \frac{1}{N}
 \begin{bmatrix}
-\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j) \\
-\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j+1) \\
-\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j+2) \\
+\sum_{j=0}^{N-1}\boldsymbol{x}(k+j)\boldsymbol{u}(k+j) \\
+\sum_{j=0}^{N-1}\boldsymbol{x}(k+j)\boldsymbol{u}(k+j+1) \\
+\sum_{j=0}^{N-1}\boldsymbol{x}(k+j)\boldsymbol{u}(k+j+2) \\
 \vdots \\
-\sum_{j=0}^{N-1}\bm{x}(k+j)\bm{u}(k+j+p-1)
+\sum_{j=0}^{N-1}\boldsymbol{x}(k+j)\boldsymbol{u}(k+j+p-1)
 \end{bmatrix}^{T} \\
 &amp;=
-\bm{0}
+\boldsymbol{0}
 \end{aligned}\end{split}\]</div>
 <p>in order to yield:</p>
 <div class="math notranslate nohighlight">
-\[\bm{R}_{yy} - \bm{R}_{yu}\bm{R}_{uu}^{-1}\bm{R}_{yu}^{T} = \mathcal{O}_{p}\bm{R}_{xx}\mathcal{O}_{p}^{T}~.\]</div>
+\[\boldsymbol{R}_{yy} - \boldsymbol{R}_{yu}\boldsymbol{R}_{uu}^{-1}\boldsymbol{R}_{yu}^{T} = \mathcal{O}_{p}\boldsymbol{R}_{xx}\mathcal{O}_{p}^{T}~.\]</div>
 </section>
 </section>
 
