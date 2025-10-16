@@ -44,9 +44,10 @@ def _get_error(true, test, metric='l2_norm', normalized=True):
             return error/sum(np.abs(true))
         return error
     if metric == 'are_max_normalized':
-        error = np.mean(np.abs(test-true)) # average absolute relative error
-        if normalized:
-            return error/max(np.abs(true)) # divide by maximum absolute value
+        #error = np.mean(np.abs(test-true)) # average absolute relative error
+        error = np.mean(np.abs(test - true) / (np.abs(true) + 1e-8))
+        # if normalized:
+        #     return error/max(np.abs(true)) # divide by maximum absolute value
         return error
     if metric == 'sym':
         error = sum(test-true)
