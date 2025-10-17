@@ -44,10 +44,9 @@ def _get_error(true, test, metric='l2_norm', normalized=True):
             return error/sum(np.abs(true))
         return error
     if metric == 'are_max_normalized':
-        #error = np.mean(np.abs(test-true)) # average absolute relative error
-        error = np.mean(np.abs(test - true) / (np.abs(true) + 1e-8))
-        # if normalized:
-        #     return error/max(np.abs(true)) # divide by maximum absolute value
+        error = np.mean(np.abs(test-true)) # average absolute relative error
+        if normalized:
+            return error/max(np.abs(true)) # divide by maximum absolute value
         return error
     if metric == 'sym':
         error = sum(test-true)
@@ -94,9 +93,11 @@ class Realization:
 
         if stabilize:
             A_stable, real_mode_indices = stabilize_discrete(A=realization[0], verbose=verbose, list_filtered_modes=True)
-            modes_removed = np.array([real_mode_indices,[
-                _get_period_from_discrete_A_eigval(np.linalg.eig(realization[0])[0][2*i], dti) for i in real_mode_indices
-            ]])
+            eigvals = np.linalg.eigvals(realization[0])
+            modes_removed = np.array([
+                real_mode_indices,
+                [_get_period_from_discrete_A_eigval(eigvals[i], dti) for i in real_mode_indices]
+            ])
             realization = (A_stable,*realization[1:])
             self._modes_removed = modes_removed
         else:
