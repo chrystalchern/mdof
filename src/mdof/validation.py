@@ -123,7 +123,7 @@ def stabilize_discrete(A, verbose=False, list_filtered_modes=False):
         because magnitude of eigenvalue is greater than 1 ({test_string(test)})
         """)
     if list_filtered_modes:
-        return filtered_A, real_mode_indices
+        return filtered_A, indices
     else:
         return filtered_A
 
