@@ -92,11 +92,11 @@ class Realization:
         realization = mdof.system(method='srim', inputs=inputs, outputs=outpts, **conf)
 
         if stabilize:
-            A_stable, real_mode_indices = stabilize_discrete(A=realization[0], verbose=verbose, list_filtered_modes=True)
+            A_stable, indices = stabilize_discrete(A=realization[0], verbose=verbose, list_filtered_modes=True)
             eigvals = np.linalg.eigvals(realization[0])
             modes_removed = np.array([
-                real_mode_indices,
-                [_get_period_from_discrete_A_eigval(eigvals[i], dti) for i in real_mode_indices]
+                indices,
+                [_get_period_from_discrete_A_eigval(eigvals[i], dti) for i in indices]
             ])
             realization = (A_stable,*realization[1:])
             self._modes_removed = modes_removed
