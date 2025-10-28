@@ -97,13 +97,22 @@ def truncate_by_bounds(series, bounds):
 from scipy.signal import correlate, correlation_lags
 import matplotlib.pyplot as plt
 
-def align_signals(signal1, signal2, times=None, verbose=False):
+def align_signals(signal1, signal2, times=None, verbose=False, max_lag_allowed=None):
 
     assert signal1.shape == signal2.shape, "Please give two signals of equal shape."
     signal1 = np.atleast_2d(signal1)
     signal2 = np.atleast_2d(signal2)
     npts = signal1.shape[1]
 
+    if max_lag_allowed is None and times is not None and len(times) >= 2:
+        dt = float(times[1] - times[0])
+        if dt > 0:
+            fs = 1.0 / dt
+            max_lag_allowed = int(fs * 1.0)  # 1 second in samples
+            if verbose:
+                print(f"[Auto] Sampling rate ≈ {fs:.2f} Hz → "
+                      f"max_lag_allowed = {max_lag_allowed} samples (≈1 s)")
+                
     max_lag = 0
     s1_aligned = []
     s2_aligned = []
@@ -124,6 +133,11 @@ def align_signals(signal1, signal2, times=None, verbose=False):
         
         # Find the lag corresponding to the maximum correlation
         lag = lags[np.argmax(correlation)]
+
+        if max_lag_allowed is not None and abs(lag) > max_lag_allowed:
+            if verbose:
+                print(f"Lag {lag} exceeds max allowed ({max_lag_allowed}), no alignment applied.")
+            lag = 0
         
         # Trim the signals
         if lag > 0:
