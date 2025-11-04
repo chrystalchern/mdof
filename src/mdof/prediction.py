@@ -111,55 +111,45 @@ def get_error_new(
         raise ValueError(f"Unknown averaging_mode: {averaging_mode}")
 
 
-def _get_error(true, test, metric='l2_norm', normalized=True):
-    """
-    """
-    if not isinstance(true, np.ndarray):
-        true = np.array(true)
-    if not isinstance(test, np.ndarray):
-        test = np.array(test)
-    if true.ndim != 1:
-        Warning("The true series has incorrect dimensions for this operation (must be a 1D array or list).")
-    if test.ndim != 1:
-        Warning("The test series has incorrect dimensions for this operation (must be a 1D array or list).")
-    assert true.shape == test.shape, f"Shapes are different for true series ({true.shape}) and test series ({test.shape})."
-    if metric == 'l2_norm':
-        error = np.linalg.norm(test-true)
-        if normalized:
-            return error/np.linalg.norm(true)
-        return error
-    if metric == 'l2_norm_max_normalized':
-        error = np.linalg.norm(test-true)
-        if normalized:
-            return error/max(true)
-        return error
-    if metric == 'abs_norm':
-        error = np.linalg.norm(test-true,ord=1)
-        assert error == np.sum(np.abs(test-true))
-        if normalized:
-            return error/np.linalg.norm(true,ord=1)
-    if metric == 'rae':
-        error = sum(np.abs(test)-np.abs(true))
-        if normalized:
-            return error/sum(np.abs(true))
-        return error
-    if metric == 'are':
-        error = sum(np.abs(test-true))
-        if normalized:
-            return error/sum(np.abs(true))
-        return error
-    if metric == 'are_max_normalized':
-        error = np.mean(np.abs(test-true)) # average absolute relative error
-        if normalized:
-            return error/max(np.abs(true)) # divide by maximum absolute value
-        return error
-    if metric == 'sym':
-        error = sum(test-true)
-        if normalized:
-            return error/(sum(test+true)/2)
-        return error
+def norm(y, ntime, order:int=1, averaging_mode='mean'):
+    if averaging_mode is None:
+        norm = np.linalg.norm(y, order)
+        norm_manual = (np.sum(np.abs(y)**order))**(1/order)
+        assert norm == norm_manual
+    elif averaging_mode == 'mean':
+        norm = (np.sum(np.abs(y)**order)/ntime)**(1/order)
+    return norm
+
+def _get_error(ytrue, ypred, numerator_norm, denominator_norm, numerator_averaged=True, denominator_averaged=True):
+    ntime = len(ytrue)
+    assert (len(ytrue) == len(ypred)), f"{len(ytrue)=}, {len(ypred)=}, but they must match"
+    if numerator_norm == 'L1':
+        numerator_norm = 1
+    if numerator_norm == 'L2':
+        numerator_norm = 2
+    if denominator_norm == 'L1':
+        denominator_norm = 1
+    if denominator_norm == 'L2':
+        denominator_norm = 2
+
+    num_mode = 'mean' if numerator_averaged else None
+    den_mode = 'mean' if denominator_averaged else None
+
+    if isinstance(numerator_norm, int):
+        numerator = norm(ytrue-ypred, ntime, order=numerator_norm, averaging_mode=num_mode)
+    elif numerator_norm in ['max', 'supremum', 'infinity', 'uniform', 'inf', np.inf]:
+        numerator = np.max(np.abs(ytrue - ypred))
     else:
-        return NotImplementedError("This metric is not recognized. The metrics available are 'l2_norm', 'are', and 'sym'.")
+        raise ValueError(f"Unsupported numerator_norm: {numerator_norm}")
+    
+    if isinstance(denominator_norm, int):
+        denominator = norm(ytrue, ntime, order=denominator_norm, averaging_mode=den_mode)
+    elif denominator_norm in ['max', 'supremum', 'infinity', 'uniform', 'inf', np.inf]:
+        denominator = np.max(np.abs(ytrue))
+    else:
+        raise ValueError(f"Unsupported denominator_norm: {denominator_norm}")
+    
+    return numerator/denominator
 
 
 def _get_period_from_discrete_A_eigval(eigval, dt):
@@ -296,5 +286,13 @@ class Prediction:
         """
         ic: index of channel 
         """
-        return _get_error(true=self.true(ic), test=self.test(ic), metric=metric)
+        #return _get_error(true=self.true(ic), test=self.test(ic), metric=metric)
+        return _get_error(
+            ytrue=self.true(ic),
+            ypred=self.test(ic),
+            numerator_norm=2,
+            denominator_norm=2,
+            numerator_averaged=True,
+            denominator_averaged=True
+        )
     
