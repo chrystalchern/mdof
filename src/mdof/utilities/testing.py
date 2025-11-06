@@ -106,12 +106,11 @@ def align_signals(signal1, signal2, times=None, verbose=False, max_lag_allowed=N
 
     if max_lag_allowed is None and times is not None and len(times) >= 2:
         dt = float(times[1] - times[0])
-        if dt > 0:
-            fs = 1.0 / dt
-            max_lag_allowed = int(fs * 1.0)  # 1 second in samples
-            if verbose:
-                print(f"[Auto] Sampling rate ≈ {fs:.2f} Hz → "
-                      f"max_lag_allowed = {max_lag_allowed} samples (≈1 s)")
+        fs = 1.0 / dt
+        max_lag_allowed = int(fs * 1.0)  # 1 second in samples
+        if verbose:
+            print(f"[Auto] Sampling rate ≈ {fs:.2f} Hz → "
+                    f"max_lag_allowed = {max_lag_allowed} samples (≈1 s)")
                 
     max_lag = 0
     s1_aligned = []
