@@ -98,66 +98,84 @@ from scipy.signal import correlate, correlation_lags
 import matplotlib.pyplot as plt
 
 def align_signals(signal1, signal2, times=None, verbose=False, max_lag_allowed=None):
+    """
+    Align two 1D signals to maximize their cross-correlation.
+    If max_lag_allowed is given, then the signals will only
+    be aligned if it does not cause a lag > max_lag_allowed
+    
+    :param signal1:         first signal, 1D np.ndarray
+    :param signal2:         second signal, 1D np.ndarray
+    :param times:           optional, time array. must be
+                            provided if using max_lag_allowed
+    :param verbose:         if True or >=1, prints feedback
+                            regarding alignment. If >=2, plots
+                            lags vs correlations. Default False.
+    :param max_lag_allowed: optional: maximum time, in seconds,
+                            that the signals may be lagged for 
+                            alignment
+    """
 
-    assert signal1.shape == signal2.shape, "Please give two signals of equal shape."
-    signal1 = np.atleast_2d(signal1)
-    signal2 = np.atleast_2d(signal2)
-    npts = signal1.shape[1]
+    assert len(signal1) == len(signal2), "Please give two signals of equal length."
+    assert signal1.ndim == 1 and signal2.ndim == 1, "Both signals must be 1D np.ndarray."
+    npts = len(signal1)
 
-    if max_lag_allowed is None and times is not None and len(times) >= 2:
-        dt = float(times[1] - times[0])
-        fs = 1.0 / dt
-        max_lag_allowed = int(fs * 1.0)  # 1 second in samples
-        if verbose:
-            print(f"[Auto] Sampling rate ≈ {fs:.2f} Hz → "
-                    f"max_lag_allowed = {max_lag_allowed} samples (≈1 s)")
-                
-    max_lag = 0
-    s1_aligned = []
-    s2_aligned = []
+    # Compute the cross-correlation between signal1 and signal2
+    correlation = correlate(signal1, signal2, mode='full')
+    
+    # Get the lags corresponding to the cross-correlation
+    lags = correlation_lags(len(signal1), len(signal2), mode='full')
 
-    for s1,s2 in zip(signal1,signal2):
-        # Compute the cross-correlation between signal1 and signal2
-        correlation = correlate(s1, s2, mode='full')
-        
-        # Get the lags corresponding to the cross-correlation
-        lags = correlation_lags(len(s1), len(s2), mode='full')
+    if verbose >= 2:
+        _,ax=plt.subplots()
+        ax.scatter(lags,correlation)
+        ax.set_xlabel("lag")
+        ax.set_ylabel("correlation")
+        plt.show()
+    
+    # Sort lags from max to min correlations
+    corr_idxs_sorted = np.argsort(-correlation)
+    lags_sorted = lags[corr_idxs_sorted]
 
-        if verbose:
-            _,ax=plt.subplots()
-            ax.scatter(lags,correlation)
-            ax.set_xlabel("lag")
-            ax.set_ylabel("correlation")
-            plt.show()
-        
-        # Find the lag corresponding to the maximum correlation
-        lag = lags[np.argmax(correlation)]
-
-        if max_lag_allowed is not None and abs(lag) > max_lag_allowed:
+    # Find the lag corresponding to the maximum correlation
+    # Only allow lags shorted than the max allowed, if specified
+    if max_lag_allowed is not None:
+        if times is None:
+            raise ValueError("times must be given if max_lag_allowed applied.")
+        dt = times[1]-times[0]
+        lag_times = abs(lags_sorted)*dt
+        lags_allowed_indices = np.where(lag_times < max_lag_allowed)[0]
+        if dt > max_lag_allowed:
             if verbose:
-                print(f"Lag {lag} exceeds max allowed ({max_lag_allowed}), no alignment applied.")
+                print(f"Time step ({dt} s) is larger than max allowed lag ({max_lag_allowed} s); no alignment applied.")
+                lag = 0
+        elif len(lags_allowed_indices) == 0: # TODO: confirm that this case is different than the previous.
             lag = 0
-        
-        # Trim the signals
-        if lag > 0:
-            s1_aligned.append(s1[lag:])
-            s2_aligned.append(s2[:len(s1[lag:])])
-        elif lag < 0:
-            s2_aligned.append(s2[-lag:])
-            s1_aligned.append(s1[:len(s2[-lag:])])
         else:
-            s1_aligned.append(s1)
-            s2_aligned.append(s2)
+            lag = lags_sorted[lags_allowed_indices[0]]
+    else:
+        lag = lags_sorted[0]
 
-        max_lag = max(abs(lag), max_lag)
+    # Trim the signals if there is a lag
+    if lag > 0:
+        signal1_aligned = signal1[lag:]
+        signal2_aligned = signal2[:len(signal2[lag:])]
+    elif lag < 0:
+        signal2_aligned = signal2[-lag:]
+        signal1_aligned = signal1[:len(signal2[-lag:])]
+    else:
+        signal1_aligned = signal1
+        signal2_aligned = signal2
 
-    new_npts = npts-max_lag
-    signal1_aligned = np.array([s[:new_npts] for s in s1_aligned])
-    signal2_aligned = np.array([s[:new_npts] for s in s2_aligned])
+    if verbose and time is not None:
+        lag_time = lag*dt
+        print(f"Signals aligned with lag time {lag_time} s.")
+
+    # TODO: confirm that lag always trims signals to equal lengths
+    assert len(signal1_aligned) == len(signal2_aligned), "trimmed signals aren't equal lengths"
 
     if times is None:
-        times = np.arange(0,new_npts,1)
+        times = np.arange(len(signal1_aligned))
     else:
-        times = times[:new_npts]
+        times = times[:len(signal1_aligned)]
     
-    return max_lag, signal1_aligned, signal2_aligned, times
+    return lag, signal1_aligned, signal2_aligned, times
