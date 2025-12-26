@@ -148,8 +148,6 @@ def align_signals(signal1, signal2, times=None, verbose=False, max_lag_allowed=N
             if verbose:
                 print(f"Time step ({dt} s) is larger than max allowed lag ({max_lag_allowed} s); no alignment applied.")
                 lag = 0
-        elif len(lags_allowed_indices) == 0: # TODO: confirm that this case is different than the previous.
-            lag = 0
         else:
             lag = lags_sorted[lags_allowed_indices[0]]
     else:
@@ -170,7 +168,6 @@ def align_signals(signal1, signal2, times=None, verbose=False, max_lag_allowed=N
         lag_time = lag*dt
         print(f"Signals aligned with lag time {lag_time} s.")
 
-    # TODO: confirm that lag always trims signals to equal lengths
     assert len(signal1_aligned) == len(signal2_aligned), "trimmed signals aren't equal lengths"
 
     if times is None:
