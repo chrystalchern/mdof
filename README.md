@@ -15,6 +15,8 @@
 
   [![Latest PyPI version](https://img.shields.io/pypi/v/mdof?logo=pypi&style=for-the-badge)](https://pypi.python.org/pypi/mdof)
   [![Downloads per Month](https://img.shields.io/pypi/dm/mdof?style=for-the-badge)]((https://pypi.python.org/pypi/mdof))
+  [![DOI](https://zenodo.org/badge/743834794.svg)](https://doi.org/10.5281/zenodo.11660200)
+
 
   </div>
 
