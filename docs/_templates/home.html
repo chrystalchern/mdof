@@ -60,7 +60,39 @@
       line-height: 1.5;
       padding: .5rem .75rem;
       position: relative;
-  }  
+  }
+  /* Add persistent underline (match hover) for current page's
+     nav link on landing page nav bar.
+     Using `text-decoration: underline`
+     (pydata's `a` default, which `.nav-link` removes) 
+  */
+  .bd-navbar-elements a.nav-link.nav-internal[href="#"] {
+      text-decoration: underline;
+      text-decoration-thickness: max(3px, .1875rem, .12em);
+  }
+  /* When the hamburger menu is open (narrow/phone views),
+     stack the links vertically.
+     Overrides inline `flex-direction: row` on the <ul>, hence !important.
+     Scoped to `.is-active` so only affects opened narrow view menu. */
+  /* Open hamburger menu was getting shrink-wrapped and shoved to the right edge
+     by parent flex layout (Bulma `.navbar-end{margin-left:auto}`,
+     plus the navbar's justify-content across Bulma/Bootstrap).
+     Force the menu, its `.navbar-end`, and the link list to span
+     full width and align left. */
+  .navbar-menu.is-active,
+  .navbar-menu.is-active .navbar-end {
+      width: 100% !important;
+      flex-basis: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      justify-content: flex-start !important;
+  }
+  .navbar-menu.is-active .bd-navbar-elements {
+      width: 100% !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;   /* left-align the stacked links */
+      margin-left: 0 !important;
+  }
   </style>
 </head>
 
@@ -632,6 +664,20 @@
   <script type=text/javascript src=/js/bundle.min.js></script>
   <script type=text/javascript>setupShortcuts(maxLevel=2)</script>
   <script defer data-domain=numpy.org src=https://views.scientific-python.org/js/script.js></script>
+
+  <script>
+    // Bulma ships no JS for the navbar hamburger — wire each burger to toggle its target menu
+    // (data-target -> element id). Without this, hamburger can't open.
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".navbar-burger").forEach((burger) => {
+        burger.addEventListener("click", () => {
+          const target = document.getElementById(burger.dataset.target);
+          burger.classList.toggle("is-active");
+          if (target) target.classList.toggle("is-active");
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>

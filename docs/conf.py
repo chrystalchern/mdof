@@ -4,11 +4,11 @@
 #
 from pathlib import Path
 project = 'mdof'
-copyright = '2023, Chrystal Chern'
+copyright = '2026, Chrystal Chern'
 author = 'Chrystal Chern'
 description = "Fast and friendly structural system identification."
-version = '0.0.17'
-release = '0.0.17'
+version = '0.0.22'
+release = '0.0.22'
 html_baseurl = "https://mdof.chrystalchern.com/"
 sitemap_url_scheme = "{link}"
 sitemap_excludes = [
