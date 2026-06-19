@@ -17,7 +17,6 @@
   {{ _webpack.head_js_preload() }}
   <link rel="canonical" href="https://mdof.chrystalchern.com" >
   <link rel="icon" type="image/x-icon" href="_static/images/favicon.ico">
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900"> -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
@@ -106,17 +105,6 @@
           <span aria-hidden=true></span></a></div>
       <div id=navbar-menu class="navbar-menu is-static">
         <div class=navbar-end>
-          {% if False %}
-          <a href="/install.html" class="navbar-item is-secondary">Install</a>
-          <a href=https://numpy.org/doc/stable class="navbar-item is-secondary">Documentation</a>
-          <div class="navbar-item has-dropdown is-hoverable"><a aria-label="Select language"
-            class=navbar-link>English</a>
-            <div class=navbar-dropdown>
-              <a href=/pt/ class=navbar-item>Português</a>
-              <a href=/ja/ class=navbar-item>日本語 (Japanese)</a>
-            </div>
-          </div>
-          {% endif %}
           <ul class="navbar-item bd-navbar-elements " style="display: flex; flex-direction: row;">
             {{ generate_header_nav_html(n_links_before_dropdown=theme_header_links_before_dropdown) }}
           </ul>
@@ -124,31 +112,6 @@
       </div>
     </div>
   </nav>
-
-  <!--
-    <nav id=navbar-clone class="navbar navbar-nav is-fresh is-transparent" role=navigation aria-label="main navigation">
-      <div class="container is-max-widescreen">
-        <div class=navbar-brand>
-          <a class=navbar-item href="/"><img class=navbar-logo src="/_static/images/logo.svg" >
-            <div class=navbar-logo-text></div>
-          </a>
-          <a role=button class=navbar-burger aria-label=menu aria-expanded=false data-target=cloned-navbar-menu><span aria-hidden=true></span>
-      <span aria-hidden=true></span>
-      <span aria-hidden=true></span></a></div>
-        <div id=cloned-navbar-menu class="navbar-menu is-fixed">
-    <div class="navbar-header-items navbar-end">
-          <ul class="navbar-item bd-navbar-elements navbar-nav">
-    {{ generate_header_nav_html(n_links_before_dropdown=theme_header_links_before_dropdown) }}
-          </ul>
-      <a href=/install class="navbar-item is-secondary">Install</a>
-      <a href=https://numpy.org/doc/stable class="navbar-item is-secondary">Documentation</a>
-      <a href=/contribute class="navbar-item is-secondary">Contribute</a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a aria-label="Select language" class=navbar-link>English</a><div class=navbar-dropdown><a href=/pt/ class=navbar-item>Português</a>
-        <a href=/ja/ class=navbar-item>日本語 (Japanese)</a>
-    </div></div></div></div></div>
-  </nav>
-  -->
 
   <section class=hero>
     <div class=hero-container>
@@ -169,109 +132,8 @@
 
   <div class="news-container">
     <div class="news-title">
-      {% if False %}
-      <a href=/news>numpy.org is now available in Japanese and Portuguese</a>
-      {% endif %}
     </div>
   </div>
-
-  {% if False %}
-  <section class=keyfeatures>
-    <div class="container is-max-widescreen">
-      <div class=keyfeatures-box-container>
-        <div class="keyfeatures-box-content keyfeatures-underline">
-          <p>
-          <div class=keyfeatures-box-title>Powerful N-dimensional arrays</div>
-          <div class=keyfeatures-box-text>Fast and versatile, the sdof vectorization, indexing, and broadcasting
-            concepts are the de-facto standards of array computing today.</div>
-          </p>
-        </div>
-        <div class="keyfeatures-box-content keyfeatures-underline">
-          <p>
-          <div class=keyfeatures-box-title>Numerical computing tools</div>
-          <div class=keyfeatures-box-text>sdof offers comprehensive mathematical functions, random number generators,
-            linear algebra routines, Fourier transforms, and more.</div>
-          </p>
-        </div>
-        <div class="keyfeatures-box-content keyfeatures-underline">
-          <p>
-          <div class=keyfeatures-box-title>Open source</div>
-          <div class=keyfeatures-box-text>Distributed under a liberal <a
-              href=https://github.com/numpy/numpy/blob/main/LICENSE.txt>BSD license</a>, sdof is developed and
-            maintained <a href=https://github.com/numpy/numpy>publicly on GitHub</a> by a vibrant, responsive, and
-            diverse <a href=/community>community</a>.</div>
-          </p>
-        </div>
-        <div class="keyfeatures-box-content keyfeatures-underline">
-          <p>
-          <div class=keyfeatures-box-title>Interoperable</div>
-          <div class=keyfeatures-box-text>sdof supports a wide range of hardware and computing platforms, and plays well
-            with distributed, GPU, and sparse array libraries.</div>
-          </p>
-        </div>
-        <div class="keyfeatures-box-content keyfeatures-underline">
-          <p>
-          <div class=keyfeatures-box-title>Performant</div>
-          <div class=keyfeatures-box-text>The core of sdof is well-optimized C code. Enjoy the flexibility of Python
-            with the speed of compiled code.</div>
-          </p>
-        </div>
-        <div class="keyfeatures-box-content keyfeatures-underline">
-          <p>
-          <div class=keyfeatures-box-title>Easy to use</div>
-          <div class=keyfeatures-box-text>sdof&rsquo;s high level syntax makes it accessible and productive for
-            programmers from any background or experience level.</div>
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-  {% endif %}
-
-  {% if False %}
-  <div class=hero-right>
-    <!--
-  <div class=numpy-shell-canvas>
-    <div class=numpy-shell-container>
-      <div class="shell-lesson shell-content">
-        <div class=highlight>
-        <pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4>
-        <code class=language-python data-lang=python><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;
-        </span></span></span><span style=display:flex><span><span style=color:#e6db74>To try the examples in the browser:
-        </span></span></span><span style=display:flex><span><span style=color:#e6db74>1. Type code in the input cell and press
-        </span></span></span><span style=display:flex><span><span style=color:#e6db74>   Shift + Enter to execute
-        </span></span></span><span style=display:flex><span><span style=color:#e6db74>2. Or copy paste the code, and click on
-        </span></span></span><span style=display:flex><span><span style=color:#e6db74>   the &#34;Run&#34; button in the toolbar
-        </span></span></span><span style=display:flex><span><span style=color:#e6db74>&#34;&#34;&#34;</span>
-        </span></span><span style=display:flex><span>
-        </span></span><span style=display:flex><span><span style=color:#75715e># The standard way to import sdof:</span>
-        </span></span><span style=display:flex><span><span style=color:#f92672>import</span> numpy <span style=color:#66d9ef>as</span> np
-        </span></span><span style=display:flex><span>
-        </span></span><span style=display:flex><span><span style=color:#75715e># Create a 2-D array, set every second element in</span>
-        </span></span><span style=display:flex><span><span style=color:#75715e># some rows and find max per row:</span>
-        </span></span><span style=display:flex><span>
-        </span></span><span style=display:flex><span>x <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>arange(<span style=color:#ae81ff>15</span>, dtype<span style=color:#f92672>=</span>np<span style=color:#f92672>.</span>int64)<span style=color:#f92672>.</span>reshape(<span style=color:#ae81ff>3</span>, <span style=color:#ae81ff>5</span>)
-        </span></span><span style=display:flex><span>x[<span style=color:#ae81ff>1</span>:, ::<span style=color:#ae81ff>2</span>] <span style=color:#f92672>=</span> <span style=color:#f92672>-</span><span style=color:#ae81ff>99</span>
-        </span></span><span style=display:flex><span>x
-        </span></span><span style=display:flex><span><span style=color:#75715e># array([[  0,   1,   2,   3,   4],</span>
-        </span></span><span style=display:flex><span><span style=color:#75715e>#        [-99,   6, -99,   8, -99],</span>
-        </span></span><span style=display:flex><span><span style=color:#75715e>#        [-99,  11, -99,  13, -99]])</span>
-        </span></span><span style=display:flex><span>
-        </span></span><span style=display:flex><span>x<span style=color:#f92672>.</span>max(axis<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>)
-        </span></span><span style=display:flex><span><span style=color:#75715e># array([ 4,  8, 13])</span>
-        </span></span><span style=display:flex><span>
-        </span></span><span style=display:flex><span><span style=color:#75715e># Generate normally distributed random numbers:</span>
-        </span></span><span style=display:flex><span>rng <span style=color:#f92672>=</span> np<span style=color:#f92672>.</span>random<span style=color:#f92672>.</span>default_rng()
-        </span></span><span style=display:flex><span>samples <span style=color:#f92672>=</span> rng<span style=color:#f92672>.</span>normal(size<span style=color:#f92672>=</span><span style=color:#ae81ff>2500</span>)
-        </span></span><span style=display:flex><span>samples
-        </span></span></code>
-      </pre></div></div>
-<iframe class=numpy-shell src="https://jupyterlite.github.io/demo/repl/?toolbar=1&kernel=python&code=import%20numpy%20as%20np"></iframe>
-</div>
-</div>
--->
-  </div>
-  {% endif %}
 
   <section class=casestudies>
     <div class=container>
@@ -301,7 +163,6 @@
                 <td class=bold-text></td>
                 <td class=bold-text>Package</td>
                 <td class=bold-text>Description</td>
-                <!-- </td> -->
               </tr>
               <tr>
                 <td style=text-align:center>
@@ -332,271 +193,6 @@
               </tr>
             </table>
           </li>
-          {% if False %}
-          <li class=scientific-domains>
-            <p>Nearly every scientist working in Python draws on the power of sdof.</p>
-            <p>sdof brings the computational power of languages like C and Fortran to Python, a language much easier to
-              learn and use. With this power comes simplicity: a solution in sdof is often clear and elegant.</p>
-            <table>
-              <tr class=highlight-th>
-                <td class=bold-text>Quantum Computing</td>
-                <td class=bold-text>Statistical Computing</td>
-                <td class=bold-text>Signal Processing</td>
-                <td class=bold-text>Image Processing</td>
-                <td class=bold-text>Graphs and Networks</td>
-                <td class=bold-text>Astronomy</td>
-                <td class=bold-text>Cognitive Psychology</td>
-              </tr>
-              <tr>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/quantum_computing.svg"
-                    alt="A computer chip."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/statistical_computing.svg"
-                    alt="A line graph with the line moving up."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/signal_processing.svg"
-                    alt="A bar chart with positive and negative values."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/image_processing.svg"
-                    alt="An photograph of the mountains."></td>
-                <td><img class=cell-layout src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/sd6.svg"
-                    alt="A simple graph."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/astronomy_processes.svg"
-                    alt="A telescope."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static', 1) }}/images/content_images/sc_dom_img/cognitive_psychology.svg"
-                    alt="A human head with gears."></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=http://qutip.org>QuTiP</a></td>
-                <td class=center-text><a href=https://pandas.pydata.org>Pandas</a></td>
-                <td class=center-text><a href=https://www.scipy.org>SciPy</a></td>
-                <td class=center-text><a href=https://scikit-image.org>Scikit-image</a></td>
-                <td class=center-text><a href=https://networkx.org>NetworkX</a></td>
-                <td class=center-text><a href=https://www.astropy.org>AstroPy</a></td>
-                <td class=center-text><a href=https://www.psychopy.org>PsychoPy</a></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=https://pyquil-docs.rigetti.com/en/stable>PyQuil</a></td>
-                <td class=center-text><a href=https://github.com/statsmodels/statsmodels>statsmodels</a></td>
-                <td class=center-text><a href=https://pywavelets.readthedocs.io>PyWavelets</a></td>
-                <td class=center-text><a href=https://opencv.org>OpenCV</a></td>
-                <td class=center-text><a href=https://graph-tool.skewed.de />graph-tool</a></td>
-                <td class=center-text><a href=https://github.com/sunpy/sunpy>SunPy</a></td>
-                <td class=center-text></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=https://qiskit.org>Qiskit</a></td>
-                <td class=center-text><a href=https://xarray.pydata.org/en/stable />Xarray</a></td>
-                <td class=center-text><a href=https://python-control.org>python-control</a></td>
-                <td class=center-text><a href=https://mahotas.rtfd.io />Mahotas</a></td>
-                <td class=center-text><a href=https://igraph.org/python />igraph</a></td>
-                <td class=center-text><a href=https://github.com/spacepy/spacepy>SpacePy</a></td>
-                <td class=center-text></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=https://pennylane.ai>PennyLane</a></td>
-                <td class=center-text><a href=https://github.com/mwaskom/seaborn>Seaborn</a></td>
-                <td class=lastrow-center-text></td>
-                <td class=lastrow-center-text></td>
-                <td class=center-text><a href=https://pygsp.rtfd.io>PyGSP</a></td>
-                <td class=lastrow-center-text></td>
-                <td class=lastrow-center-text></td>
-              </tr>
-              <tr class=highlight-th>
-                <td class=bold-text>Bioinformatics</td>
-                <td class=bold-text>Bayesian Inference</td>
-                <td class=bold-text>Mathematical Analysis</td>
-                <td class=bold-text>Chemistry</td>
-                <td class=bold-text>Geoscience</td>
-                <td class=bold-text>Geographic Processing</td>
-                <td class=bold-text>Architecture & Engineering</td>
-              </tr>
-              <tr>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/bioinformatics.svg"
-                    alt="A strand of DNA."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/bayesian_inference.svg"
-                    alt="A graph with a bell-shaped curve."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/mathematical_analysis.svg"
-                    alt="Four mathematical symbols."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/chemistry.svg" alt="A test tube.">
-                </td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/geoscience.svg" alt="The Earth.">
-                </td>
-                <td><img class=cell-layout src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/GIS.svg"
-                    alt="A map."></td>
-                <td><img class=cell-layout
-                    src="{{ pathto('_static/', 1) }}/images/content_images/sc_dom_img/robotics.svg"
-                    alt="A microprocessor development board."></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=https://biopython.org>BioPython</a></td>
-                <td class=center-text><a href=https://pystan.readthedocs.io/en/latest />PyStan</a></td>
-                <td class=center-text><a href=https://www.scipy.org>SciPy</a></td>
-                <td class=center-text><a href=https://cantera.org />Cantera</a></td>
-                <td class=center-text><a href=https://pangeo.io />Pangeo</a></td>
-                <td class=center-text><a href=https://shapely.readthedocs.io>Shapely</a></td>
-                <td class=center-text><a href=https://compas.dev />COMPAS</a></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=http://scikit-bio.org>Scikit-Bio</a></td>
-                <td class=center-text><a href=https://docs.pymc.io>PyMC3</a></td>
-                <td class=center-text><a href=https://www.sympy.org>SymPy</a></td>
-                <td class=center-text><a href=https://www.mdanalysis.org />MDAnalysis</a></td>
-                <td class=center-text><a href=https://simpeg.xyz />Simpeg</a></td>
-                <td class=center-text><a href=https://geopandas.org />GeoPandas</a></td>
-                <td class=center-text><a href=https://cityenergyanalyst.com />City Energy Analyst</a></td>
-              </tr>
-              <tr>
-                <td class=center-text><a href=https://github.com/openvax/pyensembl>PyEnsembl</a></td>
-                <td class=center-text><a href=https://arviz-devs.github.io/arviz />ArviZ</a></td>
-                <td class=center-text><a href=https://github.com/cvxgrp/cvxpy>cvxpy</a></td>
-                <td class=center-text><a href=https://github.com/rdkit/rdkit>RDKit</a></td>
-                <td class=center-text><a href=https://github.com/obspy/obspy/wiki>ObsPy</a></td>
-                <td class=center-text><a href=https://python-visualization.github.io/folium>Folium</a></td>
-                <td class=center-text><a href=https://nortikin.github.io/sverchok />Sverchok</a></td>
-              </tr>
-              <tr>
-                <td class=lastrow-center-text><a href=http://etetoolkit.org />ETE</a></td>
-                <td class=lastrow-center-text><a href=https://emcee.readthedocs.io />emcee</a></td>
-                <td class=lastrow-center-text><a href=https://fenicsproject.org />FEniCS</a></td>
-                <td class=lastrow-center-text><a href=https://www.pybamm.org>PyBaMM</a></td>
-                <td class=lastrow-center-text><a href=https://www.fatiando.org />Fatiando a Terra</a></td>
-                <td class=lastrow-center-text></td>
-                <td class=lastrow-center-text></td>
-              </tr>
-            </table>
-          </li>
-          <li class=data-science>
-            <div class=grid-container>
-              <div><a href=/images/content_images/ds-landscape.png target=_blank><img
-                    src="{{ pathto('_static/images', 1) }}/content_images/ds-landscape.png"
-                    alt="Diagram of Python Libraries. The five catagories are 'Extract, Transform, Load', 'Data Exploration', 'Data Modeling', 'Data Evaluation' and 'Data Presentation'."
-                    align=left></a></div>
-              <div>
-                <p>sdof lies at the core of a rich ecosystem of data science libraries. A typical exploratory data
-                  science workflow might look like:
-                <ul class=content-tab>
-                  <li><b>Extract, Transform, Load: </b><a href=https://pandas.pydata.org>Pandas</a>, <a
-                      href=https://intake.readthedocs.io>Intake</a>, <a
-                      href=https://pyjanitor.readthedocs.io />PyJanitor</a></li>
-                  <li><b>Exploratory analysis: </b><a href=https://jupyter.org>Jupyter</a>, <a
-                      href=https://seaborn.pydata.org>Seaborn</a>, <a href=https://matplotlib.org>Matplotlib</a>, <a
-                      href=https://altair-viz.github.io>Altair</a></li>
-                  <li><b>Model and evaluate: </b><a href=https://scikit-learn.org>scikit-learn</a>, <a
-                      href=https://www.statsmodels.org/stable/index.html>statsmodels</a>, <a
-                      href=https://docs.pymc.io>PyMC3</a>, <a href=https://spacy.io>spaCy</a></li>
-                  <li><b>Report in a dashboard: </b><a href=https://plotly.com/dash>Dash</a>, <a
-                      href=https://panel.holoviz.org>Panel</a>, <a
-                      href=https://github.com/voila-dashboards/voila>Voila</a></li>
-                </ul>
-                </p>
-              </div>
-            </div>
-            <div class=grid-container>
-              <div>
-                <p></p>
-                <p>For high data volumes, <a href=https://dask.org>Dask</a> and <a href=https://ray.io />Ray</a> are
-                  designed to scale. Stable deployments rely on data versioning (<a href=https://dvc.org>DVC</a>),
-                  experiment tracking (<a href=https://mlflow.org>MLFlow</a>), and workflow automation (<a
-                    href=https://airflow.apache.org>Airflow</a>, <a href=https://dagster.io>Dagster</a> and <a
-                    href=https://www.prefect.io>Prefect</a>).</p>
-                </p>
-              </div>
-              <div><img src="{{ pathto('_static/images', 1) }}/content_images/data-science.png"
-                  alt="Diagram of three overlapping circles. The circles are labeled 'Mathematics', 'Computer Science' and 'Domain Expertise'. In the middle of the diagram, which has the three circles overlapping it, is an area labeled 'Data Science'."
-                  align=centre width=75%></a></div>
-            </div>
-          </li>
-          <li class=machine-learning>
-            <div class=grid-container>
-              <div class=animation-holder><a
-                  href=https://ai.googleblog.com/2016/12/open-sourcing-embedding-projector-tool.html><img
-                    src="{{ pathto('_static/images', 1) }}/content_images/ml_img/tensorflow-ml-anim.gif"
-                    alt="An animated gif showing a three-dimensional graph of embeddings made in Tensorflow."
-                    align=middle class=animation-img></a>
-                <p><i style=font-size:80%><a
-                      href=https://ai.googleblog.com/2016/12/open-sourcing-embedding-projector-tool.html>Source: Google
-                      AI Blog</a></i></p>
-              </div>
-              <div>
-                <p>sdof forms the basis of powerful machine learning libraries like <a
-                    href=https://scikit-learn.org>scikit-learn</a> and <a href=https://www.scipy.org>SciPy</a>. As
-                  machine learning grows, so does the list of libraries built on sdof. <a
-                    href=https://www.tensorflow.org>TensorFlow’s</a> deep learning capabilities have broad applications
-                  — among them speech and image recognition, text-based applications, time-series analysis, and video
-                  detection. <a href=https://pytorch.org>PyTorch</a>, another deep learning library, is popular among
-                  researchers in computer vision and natural language processing. <a
-                    href=https://github.com/apache/incubator-mxnet>MXNet</a> is another AI package, providing blueprints
-                  and templates for deep learning.</p>
-              </div>
-            </div>
-            <div>
-              <div>
-                <p>Statistical techniques called <a
-                    href=https://towardsdatascience.com/ensemble-methods-bagging-boosting-and-stacking-c9214a10a205>ensemble</a>
-                  methods such as binning, bagging, stacking, and boosting are among the ML algorithms implemented by
-                  tools such as <a href=https://github.com/dmlc/xgboost>XGBoost</a>, <a
-                    href=https://lightgbm.readthedocs.io/en/latest />LightGBM</a>, and <a
-                    href=https://catboost.ai>CatBoost</a> — one of the fastest inference engines. <a
-                    href=https://www.scikit-yb.org/en/latest />Yellowbrick</a> and <a
-                    href=https://eli5.readthedocs.io/en/latest />Eli5</a> offer machine learning visualizations.</p>
-              </div>
-            </div>
-          </li>
-          <li class=visualization>
-            <div class=grid-container>
-              <div class=visualization-images>
-                <div class=image-grid>
-                  <div><a href=https://www.fusioncharts.com/blog/best-python-data-visualization-libraries><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_matplotlib.png"
-                        alt="A streamplot made in matplotlib" align=middle></a></div>
-                  <div><a href=https://github.com/yhat/ggpy><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_ggpy.png"
-                        alt="A scatter-plot graph made in ggpy" align=middle></a></div>
-                  <div><a href=https://www.journaldev.com/19692/python-plotly-tutorial><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_plotly.png"
-                        alt="A box-plot made in plotly" align=middle></a></div>
-                  <div><a href=https://altair-viz.github.io/gallery/streamgraph.html><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_altair.png"
-                        alt="A streamgraph made iair" align=middle></a></div>
-                  <div><a href=https://seaborn.pydata.org><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_seaborn.png"
-                        alt='A pairplot of two types of graph, a plot-graph and a frequency graph made in seaborn"'
-                        align=middle></a></div>
-                  <div><a href=https://docs.pyvista.org/examples/index.html><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_pyvista.png"
-                        alt="A 3D volume rendering made in PyVista." align=middle></a></div>
-                  <div><a href=https://napari.org><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_napari.png"
-                        alt="A multi-dimensionan image made in napari." align=middle></a></div>
-                  <div><a href=https://vispy.org/gallery/index.html><img
-                        src="{{ pathto('_static/images', 1) }}/content_images/v_vispy.png"
-                        alt="A Voronoi diagram made in vispy." align=middle></a></div>
-                </div>
-              </div>
-              <div>
-                <p>sdof is an essential component in the burgeoning <a
-                    href=https://pyviz.org/overviews/index.html>Python visualization landscape</a>, which includes <a
-                    href=https://matplotlib.org>Matplotlib</a>, <a href=https://seaborn.pydata.org>Seaborn</a>, <a
-                    href=https://plot.ly>Plotly</a>, <a href=https://altair-viz.github.io>Altair</a>, <a
-                    href=https://docs.bokeh.org/en/latest />Bokeh</a>, <a href=https://holoviz.org>Holoviz</a>, <a
-                    href=http://vispy.org>Vispy</a>, <a href=https://github.com/napari/napari>Napari</a>, and <a
-                    href=https://github.com/pyvista/pyvista>PyVista</a>, to name a few.</p>
-                <p>sdof&rsquo;s accelerated processing of large arrays allows researchers to visualize datasets far
-                  larger than native Python could handle.</p>
-              </div>
-              <div></div>
-            </div>
-          </li>
-          {% endif %}
         </ul> 
       </div>
     </div>
@@ -625,15 +221,6 @@
         <div class=link-column>
           <div class=footer-column>
             <div class=footer-header></div>
-            {% if False %}
-            <ul class=link-list style=padding-left:30px;margin-top:20px>
-              <li class=link-list><a class=footer-link href=/about>About us</a></li>
-              <li class=link-list><a class=footer-link href=/community>Community</a></li>
-              <li class=link-list><a class=footer-link href=/user-surveys>User surveys</a></li>
-              <li class=link-list><a class=footer-link href=/contribute>Contribute</a></li>
-              <li class=link-list><a class=footer-link href=/code-of-conduct>Code of conduct</a></li>
-            </ul>
-            {% endif %}
           </div>
         </div>
         <div class=link-column>
@@ -641,7 +228,6 @@
             <div class=footer-header></div>
             <ul class=link-list style=padding-left:30px;margin-top:20px>
               <li class=link-list><a class=footer-link href="https://raw.githubusercontent.com/chrystalchern/mdof/master/LICENSE.txt">Terms of use</a></li>
-              <!-- <li class=link-list><a class=footer-link href=/press-kit>Press kit</a></li> -->
             </ul>
           </div>
         </div>
