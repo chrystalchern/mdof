@@ -1,4 +1,4 @@
-mdof
+Library
 ==================
 
 .. currentmodule:: mdof
