@@ -70,6 +70,7 @@ def plot_models(models, Tn, zeta):
     ax[1,0].set_title("Period Errors", fontsize=16)
     ax[1,0].set_ylabel(r"Percent Error (\%)", fontsize=14)
     ax[1,0].set_xlabel("Method", fontsize=14)
+    ax[1,0].set_xticks([i for i in range(len(models)+1)])
     ax[1,0].set_xticklabels(["true"]+[method.upper() for method in models.keys()], rotation = 30)
 
     ax[0,1].bar(["true"]+[method.upper() for method in models.keys()], [zeta]+damp)
@@ -80,6 +81,7 @@ def plot_models(models, Tn, zeta):
     ax[1,1].set_title("Damping Errors", fontsize=16)
     ax[1,1].set_ylabel(r"Percent Error (\%)", fontsize=14)
     ax[1,1].set_xlabel("Method", fontsize=14)
+    ax[1,0].set_xticks([i for i in range(len(models)+1)])
     ax[1,1].set_xticklabels(["true"]+[method.upper() for method in models.keys()], rotation = 30)
 
     for axi in ax.flatten():
