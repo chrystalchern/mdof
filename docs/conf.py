@@ -45,7 +45,7 @@ html_theme = "pydata_sphinx_theme"
 html_static_path = ['_static']
 html_favicon = './_static/images/favicon.ico'
 html_css_files = [
-    "css/peer.css",
+    "css/brand.css",
 ] + [
     'css/home-css/'+str(file.name) for file in (Path(__file__).parents[0]/"_static/css/home-css/").glob("vars*.css")
 ] + [
