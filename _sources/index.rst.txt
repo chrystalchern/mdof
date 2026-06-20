@@ -10,6 +10,8 @@ mdof documentation
    :maxdepth: 2
    :caption: Contents:
 
+   ⌂ chrystalchern.com <https://chrystalchern.com>
+   Overview <self>
    library/index
    theory/index
    examples/index

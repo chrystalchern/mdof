@@ -13,19 +13,18 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
-<link href="_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+  <link href="_static/styles/theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
   
   <!-- So that users can add custom icons -->
-  <script src="_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <script defer src="_static/scripts/fontawesome.js?digest=a95f357e85573c9b56d5"></script>
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
-<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=a95f357e85573c9b56d5" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=a95f357e85573c9b56d5" />
 
   <link rel="canonical" href="https://mdof.chrystalchern.com" >
   <link rel="icon" type="image/x-icon" href="_static/images/favicon.ico">
-  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,900"> -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap" rel="stylesheet">
@@ -68,7 +67,39 @@
       line-height: 1.5;
       padding: .5rem .75rem;
       position: relative;
-  }  
+  }
+  /* Add persistent underline (match hover) for current page's
+     nav link on landing page nav bar.
+     Using `text-decoration: underline`
+     (pydata's `a` default, which `.nav-link` removes) 
+  */
+  .bd-navbar-elements a.nav-link.nav-internal[href="#"] {
+      text-decoration: underline;
+      text-decoration-thickness: max(3px, .1875rem, .12em);
+  }
+  /* When the hamburger menu is open (narrow/phone views),
+     stack the links vertically.
+     Overrides inline `flex-direction: row` on the <ul>, hence !important.
+     Scoped to `.is-active` so only affects opened narrow view menu. */
+  /* Open hamburger menu was getting shrink-wrapped and shoved to the right edge
+     by parent flex layout (Bulma `.navbar-end{margin-left:auto}`,
+     plus the navbar's justify-content across Bulma/Bootstrap).
+     Force the menu, its `.navbar-end`, and the link list to span
+     full width and align left. */
+  .navbar-menu.is-active,
+  .navbar-menu.is-active .navbar-end {
+      width: 100% !important;
+      flex-basis: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      justify-content: flex-start !important;
+  }
+  .navbar-menu.is-active .bd-navbar-elements {
+      width: 100% !important;
+      flex-direction: column !important;
+      align-items: flex-start !important;   /* left-align the stacked links */
+      margin-left: 0 !important;
+  }
   </style>
 </head>
 
@@ -82,12 +113,25 @@
           <span aria-hidden=true></span></a></div>
       <div id=navbar-menu class="navbar-menu is-static">
         <div class=navbar-end>
-          
           <ul class="navbar-item bd-navbar-elements " style="display: flex; flex-direction: row;">
             
 <li class="nav-item ">
+  <a class="nav-link nav-external" href="https://chrystalchern.com">
+    ⌂ chrystalchern.com
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="#">
+    Overview
+  </a>
+</li>
+
+
+<li class="nav-item ">
   <a class="nav-link nav-internal" href="library/index.html">
-    mdof
+    Library
   </a>
 </li>
 
@@ -110,51 +154,6 @@
       </div>
     </div>
   </nav>
-
-  <!--
-    <nav id=navbar-clone class="navbar navbar-nav is-fresh is-transparent" role=navigation aria-label="main navigation">
-      <div class="container is-max-widescreen">
-        <div class=navbar-brand>
-          <a class=navbar-item href="/"><img class=navbar-logo src="/_static/images/logo.svg" >
-            <div class=navbar-logo-text></div>
-          </a>
-          <a role=button class=navbar-burger aria-label=menu aria-expanded=false data-target=cloned-navbar-menu><span aria-hidden=true></span>
-      <span aria-hidden=true></span>
-      <span aria-hidden=true></span></a></div>
-        <div id=cloned-navbar-menu class="navbar-menu is-fixed">
-    <div class="navbar-header-items navbar-end">
-          <ul class="navbar-item bd-navbar-elements navbar-nav">
-    
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="library/index.html">
-    mdof
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="theory/index.html">
-    Theory
-  </a>
-</li>
-
-
-<li class="nav-item ">
-  <a class="nav-link nav-internal" href="examples/index.html">
-    Examples
-  </a>
-</li>
-
-          </ul>
-      <a href=/install class="navbar-item is-secondary">Install</a>
-      <a href=https://numpy.org/doc/stable class="navbar-item is-secondary">Documentation</a>
-      <a href=/contribute class="navbar-item is-secondary">Contribute</a>
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a aria-label="Select language" class=navbar-link>English</a><div class=navbar-dropdown><a href=/pt/ class=navbar-item>Português</a>
-        <a href=/ja/ class=navbar-item>日本語 (Japanese)</a>
-    </div></div></div></div></div>
-  </nav>
-  -->
 
   <section class=hero>
     <div class=hero-container>
@@ -175,13 +174,8 @@
 
   <div class="news-container">
     <div class="news-title">
-      
     </div>
   </div>
-
-  
-
-  
 
   <section class=casestudies>
     <div class=container>
@@ -225,7 +219,6 @@
                 <td class=bold-text></td>
                 <td class=bold-text>Package</td>
                 <td class=bold-text>Description</td>
-                <!-- </td> -->
               </tr>
               <tr>
                 <td style=text-align:center>
@@ -256,7 +249,6 @@
               </tr>
             </table>
           </li>
-          
         </ul> 
       </div>
     </div>
@@ -285,7 +277,6 @@
         <div class=link-column>
           <div class=footer-column>
             <div class=footer-header></div>
-            
           </div>
         </div>
         <div class=link-column>
@@ -293,7 +284,6 @@
             <div class=footer-header></div>
             <ul class=link-list style=padding-left:30px;margin-top:20px>
               <li class=link-list><a class=footer-link href="https://raw.githubusercontent.com/chrystalchern/mdof/master/LICENSE.txt">Terms of use</a></li>
-              <!-- <li class=link-list><a class=footer-link href=/press-kit>Press kit</a></li> -->
             </ul>
           </div>
         </div>
@@ -316,6 +306,20 @@
   <script type=text/javascript src=/js/bundle.min.js></script>
   <script type=text/javascript>setupShortcuts(maxLevel=2)</script>
   <script defer data-domain=numpy.org src=https://views.scientific-python.org/js/script.js></script>
+
+  <script>
+    // Bulma ships no JS for the navbar hamburger — wire each burger to toggle its target menu
+    // (data-target -> element id). Without this, hamburger can't open.
+    document.addEventListener("DOMContentLoaded", () => {
+      document.querySelectorAll(".navbar-burger").forEach((burger) => {
+        burger.addEventListener("click", () => {
+          const target = document.getElementById(burger.dataset.target);
+          burger.classList.toggle("is-active");
+          if (target) target.classList.toggle("is-active");
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
