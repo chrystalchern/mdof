@@ -13,18 +13,15 @@ html[data-theme="dark"] {
 }
 
 /* Heading fix. The docs' content.css applies `text-transform: uppercase; color:
-   var(--colorHeading)` to h2-h6 GLOBALLY (a scoping bug — only h1 is tied to
-   .content-container), so doc-page subheadings render ALL-CAPS in a dark gray
-   (rgb(54,54,54)) that's unreadable on the dark theme. Reset to normal case and use
+   var(--colorHeading)` to h2-h6 globallly. Reset to normal case and use
    pydata's readable heading color (near-black on light, light gray on dark). */
 h1, h2, h3, h4, h5, h6 {
     text-transform: none !important;
     color: var(--pst-color-heading) !important;
 }
 
-/* Emphasized text — and autodoc signature params, which Sphinx wraps in <em> — are forced
-   to a dark slate-blue (var(--colorPrimaryDark) = #3D576E) with !important, unreadable on
-   the dark theme. Light mode is fine; give dark mode a lighter, readable slate. */
+/* Emphasized text need to be lighter than default
+   (var(--colorPrimaryDark) = #3D576E) to be readable in dark mode. */
 html[data-theme="dark"] em {
     color: #8fb3c9 !important;
 }
