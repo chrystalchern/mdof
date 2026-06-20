@@ -108,6 +108,13 @@
   .footer-link:visited {
       color: #d6d0b8 !important;
   }
+  /* Hero "mdof" logo: DM Serif Display is loaded italic-only (ital@1), so mobile Safari won't
+     apply it for a default font-style and drops the italic. Pin the loaded font + italic so
+     the wordmark is the same italic serif on every browser. */
+  .hero-title {
+      font-family: "DM Serif Display", serif !important;
+      font-style: italic !important;
+  }
   </style>
 </head>
 

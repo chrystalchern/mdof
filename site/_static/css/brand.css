@@ -28,9 +28,7 @@ html[data-theme="dark"] em {
     color: #8fb3c9 !important;
 }
 
-/* Brand wordmark: the navbar "mdof" should read in the landing logo's font (DM Serif
-   Display italic), so it's recognizable as the brand. Targets the brand link and the
-   common inner-text classes across pydata versions. (Font loaded via the @import above.) */
+/* Brand wordmark at navbar "mdof" */
 .navbar-brand,
 .navbar-brand .title,
 .navbar-brand-text,
