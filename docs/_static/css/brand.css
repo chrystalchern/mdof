@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@1&display=swap');
+
 /* === mdof docs brand theme ===
    Brand colors: #2698BA (blue) + #B509AC (magenta).
    `!important` is required — pydata's theme CSS otherwise wins the cascade for these
@@ -24,4 +26,13 @@ h1, h2, h3, h4, h5, h6 {
    (var(--colorPrimaryDark) = #3D576E) to be readable in dark mode. */
 html[data-theme="dark"] em {
     color: #8fb3c9 !important;
+}
+
+/* Brand wordmark at navbar "mdof" */
+.navbar-brand,
+.navbar-brand .title,
+.navbar-brand-text,
+.navbar-brand .logo__title {
+    font-family: "DM Serif Display", Georgia, serif !important;
+    font-style: italic !important;
 }
