@@ -353,7 +353,6 @@ def n4sid(inputs, outputs, i, j, **options):
 
 
 def deterministic(inputs, outputs, i, j, **options):
-    m = inputs.shape[0]  
     # Naiqi Guo
     '''
     Van Overschee's Deterministic Algorithm for State Space System Identification
