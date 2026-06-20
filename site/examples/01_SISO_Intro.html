@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/brand.css?v=f4c97ae0" />
     <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
@@ -455,7 +455,8 @@
 <span class="kn">from</span><span class="w"> </span><span class="nn">mdof.utilities.config</span><span class="w"> </span><span class="kn">import</span> <span class="n">Config</span>
 <span class="kn">import</span><span class="w"> </span><span class="nn">mdof</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">mdof</span><span class="w"> </span><span class="kn">import</span> <span class="n">modal</span><span class="p">,</span> <span class="n">transform</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">control</span><span class="w"> </span><span class="kn">import</span> <span class="n">ss</span><span class="p">,</span> <span class="n">forced_response</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">scienceplots</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">([</span><span class="s2">&quot;science&quot;</span><span class="p">])</span>
 </pre></div>
 </div>
 </div>
@@ -514,7 +515,7 @@
 <div class="highlight"><pre>
 natural period: 1.1471s
 damping ratio: 0.01
-forcing periods: [0.09311283477587824, 0.7668115805072326, 1.6431676725154982]
+forcing periods: [np.float64(0.09311283477587824), np.float64(0.7668115805072326), np.float64(1.6431676725154982)]
 </pre></div></div>
 </div>
 <div class="nbinput nblast docutils container">
@@ -552,7 +553,7 @@ forcing periods: [0.09311283477587824, 0.7668115805072326, 1.6431676725154982]
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># plot input vs. output</span>
-<span class="n">plot_io</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;SDOF Displacement Response to Sinusoidal Forcing&quot;</span><span class="p">)</span>
+<span class="n">io_fig</span> <span class="o">=</span> <span class="n">plot_io</span><span class="p">(</span><span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;SDOF Displacement Response to Sinusoidal Forcing&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -617,32 +618,16 @@ forcing periods: [0.09311283477587824, 0.7668115805072326, 1.6431676725154982]
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|█████████▉| 4700/4701 [00:00&lt;00:00, 109264.20it/s]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.147      0.01       1.0        1.0        1.0          -4.839e-13    -7.685e-12
-Mean Period(s): 1.1471474419090897
+      1.147      0.01       0.3955     1.0        0.3955       3.484e-13    -1.735e-14
+Mean Period(s): 1.1471474419090992
 Standard Dev(s): 0.0
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-
 </pre></div></div>
 </div>
 <div class="nbinput docutils container">
@@ -650,8 +635,8 @@ Standard Dev(s): 0.0
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
-<span class="n">y_mdof</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">,</span><span class="n">dt</span><span class="p">),</span> <span class="n">T</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">U</span><span class="o">=</span><span class="n">f</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
-<span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">y_mdof</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;System ID Predicted Displacement Response&quot;</span><span class="p">)</span>
+<span class="n">y_mdof</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">realization</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">),</span> <span class="n">inputs</span><span class="o">=</span><span class="n">f</span><span class="p">)</span>
+<span class="n">pred_fig</span> <span class="o">=</span> <span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">y_mdof</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;System ID Predicted Displacement Response&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -791,8 +776,8 @@ Standard Dev(s): 0.0
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.147      0.01015    1.0        1.0        1.0          -0.009354    1.526
-Mean Period(s): 1.1470401342265166
+      1.147      0.01015    0.0        1.0        0.0          -0.009354    1.526
+Mean Period(s): 1.147040134226514
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
@@ -842,8 +827,8 @@ Standard Dev(s): 0.0
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.147      0.009956   1.0        1.0        1.0          -0.01633     -0.4366
-Mean Period(s): 1.146960162584902
+      1.147      0.009956   0.0        1.0        0.0          -0.01633     -0.4366
+Mean Period(s): 1.1469601625849053
 Standard Dev(s): 0.0
 </pre></div></div>
 </div>
@@ -877,32 +862,16 @@ Standard Dev(s): 0.0
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-100%|█████████▉| 4860/4861 [00:00&lt;00:00, 104888.89it/s]
-</pre></div></div>
-</div>
-<div class="nboutput docutils container">
+<div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC     T % error    ζ % error
-      1.147      0.01       1.0        1.0        1.0          -3.929e-12    1.513e-10
-Mean Period(s): 1.1471474419090502
+      1.147      0.01       0.0        1.0        0.0          -1.742e-13    -3.676e-11
+Mean Period(s): 1.1471474419090932
 Standard Dev(s): 0.0
-</pre></div></div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-
 </pre></div></div>
 </div>
 </section>
@@ -916,29 +885,18 @@ Standard Dev(s): 0.0
 </pre></div>
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/utilities/printing.py:79: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
-  ax[1,0].set_xticklabels([&#34;true&#34;]+[method.upper() for method in models.keys()], rotation = 30)
-/mnt/c/Users/16507/Documents/GitHub/mdof/src/mdof/utilities/printing.py:89: UserWarning: set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
-  ax[1,1].set_xticklabels([&#34;true&#34;]+[method.upper() for method in models.keys()], rotation = 30)
-</pre></div></div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_01_SISO_Intro_30_1.png" src="../_images/examples_01_SISO_Intro_30_1.png" />
+<img alt="../_images/examples_01_SISO_Intro_30_0.png" src="../_images/examples_01_SISO_Intro_30_0.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[14]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pred_fig_compare</span> <span class="o">=</span> <span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">models</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

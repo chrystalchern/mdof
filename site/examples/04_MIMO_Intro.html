@@ -32,7 +32,7 @@
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
     <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/brand.css?v=f4c97ae0" />
     <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
@@ -683,10 +683,10 @@ damping matrix: [[ 0.04641016 -1.29282032]
 <div class="highlight"><pre>
 Spectral quantities:
        T(s)        ζ        EMACO      MPC       EMACO*MPC
-      0.9911     0.01       1.0        1.0        1.0
-      0.2656     0.02       1.0        1.0        1.0
-Mean Period(s): 0.6283185307179744
-Standard Dev(s): 0.3627598728468329
+      0.9911     0.01       0.8057     1.0        0.8057
+      0.2656     0.02       0.0        1.0        0.0
+Mean Period(s): 0.6283185307179152
+Standard Dev(s): 0.36275987284688516
 </pre></div></div>
 </div>
 <div class="nboutput nblast docutils container">
@@ -714,15 +714,23 @@ Standard Dev(s): 0.3627598728468329
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+All or nearly all modes are filtered out by the stabilization process.
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../_images/examples_04_MIMO_Intro_20_0.png" src="../_images/examples_04_MIMO_Intro_20_0.png" />
+<img alt="../_images/examples_04_MIMO_Intro_20_1.png" src="../_images/examples_04_MIMO_Intro_20_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[23]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
@@ -750,7 +758,7 @@ Standard Dev(s): 0.3627598728468329
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">control</span><span class="w"> </span><span class="kn">import</span> <span class="n">ss</span><span class="p">,</span> <span class="n">forced_response</span>
 <span class="n">realization</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;srim&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">out_pred</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="o">*</span><span class="n">realization</span><span class="p">,</span><span class="n">dt</span><span class="p">),</span> <span class="n">U</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
+<span class="n">out_pred</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">realization</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">),</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">out_pred</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;State Space Model Displacement Response (SRIM)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -769,7 +777,7 @@ Standard Dev(s): 0.3627598728468329
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Reproduce the response with the state space model</span>
 <span class="kn">from</span><span class="w"> </span><span class="nn">control</span><span class="w"> </span><span class="kn">import</span> <span class="n">ss</span><span class="p">,</span> <span class="n">forced_response</span>
 <span class="n">realization</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">&quot;okid-era-dc&quot;</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">outputs</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="o">**</span><span class="n">conf</span><span class="p">)</span>
-<span class="n">out_pred</span> <span class="o">=</span> <span class="n">forced_response</span><span class="p">(</span><span class="n">ss</span><span class="p">(</span><span class="o">*</span><span class="n">realization</span><span class="p">,</span><span class="n">dt</span><span class="p">),</span> <span class="n">U</span><span class="o">=</span><span class="n">inputs</span><span class="p">,</span> <span class="n">squeeze</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">return_x</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">outputs</span>
+<span class="n">out_pred</span> <span class="o">=</span> <span class="n">mdof</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">realization</span><span class="o">=</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">D</span><span class="p">),</span> <span class="n">inputs</span><span class="o">=</span><span class="n">inputs</span><span class="p">)</span>
 <span class="n">fig</span> <span class="o">=</span> <span class="n">plot_pred</span><span class="p">(</span><span class="n">ytrue</span><span class="o">=</span><span class="n">outputs</span><span class="p">,</span> <span class="n">models</span><span class="o">=</span><span class="n">out_pred</span><span class="p">,</span> <span class="n">t</span><span class="o">=</span><span class="n">t</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;State Space Model Displacement Response (OKID)&quot;</span><span class="p">)</span>
 </pre></div>
 </div>

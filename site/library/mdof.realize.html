@@ -31,7 +31,7 @@
 <link href="../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../_static/css/peer.css?v=5e4ab7cc" />
+    <link rel="stylesheet" type="text/css" href="../_static/css/brand.css?v=f4c97ae0" />
     <link rel="stylesheet" type="text/css" href="../_static/css/home-css/vars.css?v=968152e4" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
     <link rel="stylesheet" type="text/css" href="../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
@@ -452,12 +452,6 @@
                   
   <section id="module-mdof.realize">
 <span id="mdof-realize-module"></span><h1>mdof.realize module<a class="headerlink" href="#module-mdof.realize" title="Link to this heading">#</a></h1>
-<dl class="py exception">
-<dt class="sig sig-object py" id="mdof.realize.StupidUserMakingBadDataError">
-<span class="property"><span class="k"><span class="pre">exception</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">StupidUserMakingBadDataError</span></span><a class="headerlink" href="#mdof.realize.StupidUserMakingBadDataError" title="Link to this definition">#</a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
-</dd></dl>
-
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.realize.srim">
 <span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">srim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.srim" title="Link to this definition">#</a></dt>
@@ -560,8 +554,8 @@ default: <span class="math notranslate nohighlight">\(\min(150, (nt-1)/2)\)</spa
 <li><p><strong>nc</strong> (<em>int</em>) – (optional) number of block columns in Hankel matrix = order of controllability matrix.
 default: <span class="math notranslate nohighlight">\(\min(150, max(nt-1-\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(, (nt-1)/2))\)</span></p></li>
 <li><p><strong>order</strong> (<em>int</em>) – (optional) model order. default: <span class="math notranslate nohighlight">\(\min(20,\)</span> <code class="docutils literal notranslate"><span class="pre">horizon</span></code><span class="math notranslate nohighlight">\(/2)\)</span></p></li>
-<li><p><strong>a</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\\alpha)\)</span> number of block rows in Hankel of correlation matrix. default: 0</p></li>
-<li><p><strong>b</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\\beta)\)</span> number of block columns in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>a</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\alpha)\)</span> number of block rows in Hankel of correlation matrix. default: 0</p></li>
+<li><p><strong>b</strong> (<em>int</em>) – (optional) <span class="math notranslate nohighlight">\((\beta)\)</span> number of block columns in Hankel of correlation matrix. default: 0</p></li>
 <li><p><strong>l</strong> (<em>int</em>) – (optional) initial lag for data correlations. default: 0</p></li>
 <li><p><strong>g</strong> (<em>int</em>) – (optional) lags (gap) between correlation matrices. default: 1</p></li>
 </ul>
@@ -589,13 +583,16 @@ using data correlations (ERA/DC) for modal parameter identification.
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.realize.n4sid">
 <span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">n4sid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.n4sid" title="Link to this definition">#</a></dt>
-<dd><p>Numerical Algorithms for Subspace State Space System Identification</p>
+<dd><p>Numerical Algorithms for Subspace State Space System Identification.
+Adapted from Van Overschee by Naiqi Guo</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.realize.deterministic">
 <span class="sig-prename descclassname"><span class="pre">mdof.realize.</span></span><span class="sig-name descname"><span class="pre">deterministic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">i</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">j</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.realize.deterministic" title="Link to this definition">#</a></dt>
-<dd></dd></dl>
+<dd><p>Van Overschee’s Deterministic Algorithm for State Space System Identification.
+Adapted by Naiqi Guo</p>
+</dd></dl>
 
 </section>
 
@@ -646,7 +643,6 @@ using data correlations (ERA/DC) for modal parameter identification.
   </div>
   <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="pst-show_toc_level nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.StupidUserMakingBadDataError"><code class="docutils literal notranslate"><span class="pre">StupidUserMakingBadDataError</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.srim"><code class="docutils literal notranslate"><span class="pre">srim()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era"><code class="docutils literal notranslate"><span class="pre">era()</span></code></a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mdof.realize.era_dc"><code class="docutils literal notranslate"><span class="pre">era_dc()</span></code></a></li>

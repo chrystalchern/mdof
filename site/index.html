@@ -100,6 +100,15 @@
       align-items: flex-start !important;   /* left-align the stacked links */
       margin-left: 0 !important;
   }
+  /* Landing navbar: brand-magenta hover (theme default was light blue). */
+  .bd-navbar-elements a.nav-link:hover {
+      color: #B509AC !important;
+  }
+  /* Footer: visited links had no color set, so they fell back to a low-contrast browser
+     blue that faded into the dark footer. Give them a readable yellowish-gray. */
+  .footer-link:visited {
+      color: #d6d0b8 !important;
+  }
   </style>
 </head>
 
@@ -216,7 +225,7 @@
           <li class=array-libraries>
             <table>
               <tr class=highlight-th>
-                <td class=bold-text></td>
+                <td style=text-align:center class=bold-text>Website</td>
                 <td class=bold-text>Package</td>
                 <td class=bold-text>Description</td>
               </tr>
@@ -224,28 +233,33 @@
                 <td style=text-align:center>
                   <a href="https://xara.so">
                     <img class=first-column-layout
-                         src="_static/images/content_images/brace/opensees.jpg" alt="opensees"></a></td>
-                <td class=full-center-text><a href="https://pypi.org/project/opensees" />opensees</a></td>
-                <td class=left-text>Nonlinear finite element analysis using the
-                  <a href="https://github.com/claudioperez/OpenSeesRT">OpenSeesRT framework</a>.</td>
+                         src="_static/images/content_images/brace/xara.png" alt="xara"></a></td>
+                <td class=full-center-text><a href="https://pypi.org/project/xara" />xara</a></td>
+                <td class=left-text>Framework for nonlinear finite element analysis of structures.</td>
               </tr>
               <tr>
-                <td style=text-align:center><img class=first-column-layout
+                <td style=text-align:center>
+                  <a href="https://pypi.org/project/sdof">
+                    <img class=first-column-layout
                     src="_static/images/content_images/brace/sdof.svg" alt="sdof"></td>
                 <td class=full-center-text><a href="https://pypi.org/project/sdof" />sdof</a></td>
                 <td class=left-text>Parallel integration of single degree-of-freedom systems.</td>
               </tr>
               <tr>
-                <td style=text-align:center><img class=first-column-layout
-                    src="_static/images/content_images/brace/mdof.svg" alt="mdof logo"></td>
+                <td style=text-align:center>
+                  <a href="https://mdof.chrystalchern.com">
+                    <img class=first-column-layout
+                    src="_static/images/content_images/brace/mdof.png" alt="mdof logo"></td>
                 <td class=full-center-text><a href="https://pypi.org/project/mdof">mdof</a></td>
                 <td class=left-text>Fast and friendly structural system identification.</td>
               </tr>
               <tr>
-                <td style=text-align:center><img class=first-column-layout
+                <td style=text-align:center>
+                  <a href="https://veux.io">
+                    <img class=first-column-layout
                     src="_static/images/content_images/brace/sees.png" alt="veux logo"></td>
-                <td class=full-center-text><a rel="follow" href="https://veux.io">veux</a></td>
-                <td class=left-text>A web-first digital twin visualization tool.</td>
+                <td class=full-center-text><a rel="follow" href="https://pypi.org/project/veux">veux</a></td>
+                <td class=left-text>Web-first visualization framework for finite element analysis.</td>
               </tr>
             </table>
           </li>

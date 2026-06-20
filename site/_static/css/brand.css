@@ -1,0 +1,30 @@
+/* === mdof docs brand theme ===
+   Brand colors: #2698BA (blue) + #B509AC (magenta).
+   `!important` is required — pydata's theme CSS otherwise wins the cascade for these
+   variables. Applied to both light and dark. (brand.css only loads on the doc pages,
+   not the landing page.) */
+
+html[data-theme="light"],
+html[data-theme="dark"] {
+    --pst-color-primary: #2698BA !important;     /* accents: active nav, buttons, focus rings */
+    --pst-color-secondary: #B509AC !important;   /* secondary accent + navbar-link hover */
+    --pst-color-link: #2698BA !important;         /* body links */
+    --pst-color-link-hover: #B509AC !important;
+}
+
+/* Heading fix. The docs' content.css applies `text-transform: uppercase; color:
+   var(--colorHeading)` to h2-h6 GLOBALLY (a scoping bug — only h1 is tied to
+   .content-container), so doc-page subheadings render ALL-CAPS in a dark gray
+   (rgb(54,54,54)) that's unreadable on the dark theme. Reset to normal case and use
+   pydata's readable heading color (near-black on light, light gray on dark). */
+h1, h2, h3, h4, h5, h6 {
+    text-transform: none !important;
+    color: var(--pst-color-heading) !important;
+}
+
+/* Emphasized text — and autodoc signature params, which Sphinx wraps in <em> — are forced
+   to a dark slate-blue (var(--colorPrimaryDark) = #3D576E) with !important, unreadable on
+   the dark theme. Light mode is fine; give dark mode a lighter, readable slate. */
+html[data-theme="dark"] em {
+    color: #8fb3c9 !important;
+}
