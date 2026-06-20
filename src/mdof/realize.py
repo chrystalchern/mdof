@@ -229,9 +229,9 @@ def era_dc(Y,**options):
     :type nc:       int
     :param order:   (optional) model order. default: :math:`\min(20,` ``horizon``:math:`/2)`
     :type order:    int
-    :param a:       (optional) :math:`(\\alpha)` number of block rows in Hankel of correlation matrix. default: 0
+    :param a:       (optional) :math:`(\alpha)` number of block rows in Hankel of correlation matrix. default: 0
     :type a:        int
-    :param b:       (optional) :math:`(\\beta)` number of block columns in Hankel of correlation matrix. default: 0
+    :param b:       (optional) :math:`(\beta)` number of block columns in Hankel of correlation matrix. default: 0
     :type b:        int
     :param l:       (optional) initial lag for data correlations. default: 0
     :type l:        int
@@ -319,9 +319,9 @@ def era_dc(Y,**options):
 
 from mdof.utilities import n4sid_utils
 def n4sid(inputs, outputs, i, j, **options):
-    # Naiqi Guo
     """
-    Numerical Algorithms for Subspace State Space System Identification
+    Numerical Algorithms for Subspace State Space System Identification.
+    Adapted from Van Overschee by Naiqi Guo
     """
 
     m = inputs.shape[0]  
@@ -353,9 +353,9 @@ def n4sid(inputs, outputs, i, j, **options):
 
 
 def deterministic(inputs, outputs, i, j, **options):
-    # Naiqi Guo
     '''
-    Van Overschee's Deterministic Algorithm for State Space System Identification
+    Van Overschee's Deterministic Algorithm for State Space System Identification.
+    Adapted by Naiqi Guo
     '''
     m = inputs.shape[0]
     l = outputs.shape[0]
