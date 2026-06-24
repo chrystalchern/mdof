@@ -57,7 +57,11 @@ def ac2bd(inputs, outputs, A, C, **options):
     Phi[:,:n] = CA_powers.reshape(N*p,n)
 
     # Second block column of Phi
-    for i in range(N):
+    if options.get("verbose",False):
+        column_iterator = progress_bar(range(N))
+    else:
+        column_iterator = range(N)
+    for i in column_iterator:
         Phi[i*p:(i+1)*p, n:n+p*q] = _form_IU(p,inputs[:,i])
 
     # Third block column of Phi
