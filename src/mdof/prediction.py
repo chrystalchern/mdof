@@ -209,8 +209,8 @@ class Realization:
         self._cm = cm
         self._verbose = verbose
 
-    def predict(self, event):
-        return Prediction(self._realization, event, self._chan_conf, self._windowed_intensity, self._response, verbose=self._verbose)
+    def predict(self, event, **options):
+        return Prediction(self._realization, event, self._chan_conf, self._windowed_intensity, self._response, verbose=self._verbose, **options)
 
 
 
