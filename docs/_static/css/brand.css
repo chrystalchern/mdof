@@ -12,6 +12,10 @@ html[data-theme="dark"] {
     --pst-color-secondary: #B509AC !important;   /* secondary accent + navbar-link hover */
     --pst-color-link: #2698BA !important;         /* body links */
     --pst-color-link-hover: #B509AC !important;
+
+    /* Set default font to sans-serif. */
+    --fontFamily: var(--pst-font-family-base) !important;
+    --font-family: var(--pst-font-family-base) !important;
 }
 
 /* Heading fix. The docs' content.css applies `text-transform: uppercase; color:
