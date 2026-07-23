@@ -31,7 +31,7 @@
 <link href="../../_static/styles/pydata-sphinx-theme.css?digest=a95f357e85573c9b56d5" rel="stylesheet" />
 
     <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
-    <link rel="stylesheet" type="text/css" href="../../_static/css/brand.css?v=4231a454" />
+    <link rel="stylesheet" type="text/css" href="../../_static/css/brand.css?v=04992224" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/home-css/vars.css?v=434d86e7" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/css/casestudies.css.min.6bba5e8b00dd9f04d2fef2e38dd0a840baa2dd8a473df4c24c5913558e805609.css?v=162d6c55" />
     <link rel="stylesheet" type="text/css" href="../../_static/css/css/tabs.css.min.2774227fab8d6dfd0b5b1c8f06b5abafeaf3d6247bec4efda87ac5a587b3d2bc.css?v=46696a9d" />
@@ -454,25 +454,36 @@
 <h1>mdof.sysid<a class="headerlink" href="#mdof-sysid" title="Link to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="mdof.sysid">
-<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">sysid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.sysid" title="Link to this definition">#</a></dt>
-<dd><p>State space system realization (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>) from <code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p>
+<span class="sig-prename descclassname"><span class="pre">mdof.</span></span><span class="sig-name descname"><span class="pre">sysid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">options</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mdof.sysid" title="Link to this definition">#</a></dt>
+<dd><p>State space system realization (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>) from
+<code class="docutils literal notranslate"><span class="pre">input</span></code> and <code class="docutils literal notranslate"><span class="pre">output</span></code> arrays.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions: <span class="math notranslate nohighlight">\((q,nt)\)</span>, where
-<span class="math notranslate nohighlight">\(q\)</span> = number of inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
+<li><p><strong>inputs</strong> (<em>array</em>) – input time history. dimensions:
+<span class="math notranslate nohighlight">\((q,nt)\)</span>, where <span class="math notranslate nohighlight">\(q\)</span> = number of
+inputs, and <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
 <li><p><strong>outputs</strong> (<em>array</em>) – output response history.
-dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where <span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
+dimensions: <span class="math notranslate nohighlight">\((p,nt)\)</span>, where
+<span class="math notranslate nohighlight">\(p\)</span> = number of outputs, and
 <span class="math notranslate nohighlight">\(nt\)</span> = number of timesteps</p></li>
-<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is “srim”, other options are “okid-era” and “okid-era-dc”.</p></li>
-<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: 8</p></li>
+<li><p><strong>dt</strong> (<em>float</em><em>, </em><em>optional</em>) – timestep of the data, in seconds. If given,
+it is stored on the returned realization
+(adjusted for any decimation).</p></li>
+<li><p><strong>method</strong> (<em>string</em><em>, </em><em>optional</em>) – system identification method. default is
+“srim”, other options are “okid-era”,
+“okid-era-dc”, and “deterministic”.</p></li>
+<li><p><strong>decimation</strong> (<em>int</em><em>, </em><em>optional</em>) – decimation factor. default: no decimation</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>system realization in the form of state space coefficients (<code class="docutils literal notranslate"><span class="pre">A</span></code>, <code class="docutils literal notranslate"><span class="pre">B</span></code>, <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">D</span></code>)</p>
+<dd class="field-even"><p>state-space realization <code class="docutils literal notranslate"><span class="pre">(A,B,C,D)</span></code> as a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">mdof.Realization</span></code>, which unpacks like
+the tuple but also carries the effective <code class="docutils literal notranslate"><span class="pre">dt</span></code>
+and a provenance record.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>tuple of arrays</p>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">mdof.Realization</span></code></p>
 </dd>
 </dl>
 </dd></dl>
