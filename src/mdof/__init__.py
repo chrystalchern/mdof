@@ -6,17 +6,36 @@
 
 # default imports
 from .system import system
+from .realization import Realization
 from . import transform
 from . import modal
 import numpy as np
 
+__all__ = [
+    # core object
+    "Realization",
+    # identification
+    "sysid",
+    "system",
+    "modes",
+    "outid",
+    "eigid",
+    # prediction
+    "predict",
+    # submodules
+    "transform",
+    "modal",
+]
+
 
 def outid(outputs, dt, **options):
     """
-    Fundamental periods ``P`` and modeshapes ``Phi`` identification from ``output`` array.
+    Fundamental periods ``P`` and modeshapes ``Phi`` identification
+    from ``output`` array.
 
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        dimensions: :math:`(p,nt)`, where
+                        :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
     :param dt:          timestep.
@@ -40,114 +59,132 @@ def outid(outputs, dt, **options):
         if i==0:
             Phi = U[:,:,peaks[0]]
     
-    return (P,Phi)
+    return P,Phi
     
 
 def modes(inputs, outputs, dt, **options):
     """
-    Fundamental periods ``P`` and modeshapes ``Phi`` identification from ``input`` and ``output`` arrays.
+    Fundamental periods ``P`` and modeshapes ``Phi`` identification
+    from ``input`` and ``output`` arrays.
 
     :param inputs:      input time history.
-                        dimensions: :math:`(q,nt)`, where :math:`q` = number of inputs, and
+                        dimensions: :math:`(q,nt)`, where
+                        :math:`q` = number of inputs, and
                         :math:`nt` = number of timesteps.
     :type inputs:       array
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        dimensions: :math:`(p,nt)`, where
+                        :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
-    :param dt:          timestep.
+    :param dt:          timestep, in seconds.
     :type dt:           float
-    :param method:      system identification method. default is "srim", other options are
-                        "okid-era" and "okid-era-dc".
+    :param method:      system identification method. default is
+                        "srim", other options are "okid-era" and
+                        "okid-era-dc".
     :type method:       string, optional
-    :param decimation:  decimation factor. default: 1
-    :type decimation:   int, optional
 
     :return:            (``P``, ``Phi``)
     :rtype:             tuple of 1D array, ND array
     """
 
-    realization = system(inputs, outputs, **options)
+    realization = system(inputs, outputs, dt=dt, **options)
 
-    # Stabilize the model if desired
     if options.get("stabilize", False):
-        from mdof.validation import stabilize_discrete
-        A_stable = stabilize_discrete(A=realization[0])
-        realization = (A_stable,*realization[1:])
+        realization = realization.stabilize()
 
-    modes = modal.system_modes(realization, dt)
+    modes = realization.modes()
     P = [1/mode['freq'] for mode in modes.values()]
     Phi = np.array([mode['modeshape'] for mode in modes.values()])
-    # nmodes, p = Phi.shape
-    # if nmodes == p:
-    #     Phi = Phi/np.linalg.norm(Phi,axis=0)
 
-    return (P,Phi)
+    return P,Phi
 
 
 def eigid(inputs, outputs, **options):
     r"""
-    State space system eigenvalues ``vals`` and eigenvectors ``vecs`` identification from
-    ``input`` and ``output`` arrays. This is the eigendecomposition of the discrete system
-    state transition matrix, :math:`\mathbf{A}`.
+    State space system eigenvalues ``vals`` and eigenvectors ``vecs``
+    identification from `input`` and ``output`` arrays. This is
+    the eigendecomposition of the discrete system state transition
+    matrix, :math:`\mathbf{A}`.
 
-    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
-                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :param inputs:      input time history. dimensions:
+                        :math:`(q,nt)`, where :math:`q` = number of
+                        inputs, and :math:`nt` = number of timesteps
     :type inputs:       array
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        dimensions: :math:`(p,nt)`, where
+                        :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
-    :param decimation:  decimation factor. default: 1
+    :param decimation:  decimation factor. default: no decimation
     :type decimation:   int, optional
 
     :return:            (``vals``, ``vecs``)
     :rtype:             tuple of 1D array, ND array
     """
+    
     A,_,_,_ = sysid(inputs, outputs, **options)
-    decimation = options.get("decimation", 1)
     vals,vecs = np.linalg.eig(A)
-    return (vals,vecs)
+    return vals,vecs
 
 
-def sysid(inputs, outputs, **options):
+def sysid(inputs, outputs, dt=None, **options):
     """
-    State space system realization (``A``, ``B``, ``C``, ``D``) from ``input`` and ``output`` arrays.
+    State space system realization (``A``, ``B``, ``C``, ``D``) from
+    ``input`` and ``output`` arrays.
 
-    :param inputs:      input time history. dimensions: :math:`(q,nt)`, where
-                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+    :param inputs:      input time history. dimensions:
+                        :math:`(q,nt)`, where :math:`q` = number of
+                        inputs, and :math:`nt` = number of timesteps
     :type inputs:       array
     :param outputs:     output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        dimensions: :math:`(p,nt)`, where
+                        :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :type outputs:      array
-    :param method:      system identification method. default is "srim", other options are "okid-era" and "okid-era-dc".
+    :param dt:          timestep of the data, in seconds. If given,
+                        it is stored on the returned realization
+                        (adjusted for any decimation).
+    :type dt:           float, optional
+    :param method:      system identification method. default is
+                        "srim", other options are "okid-era",
+                        "okid-era-dc", and "deterministic".
     :type method:       string, optional
-    :param decimation:  decimation factor. default: 8
+    :param decimation:  decimation factor. default: no decimation
     :type decimation:   int, optional
 
-    :return:            system realization in the form of state space coefficients (``A``, ``B``, ``C``, ``D``)
-    :rtype:             tuple of arrays
+    :return:            state-space realization ``(A,B,C,D)`` as a
+                        :class:`mdof.Realization`, which unpacks like
+                        the tuple but also carries the effective ``dt``
+                        and a provenance record.
+    :rtype:             :class:`mdof.Realization`
     """
-    return system(inputs, outputs, **options)
+
+    return system(inputs, outputs, dt=dt, **options)
 
 
 def predict(realization, inputs, **options):
     """
-    Prediction of ``output`` from system realization (``A``, ``B``, ``C``, ``D``) and ``inputs``.
+    Prediction of ``output`` from system realization
+    (``A``, ``B``, ``C``, ``D``) and ``inputs``.
 
-    :param realization: realization in the form of state space coefficients ``(A,B,C,D)``
+    :param realization: realization in the form of state space
+                        coefficients ``(A,B,C,D)``
     :type realization:  tuple of arrays
-    :param inputs:      input time history on which to predict the output response.
+    :param inputs:      input time history on which to predict the
+                        output response.
                         dimensions: :math:`(q,nt)`, where
-                        :math:`q` = number of inputs, and :math:`nt` = number of timesteps
+                        :math:`q` = number of inputs, and
+                        :math:`nt` = number of timesteps
     :type inputs:       array
 
     :return:            output response history.
-                        dimensions: :math:`(p,nt)`, where :math:`p` = number of outputs, and
+                        dimensions: :math:`(p,nt)`, where
+                        :math:`p` = number of outputs, and
                         :math:`nt` = number of timesteps
     :rtype:             array
     """
+
     from mdof.simulate import simulate
     out_pred = simulate(realization, inputs)
     return out_pred

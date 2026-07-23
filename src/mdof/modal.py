@@ -2,13 +2,21 @@
 This module implements functions that extract modal information
 from a state space realization or transfer function.
 """
+import warnings
 import numpy as np
 import scipy.linalg as sl
 from numpy import pi
 from .validation import OutputEMAC, MPC
 from .numerics import _condeig
     
-def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=True, filter_by=None, filter_lim=None, **options):
+def system_modes(realization,
+                 dt,
+                 n_peaks=None,
+                 sorted_by=None,
+                 sort_descending=True,
+                 filter_by=None,
+                 filter_lim=None,
+                 **options):
     """
     Modal identification from a state space system realization.
 
@@ -32,7 +40,9 @@ def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=
     :param filter_lim:      (optional) list of lower and upper limits by which to filter.
                             example: [(0.5,1.0), (0.5,1.0)]
     :type filter_lim:       list of tuples of floats
-    :param decimation:      (optional) decimation factor. default: 1
+    :param decimation:      (deprecated) decimation factor. Prefer passing an
+                            already-effective ``dt`` (``dt * decimation``) or
+                            using :meth:`mdof.Realization.modes`.
     :type decimation:       int
     :param Observability:   (optional) Observability matrix; can be reused from :func:`mdof.realize.srim`.
                             default: None
@@ -42,12 +52,24 @@ def system_modes(realization, dt, n_peaks=None, sorted_by=None, sort_descending=
                             condition numbers, and modal validation metrics EMAC and MPC.
     :rtype:                 dictionary
     """
-    decimation = options.get("decimation",
-                             1)
+    decimation = options.get("decimation", None)
     Observability = options.get("Observability",
                                 None)
-    
-    dt = dt*decimation
+
+    # `decimation` is deprecated: `dt` is now the single source of truth for
+    # the effective timestep (see mdof.Realization, whose stored `dt` already
+    # reflects any decimation). Fold decimation into `dt` (pass dt*decimation)
+    # or use `Realization.modes()` instead.
+    if decimation is not None:
+        warnings.warn(
+            "`decimation` in `system_modes` is deprecated and will be "
+            "removed in a future release. Fold it into `dt` by passing "
+            "`dt * decimation`, or use `Realization.modes()`, which reads "
+            "the effective timestep off the realization.",
+            FutureWarning,
+            stacklevel=2,
+        )
+        dt = dt*decimation
 
     A,_,C,_ = realization
     # eigendecomp A

@@ -18,9 +18,12 @@ help:
 
 
 test:
+	pytest tests/
+
+test-nb:
 	pytest --nbmake $(NOTEBOOKS)
 
-publish: test
+publish: test test-nb
 	mkdir -p site/
 	cp -r _build/html/* site/
 	touch site/.nojekyll
@@ -40,7 +43,7 @@ html: Makefile
 	sed -i .bak 's/\\bm{/\\boldsymbol{/g' $(BUILDDIR)/html/theory/srim.html
 	
 
-.PHONY: help Makefile
+.PHONY: help Makefile test test-nb
 
 # Catch-all target: route all unknown targets to Sphinx using the new
 # "make mode" option.  $(O) is meant as a shortcut for $(SPHINXOPTS).
