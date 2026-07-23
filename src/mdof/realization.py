@@ -3,8 +3,9 @@ Core state-space realization object for ``mdof``.
 
 A :class:`Realization` bundles the state-space coefficient matrices
 ``(A, B, C, D)`` together with the effective timestep ``dt`` of the
-identified model and a ``provenance`` record describing how it was produced
-(identification method, decimation factor, stabilization, etc.).
+identified model and a ``provenance`` record describing how it was
+produced (identification method, decimation factor, stabilization,
+etc.).
 
 The object is **tuple-compatible**: it iterates, indexes, and
 slices exactly like a plain ``(A, B, C, D)`` tuple. Usage such as::
@@ -47,7 +48,7 @@ class Realization:
     dt: Optional[float] = None
     provenance: dict = field(default_factory=dict)
 
-    # -- tuple compatibility -------------------------------------------------
+    # -- tuple compatibility ---------------------------------------
 
     def _matrices(self):
         return (self.A, self.B, self.C, self.D)
@@ -67,7 +68,7 @@ class Realization:
         """Return the plain ``(A, B, C, D)`` tuple."""
         return self._matrices()
 
-    # -- convenience methods -------------------------------------------------
+    # -- convenience methods ---------------------------------------
 
     @property
     def order(self):
@@ -78,8 +79,9 @@ class Realization:
         dt = self.dt if dt is None else dt
         if dt is None:
             raise ValueError(
-                "No timestep available. Either identify with a `dt` "
-                "(e.g. mdof.sysid(inputs, outputs, dt=...)) or pass dt=... here."
+                "No timestep available. Either identify with a `dt`"
+                "(e.g. mdof.sysid(inputs, outputs, dt=...)) or "
+                "pass dt=... here."
             )
         return dt
 
@@ -88,17 +90,20 @@ class Realization:
         Modal properties (frequencies, damping, modeshapes).
 
         :param dt: override the stored timestep, in seconds.
-        :return: dictionary of modes, as returned by :func:`mdof.modal.system_modes`.
+        :return:   dictionary of modes, as returned by
+                   :func:`mdof.modal.system_modes`.
         """
         from mdof import modal
         dt = self._require_dt(dt)
-        # `dt` already reflects any decimation, so `decimation` here would
-        # double-count. Reject it loudly rather than silently ignore it.
+        # `dt` already reflects any decimation, so `decimation` here
+        # would double-count. Reject it loudly rather than silently
+        # ignore it.
         if "decimation" in options:
             raise TypeError(
-                "`Realization.modes()` does not accept `decimation`: the "
-                "realization's `dt` already reflects any decimation used "
-                "during identification."
+                "`Realization.modes()` does not accept "
+                "`decimation`: the realization's `dt` already "
+                "reflects any decimation used during "
+                "identification."
             )
         return modal.system_modes(self._matrices(), dt, **options)
 
@@ -114,13 +119,15 @@ class Realization:
 
     def stabilize(self, **options):
         """
-        Return a new :class:`Realization` with unstable discrete modes filtered
-        out (see :func:`mdof.validation.stabilize_discrete`).
+        Return a new :class:`Realization` with unstable discrete
+        modes filtered out (see
+        :func:`mdof.validation.stabilize_discrete`).
 
         Provenance is updated with ``{"stabilized": True}`` and a
-        ``"modes_removed"`` record listing the filtered eigenvalue ``indices``
-        (and their ``periods`` in seconds, when :attr:`dt` is known). The
-        original object is left unchanged (this object is immutable).
+        ``"modes_removed"`` record listing the filtered eigenvalue
+        ``indices`` (and their ``periods`` in seconds, when
+        :attr:`dt` is known). The original object is left unchanged
+        (this object is immutable).
         """
         from mdof.validation import stabilize_discrete
         from mdof.modal import _period_from_eigval
@@ -132,7 +139,8 @@ class Realization:
         if self.dt is not None:
             eigvals = np.linalg.eigvals(self.A)
             modes_removed["periods"] = [
-                _period_from_eigval(eigvals[i], self.dt) for i in indices
+                _period_from_eigval(eigvals[i], self.dt)
+                for i in indices
             ]
         new_provenance = {
             **self.provenance,
@@ -145,7 +153,8 @@ class Realization:
         p, n = self.C.shape
         q = self.B.shape[1] if self.B.ndim == 2 else 1
         dt = "unknown" if self.dt is None else f"{self.dt:g}s"
-        prov = ", ".join(f"{k}={v}" for k, v in self.provenance.items())
+        prov = ", ".join(
+            f"{k}={v}" for k, v in self.provenance.items())
         prov = f", {prov}" if prov else ""
         return (
             f"Realization(order={n}, inputs={q}, outputs={p}, "

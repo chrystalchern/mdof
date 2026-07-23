@@ -34,23 +34,30 @@ def get_error(
     y_pred,
     *,
     normalized: bool = True,
-    denominator_norm = 2,   # 1,2,'L1','L2','max','supremum','infinity'
-    numerator_norm = 2,     # 1,2,'L1','L2','max','supremum','infinity'
+    # 1,2,'L1','L2','max','supremum','infinity'
+    denominator_norm = 2,
+    # 1,2,'L1','L2','max','supremum','infinity'
+    numerator_norm = 2,
     averaged: bool = False,
-    axis: Optional[int] = -1,   # None => flatten and treat as one vector
-    averaging_mode: Optional[Literal['mean','median','max','quantile','weighted','global']] = None,
+    # None => flatten and treat as one vector
+    axis: Optional[int] = -1,
+    averaging_mode: Optional[
+        Literal['mean', 'median', 'max', 'quantile',
+                'weighted', 'global']] = None,
     weights: Optional[np.ndarray] = None,  # for 'weighted' mode
     quantile: float = 0.95                 # for 'quantile' mode
 ):
     y_true = np.asarray(y_true)
     y_pred = np.asarray(y_pred)
     if y_true.shape != y_pred.shape:
-        raise ValueError(f"Shapes differ: {y_true.shape} vs {y_pred.shape}")
+        raise ValueError(
+            f"Shapes differ: {y_true.shape} vs {y_pred.shape}")
 
     # decide reduction axis
     if axis is None:
         # treat the entire array as one vector (single sample)
-        reduce_axis = tuple(range(y_true.ndim)) if y_true.ndim > 0 else None
+        reduce_axis = (tuple(range(y_true.ndim))
+                       if y_true.ndim > 0 else None)
     else:
         reduce_axis = axis
 
@@ -75,7 +82,8 @@ def get_error(
             averaging_mode = 'mean'
 
     # aggregate across the remaining sample dimensions
-    # (after removing `reduce_axis`, 'err' holds one scalar per sample)
+    # (after removing `reduce_axis`, 'err' holds one scalar per
+    # sample)
     if averaging_mode == 'mean':
         return float(np.mean(err))
     elif averaging_mode == 'median':
@@ -86,23 +94,33 @@ def get_error(
         return float(np.quantile(err, quantile))
     elif averaging_mode == 'weighted':
         if weights is None:
-            raise ValueError("weights must be provided for averaging_mode='weighted'.")
+            raise ValueError(
+                "weights must be provided for "
+                "averaging_mode='weighted'.")
         w = np.asarray(weights, dtype=float)
         if w.shape != err.shape:
-            raise ValueError(f"weights shape {w.shape} must match err shape {err.shape}.")
+            raise ValueError(
+                f"weights shape {w.shape} must match err "
+                f"shape {err.shape}.")
         ws = w / (np.sum(w) if np.sum(w) != 0 else 1.0)
         return float(np.sum(ws * err))
     elif averaging_mode == 'global':
-        # Global normalization (optional alternative): combine numerators/denominators before dividing.
+        # Global normalization (optional alternative): combine
+        # numerators/denominators before dividing.
         # Note: this is also dimensionless when normalized=True.
         if normalized:
             # recompute per-sample norms and sum them globally
-            num_sum = np.sum(_vector_norm(diff, numerator_norm, axis=reduce_axis))
-            den_sum = np.sum(_vector_norm(y_true, denominator_norm, axis=reduce_axis))
+            num_sum = np.sum(
+                _vector_norm(diff, numerator_norm, axis=reduce_axis))
+            den_sum = np.sum(
+                _vector_norm(y_true, denominator_norm,
+                             axis=reduce_axis))
             return float(num_sum / max(den_sum))
         else:
             # global absolute error (sum of per-sample norms)
-            return float(np.sum(_vector_norm(diff, numerator_norm, axis=reduce_axis)))
+            return float(np.sum(
+                _vector_norm(diff, numerator_norm,
+                             axis=reduce_axis)))
     else:
         raise ValueError(f"Unknown averaging_mode: {averaging_mode}")
 

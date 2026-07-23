@@ -1,10 +1,11 @@
 """
 Tests for the seismic-event workflow (:mod:`mdof.utilities.events`).
 
-`extract_channels` is mocked so these tests don't require real recorded event
-data: synthetic input/output signals from a known SISO system are fed in.
-The focus is that `Event` builds on the core :class:`mdof.Realization` and
-reads stabilization bookkeeping off its provenance rather than tracking it.
+`extract_channels` is mocked so these tests don't require real
+recorded event data: synthetic input/output signals from a known
+SISO system are fed in. The focus is that `Event` builds on the core
+:class:`mdof.Realization` and reads stabilization bookkeeping off its
+provenance rather than tracking it.
 """
 
 import numpy as np
@@ -58,8 +59,10 @@ def test_event_wraps_core_realization(mock_channels):
 def test_event_reads_stabilization_from_provenance(mock_channels):
     ev = events.Event(_event(), CHAN_CONF, conf={}, stabilize=True)
     assert ev.stabilized is True
-    # modes_removed comes straight from the core realization's provenance
-    assert ev.modes_removed is ev.realization.provenance["modes_removed"]
+    # modes_removed comes straight from the core
+    # realization's provenance
+    assert (ev.modes_removed
+            is ev.realization.provenance["modes_removed"])
     assert "indices" in ev.modes_removed
 
 
@@ -79,5 +82,6 @@ def test_backcompat_alias_from_prediction_module(mock_channels):
     # old import path still works and points at the renamed class
     from mdof.prediction import Realization as SeismicRealization
     assert SeismicRealization is events.Event
-    ev = SeismicRealization(_event(), CHAN_CONF, conf={}, stabilize=True)
+    ev = SeismicRealization(
+        _event(), CHAN_CONF, conf={}, stabilize=True)
     assert isinstance(ev.realization, Realization)

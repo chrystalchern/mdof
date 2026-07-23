@@ -1,11 +1,13 @@
 """
-Seismic-event workflow built on top of the core :class:`mdof.Realization`.
+Seismic-event workflow built on top of the core
+:class:`mdof.Realization`.
 
-An :class:`Event` identifies a state-space model from the recorded input and
-output channels of a seismic event. It delegates identification,
-stabilization, and mode-removal bookkeeping to :class:`mdof.Realization`,
-and adds domain-specific conveniences: channel extraction, intensity windowing,
-unit reporting, and prediction/validation against another event.
+An :class:`Event` identifies a state-space model from the recorded
+input and output channels of a seismic event. It delegates
+identification, stabilization, and mode-removal bookkeeping to
+:class:`mdof.Realization`, and adds domain-specific conveniences:
+channel extraction, intensity windowing, unit reporting, and
+prediction/validation against another event.
 
 See :mod:`mdof.realization` and :mod:`mdof.modal` for the general
 state-space machinery.
@@ -55,20 +57,22 @@ def _get_error(ytrue, ypred, numerator_norm, denominator_norm,
     if isinstance(numerator_norm, int):
         numerator = norm(ytrue-ypred, ntime, order=numerator_norm,
                          averaging_mode=num_mode)
-    elif numerator_norm in ['max', 'supremum', 'infinity', 'uniform',
-                            'inf', np.inf]:
+    elif numerator_norm in ['max', 'supremum', 'infinity',
+                            'uniform', 'inf', np.inf]:
         numerator = np.max(np.abs(ytrue - ypred))
     else:
-        raise ValueError(f"Unsupported numerator_norm: {numerator_norm}")
+        raise ValueError(
+            f"Unsupported numerator_norm: {numerator_norm}")
 
     if isinstance(denominator_norm, int):
         denominator = norm(ytrue, ntime, order=denominator_norm,
                            averaging_mode=den_mode)
-    elif denominator_norm in ['max', 'supremum', 'infinity', 'uniform',
-                              'inf', np.inf]:
+    elif denominator_norm in ['max', 'supremum', 'infinity',
+                              'uniform', 'inf', np.inf]:
         denominator = np.max(np.abs(ytrue))
     else:
-        raise ValueError(f"Unsupported denominator_norm: {denominator_norm}")
+        raise ValueError(
+            f"Unsupported denominator_norm: {denominator_norm}")
 
     return numerator/denominator
 
@@ -77,20 +81,26 @@ class Event:
     """
     Identify a state-space model from a recorded seismic event.
 
-    :param event:       a parsed event record (e.g. from ``quakeio``) whose
-                        channels are addressable by ``chan_conf``.
-    :param chan_conf:   mapping with ``'inputs'`` and ``'outputs'`` channel
-                        lists.
+    :param event:       a parsed event record (e.g. from
+                        ``quakeio``) whose channels are
+                        addressable by ``chan_conf``.
+    :param chan_conf:   mapping with ``'inputs'`` and ``'outputs'``
+                        channel lists.
     :param conf:        identification options forwarded to
-                        :func:`mdof.system` (e.g. ``order``, ``horizon``).
-    :param stabilize:   filter unstable discrete modes. default: ``True``.
-    :param windowed_intensity: truncate to the strong-motion window before
-                        identification. default: ``False``.
-    :param response:    channel response to extract. default: ``'accel'``.
-    :param cm:          data are in cm/s/s (converted to g for reporting).
+                        :func:`mdof.system` (e.g. ``order``,
+                        ``horizon``).
+    :param stabilize:   filter unstable discrete modes.
+                        default: ``True``.
+    :param windowed_intensity: truncate to the strong-motion window
+                        before identification. default: ``False``.
+    :param response:    channel response to extract.
+                        default: ``'accel'``.
+    :param cm:          data are in cm/s/s (converted to g for
+                        reporting).
 
-    The identified model is a core :class:`mdof.Realization`, available as
-    :attr:`realization`; stabilization details are read from its provenance.
+    The identified model is a core :class:`mdof.Realization`,
+    available as :attr:`realization`; stabilization details are read
+    from its provenance.
     """
 
     def __init__(self, event, chan_conf, conf,
@@ -101,7 +111,9 @@ class Event:
                  cm: bool = True):
 
         if verbose:
-            units = _CM_PER_S2_TO_G if (cm and response == 'accel') else 1
+            units = (
+                _CM_PER_S2_TO_G if (cm and response == 'accel')
+                else 1)
             print("peak acceleration (g):",
                   np.abs(event['peak_accel']*units))
             print("event date/time:", event['event_date'])
@@ -110,8 +122,9 @@ class Event:
                                        response=response)
         outpts, dto = extract_channels(event, chan_conf['outputs'],
                                        response=response)
-        assert abs(dti - dto) < 1e-5, \
-            "The input timestep is different from the output timestep."
+        assert abs(dti - dto) < 1e-5, (
+            "The input timestep is different from the "
+            "output timestep.")
 
         if windowed_intensity:
             bounds = intensity_bounds(outpts[0], lb=0.001, ub=0.999)
@@ -122,7 +135,8 @@ class Event:
         realization = mdof.system(method='srim', inputs=inputs,
                                   outputs=outpts, dt=dti, **conf)
 
-        # Delegate stabilization + mode-removal bookkeeping to the core object.
+        # Delegate stabilization + mode-removal bookkeeping to
+        # the core object.
         if stabilize:
             realization = realization.stabilize(verbose=verbose)
 
@@ -136,7 +150,7 @@ class Event:
         self._cm = cm
         self._verbose = verbose
 
-    # -- read-through to the core realization --------------------------------
+    # -- read-through to the core realization ----------------------
 
     @property
     def realization(self):
@@ -150,13 +164,15 @@ class Event:
     @property
     def stabilized(self):
         """Whether unstable modes were filtered out."""
-        return bool(self._realization.provenance.get("stabilized", False))
+        return bool(
+            self._realization.provenance.get("stabilized", False))
 
     @property
     def modes_removed(self):
         """
-        Modes removed during stabilization as ``{"indices": [...],
-        "periods": [...]}``, or ``None`` if the model was not stabilized.
+        Modes removed during stabilization as
+        ``{"indices": [...], "periods": [...]}``, or ``None`` if
+        the model was not stabilized.
         """
         return self._realization.provenance.get("modes_removed", None)
 
@@ -175,16 +191,18 @@ class Event:
 
 
 class Prediction:
-    def __init__(self, realization, event, chan_conf, windowed_intensity,
-                 response='accel', align=True, verbose=False):
+    def __init__(self, realization, event, chan_conf,
+                 windowed_intensity, response='accel',
+                 align=True, verbose=False):
         self._windowed_intensity = windowed_intensity
 
         inputs, dti = extract_channels(event, chan_conf['inputs'],
                                        response=response)
         outpts, dto = extract_channels(event, chan_conf['outputs'],
                                        response=response)
-        assert abs(dti - dto) < 1e-5, \
-            "The input timestep is different from the output timestep."
+        assert abs(dti - dto) < 1e-5, (
+            "The input timestep is different from the "
+            "output timestep.")
 
         self._dt = dti
 
@@ -195,9 +213,11 @@ class Prediction:
 
         self._inputs = inputs
 
-        times = np.linspace(0, self._dt*outpts.shape[1], outpts.shape[1])
+        times = np.linspace(
+            0, self._dt*outpts.shape[1], outpts.shape[1])
 
-        out_pred = mdof.simulate.simulate(system=realization, inputs=inputs)
+        out_pred = mdof.simulate.simulate(
+            system=realization, inputs=inputs)
         if align:
             _, outpts, out_pred, times = align_signals(
                 signal1=outpts, signal2=out_pred, times=times)
@@ -207,7 +227,8 @@ class Prediction:
         self._out_pred = out_pred
 
     def _truncate(self, series):
-        return truncate_by_bounds(series, intensity_bounds(self._outpts[0]))
+        return truncate_by_bounds(
+            series, intensity_bounds(self._outpts[0]))
 
     def channels(self):
         return range(self._outpts.shape[0])

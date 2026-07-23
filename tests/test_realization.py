@@ -1,12 +1,12 @@
 """
-Tests for the core :class:`mdof.Realization` object and its wiring into
-``mdof.system`` / ``mdof.sysid``:
+Tests for the core :class:`mdof.Realization` object and its wiring
+into ``mdof.system`` / ``mdof.sysid``:
 
-1. **Backward compatibility** -- a ``Realization`` unpacks, indexes, and slices
-   exactly like the legacy ``(A, B, C, D)`` tuple.
-2. **dt safety** -- the effective (post-decimation) timestep is carried on the
-   object, so modal analysis cannot be silently off by the decimation
-   factor.
+1. **Backward compatibility** -- a ``Realization`` unpacks, indexes,
+   and slices exactly like the legacy ``(A, B, C, D)`` tuple.
+2. **dt safety** -- the effective (post-decimation) timestep is
+   carried on the object, so modal analysis cannot be silently off by
+   the decimation factor.
 """
 
 import numpy as np
@@ -57,13 +57,14 @@ def test_simulate_accepts_a_realization():
     assert out.shape[1] == inputs.shape[1]
 
 
-# --- stabilize(): immutability + provenance bookkeeping -------------------
+# --- stabilize(): immutability + provenance bookkeeping ------------
 
 def test_stabilize_records_removed_modes_in_provenance():
-    # A has one unstable discrete mode (|eig| > 1) and one stable mode.
+    # A has one unstable discrete mode (|eig| > 1) and one
+    # stable mode.
     A = np.diag([1.5, 0.5])
-    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)), np.zeros((1, 1)),
-                    dt=0.02)
+    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)),
+                    np.zeros((1, 1)), dt=0.02)
     rs = r.stabilize()
 
     assert rs.provenance["stabilized"] is True
@@ -75,22 +76,24 @@ def test_stabilize_records_removed_modes_in_provenance():
 
 def test_stabilize_leaves_original_unchanged():
     A = np.diag([1.5, 0.5])
-    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)), np.zeros((1, 1)),
-                    dt=0.02)
+    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)),
+                    np.zeros((1, 1)), dt=0.02)
     r.stabilize()
-    # frozen + returns a new object: original A and provenance untouched
+    # frozen + returns a new object: original A and provenance
+    # untouched
     assert np.allclose(r.A, np.diag([1.5, 0.5]))
     assert "stabilized" not in r.provenance
 
 
 def test_stabilize_without_dt_omits_periods():
     A = np.diag([1.5, 0.5])
-    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)), np.zeros((1, 1)))
+    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)),
+                    np.zeros((1, 1)))
     rs = r.stabilize()
     assert "periods" not in rs.provenance["modes_removed"]
 
 
-# --- dt safety -------------------------------------------------------------
+# --- dt safety -----------------------------------------------------
 
 def test_modes_requires_a_timestep():
     r = _toy_realization(dt=None)
@@ -99,7 +102,8 @@ def test_modes_requires_a_timestep():
 
 
 def test_modes_uses_the_objects_dt():
-    # modes() must call system_modes with the object's own (effective) dt.
+    # modes() must call system_modes with the object's own
+    # (effective) dt.
     captured = {}
     r = _toy_realization(dt=0.05)
 
@@ -140,8 +144,8 @@ def test_sysid_returns_a_realization_with_effective_dt():
     outputs = mdof.simulate.simulate((A, B, C, D), inputs)
 
     dt_raw, decimation = 0.02, 2
-    result = mdof.sysid(inputs, outputs, dt=dt_raw, decimation=decimation,
-                        method="srim")
+    result = mdof.sysid(inputs, outputs, dt=dt_raw,
+                        decimation=decimation, method="srim")
 
     assert isinstance(result, Realization)
     # still unpackable
@@ -181,7 +185,7 @@ def test_decimation_with_dt_does_not_warn():
         mdof.sysid(u, y, dt=0.01, decimation=2)  # must not raise
 
 
-# --- modes() decimation correctness / deprecation -------------------------
+# --- modes() decimation correctness / deprecation ------------------
 
 def _siso_data(seed, n=2000):
     rng = np.random.default_rng(seed)
@@ -209,8 +213,8 @@ def test_top_level_modes_uses_effective_dt_under_decimation():
 
 
 def test_top_level_modes_does_not_warn():
-    # dt is threaded through, so neither system() nor system_modes should
-    # emit the decimation FutureWarning.
+    # dt is threaded through, so neither system() nor
+    # system_modes should emit the decimation FutureWarning.
     u, y = _siso_data(seed=1)
     import warnings
     with warnings.catch_warnings():

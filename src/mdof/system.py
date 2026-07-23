@@ -21,7 +21,8 @@ def system(inputs, outputs, dt=None, **options):
     
     :param method:      (optional) system identification method.
                         default is "srim", other options are
-                        "okid-era", "okid-era-dc", and "deterministic".
+                        "okid-era", "okid-era-dc", and
+                        "deterministic".
     :type method:       string
     
     :param dt:          (optional) timestep, in seconds.
@@ -52,11 +53,13 @@ def system(inputs, outputs, dt=None, **options):
 
     if decimation is not None and dt is None:
         warnings.warn(
-            "`decimation` was set without passing `dt`. The identified "
-            "realization changes the effective timestep to "
-            "`dt * decimation`, but with no `dt` the resulting model cannot "
-            "record its own timestep, so modal analysis may be silently off "
-            "by the decimation factor. Pass `dt=...` so mdof can track it.",
+            "`decimation` was set without passing `dt`. The "
+            "identified realization changes the effective "
+            "timestep to `dt * decimation`, but with no `dt` "
+            "the resulting model cannot record its own "
+            "timestep, so modal analysis may be silently off "
+            "by the decimation factor. Pass `dt=...` so mdof "
+            "can track it.",
             FutureWarning,
             stacklevel=2,
         )
@@ -77,11 +80,13 @@ def system(inputs, outputs, dt=None, **options):
         realization = realize.srim(inputs, outputs, **options)
 
     if method == "deterministic":
-        realization = realize.deterministic(inputs, outputs, **options)
+        realization = realize.deterministic(inputs, outputs,
+                                            **options)
 
     effective_dt = None
     if dt is not None:
-        effective_dt = dt * (decimation if decimation is not None else 1)
+        effective_dt = dt * (
+            decimation if decimation is not None else 1)
 
     A,B,C,D = realization
 

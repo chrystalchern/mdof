@@ -155,8 +155,8 @@ def sysid(inputs, outputs, dt=None, **options):
 
     :return:            state-space realization ``(A,B,C,D)`` as a
                         :class:`mdof.Realization`, which unpacks like
-                        the tuple but also carries the effective ``dt``
-                        and a provenance record.
+                        the tuple but also carries the effective
+                        ``dt`` and a provenance record.
     :rtype:             :class:`mdof.Realization`
     """
 
