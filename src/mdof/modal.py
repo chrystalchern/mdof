@@ -8,7 +8,13 @@ import scipy.linalg as sl
 from numpy import pi
 from .validation import OutputEMAC, MPC
 from .numerics import _condeig
-    
+
+
+def _period_from_eigval(eigval, dt):
+    """Undamped period (s) of a discrete-time eigenvalue at timestep ``dt``."""
+    return (2*pi) / np.abs(np.log(eigval)/dt)
+
+
 def system_modes(realization,
                  dt,
                  n_peaks=None,

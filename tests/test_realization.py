@@ -57,6 +57,39 @@ def test_simulate_accepts_a_realization():
     assert out.shape[1] == inputs.shape[1]
 
 
+# --- stabilize(): immutability + provenance bookkeeping -------------------
+
+def test_stabilize_records_removed_modes_in_provenance():
+    # A has one unstable discrete mode (|eig| > 1) and one stable mode.
+    A = np.diag([1.5, 0.5])
+    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)), np.zeros((1, 1)),
+                    dt=0.02)
+    rs = r.stabilize()
+
+    assert rs.provenance["stabilized"] is True
+    removed = rs.provenance["modes_removed"]
+    assert 0 in removed["indices"]        # the unstable mode
+    # dt is known, so periods are recorded alongside indices
+    assert len(removed["periods"]) == len(removed["indices"])
+
+
+def test_stabilize_leaves_original_unchanged():
+    A = np.diag([1.5, 0.5])
+    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)), np.zeros((1, 1)),
+                    dt=0.02)
+    r.stabilize()
+    # frozen + returns a new object: original A and provenance untouched
+    assert np.allclose(r.A, np.diag([1.5, 0.5]))
+    assert "stabilized" not in r.provenance
+
+
+def test_stabilize_without_dt_omits_periods():
+    A = np.diag([1.5, 0.5])
+    r = Realization(A, np.ones((2, 1)), np.ones((1, 2)), np.zeros((1, 1)))
+    rs = r.stabilize()
+    assert "periods" not in rs.provenance["modes_removed"]
+
+
 # --- dt safety -------------------------------------------------------------
 
 def test_modes_requires_a_timestep():

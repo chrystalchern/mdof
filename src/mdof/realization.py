@@ -117,12 +117,28 @@ class Realization:
         Return a new :class:`Realization` with unstable discrete modes filtered
         out (see :func:`mdof.validation.stabilize_discrete`).
 
-        Provenance is updated with ``{"stabilized": True}``; the original object
-        is left unchanged (this object is immutable).
+        Provenance is updated with ``{"stabilized": True}`` and a
+        ``"modes_removed"`` record listing the filtered eigenvalue ``indices``
+        (and their ``periods`` in seconds, when :attr:`dt` is known). The
+        original object is left unchanged (this object is immutable).
         """
         from mdof.validation import stabilize_discrete
-        A_stable = stabilize_discrete(A=self.A, **options)
-        new_provenance = {**self.provenance, "stabilized": True}
+        from mdof.modal import _period_from_eigval
+        options.pop("list_filtered_modes", None)
+        A_stable, indices = stabilize_discrete(
+            A=self.A, list_filtered_modes=True, **options
+        )
+        modes_removed = {"indices": list(indices)}
+        if self.dt is not None:
+            eigvals = np.linalg.eigvals(self.A)
+            modes_removed["periods"] = [
+                _period_from_eigval(eigvals[i], self.dt) for i in indices
+            ]
+        new_provenance = {
+            **self.provenance,
+            "stabilized": True,
+            "modes_removed": modes_removed,
+        }
         return replace(self, A=A_stable, provenance=new_provenance)
 
     def __repr__(self):
