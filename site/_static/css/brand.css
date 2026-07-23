@@ -13,10 +13,7 @@ html[data-theme="dark"] {
     --pst-color-link: #2698BA !important;         /* body links */
     --pst-color-link-hover: #B509AC !important;
 
-    /* The theme's default font variable is a DISPLAY SERIF (DM Serif Display), and its `body`
-       rule uses it — so the whole page renders serif once that font loads. Make the default
-       SANS, so serif is opt-in: only the navbar brand wordmark (below) overrides to the serif,
-       by naming the font literally rather than via this variable. */
+    /* Set default font to sans-serif. */
     --fontFamily: var(--pst-font-family-base) !important;
     --font-family: var(--pst-font-family-base) !important;
 }
