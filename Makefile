@@ -9,6 +9,7 @@ NOTEBOOKS = notebooks/00_Overview.ipynb \
             notebooks/02_SISO_Event.ipynb \
             notebooks/03_SISO_History.ipynb \
             notebooks/04_MIMO_Intro.ipynb \
+            notebooks/05_Complex_Modes.ipynb \
 	    	notebooks/06_MIMO_History.ipynb \
 
 
