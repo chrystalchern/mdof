@@ -1,17 +1,14 @@
 import numpy as np
 
 def decimate(series, decimation):
-    if decimation is None:
-        return series
-    
     if isinstance(series, np.ndarray):
         if len(series.shape) == 1:
             return series[np.arange(0,len(series),decimation)]
         else:
             return series[:,np.arange(0,series.shape[1],decimation)]
-    elif isinstance(series, list):
-        return np.asarray(series)[np.arange(0,len(series),decimation)]
-
+    if isinstance(series, list):
+        return np.asarry(series)[np.arange(0,len(series),decimation)]
+    
 
 def power(series):
     """
@@ -96,16 +93,19 @@ def plot_moving_window(time_grid, period_grid, amplitude_grid, period_range=(0,1
             z = z,
             x = x,
             y = y,
-            zsmooth = 'best',
+            # zsmooth = 'best',
             colorscale = 'viridis',
-            coloraxis = 'coloraxis'
+            colorbar = {'title': "Amplitude"}
         ))
         fig.update_layout(
+            width = 500,
+            height = 350,
+            margin = {'t':50,'l':0,'b':0,'r':0},
             xaxis_title = "time (s)",
             yaxis_title = "Period (s)",
-            yaxis_range=period_range)
-        fig.update_coloraxes(
-            showscale = False)
+            yaxis_range=period_range,
+            # title = f"{options.get('method',"").capitalize()} transfer function frequency content"
+        )
     else:
         if 'figax' in options.keys():
             fig,ax = options['figax']
