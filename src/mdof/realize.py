@@ -12,6 +12,8 @@ from .import numerics
 from .evolve import obsv2ac
 from .influence import ac2bd
 
+from mdof.validation import stabilize_discrete
+
 
 def srim(inputs,outputs,**options):
     r"""
@@ -115,6 +117,9 @@ def srim(inputs,outputs,**options):
 
     # Computation of system matrices A & C
     A,C = obsv2ac(Observability, no, p, **options)
+
+    if options.get("stabilize_intermediate",False):
+        A, indices = stabilize_discrete(A,verbose=False,list_filtered_modes=True)
 
     assert A.shape[0] == A.shape[1] == n
     assert C.shape[0] == p

@@ -86,6 +86,7 @@ def eigenfilter(A, test, by_index=False, return_indices=False):
     2. Recomputes a "filtered" matrix, `filtered_A`, with those eigenvalues set to zero.
     Test is evaluated on the eigenvalue (`test(val)`) by default (`by_index=False').
     Test is evaluated on the index of the eigenvalue if `by_index=True`.
+    Assumes `A` is real-valued and returns a real-valued matrix.
     """
     vals,vecs = np.linalg.eig(A)
 
@@ -96,6 +97,8 @@ def eigenfilter(A, test, by_index=False, return_indices=False):
             vals[i] = 0
 
     filtered_A = vecs @ np.diag(vals) @ np.linalg.inv(vecs)
+    filtered_A = np.real_if_close(filtered_A, tol=1000)
+    assert not np.iscomplexobj(filtered_A), "A has non-negligible imaginary part"
 
     if return_indices:
         return filtered_A, indices
