@@ -55,16 +55,20 @@ def mode_set(mode_results, key):
     return 
 
 
-def husid(accel_series, intensity_measure='arias'):
+def husid(accel_series, intensity_measure='arias', dt=None):
+    print(f"{accel_series.shape=}")
+    if accel_series.ndim > 1:
+        raise ValueError("Input acceleration series must be 1-dimensional.")
     if intensity_measure == 'arias':
-        # Compute Arias Intensity (cumulative of squared acceleration)
+        # Compute Arias Intensity (cumulative squared acceleration)
         # intensity = np.tril(np.ones(len(accel_series)))@accel_series**2
         intensity = np.cumsum(accel_series**2)
+        print(f"{intensity.shape=}")
     elif intensity_measure == 'isaacson':
-        # Compute Isaacson's Intensity (cumulative of squared acceleration but might use different methodology)
+        # Compute Isaacson's Intensity (cumulative squared acceleration but might use different methodology)
         intensity = np.cumsum(accel_series**2)  # Example, may vary depending on specific implementation
     elif intensity_measure == 'cav':
-        # Compute Cumulative Absolute Velocity (CAV) (cumulative of absolute acceleration)
+        # Compute Cumulative Absolute Velocity (CAV) (cumulative absolute acceleration)
         intensity = np.cumsum(np.abs(accel_series))
     elif intensity_measure == 'pga':
         # Compute Peak Ground Acceleration (cumulative max absolute value)
@@ -72,6 +76,8 @@ def husid(accel_series, intensity_measure='arias'):
                               for i in range(len(accel_series))])
     elif intensity_measure == 'pgv':
         # Compute Peak Ground Velocity (cumulative max absolute value)
+        if dt is None:
+            raise ValueError("dt must be provided for PGV intensity measure.")
         veloc_series = np.cumsum(accel_series)  # Integrating to get velocity
         intensity = np.array([np.max(np.abs(veloc_series[:i]))
                               for i in range(len(veloc_series))])
