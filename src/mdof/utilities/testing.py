@@ -56,14 +56,12 @@ def mode_set(mode_results, key):
 
 
 def husid(accel_series, intensity_measure='arias', dt=None):
-    print(f"{accel_series.shape=}")
     if accel_series.ndim > 1:
         raise ValueError("Input acceleration series must be 1-dimensional.")
     if intensity_measure == 'arias':
         # Compute Arias Intensity (cumulative squared acceleration)
         # intensity = np.tril(np.ones(len(accel_series)))@accel_series**2
         intensity = np.cumsum(accel_series**2)
-        print(f"{intensity.shape=}")
     elif intensity_measure == 'isaacson':
         # Compute Isaacson's Intensity (cumulative squared acceleration but might use different methodology)
         intensity = np.cumsum(accel_series**2)  # Example, may vary depending on specific implementation
