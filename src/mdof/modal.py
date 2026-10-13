@@ -18,6 +18,39 @@ def _period_from_eigval(eigval, dt):
     return (2*pi) / np.abs(np.log(eigval)/dt)
 
 
+def standardize_modes(modes):
+    """
+    Standardize the mode shapes of a set of modes by rotating
+    the last component of each mode onto the real axis and
+    scaling the mode shape so that its magnitude is 1.0.
+    
+    See Chern and O'Reilly, 2026, ASME Journal of Applied Mechanics:
+    "On Complex Modal Analysis: The Cautionary Tale of the Single
+    Surviving Mode".
+
+    :param modes:   modal matrix, i.e. C@Psi, where C is the
+                    output matrix and Psi is the eigenvector
+                    matrix of the state matrix A.
+    :type modes:    array of shape (n_outputs, model order)
+
+    :return:        standardized modes
+    :rtype:         array of shape (n_outputs, model order)
+    """
+
+    for i in range(modes.shape[1]):
+        mode = modes[:,i]
+        # rotate mode shape so that the last component is real
+        phase = -np.arctan(np.imag(mode[-1])/np.real(mode[-1]))
+        print(f"{phase=}")
+        mode = np.exp(phase*1j)*mode
+        # scale mode shape so that its magnitude is 1.0
+        magnitude = np.linalg.norm(mode)
+        mode /= magnitude
+        # replace the original mode shape with the standardized one
+        modes[:,i] = mode
+    return modes
+
+
 def system_modes(realization,
                  dt,
                  n_peaks=None,
@@ -25,6 +58,7 @@ def system_modes(realization,
                  sort_descending=True,
                  filter_by=None,
                  filter_lim=None,
+                 standardize=False,
                  **options):
     """
     Modal identification from a state space system realization.
